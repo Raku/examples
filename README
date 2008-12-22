@@ -7,6 +7,12 @@ All examples should work for any implementation of perl.
 
 If an example needs an implementation specific version then it should end in .implementation.  So for example if you are making an example that only works on rakudo then it should end in .rakudo.
 
+Why
+---
+Why not just use the Pugs repo?
+1. This is an open repo so there is no need to obtain a commit bit (hopefully making it easier for everyone to participate)
+2. This is not tied in any way to any implementation of Perl 6
+3. Something NEW and FRESH is always more fun (I hope!)
 
 
 Goals
@@ -19,5 +25,4 @@ Directories
 -----------
 
 Games - Games should go in here :)
-Euler - Answers for Project Euler should go in here name them prob00-author.pl
-
+Euler - Answers for Project Euler http://projecteuler.net/
