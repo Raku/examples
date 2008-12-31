@@ -34,6 +34,7 @@ Directories
 games     - Games should go in here :)
 euler     - Answers for Project Euler <http://projecteuler.net>
 perlmonks - Answers to perlmonks.org questions
+wsg       - Answers for Winter Gaming Scripts, divided by difficulty and year
 
 
 License Information
