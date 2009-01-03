@@ -1,0 +1,92 @@
+nko Cajhen,84,80,61,81,71,62,76
+Ryan Calafato,59,93,93,80,67,73,95
+Iulian Calinov,56,70,76,93,79,83,58
+Geert Camelbeke,97,61,55,73,70,92,63
+David Campbell,87,66,62,73,76,91,91
+John III Campbell,93,51,61,55,84,99,91
+Chris Cannon,60,79,73,63,51,60,61
+Jon Cantrell,59,64,99,66,73,52,65
+Jun Cao,64,80,83,65,57,82,97
+Anthony Cappiello-Guy,89,74,56,58,51,79,84
+Cyril Carbonati,97,57,77,90,78,64,58
+Richard Carey,80,78,55,88,54,91,95
+Jason Carlson,93,68,79,73,91,88,60
+Ty  Carlson,60,84,77,73,84,50,65
+Fernando Caro,58,97,56,79,74,52,53
+Rob Caron,85,54,51,59,99,80,89
+Andy Carothers,89,88,93,64,95,51,81
+Chase Carpenter,94,93,58,92,94,86,60
+Matthew Carroll,75,67,52,85,60,80,57
+Adam Carter,62,75,72,55,86,60,60
+Carlos Carvallo,87,95,56,84,52,83,79
+Rob Cason,97,71,97,57,51,69,83
+Gitte Casparij,54,89,99,55,51,62,79
+Joao Casqueiro,93,50,75,84,57,52,80
+Giorgio Cavaglieri,82,63,61,80,88,78,58
+Matt Cavallari,53,54,52,57,66,73,80
+Luisa Cazzaniga,96,71,71,87,77,59,50
+Andrew Cencini,75,52,83,80,63,51,96
+Baris Cetinok,86,77,91,50,84,84,71
+Sean Chai,71,64,73,85,62,81,61
+Gareth Chan,84,51,87,75,72,66,84
+Greg Chapman,81,53,88,78,83,80,91
+Mathew Charles,57,58,79,80,89,86,67
+Sootha Charncherngkha,96,60,92,98,66,66,56
+Neil Charney,87,82,83,81,86,71,64
+Mohammad Chami,95,74,99,86,51,54,57
+Ankur Chavda,99,53,81,60,96,92,80
+Francisco Chaves,99,91,55,68,79,62,61
+Hao Chen,99,86,62,84,63,77,59
+Jacky Chen,76,62,66,92,80,50,95
+John Y. Chen,62,59,82,52,76,82,57
+Yao-Qiang Cheng,69,72,87,57,58,67,77
+Jeff Chia,72,74,89,56,76,95,89
+Lee Theng Chia,79,59,60,60,59,64,99
+Martin Chisholm,93,91,79,92,64,80,83
+Michal Chmiela,86,78,51,66,89,74,56
+Manish Chopra,58,78,55,60,73,84,77
+Ray Chow,90,78,64,91,62,61,88
+Terri Chudzik,88,54,91,95,69,95,55
+Bjarke Rust Christensen,99,91,88,59,81,54,97
+Nicholas Christopoulos,93,54,50,64,85,73,83
+Ranjit Varkey Chudukatil,55,50,79,80,85,54,59
+Guido Chuffart,67,57,88,97,97,96,93
+Petra Chvojkov,64,71,78,57,70,69,85
+Alice Ciccu,88,64,56,80,95,88,72
+Ewa Ciesielska,54,57,77,84,89,51,99
+Molly Clark,82,95,69,69,69,77,90
+Leah Clelland,66,85,65,89,55,81,55
+Christian Cletus,84,78,96,80,51,86,96
+Mark-Stuart Cochrane,51,98,59,99,63,70,72
+Pat Coleman,81,53,99,77,58,90,96
+Jean-Charles Colon,64,72,62,93,88,89,87
+Craig M. Combel,92,77,57,64,80,55,55
+Aaron Con,70,61,63,98,72,99,79
+Steve Conn,77,59,99,68,83,74,87
+Peter Connelly,97,81,80,68,68,95,82
+Cathan Cook,95,71,90,70,94,60,72
+Kevin Cook,60,58,52,94,91,62,97
+Patrick M. Cook,57,63,59,70,87,54,75
+Jeroen Cool,77,86,58,91,68,84,65
+Kenneth Cools,71,90,71,60,91,87,87
+Jim Corbin,86,91,76,99,55,85,60
+Michel Cordani,97,62,65,68,60,85,62
+Cecilia Cornejo,65,94,96,85,54,96,87
+Eva Corets,99,59,86,85,73,59,86
+Ryan Cornelsen,57,69,83,65,82,92,96
+Robin Counts,71,59,56,50,68,66,67
+Brian Cox,89,62,67,64,75,78,93
+Oliver Cox,63,64,97,56,51,80,95
+Ovidiu V. Crciun,63,82,50,96,85,83,92
+Jack Creasey,92,91,96,81,74,81,84
+Armin Cremerius,96,96,60,64,67,59,83
+Ioan Crisiarcu,98,70,54,88,90,59,87
+MaraJesaesta,92,54,64,85,98,59,96
+Grant Culbertson,72,94,92,69,51,68,54
+Scott Culp,58,76,51,62,56,74,71
+Gonaso Cunha,93,64,88,80,99,61,77
+Conor Cunningham,92,62,50,59,82,56,85
+Shiraz Cupala,87,68,88,93,50,91,71
+Douglas Curran,80,80,51,56,79,86,93
+Pawel Czernek,72,84,84,99,70,72,64
+Wojciech Czupta,89,53,96,81,63,65,85
