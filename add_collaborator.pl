@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# perl5 utility script to add collaborators to the github repo
+
 use strict;
 use warnings;
 
