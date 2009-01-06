@@ -79,12 +79,16 @@ class Test::Harness {
 } # class Test::Harness
 
 =begin pod
+
 =head1 NAME
 Test::Harness - test harness for Rakudo (Perl 6)
+
 =head1 SYNOPSIS
 From the command line...
 =begin code
 perl6 -e'use Test::Harness; Test::Harness::runtests(@*ARGS);' t/*.t
 =end code
-=head1 DESCRIPTION
+
+=head1 SEE ALSO
+
 =end pod

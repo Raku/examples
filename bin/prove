@@ -86,13 +86,31 @@ sub glob( Str $pattern ) {
 }
 
 =begin pod
+
 =head1 NAME
 prove - thin wrapper around Test::Harness
+
 =head1 SYNOPSIS
 =begin code
 prove [options] [files/directories]
+prove --recurse t
 =end code
+
 =head1 OPTIONS
+
+=head2 --recurse
+processes all subdirectories and files
+
+=head2 --help
+shows the command format and options
+
 =head1 DESCRIPTION
+Runs a series of tests (usually named *.t in a t/ directory) and
+displays the results.
+
+=head1 SEE ALSO
+Run C<perldoc prove> to see the Perl 5 L<doc:prove> documentation.
+Perl 5 also has a L<doc:Test::Harness>.
+
 =end pod
 
