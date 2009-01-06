@@ -1,0 +1,98 @@
+#!/usr/local/bin/perl6
+use Test::Harness;
+
+my $invalid;
+my $help = False;
+my $recurse = False;
+my @files;
+my @inc;
+my $taking_options = True;
+for @*ARGS -> $arg {
+    $taking_options = $taking_options && ( substr($arg,0,1) eq '-' );
+    if $taking_options {
+        option($arg); }
+    else {
+        file_or_dir( $arg );
+    }
+}
+
+if defined $invalid { say "invalid option: $invalid"; }
+elsif $help         { help(); }
+else                { Test::Harness::runtests( @files ) }
+
+sub option( $arg ) {
+    given $arg {
+        when '-h' | '--help'    { $help = True;    }
+        when '-I'               { say "include not implemented!"; }
+        when '-r' | '--recurse' { $recurse = True; }
+        default                 { $invalid = $arg; }
+    }
+}
+
+sub file_or_dir( $arg ) {
+    if   is_file( $arg ) { push @files, $arg; }
+    elsif is_dir( $arg ) {
+        my $dirname = $arg;
+	    if substr( $arg, -1, 1 ) eq '/' { # does directory name end with '/'?
+	        $dirname = substr( $arg, 0, $arg.chars - 1); # remove the '/'
+	    }
+        my @tests = glob( "$dirname/*.t" );
+        push @files, @tests;
+        # my @tests_rakudo = glob( "$dirname/*.rakudo" );
+        # push @files, @tests_rakudo;
+        if $recurse {
+            my @names = glob( "$dirname/*" );
+            for @names -> $name {
+                if is_dir( $name ) {
+                    file_or_dir( $name );
+                }
+            }
+        }
+    }
+}
+
+sub help() {
+    say "usage: prove6 [options] [files/directories]";
+    say "  -h  --help   display this help";
+    say "  -r  --recurse  also test subdirectories";
+}
+
+# inefficient workaround - remove when Rakudo gets $name.:f or $name ~~ :f
+sub is_file( $name ) {
+    my $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
+    return ( substr( $result, 0, 1 ) eq '-' );
+}
+
+# inefficient workaround - remove when Rakudo gets $name.:d or $name ~~ :d
+sub is_dir( $name ) {
+    my $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
+    return ( substr( $result, 0, 1 ) eq 'd' );
+}
+
+# inefficient workaround - remove when Rakudo gets a glob function
+sub glob( Str $pattern ) {
+    my $tempfile = "/tmp/prove.tmp";
+    my $command = "ls -ld $pattern >$tempfile 2>/dev/null";
+    run $command;
+    my @filenames;
+    for slurp($tempfile).split("\n") -> $line {
+        my @field = $line.split( / \s+ / ); # will fail with spaces in filenames
+        if @field.elems > 7 {
+            push @filenames, @field[7];
+        }
+    }
+    unlink $tempfile;
+    return @filenames;
+}
+
+=begin pod
+=head1 NAME
+prove - thin wrapper around Test::Harness
+=head1 SYNOPSIS
+=begin code
+prove [options] [files/directories]
+=end code
+=head1 OPTIONS
+=head1 DESCRIPTION
+=end pod
+
