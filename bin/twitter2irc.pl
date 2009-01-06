@@ -57,7 +57,7 @@ sub check_twitter {
 		my $tweets = get_tweets_since($user, $last_tweet);
 		for my $tweet (@$tweets) {
 			my $test = $tweet->{text};
-			$test =~ s/[perl6-examples]/[github]/;
+			$test =~ s/\[perl6-examples\]/[github]/;
 			$heap->{irc}->yield('privmsg', $channel, $tweet->{text});
 			$last_tweet = $tweet->{id};
 		}
