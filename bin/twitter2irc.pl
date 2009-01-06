@@ -9,11 +9,11 @@ use POE;
 use POE::Component::IRC::State;
 use POE::Component::IRC::Plugin::AutoJoin;
 
-my $delay = 60;
+my $delay = 40;
 my $connected = 0;
 my $user  = 'perl6examples';
-my $last_tweet = 1100006750;
-my $channel = '#perl6test';
+my $last_tweet = undef;
+my $channel = '#perl6';
 
 POE::Session->create(
      package_states => [
@@ -44,10 +44,8 @@ sub irc_join {
 
      # only send the message if we were the one joining
      if ($nick eq $irc->nick_name()) {
-         $irc->yield(privmsg => $channel, 'Hi everybody!');
-     }
-	 $connected = 1;
-	 $_[KERNEL]->alarm( check_twitter => time() + 5);
+	 	$_[KERNEL]->alarm( check_twitter => time() + 5);
+	 }
 }
 
 sub check_twitter {

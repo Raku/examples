@@ -1,7 +1,7 @@
 
 use v6;
 
-my %dict = ( (slurp("wordlist.txt").split("\r\n").grep: {.chars > 5}) X 1);
+my %dict = ( (slurp("wordlist.txt").split("\r\n").grep: {.chars > 6}) X 1);
 
 loop {
 	print "Enter password to test:";
