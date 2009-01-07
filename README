@@ -14,7 +14,7 @@ Why
 
 Why not just use the Pugs repo?
 
-1. With github we can have collaborators (simply request via github or #perl6 and I'll add you), or you can fork the repository and then send me a request when you want me to pull in your changes.
+1. With github we can have collaborators (simply request via github or #perl6 and I'll add you), or you can fork the repository and then send me a request when you want me to pull in your changes.  You can now also say "perl6examples: add $githubname" and the bot will add you as a collaborator.
 2. This is not tied in any way to any implementation of Perl 6
 3. Something NEW and FRESH is always more fun (I hope!)
 
