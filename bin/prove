@@ -108,6 +108,14 @@ shows the command format and options
 Runs a series of tests (usually named *.t in a t/ directory) and
 displays the results.
 
+=head1 BUGS
+Rakudo acquired a bug on December 18th, 2008 in Parrot r34090.
+L<RT 62030|http://rt.perl.org/rt3/Public/Bug/Display.html?id=62030>
+causes C<prove> to not see the directory or file names to test on the
+command line.
+Until RT 62030 is fixed, C<prove> requires Parrot revisions less than
+r34090.
+
 =head1 SEE ALSO
 Run C<perldoc prove> to see the Perl 5 L<doc:prove> documentation.
 Perl 5 also has a L<doc:Test::Harness>.

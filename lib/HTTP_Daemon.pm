@@ -11,7 +11,6 @@ class HTTP_Daemon
         while $!running {
 #           my Str $command = "$*PROG --request";
             my Str $command = "{$!temporary_prog} --request";
-#           $*ERR.say: "COMMAND: $command";
             run( "netcat -c '$command' -l -s {$.host} -p {$.port}" );
             # spawning netcat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.
@@ -150,7 +149,7 @@ sub request {
             if $r.method eq 'GET' {
                 given $r.url.path {
                     when '/'             { get_root_dir( $c, $r ); }
-                    when / ^ \/pub\/ $ / { get_pub_dir( $c, $r ); }
+                    when / ^ \/pub\/ $ / { get_pub_dir(  $c, $r ); }
                 }
             }
             else {
@@ -206,8 +205,11 @@ sub daemon {
 }
 
 =head1 DEPENDENCIES
-Temporarily (see L<#TODO>) http_daemon depends on the L<man:netcat>
+Temporarily (see L<#TODO>) HTTP_Daemon depends on the L<man:netcat>
 utility to receive and send on a TCP port.
+On Debian based Linux distributions, this should set it up:
+
+ sudo apt-get install netcat
 
 =head1 TODO
 Remove temporary_set_prog() when rakudo gets $*PROG.
