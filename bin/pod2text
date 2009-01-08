@@ -1,0 +1,7 @@
+#!/usr/local/bin/perl6
+use v6;
+use Pod::to::text;
+my Pod::to::text $translator .= new;
+my Str $podfilename = @*ARGS[0];
+$translator.parse_file( $podfilename );
+

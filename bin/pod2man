@@ -1,0 +1,5 @@
+#!/usr/local/bin/perl6
+use v6;
+use Pod::to::man;
+my Pod::to::man $translator .= new;
+$translator.parse_file( @*ARGS[0] );
