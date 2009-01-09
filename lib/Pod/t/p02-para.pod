@@ -1,0 +1,14 @@
+=begin pod
+Document p02-para.pod tests paragraphs.
+
+After the above one liner,
+this second paragraph has three lines to verify that all lines
+are processed together as one paragraph, and to check word wrap.
+
+=for para
+The third paragraph is declared in the abbreviated style.
+
+=begin para
+The fourth paragraph is declared in the delimited style.
+=end para
+=end pod

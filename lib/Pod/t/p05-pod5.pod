@@ -1,0 +1,23 @@
+#!/path/to/perl5
+
+print "First Perl 5 statement\n";
+
+=pod
+
+The =pod is a Perl 5 POD command.
+
+=cut
+
+print "Second Perl 5 statement\n";
+print "Third Perl 5 statement\n";
+
+=head1 NAME
+
+p05-pod5.pod - Perl 5 Plain Old Document to test backward compatibility
+
+=head1 DESCRIPTION
+
+This document starts with a marker that indicates POD 5 and not POD 6.
+
+=cut
+

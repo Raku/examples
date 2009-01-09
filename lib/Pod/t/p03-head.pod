@@ -1,0 +1,8 @@
+=begin pod
+=head1 NAME
+Pod::Parser - stream based parser for Perl 6 Plain Old Documentation
+=head1 DESCRIPTION
+=head2 SPECIFICATION
+The specification for Perl 6 POD is Synopsis 26,
+which can be found at http://perlcabal.org/syn/S26.html
+=end pod

@@ -1,0 +1,17 @@
+=begin pod
+Document p07-basis.pod tests the B formatting code.
+The B < > formatting code specifies that the contained text is the basis
+or focus of the surrounding text; that it is of fundamental
+significance.
+Such content would typically be rendered in a bold style or in
+< strong > ... < /strong > tags.
+
+One B<basis> word.
+
+Then B<two basis> words.
+
+Third, B<a basis phrase> followed by B<another basis phrase>.
+
+Fourth, B<a basis phrase that is so long that it should be word wrapped
+in whatever output format it is rendered>.
+=end pod

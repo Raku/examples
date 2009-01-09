@@ -1,0 +1,40 @@
+=begin pod
+Document p13-link.pod tests the L formatting code.
+The L < > code is used to specify all kinds of links, filenames,
+citations, and cross-references (both internal and external).
+
+The simplest link is internal, such as to L<#SCHEMES>.
+
+A link may also specify an alternate name and a L<scheme|doc:#SCHEMES>.
+
+=head1 SCHEMES
+The following examples were taken from L<S26|http://perlcabal.org/syn/S26.html> and
+then extended.
+
+=head2 http: and https:
+L<http://www.mp3dev.org/mp3/> See
+also: L<http:tutorial/faq.html> and L<http:../examples/index.html>
+
+=head2 file:
+Either L<file:/usr/local/lib/.configrc> or L<file:~/.configrc>.
+Either L<file:.configrc> or L<file:CONFIG/.configrc>.
+
+=head2 mailto:
+Please forward bug reports to L<mailto:devnull@rt.cpan.org>
+
+=head2 man:
+Unix L<man:find(1)> facilities.
+
+=head2 doc:
+You may wish to use L<doc:Data::Dumper> to
+view the results. See also: L<doc:perldata>.
+
+=head2 defn:
+prone to D<lexiphania>: an unfortunate proclivity
+
+To treat his chronic L<defn:lexiphania> the doctor prescribed
+
+=head2 isbn: and issn:
+The Perl Journal (L<issn:1087-903X>).
+
+=end pod

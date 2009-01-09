@@ -2,6 +2,9 @@
 
 # Names, meanings and sequence according to Synopsis 26 - Documentation
 
+# warning - code in here is being sinificantly refactored.
+# statements that are almost duplicated are in transition.
+
 class Pod::Parser {
 
     has PodBlock @!podblocks is rw; # stack of nested Pod blocks
@@ -15,8 +18,8 @@ class Pod::Parser {
     has Bool     $!wrap_enable;
     has Bool     $!codeblock;
     has Bool     $!needspace;       # would require ' ' if more text follows
-    has Int      $!margin_L is rw;
-    has Int      $!margin_R is rw;
+    has Int      $!margin_L;
+    has Int      $!margin_R;
     # enum Context <AMBIENT BLOCK_DECLARATION POD_CONTENT>;
     # has $!context is rw is Context; # not (yet) in Rakudo
 
@@ -100,7 +103,7 @@ class Pod::Parser {
 
     method parse_blank { # from parse_line
         if + @!podblocks > 0 { # in some POD block
-            my Num $topindex = + @!podblocks - 1;
+            my Int $topindex = @!podblocks.end;
             my Str $style = @!podblocks[$topindex].style; # does Rakudo [*-1] yet?
             if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' | 'FORMATTING_CODE' ) {
                 # TODO: consider loop for possible nested formatting codes still open
@@ -119,7 +122,7 @@ class Pod::Parser {
         self.set_context( 'POD_CONTENT' );
         # (hopefully not premature) optimization: format only if contains < or > chars.
         $!line = $line;
-        my Num $topindex = + @!podblocks - 1;
+        my Int $topindex = @!podblocks.end;
         if $!line ~~ /[<lt>|<gt>|'«'|'»']/ {self.parse_formatting;}
         else                       {self.content(@.blocks[$topindex],$line);}  # [*-1]
 #       else                       {self.content(@.blocks[$topindex],$!line);} # [*-1]
@@ -144,7 +147,7 @@ class Pod::Parser {
                 # innermost block (last pushed).
                 # What if '=begin comment' is nested inside a format
                 # block (S26)?
-                my Num $topindex = + @!podblocks - 1;
+                my Int $topindex = @!podblocks.end;
                 my $reftopblock = @.blocks[$topindex]; # [*-1]
                 my PodBlock $topblock = @!podblocks[$topindex]; # [*-1]
                 if $topblock.style eq 'FORMATTING_CODE' {
@@ -190,7 +193,7 @@ class Pod::Parser {
                     if $format_begin_pos > 0 {
                         # There is text before the new formatting code
                         my $before = $content.substr( 0, $format_begin_pos );
-                        my Num $topindex = + @!podblocks - 1;
+                        my Int $topindex = @!podblocks.end;
                         self.content( @.blocks[$topindex], $before ); # [*-1]
                     }
                     @.blocks.push( \%formatblock );
@@ -228,7 +231,7 @@ class Pod::Parser {
                 }
                 else {
                     $output_buffer = $content.substr( 0, $angle_R_pos );
-                    my Num $topindex = + @!podblocks - 1;
+                    my Int $topindex = @!podblocks.end;
                     self.content( @.blocks[$topindex], $output_buffer ); # [*-1]
                     $output_buffer = "";
                     self.fmt_end( $reftopblock );
@@ -236,7 +239,7 @@ class Pod::Parser {
                 $chars_to_delete = $angle_R_pos + $angle_R.chars;
             }
             if $output_buffer.chars > 0 { # TODO: if $output_buffer.chars
-                my Num $topindex = + @!podblocks - 1;
+                my Int $topindex = @!podblocks.end;
                 self.content( $.blocks[$topindex], $output_buffer ); # [*-1]
             }
             $content = $content.substr( $chars_to_delete );
@@ -265,7 +268,7 @@ class Pod::Parser {
         my Str $typename = ~ $match<typename>;
         self.set_context( 'AMBIENT' ); # finish any previous block
         self.set_context( 'BLOCK_DECLARATION' );
-        my Num $topindex = + @!podblocks - 1;
+        my Int $topindex = @!podblocks.end;
         @.blocks[$topindex]<typename> = $typename;    # [*-1] eventually
         @.blocks[$topindex]<style> = 'DELIMITED';     # [*-1]
         @!podblocks[$topindex].typename = $typename;  # [*-1] eventually
@@ -295,7 +298,7 @@ class Pod::Parser {
 
     method parse_for( Match $match ) { # from parse_directive
         self.set_context( 'BLOCK_DECLARATION' );
-        my Num $topindex = + @!podblocks - 1;
+        my Int $topindex = @!podblocks.end;
         @.blocks[$topindex]<typename> = ~ $match<typename>; # [*-1]
         @.blocks[$topindex]<style> = 'ABBREVIATED';         # [*-1]
         @!podblocks[$topindex].typename = ~ $match<typename>; # [*-1]
@@ -313,7 +316,7 @@ class Pod::Parser {
         my Str $heading = ~ $match<heading>;
         self.set_context( 'AMBIENT' );        
         self.set_context( 'BLOCK_DECLARATION' ); # pushes a new empty block onto the stack
-        my Num $topindex = + @!podblocks - 1;
+        my Int $topindex = @!podblocks.end;
         @.blocks[$topindex]<typename> = 'head';               # [*-1]
         @.blocks[$topindex]<style>    = 'POD_BLOCK';          # [*-1]
         @.blocks[$topindex]<config><level> = ~ $match<level>; # [*-1]
@@ -340,7 +343,7 @@ class Pod::Parser {
     method parse_p5pod { # from parse_directive
         self.set_context( 'AMBIENT' ); # finish any previous block
         self.set_context( 'BLOCK_DECLARATION' );
-        my Num $topindex = + @!podblocks - 1;
+        my Int $topindex = @!podblocks.end;
         @.blocks[$topindex]<typename>        = 'pod';       # [*-1] eventually
         @.blocks[$topindex]<style>           = 'DELIMITED'; # [*-1]
         @.blocks[$topindex]<config><version> = 5;           # [*-1]
@@ -369,11 +372,11 @@ class Pod::Parser {
             given $old_context {
                 when 'AMBIENT' { }
                 when 'BLOCK_DECLARATION' {
-                    my Num $topindex = + @!podblocks - 1;
+                    my Int $topindex = @!podblocks.end;
                     self.blk_beg( @.blocks[$topindex] ); # [*-1]
                 }
                 when 'POD_CONTENT' {
-                    my Num $topindex = + @!podblocks - 1;
+                    my Int $topindex = @!podblocks.end;
                     my Str $style = @!podblocks[$topindex].style; # [*-1]
                     if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' ) {
                         my $reftopblock = pop @.blocks;
@@ -389,7 +392,7 @@ class Pod::Parser {
             given $new_context {
                 when 'AMBIENT' {
                     if + @!podblocks > 0 {
-                        my Num $topindex = + @!podblocks - 1;
+                        my Int $topindex = @!podblocks.end;
                         if @!podblocks[$topindex].style ne 'DELIMITED' { # ABBREVIATED or POD_BLOCK
                             self.blk_end( @.blocks[$topindex] ); # [*-1]
                         }
@@ -493,7 +496,7 @@ class PodBlock {
     method perl {
         my $typename = defined $.typename ?? $.typename !! 'undef';
         my $style    = defined $.style    ?? $.style    !! 'undef';
-        return "( typename=>'$typename', style=>'$style' )";
+        return "( 'typename'=>'$typename', 'style'=>'$style' )";
     }
 };
 
@@ -553,39 +556,48 @@ grammar Pod6 {
 grammar Pod6_link {
     regex TOP { <alternate> [ <ws> '|' <ws> ] ? <scheme> <external> <internal> };
     regex alternate { [ .* <?before [ <ws> '|' <ws> ] > ] ?  };
-    regex scheme { [ .+? ':' ] ? };
+    regex scheme { [ [ http | https | file | mailto | man | doc | defn
+        | isbn | issn ] ? ':' ] ? }; # TODO: non standard schemes
     regex external { [ <-[#]> + ] ? };
     regex internal { [ '#' .+ ] ? };
 }
 
 =begin pod
+
 =head1 NAME
 Pod6Parser - stream based parser for Perl 6 Plain Old Documentation
-=head1 SYNOPSIS
-    # in Perl 6 (Rakudo)
-    use v6;
-    use Pod6Parser;
-    my $p=Pod6Parser.new;
-    $p.parse_file("lib/Pod/Parser.pm")'
 
-    # in bash (one line, for testing)
-    perl6 -e'use Pod::Parser;Pod::Parser.new.parse_file(@*ARGS[0]);' Parser.pm
+=head1 SYNOPSIS
+ # in Perl 6 (Rakudo)
+ use v6;
+ use Pod6Parser;
+ my $p = Pod6Parser.new;
+ $p.parse_file( "lib/Pod/Parser.pm" );
+
+ # in shell (one line, for testing)
+ perl6 -e 'use Pod::Parser; Pod::Parser.new.parse_file(@*ARGS[0]);' lib/Pod/Parser.pm
+
 =head1 DESCRIPTION
-The default Pod::Parser output is a trace of parser events and data on
-the standard output. The default output code is usually overridden to
-produce plain text, a Unix man page, (X)HTML, Perl 5 POD or any other
-format.
+This module contains the base class for of a set of POD utilities such
+as L<doc:perldoc>, L<doc:pod2text> and L<doc:pod2html>.
+
+The default Pod::Parser output is a trace of parser events and document
+content to the standard output. The default output is usually converted
+by a translator module to produce plain text, a Unix man page, xhtml,
+Perl 5 POD or any other format.
+
 =head2 Emitters or POD Translators (Podlators)
 These are in development:
-Text. Man (groff). XHTML. wordcount. DocBook. POD5 to/from.
-More are very welcome. A pod6checker is needed too.
+text. man (groff). xhtml. wordcount. docbook. pod5 to and from.
+More are very welcome. A podchecker would also be useful.
+
 =head1 Writing your own translator
 Copy the following template and replace xxx with your format name.
 Avoid names that others have published, such as text, man or xhtml.
 =begin code
-  # Pod/to/xxx.pm
-  use Pod::Parser;
-  class Pod::to::xxx is Pod::Parser {
+# Pod/to/xxx.pm
+use Pod::Parser;
+class Pod::to::xxx is Pod::Parser {
     method doc_beg($name){ self.emit("doc beg $name"); }
     method doc_end       { self.emit("doc end"); }
     method blk_beg($b)   { self.emit("blk beg {$b<typename>} {$b<style>}"~config($b));}
@@ -595,26 +607,35 @@ Avoid names that others have published, such as text, man or xhtml.
     method content($b,$t){ self.emit("content $t"); }
     method ambient($t)   { self.emit("ambient $t"); }
     method warning($t)   { self.emit("warning $t"); }
-  }
+}
 =end code
-Add your logic, replace the "emit()" arguments and try it.
-Write a test script as described in L<#DIAGNOSTICS> and verify that it works.
+Add your logic, replace the "emit()" arguments and try it. Write a test
+script as described in L<#DIAGNOSTICS> and verify that it works.
 The simplest example is the L<Pod::to::wordcount> translator.
+
 =head1 METHODS
+
 =head2 parse_file
+
 =head2 emit
+
 =head2 buf_print
+
 =head2 buf_flush
+
 =config head1 :formatted<B U> :numbered
+
 =head1 LIMITATIONS
 Auto detect of Perl 5 POD only works with a subset of valid POD5
 markers.
 
 Formatting code L<doc:links> parse incorrectly when spanned over
 multiple lines.
+
 =head1 DIAGNOSTICS
-Running parse_file without an overriding translator uses the built in
+Running parse_file without an overriding translator uses the built
 C<emit()> method to produce a trace of the POD parsing events.
+
 =head2 Test suite
 The t/ directory has one test script for each emitter class, except that
 a single script tests both pod5 and pod6 emitters to reuse the documents.
@@ -622,20 +643,23 @@ The t/ directory also contains a document featuring each pod construct.
 Each emitter test script should handle each document, therefore
 $possible_tests = ( $test_scripts + 1 ) * $documents. The + 1 is because
 the pod test script performs each test twice.
+
 =head2 Round trip testing
-Start with a document in one format, for example POD6. Use a parser to
-translate it to another format such as POD5. Then use another parser to
-translate it back again. Compare the original and the twice translated
-version. Improve both parsers (and the document) until there are no
-(significant) differences.
+Start with a document in one format, for example POD6. Use a translator
+to generate another format such as POD5. Then use another translator to
+convert the translated document back again. Compare the original and the
+twice translated versions. Improve the translators (and the document)
+until there are no (significant) differences.
 
 To avoid lossy conversions the documents would only use features
-available in both formats. Therefore use different documents to test
-different formats.
+available in both formats.
+Therefore use different documents to test different round trips (text,
+Unix man page, xhtml, docbook etc).
 
 Success rate may improve by adding a third translation step, to the
-foreign format a second time. The outputs of the first and third
-translations should be identical.
+non pod format a second time.
+The outputs of the first and third translations should be identical.
+
 =head2 Testing Coverage
 General L<Helmuth von Moltke|http://en.wikipedia.org/wiki/Helmuth_von_Moltke_the_Elder>
 said (translated) "no plan survives contact with the enemy".
@@ -667,9 +691,10 @@ X<index entry|entry1,subentry1;entry2,subentry2> Y<undefined>
 Z<zero-width comment never rendered>
 
 =head1 BUGS
-
 Formatting codes at the beginning or end of POD lines are not padded
 with a space when word wrapped.
+
+Formatting code L<Pod::to::whatever> parses as scheme=>Pod :(
 
 Nested formatting codes cause internal errors.
 
@@ -683,8 +708,14 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head1 TODO
-Support for the full =marker set is incomplete.
-Handle all =marker cases and all configuration pair notations.
+Complete support for the full =marker set.
+
+Handle =config and all configuration pair notations.
+
+Manage allowed formatting codes dynamically, to support for example
+=begin code
+    =config C < > :allow<E I>
+=end code
 
 A handler could be added to the default case in every given { } block
 to detect unhandled POD.
@@ -694,27 +725,33 @@ requirements, not a reference to a block.
 
 Use [*-1] where possible to access the top of the Pod block stack.
 
-Manage allowed formatting codes dynamically, to support for example
-=begin code
-    =config C < > :allow<E I>
-=end code
-
 Recover gracefully and issue warnings when parsing invalid or badly
-formed POD. Or.. make a pod6checker with helpful diagnostics.
+formed POD.
+
+Or.. make a pod6checker with helpful diagnostics.
 
 Verify parser and emitters on Pugs, Mildew, Elf etc too.
+
 =head1 SEE ALSO
 L<http://perlcabal.org/syn/S26.html>
 L<doc:Pod::to::man> L<doc:Pod::to::xhtml> L<doc:Pod::to::wordcount>
 L<doc:perl6pod> L<doc:perl6style> The Perl 5 L<Pod::Parser>.
+
 =head1 AUTHOR
 Martin Berends (mberends on CPAN, #perl6, #parrot and @flashmail.com).
+
 =head1 ACKNOWLEDGEMENTS
+Many thanks to (in order of contribution):
+Larry Wall for perl, and for letting POD be 'manpages for dummies'.
+Damian Conway, for the Perl 6 POD
+specification L<S26|http://perlcabal.org/syn/S26.html>.
 The Rakudo developers led by Patrick Michaud and all those helpful
 people on #perl6.
 The Parrot developers led by chromatic and all those clever people on
 #parrot.
-In particular Carl Mäsak++ and Johan Viklund++ for illuminating the
-practical use of regex and grammar in their "November" Wiki engine.
+Most recently, the "November" Wiki engine developers led by Carl Mäsak++
+and Johan Viklund++, for illuminating the power and practical use of
+Perl 6 regex and grammar definitions.
+
 =end pod
 

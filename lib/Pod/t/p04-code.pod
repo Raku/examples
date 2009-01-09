@@ -1,0 +1,13 @@
+=begin pod
+=head1 NAME
+p04-code.pod - test processing of code (verbatim) paragraph
+=head1 SYNOPSIS
+ # code, paragraph style
+ say 'first';
+
+This text is a non code paragraph.
+=begin code
+# code, delimited block style
+say 'second';
+=end code
+=end pod

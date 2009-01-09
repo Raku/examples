@@ -1,0 +1,20 @@
+=begin pod
+Document p08-code.pod tests the C formatting code.
+The C < > formatting code specifies that the contained text is code;
+that is, something that might appear in a program or specification.
+Such content would typically be rendered in a fixed-width font
+(preferably a different font from that used for the T < > or K < >
+formatting codes) or with  < samp > ... < /samp > tags.
+The contents of a C < > code are space-preserved and verbatim.
+The C < > code is the inline equivalent of the =code block.
+
+Preserve the punctuation and C<say "---   ---";> three spaces.
+
+Also preserve C<if $a < 5 and $a > 0 { say "yes"; }> markup characters.
+
+Careful, this C«if $a > 0 and $a < 5 { say "yes"; }» needs a different
+delimiter because the > inside the code closes before it opens.
+Type these with AltGr-Z and AltGr-X.
+
+Multiple angles C<< $a = ( $b > $c );>> also delimit.
+=end pod

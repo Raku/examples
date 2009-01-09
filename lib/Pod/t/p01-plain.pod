@@ -1,0 +1,3 @@
+=begin pod
+document 01 plain text
+=end pod
