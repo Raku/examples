@@ -2,27 +2,28 @@
 
 class Test::Harness {
 
-    sub runtests( @filenames ) {
-        my $total_test = 0;
-        my $total_pass = 0;
-        my $total_fail = 0;
-        my $total_file = 0;
+    sub runtests( Str $perl, @filenames ) {
+        my Int $total_test = 0;
+        my Int $total_pass = 0;
+        my Int $total_fail = 0;
+        my Int $total_file = 0;
         my $time_started = time();
-        my $max_namechars = 1;
+        my Int $max_namechars = 1;
         for @filenames -> $name {
             if $name.chars > $max_namechars { $max_namechars = $name.chars; }
         }
         for @filenames -> $name {
             print "$name{'.'x($max_namechars+4-$name.chars)}";
-            my @results = qx( "perl6 $name" ).split("\n");
+            my @results = qx( "$perl $name" ).split("\n");
             # remove blank lines at the end of qx output (usually two)
-            my Num $topindex = + @results - 1;
+            my Int $topindex = @results.end;
             while @results[$topindex] eq '' { @results.pop; $topindex--; }
             # the first line must announce the number of planned tests
             if @results[0] ~~ / <digit>+ <dot> <dot> ( <digit>+ ) / {
-                my $tests_planned = $0;
-                my $tests_passed = 0; my $tests_failed = 0;
-                my $tests_done = + @results - 1; # first line says 1..count
+                my Int $tests_planned = $0;
+                my Int $tests_passed  = 0;
+                my Int $tests_failed  = 0;
+                my Int $tests_done    = @results.end; # first line says 1..count
                 if $tests_done != $tests_planned {
                     say " $tests_planned tests planned, $tests_done done";
                     if $tests_done < $tests_planned {
@@ -89,6 +90,19 @@ From the command line...
 perl6 -e'use Test::Harness; Test::Harness::runtests(@*ARGS);' t/*.t
 =end code
 
+=head1 TODO
+Pass $perl parameter via %*ENV<HARNESS_PERL> to be compatible with the
+Perl 5 interface.
+
+=head1 BUGS
+The command line in L<doc:#SYNOPSIS> began to fail with Rakudo r34090
+because @*ARGS stopped being populated from the command line if -e was
+used. Fortunately using this module via L<doc:prove> still works.
+
 =head1 SEE ALSO
+L<doc:prove>
+
+=head1 AUTHOR
+Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
 
 =end pod

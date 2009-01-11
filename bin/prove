@@ -4,11 +4,12 @@ use Test::Harness;
 my $invalid;
 my $help = False;
 my $recurse = False;
+my $perl = 'perl6';    # unless overridden by --perl
 my @files;
 my @inc;
 my $taking_options = True;
 for @*ARGS -> $arg {
-    $taking_options = $taking_options && ( substr($arg,0,1) eq '-' );
+    $taking_options = $taking_options && substr($arg,0,1) eq '-';
     if $taking_options {
         option($arg); }
     else {
@@ -18,13 +19,16 @@ for @*ARGS -> $arg {
 
 if defined $invalid { say "invalid option: $invalid"; }
 elsif $help         { help(); }
-else                { Test::Harness::runtests( @files ) }
+else                { Test::Harness::runtests( $perl, @files ) }
+                    # passing $perl via %*ENV<HARNESS_PERL> would be better
+                    # but doesn't work (yet)
 
 sub option( $arg ) {
     given $arg {
         when '-h' | '--help'    { $help = True;    }
         when '-I'               { say "include not implemented!"; }
         when '-r' | '--recurse' { $recurse = True; }
+        when / '--perl='(.*) /  { $perl = ~ $0; }
         default                 { $invalid = $arg; }
     }
 }
@@ -52,12 +56,13 @@ sub file_or_dir( $arg ) {
 }
 
 sub help() {
-    say "usage: prove6 [options] [files/directories]";
+    say "usage: prove [options] [files/directories]";
     say "  -h  --help   display this help";
     say "  -r  --recurse  also test subdirectories";
 }
 
 # inefficient workaround - remove when Rakudo gets $name.:f or $name ~~ :f
+# fixed by masak++ in r35338 but that revision dies as documented in BUGS
 sub is_file( $name ) {
     my $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
     return ( substr( $result, 0, 1 ) eq '-' );
@@ -72,15 +77,12 @@ sub is_dir( $name ) {
 # inefficient workaround - remove when Rakudo gets a glob function
 sub glob( Str $pattern ) {
     my $tempfile = "/tmp/prove.tmp";
-    my $command = "ls -ld $pattern >$tempfile 2>/dev/null";
+    my $command = "ls -d $pattern >$tempfile 2>/dev/null";
     run $command;
-    my @filenames;
-    for slurp($tempfile).split("\n") -> $line {
-        my @field = $line.split( / \s+ / ); # will fail with spaces in filenames
-        if @field.elems > 7 {
-            push @filenames, @field[7];
-        }
-    }
+    my @filenames = slurp($tempfile).split("\n");
+    # $*ERR.say: "FILENAMES: {@filenames.perl}";
+    # slurp may append an empty line that is not in the file
+    if @filenames[@filenames.end] eq "" { pop @filenames; } # [*-1] in newer rakudo
     unlink $tempfile;
     return @filenames;
 }
@@ -108,17 +110,32 @@ shows the command format and options
 Runs a series of tests (usually named *.t in a t/ directory) and
 displays the results.
 
+=head1 TODO
+Replace is_file() and is_dir with :f and :d as added by masak++ in r35338.
+
 =head1 BUGS
-Rakudo acquired a bug on December 18th, 2008 in Parrot r34090.
-L<RT 62030|http://rt.perl.org/rt3/Public/Bug/Display.html?id=62030>
-causes C<prove> to not see the directory or file names to test on the
-command line.
-Until RT 62030 is fixed, C<prove> requires Parrot revisions less than
-r34090.
+In r35310 t/01-parser.t t/02-text.t and t/03-man.t began to die with
+"compiler returned NULL ByteCode '../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found. Check the type and
+number of the arguments" during .pir precompile of to/text.pm
+
+In a later revision (on or before r35338) another error began to occur:
+'Cannot write to a filehandle not opened for write'
+during parse_begin() in Pod/Parser.pm
+
+Therefore to test the Pod suite check out an older Parrot like this:
+cd parrot
+make realclean
+svn update --revision 35309
+perl Makefile.PL
+make
+make perl6
 
 =head1 SEE ALSO
 Run C<perldoc prove> to see the Perl 5 L<doc:prove> documentation.
 Perl 5 also has a L<doc:Test::Harness>.
+
+=head1 AUTHOR
+Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
 
 =end pod
 

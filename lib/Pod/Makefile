@@ -1,4 +1,4 @@
-# Makefile for Pod::Parser and Pod::to::whatever
+# Makefile for the Pod utilities Pod::Parser and Pod::to::whatever
 
 # Default paths assume that parrot/ and perl6-examples/ are in the same
 # parent directory. See Configuration variables below to override.
@@ -11,7 +11,7 @@
 # You may also skip lines containing any form of 'test' to save time,
 # but tests are valuable to confirm that the software is working.
 # Bugs appear in the source code occasionally, for help connect to the
-# IRC server irc.freenode.net and join the #perl6 channel.
+# IRC server irc.freenode.net and join the #perl6 channel, or see below.
 #
 # sudo apt-get update
 # sudo apt-get --yes install subversion
@@ -50,21 +50,36 @@
 
 # The above is minimal. See svn --help and git --help for more options.
 
+# Bugs:
+# These Pod tools may give errors running with certain revisions of
+# Rakudo. Rakudo and the Pod tools are undergoing rapid development.
+# The most recent successfully tested Rakudo revision is Parrot r34088.
+# If you have problems with a later revision of Rakudo, try something
+# like this to make a temporary older build and run the tests with it:
+# cd /tmp                          # or /home/masak/junk or whatever ;-)
+# svn checkout --revision 34088 https://svn.perl.org/parrot/trunk parrot
+# cd parrot
+# perl Makefile.PL
+# make
+# make perl6
+# cd ~/perl6-examples/lib/Pod
+# make clean
+# make PARROT_DIR=/tmp/parrot test # or whatever directory you used
+
 # Configuration variables:
 # override one or more of these to adapt to local parrot and perl6-examples directories
 # eg: make PARROT_DIR=/stuff/my/parrot test
 PARROT_DIR   = ../../../parrot
 RAKUDO_DIR   = $(PARROT_DIR)/languages/perl6
 RAKUDO_EXE   = $(RAKUDO_DIR)/perl6
-PERL6BIN     = ../../bin
 PERL6LIB     = ..
-# RAKUDO_DIR should become independent of PARROT_DIR when Parrot 1.0 is out.
+PERL6BIN     = ../../bin
+# in Parrot 1.0 RAKUDO_DIR will be outside of PARROT_DIR (fly the nest).
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
 .pm.pir: $(RAKUDO_EXE)
-#	PERL6LIB=`pwd`/.. $(RAKUDO_EXE) --target=pir --output=$@ $<
-	$(RAKUDO_EXE) --target=pir --output=$@ $<
+	PERL6LIB=`pwd`/.. $(RAKUDO_EXE) --target=pir --output=$@ $<
 
 pod-modules-precompiled: Parser.pir to/text.pir to/man.pir\
  $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir
@@ -76,7 +91,7 @@ $(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm $(RAKUDO_EXE)
 all: pod-modules-precompiled
 
 test: all $(RAKUDO_EXE)
-	$(PERL6BIN)/prove --recurse t
+	export PERL6LIB=$(PERL6LIB); $(RAKUDO_EXE) $(PERL6BIN)/prove --perl=$(RAKUDO_EXE) --recurse t
 
 clean:
 	@find . -name '*.pir'             -exec rm {} ';' # Parser.pir etc
@@ -89,7 +104,7 @@ help:
 	@echo ''
 	@echo 'You can make the following targets:'
 	@echo ''
-	@echo 'help  - this list. See also: head --lines=52 Makefile'
+	@echo 'help  - this list. See also: head --lines=67 Makefile'
 	@echo 'all   - compiles .pm files to .pir for faster loading'
 	@echo 'test  - runs prove on the t/*.t scripts'
 	@echo 'clean - removes .pir and editor backup files'

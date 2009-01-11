@@ -41,7 +41,7 @@ is( $output, $expected, 'p01-plain.pod simplest text' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p02-para.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "doc beg test
+$expected = "doc beg test
 blk beg pod DELIMITED version=>6
 blk beg para PARAGRAPH
 content Document p02-para.pod tests paragraphs.
@@ -59,7 +59,7 @@ content The fourth paragraph is declared in the delimited style.
 blk end para DELIMITED
 blk end pod DELIMITED
 doc end";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p02-para.pod paragraphs' );
 #$*ERR.say: "OUTPUT: $output";
 
@@ -153,7 +153,7 @@ is( $output, $expected, 'p05-pod5.pod legacy compatibility' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p07-basis.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "doc beg test
+$expected = "doc beg test
 blk beg pod DELIMITED version=>6
 blk beg para PARAGRAPH
 content Document p07-basis.pod tests the B formatting code.
@@ -198,12 +198,12 @@ content .
 blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p07-basis.pod format B<basic>' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = q[doc beg test
+$expected = q[doc beg test
 blk beg pod DELIMITED version=>6
 blk beg para PARAGRAPH
 content Document p08-code.pod tests the C formatting code.
@@ -249,12 +249,12 @@ content  also delimit.
 blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end];
-#my $output = $p.parse( $pod ).join("\n");
+#$output = $p.parse( $pod ).join("\n");
 #is( $output, $expected, 'p08-code.pod format C<code>' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "doc beg test
+$expected = "doc beg test
 blk beg pod DELIMITED version=>6
 blk beg para PARAGRAPH
 content Document p13-link.pod tests the L formatting code.
@@ -389,7 +389,7 @@ content ).
 blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p13-link.pod format L<link>' );
 #$*ERR.say: "OUTPUT:\n$output";
 

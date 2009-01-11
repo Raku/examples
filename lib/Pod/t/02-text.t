@@ -30,7 +30,7 @@ is( $output, $expected, "p01-plain.pod simplest text" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p02-para.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "    Document p02-para.pod tests paragraphs.
+$expected = "    Document p02-para.pod tests paragraphs.
 
     After the above one liner, this second paragraph has three lines to verify
     that all lines are processed together as one paragraph, and to check word
@@ -39,7 +39,7 @@ my $expected = "    Document p02-para.pod tests paragraphs.
     The third paragraph is declared in the abbreviated style.
 
     The fourth paragraph is declared in the delimited style.";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p02-para.pod paragraphs" );
 #$*ERR.say: "OUTPUT:\n$output";
 
@@ -56,7 +56,7 @@ is( $output, $expected, 'p03-head.pod =head1 and =head2' );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p04-code.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "NAME
+$expected = "NAME
     p04-code.pod - test processing of code (verbatim) paragraph
 
 SYNOPSIS
@@ -67,24 +67,24 @@ SYNOPSIS
 
     # code, delimited block style
     say 'second';";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p04-code.pod code paragraphs" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p05-pod5.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "    The =pod is a Perl 5 POD command.
+$expected = "    The =pod is a Perl 5 POD command.
 
 NAME
     p05-pod5.pod - Perl 5 Plain Old Document to test backward compatibility
 
 DESCRIPTION
     This document starts with a marker that indicates POD 5 and not POD 6.";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p05-pod5.pod legacy compatibility" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p07-basis.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "    Document p07-basis.pod tests the B formatting code. The B < > formatting
+$expected = "    Document p07-basis.pod tests the B formatting code. The B < > formatting
     code specifies that the contained text is the basis or focus of the
     surrounding text; that it is of fundamental significance. Such content
     would typically be rendered in a bold style or in < strong > ... < /strong
@@ -98,12 +98,12 @@ my $expected = "    Document p07-basis.pod tests the B formatting code. The B < 
 
     Fourth, a basis phrase that is so long that it should be word wrapped in
     whatever output format it is rendered.";
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p07-basis.pod format B<basis>" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = q[    Document p08-code.pod tests the C formatting code. The C < > formatting
+$expected = q[    Document p08-code.pod tests the C formatting code. The C < > formatting
     code specifies that the contained text is code; that is, something that
     might appear in a program or specification. Such content would typically be
     rendered in a fixed-width font (preferably a different font from that used
@@ -120,12 +120,12 @@ my $expected = q[    Document p08-code.pod tests the C formatting code. The C < 
     and AltGr-X.
 
     Multiple angles C<< $a = ( $b > $c );>> also delimit.];
-#my $output = $p.parse( $pod ).join("\n");
+#$output = $p.parse( $pod ).join("\n");
 #is( $output, $expected, "p08-code.pod format C<code>" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = q[    Document p13-link.pod tests the L formatting code. The L < > code is used
+$expected = q[    Document p13-link.pod tests the L formatting code. The L < > code is used
     to specify all kinds of links, filenames, citations, and cross-references
     (both internal and external).
 
@@ -160,7 +160,7 @@ SCHEMES
 
   isbn: and issn:
     The Perl Journal (1087-903X).];
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p13-link.pod format L<link>" );
 #$*ERR.say: "OUTPUT:\n$output";
 

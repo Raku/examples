@@ -114,7 +114,7 @@ is( $output, $expected, 'p05-pod5.pod legacy compatibility' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p07-basis.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = qq(((.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"
+$expected = qq(((.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"
 .nh
 .ad l
 .PP
@@ -133,12 +133,12 @@ Third, \\fBa basis phrase\\fR followed by \\fBanother basis phrase\\fR.
 Fourth, \\fBa basis phrase that is so long that it should be word wrapped in
 whatever output format it is rendered\\fR.
 .\\" test end.)));
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p07-basis.pod formatting B<>" );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = qq(((.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"
+$expected = qq(((.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"
 .nh
 .ad l
 .PP
@@ -180,7 +180,7 @@ To treat his chronic \\fIlexiphania\\fR the doctor prescribed
 .PP
 The Perl Journal (\\fI1087-903X\\fR).
 .\\" test end.)));
-my $output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p13-link.pod format L<link>" );
 #$*ERR.say: "OUTPUT:\n$output";
 
