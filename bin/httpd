@@ -1,0 +1,191 @@
+#!/usr/local/bin/perl6
+use HTTP::Daemon;
+defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
+
+# Executed in a child process of netcat to serve one page
+sub request {
+    my HTTP::Daemon $d .= new;
+    while my HTTP::Daemon::ClientConn $c = $d.accept {
+        while my HTTP::Request $r = $c.get_request {
+            my $method = $r.req_method; # dodgy to call it 'method' in Perl 6
+            if $r.req_method eq 'GET' and $r.url.path ne '/favicon.ico' {
+                # log this request to $*ERR
+                $*ERR.say: "GET {$r.url.path} {$r.header('User-Agent')}";
+                given $r.url.path {
+                    when / ^ '/'         $ / { home(      $c, $r ); }
+                    when / ^ '/dir/'     $ / { directory( $c, $r ); }
+                    when / ^ '/proc/'    $ / { processes( $c, $r ); }
+                    when / ^ '/browser/' $ / { browser(   $c, $r ); }
+                }
+            }
+            else {
+                $c.send_error('RC_FORBIDDEN');
+            }
+        }
+    }
+}
+
+# Executed as main parent process with an endless loop that re-starts
+# netcat after every page request.
+sub daemon {
+    my HTTP::Daemon $d .= new( host=>'10.31.13.60', port=>8888 );
+    $d.temporary_set_prog( './httpd' ); # lack of $*PROG workaround
+    say "Browse this Perl 6 (Rakudo) web server at {$d.url}";
+    $d.daemon();
+}
+
+# Make a Home page for the / url
+sub home( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    my $html = qq[{page_top($c,$r)}<p/>
+    
+Hello, Rakudo developers! You are visiting the first Rakudo based web
+server!
+I'm very young and small, and a bit slow, so please be gentle with me.<p/>
+
+My source code is in
+<a href="http://github.com/eric256/perl6-examples">perl6-examples</a>
+on 
+<a href="http://github.com">GitHub</a>.<p/>
+
+All you need are the
+<a href="http://github.com/eric256/perl6-examples/bin/httpd">bin/httpd</a>
+and
+<a href="http://github.com/eric256/perl6-examples/lib/HTTP/Daemon.pm">lib/HTTP/Daemon.pm</a>
+files from there, and the netcat utility in Unix or Linux.<p/>
+</body></html>];
+    $c.send_response( $html );
+}
+
+# Show a listing of the current directory
+sub directory( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    my $html = qq[{page_top($c,$r)}
+<pre>
+{qx('ls -l')}
+</pre>
+</body></html>];
+    $c.send_response( $html );
+}
+
+# Show a list of all processes on the server computer
+sub processes( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    my $html = qq[{page_top($c,$r)}
+<pre>
+{qx('ps -el')}
+</pre>
+</body></html>];
+    $c.send_response( $html );
+}
+
+# Show the HTTP header lines received from the browser
+sub browser( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    my $html = qq[{page_top($c,$r)}<p/>
+    This is what your browser sent to me in the HTTP header lines of its
+    request:<p/>
+    <table id="http_headers">\n];
+    for $r.header_field_names -> Str $name {
+        $html ~= qq[<tr><td class="browserinfo">$name</td><td class="browserinfo">{$r.header($name)}</td></tr>\n];
+    }  
+    $html ~= qq[</table>\n</body></html>];
+    $c.send_response( $html );
+}
+
+# Kind of template for the invariant part of the web page
+sub page_top( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    return qq[{start_html('Rakudo httpd '~$r.url.path)}
+<body>
+{banner}
+{nav_top($r)}
+];
+}
+
+# No need to have CGI.pm for one standard function
+sub start_html( Str $title ) {
+    my $html = qq[<html><head><title>$title</title>
+{stylesheet}
+</head>];
+    return $html;
+}
+
+# Web authors - your creativity goes here! http://www.csszengarden.com
+sub stylesheet {
+return q[<style>
+    h1                 { font-family: helvetica, sans-serif;
+                         font-weight:bold; }
+    table#nav_top      { border-style: solid; width: 100%;
+                         text-align: center; }
+    td.down            { background-color: gray; }
+    td.up              { background-color: lightgray; }
+    table#http_headers { border: solid black; }
+    td.browserinfo     { background-color: #f0f0f0;
+                         vertical-align: top; }
+</style>
+];
+}
+
+# Part of page_top, makes it easy to re-brand the site
+sub banner { return q[<h1>Rakudo web server</h1>
+];}
+
+# Simple menu for website main subdriectories
+sub nav_top( HTTP::Request $r ) {
+    my @menu = (
+        ['/',         'Home'     ],
+        ['/dir/',     'Directory'],
+        ['/proc/',    'Processes'],
+        ['/browser/', 'Browser'  ]
+    );
+    my Str $html = qq[<table id="nav_top">\n<tr>\n];
+    for @menu -> $refitem {
+        my $url  = $refitem[0];
+        my $name = $refitem[1];
+        my $class = $url eq $r.url.path ?? 'up' !! 'down';
+        $html ~= qq[<td class="$class"><a href="$url">$name</a></td>\n];
+    }
+    $html ~= qq[</table>\n];
+}
+
+# inefficient workaround - remove when Rakudo gets a qx operator
+sub qx( $command ) {
+    my $tempfile = "/tmp/rakudo_httpd_qx.tmp";
+    my $fullcommand = "$command >$tempfile";
+    run $fullcommand;
+    my $result = slurp( $tempfile );
+    unlink $tempfile;
+    return $result;
+}
+
+=begin pod
+
+=head1 NAME
+httpd - HyperText Transfer Protocol Daemon or Perl 6 (Rakudo) web server
+
+=head1 DESCRIPTION
+This program runs a simple web server within itself, so there is no need
+for Apache, IIS, mod_perl or other products. It must temporarily use the
+Unix L<man:netcat> utility for the TCP part, but as soon as Rakudo gets
+a more complete Input/Output library that dependency will be removed.
+The overhead of communicating through netcat is two process forks per
+browser request, plus the Perl 6 parser and compiler. The performance
+will definitely improve a lot when Rakudo takes over the I/O.
+
+This program uses L<doc:HTTP::Daemon> for the low level work. Thus the
+the programmer can concentrate on the web content, as this source code
+shows.
+
+=head1 COMPATIBILITY
+The API is designed to ease migration of similar Perl 5 based servers.
+It is completely original code written whilst referencing the Perl 5
+equivalent documentation.
+
+Network compatibility is approximately HTTP 1.0, but is not verified.
+
+=head1 BUGS
+This L<doc:httpd> may give errors running with certain revisions of
+Rakudo. They most recently worked together in Rakudo r35309, but r35366
+failed with a segmentation fault. Bug reports and suggestions are very
+welcome.
+
+=head1 AUTHOR
+Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
+
+=end pod
