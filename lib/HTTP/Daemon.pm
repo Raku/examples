@@ -12,11 +12,14 @@ class HTTP::Daemon
     has Bool $!accepted;
 
     method daemon {
+        my $rakudo = '';
+        if defined( %*ENV<RAKUDO_DIR> ) { $rakudo = %*ENV<RAKUDO_DIR> ~ '/perl6 '; }
+        $*ERR.say: "RAKUDO: $rakudo";
         $!running = Bool::True;
         while $!running {
             # my Str $command = "$*PROG --request"; # Rakudo needs this
-            my Str $command = "{$!temporary_prog} --request";
-            run( "netcat -c '$command' -l -s {$.host} -p {$.port}" );
+            my Str $command = "$rakudo{$!temporary_prog} --request";            
+            run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
             # spawning netcat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.
         }
@@ -32,11 +35,11 @@ class HTTP::Daemon
 
     # Waits to receive a browser request and then returns.
     # Because netcat exits after a single receive + transmit, this
-    # routine is altered from the normal endless loop. It sets a flag when
-    # it has returned one client connection and always returns undef
-    # when called a second time, because the netcat client connection
-    # will be gone. This is also why HTTP 1.1 chunked transfer cannot
-    # be done with netcat.
+    # routine is different than the normal endless loop. It sets a flag
+    # when it has returned one client connection and always returns
+    # undef when called a second time, because the netcat client
+    # connection will be gone.
+    # This is also why HTTP 1.1 chunked transfer cannot work with netcat.
     method accept {
         if defined $!accepted { return undef; }
         else {
@@ -86,27 +89,27 @@ class HTTP::Daemon::ClientConn {
         }
     }
 
-    # no plan here - just provide what the Perl 5 docs specify
-    method send_basic_header {
-        self.send_status_line;
-    }
-
-    multi method send_status_line(
-        Int $status?   = 200,
-        Str $message?  = 'OK',
-        Str $protocol? = 'HTTP/1.0'
-    ) { say "$protocol $status $message"; }
-
-    method send_crlf {
-        say "";
-    }
-
+    # the method servers should mainly use for normal page output
     method send_response( Str $content ) {
         self.send_basic_header;
         self.send_crlf;
         say $content;
     }
 
+    # provided for Perl 5 docs compatibility, send_response calls this
+    method send_basic_header { self.send_status_line; }
+
+    # normally not called directly, send_basic_header calls this
+    multi method send_status_line(
+        Int $status?   = 200,
+        Str $message?  = 'OK',
+        Str $protocol? = 'HTTP/1.0'
+    ) { say "$protocol $status $message"; }
+
+    # the internet newline is 0x0D 0x0A, "\n" would vary between OSes
+    method send_crlf { print "\x0D\x0A"; }
+
+    # untested so far
     method send_file_response( Str $filename ) {
         self.send_basic_header;
         self.send_crlf;
@@ -131,6 +134,7 @@ class HTTP::Daemon::ClientConn {
         self.send_error( $status, %message{$status} );
     }
 
+    # seems inefficient
     multi method send_error( Str $message ) {
         my %status = (
             'OK'                => 200,
@@ -195,6 +199,14 @@ grammar HTTP::headerline {
 
 =head1 NAME
 HTTP::Daemon - a (very) simple web server using Rakudo Perl 6
+
+=head1 SYNOPSIS
+
+ git clone git://github.com/eric256/perl6-examples.git
+ cd perl6-examples/lib/HTTP
+ make clean
+ make PARROT_DIR=/path/to/parrot-r34088 all
+ make PARROT_DIR=/path/to/parrot-r34088 run
 
 =head1 DESCRIPTION
 You can make your own web server using L<doc:HTTP::Daemon> without using
@@ -309,8 +321,8 @@ Remove temporary_set_prog() when rakudo gets $*PROG.
 
 =head1 BUGS
 This L<doc:HTTP::Daemon> may give errors running with certain revisions
-of Rakudo. They most recently working together in Rakudo r35309, but
-r35366 fails in a segmentation fault.
+of Rakudo. They most recently working together in Rakudo r34088,
+but r35449 failed with a segmentation fault.
 
 =head1 SEE ALSO
 L<man:netcat(1)> calls itself a TCP/IP swiss army knife.

@@ -28,7 +28,7 @@ sub request {
 # Executed as main parent process with an endless loop that re-starts
 # netcat after every page request.
 sub daemon {
-    my HTTP::Daemon $d .= new( host=>'10.31.13.60', port=>8888 );
+    my HTTP::Daemon $d .= new( host=>'127.0.0.1', port=>8888 );
     $d.temporary_set_prog( './httpd' ); # lack of $*PROG workaround
     say "Browse this Perl 6 (Rakudo) web server at {$d.url}";
     $d.daemon();
@@ -48,11 +48,13 @@ on
 <a href="http://github.com">GitHub</a>.<p/>
 
 All you need are the
-<a href="http://github.com/eric256/perl6-examples/bin/httpd">bin/httpd</a>
+<a href="http://github.com/eric256/perl6-examples/tree/master/bin/httpd">bin/httpd</a>,
+<a href="http://github.com/eric256/perl6-examples/tree/master/lib/HTTP/Daemon.pm">lib/HTTP/Daemon.pm</a>
 and
-<a href="http://github.com/eric256/perl6-examples/lib/HTTP/Daemon.pm">lib/HTTP/Daemon.pm</a>
-files from there, and the netcat utility in Unix or Linux.<p/>
-</body></html>];
+<a href="http://github.com/eric256/perl6-examples/tree/master/lib/HTTP/Makefile">lib/HTTP/Makefile</a>
+files from there, and the
+<a href="http://en.wikipedia.org/wiki/Netcat">netcat</a> utility in Unix or Linux.<p/>
+{page_bottom($c,$r)}];
     $c.send_response( $html );
 }
 
@@ -62,7 +64,7 @@ sub directory( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
 <pre>
 {qx('ls -l')}
 </pre>
-</body></html>];
+{page_bottom($c,$r)}];
     $c.send_response( $html );
 }
 
@@ -72,7 +74,7 @@ sub processes( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
 <pre>
 {qx('ps -el')}
 </pre>
-</body></html>];
+{page_bottom($c,$r)}];
     $c.send_response( $html );
 }
 
@@ -85,7 +87,7 @@ sub browser( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     for $r.header_field_names -> Str $name {
         $html ~= qq[<tr><td class="browserinfo">$name</td><td class="browserinfo">{$r.header($name)}</td></tr>\n];
     }  
-    $html ~= qq[</table>\n</body></html>];
+    $html ~= qq[</table>\n{page_bottom($c,$r)}];
     $c.send_response( $html );
 }
 
@@ -116,6 +118,8 @@ return q[<style>
     td.down            { background-color: gray; }
     td.up              { background-color: lightgray; }
     table#http_headers { border: solid black; }
+    div#bottom         { text-align: center; font-size: small;
+                         color: lightgray; }
     td.browserinfo     { background-color: #f0f0f0;
                          vertical-align: top; }
 </style>
@@ -144,6 +148,12 @@ sub nav_top( HTTP::Request $r ) {
     $html ~= qq[</table>\n];
 }
 
+# Kind of template for the invariant part of the web page
+sub page_bottom( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
+    return qq[<div id="bottom">Powered by Rakudo r{%*VM<config><revision>}</div>
+</body></html>];
+}
+
 # inefficient workaround - remove when Rakudo gets a qx operator
 sub qx( $command ) {
     my $tempfile = "/tmp/rakudo_httpd_qx.tmp";
@@ -159,31 +169,49 @@ sub qx( $command ) {
 =head1 NAME
 httpd - HyperText Transfer Protocol Daemon or Perl 6 (Rakudo) web server
 
+=head1 SYNOPSIS
+
+ git clone git://github.com/eric256/perl6-examples.git
+ cd perl6-examples/lib/HTTP
+ make clean
+ make PARROT_DIR=/path/to/parrot-r34088 all
+ make PARROT_DIR=/path/to/parrot-r34088 run
+
 =head1 DESCRIPTION
 This program runs a simple web server within itself, so there is no need
 for Apache, IIS, mod_perl or other products. It must temporarily use the
 Unix L<man:netcat> utility for the TCP part, but as soon as Rakudo gets
 a more complete Input/Output library that dependency will be removed.
 The overhead of communicating through netcat is two process forks per
-browser request, plus the Perl 6 parser and compiler. The performance
-will definitely improve a lot when Rakudo takes over the I/O.
+browser request, plus the Perl 6 parse and compile times.
+The performance will definitely improve a lot when Rakudo takes over the
+I/O.
 
 This program uses L<doc:HTTP::Daemon> for the low level work. Thus the
 the programmer can concentrate on the web content, as this source code
 shows.
 
+=head1 INSTALLATION
+The default settings assume that parrot and perl6-examples are installed
+in the same parent directory.
+For other configurations, read about PARROT_DIR in the Makefile.
+
 =head1 COMPATIBILITY
-The API is designed to ease migration of similar Perl 5 based servers.
-It is completely original code written whilst referencing the Perl 5
-equivalent documentation.
+The API is designed to help migrate similar Perl 5 based servers. It is
+completely original code written whilst referencing corresponding the
+Perl 5 equivalent documentation.
 
 Network compatibility is approximately HTTP 1.0, but is not verified.
 
 =head1 BUGS
+Bug reports and suggestions are very welcome.
+
 This L<doc:httpd> may give errors running with certain revisions of
-Rakudo. They most recently worked together in Rakudo r35309, but r35366
-failed with a segmentation fault. Bug reports and suggestions are very
-welcome.
+Rakudo. They most recently worked together in Rakudo r34088,
+but r35449 failed with a segmentation fault.
+
+=head1 SEE ALSO
+<doc:HTTP::Daemon>
 
 =head1 AUTHOR
 Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
