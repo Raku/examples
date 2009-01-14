@@ -96,7 +96,7 @@ class HTTP::Daemon::ClientConn {
         say $content;
     }
 
-    # provided for Perl 5 docs compatibility, send_response calls this
+    # provided for Perl 5 compatibility, send_response calls this
     method send_basic_header { self.send_status_line; }
 
     # normally not called directly, send_basic_header calls this

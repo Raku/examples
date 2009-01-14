@@ -37,13 +37,13 @@ run:
 	@# line in a separate child shell. The multiple commands must be
 	@# combined this way to share the _DIR and PERL6LIB variables.
 
-test:
+testrev:
 	svn update --revision $(PARROT_REV) $(PARROT_DIR)
-	cd $(PARROT_DIR) ;\
-	make realclean   ;\
-	perl Makefile.PL ;\
-	make             ;\
-	make perl6
+	$(MAKE) -C $(PARROT_DIR) realclean
+	cd $(PARROT_DIR) &&	perl Makefile.PL
+	$(MAKE) -C $(PARROT_DIR)
+	$(MAKE) -C $(PARROT_DIR) perl6
+	$(MAKE) run
 
 # Configuration variables:
 # Override one or more of these on the command line to adapt to local
@@ -67,12 +67,16 @@ help:
 	@echo ''
 	@echo 'You can make the following targets:'
 	@echo ''
-	@echo 'all   - [default] precompile .pm to .pir for faster loading'
-	@echo 'clean - removes .pir and editor backup files'
-	@echo 'run   - runs the httpd web server with or without precompile'
-	@echo 'help  - this text. See also: head --lines=14 Makefile'
+	@echo 'all     - default, precompile .pm to .pir for speed'
+	@echo 'clean   - removes .pir and editor backup files'
+	@echo 'run     - run httpd web server with or without precompile'
+	@echo 'testrev - revises Parrot to PARROT_REV and tries to run'
+	@echo 'help    - this text. See also: head --lines=14 Makefile'
 	@echo ''
-	@echo 'The default perl6 is from within the ../../../parrot directory.'
-	@echo 'Override with for example: make PARROT_DIR=/other/parrot run'
+	@echo 'PARROT_DIR: default ../../../parrot'
+	@echo 'Example: make PARROT_DIR=/other/parrot run'
+	@echo ''
+	@echo 'PARROT_REV: default HEAD (needs Subversion)'
+	@echo 'Example: make PARROT_REV=35000 testrev'
 	@echo ''
 
