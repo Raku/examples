@@ -10,7 +10,7 @@ sub request {
             my $method = $r.req_method; # dodgy to call it 'method' in Perl 6
             if $r.req_method eq 'GET' and $r.url.path ne '/favicon.ico' {
                 # log this request to $*ERR
-                $*ERR.say: "GET {$r.url.path} {$r.header('User-Agent')}";
+                $*ERR.say: "{hhmm} GET {$r.url.path} {$r.header('User-Agent')}";
                 given $r.url.path {
                     when / ^ '/'         $ / { home(      $c, $r ); }
                     when / ^ '/dir/'     $ / { directory( $c, $r ); }
@@ -38,9 +38,10 @@ sub daemon {
 sub home( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     my $html = qq[{page_top($c,$r)}<p/>
     
-Hello, Rakudo developers! You are visiting the first Rakudo based web
-server!
-I'm very young and small, and a bit slow, so please be gentle with me.<p/>
+Hello, Rakudo developers! You are visiting the first
+<a href="http://rakudo.org">Rakudo</a> based web server!
+I'm very young and small, and a bit slow, so please be gentle with me.
+<p/>
 
 My source code is in
 <a href="http://github.com/eric256/perl6-examples">perl6-examples</a>
@@ -52,8 +53,9 @@ All you need are the
 <a href="http://github.com/eric256/perl6-examples/tree/master/lib/HTTP/Daemon.pm">lib/HTTP/Daemon.pm</a>
 and
 <a href="http://github.com/eric256/perl6-examples/tree/master/lib/HTTP/Makefile">lib/HTTP/Makefile</a>
-files from there, and the
-<a href="http://en.wikipedia.org/wiki/Netcat">netcat</a> utility in Unix or Linux.<p/>
+files from there, the
+<a href="http://en.wikipedia.org/wiki/Netcat">netcat</a> utility in Unix
+or Linux, and of course <a href="http://parrot.org">Parrot</a>.<p/>
 {page_bottom($c,$r)}];
     $c.send_response( $html );
 }
@@ -85,7 +87,8 @@ sub browser( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     request:<p/>
     <table id="http_headers">\n];
     for $r.header_field_names -> Str $name {
-        $html ~= qq[<tr><td class="browserinfo">$name</td><td class="browserinfo">{$r.header($name)}</td></tr>\n];
+        $html ~= qq[<tr><td class="browserinfo">$name</td>];
+        $html ~= qq[<td class="browserinfo">{$r.header($name)}</td></tr>\n];
     }  
     $html ~= qq[</table>\n{page_bottom($c,$r)}];
     $c.send_response( $html );
@@ -93,7 +96,7 @@ sub browser( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
 
 # Kind of template for the invariant part of the web page
 sub page_top( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
-    return qq[{start_html('Rakudo httpd '~$r.url.path)}
+    return qq[{start_html('Rakudo HTTP::Daemon '~$r.url.path)}
 <body>
 {banner}
 {nav_top($r)}
@@ -110,7 +113,7 @@ sub start_html( Str $title ) {
 
 # Web authors - your creativity goes here! http://www.csszengarden.com
 sub stylesheet {
-return q[<style>
+return q[<style type=text/css>
     h1                 { font-family: helvetica, sans-serif;
                          font-weight:bold; }
     table#nav_top      { border-style: solid; width: 100%;
@@ -127,8 +130,7 @@ return q[<style>
 }
 
 # Part of page_top, makes it easy to re-brand the site
-sub banner { return q[<h1>Rakudo web server</h1>
-];}
+sub banner { return qq[<h1>Rakudo HTTP::Daemon web server</h1>\n];}
 
 # Simple menu for website main subdriectories
 sub nav_top( HTTP::Request $r ) {
@@ -152,6 +154,15 @@ sub nav_top( HTTP::Request $r ) {
 sub page_bottom( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     return qq[<div id="bottom">Powered by Rakudo r{%*VM<config><revision>}</div>
 </body></html>];
+}
+
+# give the current time in hh:mm format
+sub hhmm {
+    my $t = int(time);
+    my $m = int( $t / 60 ) % 60;
+    my $h = int( $t / 3600 ) % 24;
+    my $hhmm = "{$h.fmt('%02d')}:{$m.fmt('%02d')}";
+    return $hhmm;
 }
 
 # inefficient workaround - remove when Rakudo gets a qx operator
@@ -198,7 +209,7 @@ For other configurations, read about PARROT_DIR in the Makefile.
 
 =head1 COMPATIBILITY
 The API is designed to help migrate similar Perl 5 based servers. It is
-completely original code written whilst referencing corresponding the
+completely original code written whilst referencing the corresponding
 Perl 5 equivalent documentation.
 
 Network compatibility is approximately HTTP 1.0, but is not verified.
@@ -207,8 +218,8 @@ Network compatibility is approximately HTTP 1.0, but is not verified.
 Bug reports and suggestions are very welcome.
 
 This L<doc:httpd> may give errors running with certain revisions of
-Rakudo. They most recently worked together in Rakudo r34088,
-but r35449 failed with a segmentation fault.
+Rakudo. They most recently worked together in Rakudo r35200,
+but from r35300 to r35477 fail with a segmentation fault.
 
 =head1 SEE ALSO
 <doc:HTTP::Daemon>
