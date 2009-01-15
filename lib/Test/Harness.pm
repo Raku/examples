@@ -7,20 +7,25 @@ class Test::Harness {
         my Int $total_pass = 0;
         my Int $total_fail = 0;
         my Int $total_file = 0;
-        my $time_started = time();
+        my Int $time_started = int time;
         my Int $max_namechars = 1;
         for @filenames -> $name {
             if $name.chars > $max_namechars { $max_namechars = $name.chars; }
         }
-        for @filenames -> $name {
+#       for @filenames -> $name {
+        for @filenames -> Str $name {
+#           $*ERR.say: "NAME: $name";
             print "$name{'.'x($max_namechars+4-$name.chars)}";
+            # run a single test as a child process and collect the output
             my @results = qx( "$perl $name" ).split("\n");
+#           $*ERR.say: "RESULT: {@results.join('|')}";
             # remove blank lines at the end of qx output (usually two)
             my Int $topindex = @results.end;
             while @results[$topindex] eq '' { @results.pop; $topindex--; }
             # the first line must announce the number of planned tests
             if @results[0] ~~ / <digit>+ <dot> <dot> ( <digit>+ ) / {
-                my Int $tests_planned = $0;
+                my Int $tests_planned = int ~ $0;
+#               my     $tests_planned =     $0;
                 my Int $tests_passed  = 0;
                 my Int $tests_failed  = 0;
                 my Int $tests_done    = @results.end; # first line says 1..count
@@ -34,7 +39,9 @@ class Test::Harness {
                     }
                 }
                 my @failures;
-                for 1 .. $tests_done -> $test_number {
+#               for 1 .. $tests_done ->     $test_number {
+                for 1 .. $tests_done -> Int $test_number {
+#                   $*ERR.say: "TEST: $test_number";
                     if @results[$test_number] ~~ / ^ ok <sp> (<digit>+) / {
                         if $0 == $test_number { $tests_passed++; }
                         else {
@@ -54,8 +61,10 @@ class Test::Harness {
                     say "# Looks like you failed $tests_failed out of $tests_planned";
                     for @failures { .say; }
                 }
-                $total_test = $total_test + $tests_planned;
-                $total_pass = $total_pass + $tests_passed;
+#               $*ERR.say: "PLANNED: {$tests_planned.WHAT}";
+                $total_test +=     $tests_planned;
+#               $total_test += int $tests_planned;
+                $total_pass += $tests_passed;
                 $total_fail += $tests_failed;
                 $total_file++;
             }
@@ -63,16 +72,17 @@ class Test::Harness {
         }
         if $total_fail == 0 { say "All tests successful"; }
         else { say "$total_fail failed, $total_pass passed"; }
-        my $realtime = int( time() - $time_started );
-        say "Files=$total_file, Tests=$total_test, $realtime wallclock secs";
+        my Int $realtime = int time - $time_started;
+        print "Files=$total_file, Tests=$total_test, ";
+        say "$realtime wallclock secs r{%*VM<config><revision>}";
     }
 
     # inefficient workaround - remove when Rakudo gets a qx operator
     sub qx( $command ) {
-        my $tempfile = "/tmp/rakudo_qx.tmp";
-        my $fullcommand = "$command >$tempfile";
+        my Str $tempfile = "/tmp/rakudo_qx.tmp";
+        my Str $fullcommand = "$command >$tempfile";
         run $fullcommand;
-        my $result = slurp( $tempfile );
+        my Str $result = slurp( $tempfile );
         unlink $tempfile;
         return $result;
     }
@@ -95,9 +105,8 @@ Pass $perl parameter via %*ENV<HARNESS_PERL> to be compatible with the
 Perl 5 interface.
 
 =head1 BUGS
-The command line in L<doc:#SYNOPSIS> began to fail with Rakudo r34090
-because @*ARGS stopped being populated from the command line if -e was
-used. Fortunately using this module via L<doc:prove> still works.
+35309 Type mismatch in assignment
+35568 Could not find non-existent sub !keyword_class
 
 =head1 SEE ALSO
 L<doc:prove>

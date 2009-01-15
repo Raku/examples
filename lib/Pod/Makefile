@@ -53,60 +53,77 @@
 # Bugs:
 # These Pod tools may give errors running with certain revisions of
 # Rakudo. Rakudo and the Pod tools are undergoing rapid development.
-# The most recent successfully tested Rakudo revision is Parrot r34088.
-# If you have problems with a later revision of Rakudo, try something
-# like this to make a temporary older build and run the tests with it:
-# cd /tmp                          # or /home/masak/junk or whatever ;-)
-# svn checkout --revision 34088 https://svn.perl.org/parrot/trunk parrot
-# cd parrot
-# perl Makefile.PL
-# make
-# make perl6
-# cd ~/perl6-examples/lib/Pod
-# make clean
-# make PARROT_DIR=/tmp/parrot test # or whatever directory you used
+# The most recent successfully tested Rakudo revision is Parrot r35300.
+# If you have problems with a later revision of Rakudo, try bisecting:
+#     make PARROT_REV=35300 testrev              # or make testrev
 
 # Configuration variables:
 # override one or more of these to adapt to local parrot and perl6-examples directories
 # eg: make PARROT_DIR=/stuff/my/parrot test
 PARROT_DIR   = ../../../parrot
-RAKUDO_DIR   = $(PARROT_DIR)/languages/perl6
-RAKUDO_EXE   = $(RAKUDO_DIR)/perl6
+PARROT       = $(PARROT_DIR)/parrot
+PERL6_DIR    = $(PARROT_DIR)/languages/perl6
+# in Parrot 1.0 PERL6_DIR will be outside of PARROT_DIR (fly the nest).
+PERL6_PBC    = $(PERL6_DIR)/perl6.pbc
+#PERL6       = $(PERL6_DIR)/perl6     # causes segfaults
+PERL6        = $(PARROT) $(PERL6_PBC)
+PARROT_REV   = HEAD
+EXAMPLES_DIR = ../..
+EXAMPLES_BIN = $(EXAMPLES_DIR)/bin
 PERL6LIB     = ..
-PERL6BIN     = ../../bin
-# in Parrot 1.0 RAKUDO_DIR will be outside of PARROT_DIR (fly the nest).
+
+all: precompile
+
+precompile: Parser.pir to/text.pir to/man.pir\
+ $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
-.pm.pir: $(RAKUDO_EXE)
-	PERL6LIB=`pwd`/.. $(RAKUDO_EXE) --target=pir --output=$@ $<
-
-pod-modules-precompiled: Parser.pir to/text.pir to/man.pir\
- $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir
+.pm.pir: $(PARROT)
+	@echo 'precompile $< -> $@'
+	@export PERL6LIB=`pwd`/.. ;	$(PERL6) --target=pir --output=$@ $<
 
 # avoid duplication - precompile the Test module from the Parrot source
-$(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm $(RAKUDO_EXE)
-	$(RAKUDO_EXE) --target=pir --output=$(PERL6LIB)/Test.pir $(RAKUDO_DIR)/Test.pm
+$(PERL6LIB)/Test.pir: $(PERL6_DIR)/Test.pm $(PARROT)
+	@echo 'precompile $(PERL6_DIR)/Test.pm -> $(PERL6LIB)/Test.pir'
+	@$(PERL6) --target=pir --output=$(PERL6LIB)/Test.pir $(PERL6_DIR)/Test.pm
 
-all: pod-modules-precompiled
+test: all $(PARROT)
+	@echo 'prove --perl="$(PERL6)" --recurse t'
+	@export PERL6LIB=$(PERL6LIB); $(PERL6) $(EXAMPLES_BIN)/prove --perl='$(PERL6)' --recurse t
 
-test: all $(RAKUDO_EXE)
-	export PERL6LIB=$(PERL6LIB); $(RAKUDO_EXE) $(PERL6BIN)/prove --perl=$(RAKUDO_EXE) --recurse t
+testrev:
+	rm -rf /tmp/parrot
+	svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
+	cd /tmp/parrot; perl Makefile.PL
+	$(MAKE) --silent -C /tmp/parrot
+	$(MAKE) --silent -C /tmp/parrot perl6
+	$(MAKE) --silent clean
+	$(MAKE) --silent precompile
+	$(MAKE) --silent PARROT_DIR=/tmp/parrot test
+	@echo 'Parrot/Rakudo r$(PARROT_REV)'
 
 clean:
 	@find . -name '*.pir'             -exec rm {} ';' # Parser.pir etc
 	@find .. -name 'Test.pir'         -exec rm {} ';'
 	@find ../Test -name 'Harness.pir' -exec rm {} ';'
-	@find . -name '*~'                -exec rm {} ';' # editor backups
+	@find ../.. -name '*~'            -exec rm {} ';' # editor backups
 
 # List the targets to be made by users
 help:
 	@echo ''
 	@echo 'You can make the following targets:'
 	@echo ''
-	@echo 'help  - this list. See also: head --lines=67 Makefile'
-	@echo 'all   - compiles .pm files to .pir for faster loading'
-	@echo 'test  - runs prove on the t/*.t scripts'
-	@echo 'clean - removes .pir and editor backup files'
+	@echo 'help    - this list. See also: head --lines=67 Makefile'
+	@echo 'all     - compiles .pm files to .pir for faster loading'
+	@echo 'test    - runs prove on the t/*.t scripts'
+	@echo 'testrev - build and test PARROT_REV=nnnnn in /tmp/parrot'
+	@echo 'clean   - removes .pir and editor backup files'
+	@echo ''
+	@echo 'PARROT_DIR: default ../../../parrot'
+	@echo 'Example: make PARROT_DIR=/other/parrot test'
+	@echo ''
+	@echo 'PARROT_REV: default HEAD'
+	@echo 'Example: make PARROT_REV=35300 testrev     # or make testrev'
 	@echo ''
 

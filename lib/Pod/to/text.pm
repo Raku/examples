@@ -17,24 +17,7 @@ class Pod::to::text is Pod::Parser
         $!newline_before_para = Bool::False;
     }
 
-    multi method blk_beg( PodBlock $podblock ) {
-        my Str $typename = $podblock.typename;
-        given $typename {
-            when 'pod'  { $!newline_before_para = Bool::False; }
-            when 'head' { if $!newline_before_head { self.emit(''); }
-                          my $level = int $podblock.config<level>;
-                          $!margin_L = ($level - 1) * 2; }
-            when 'para' { if $!newline_before_para { self.emit(''); }
-                          $!newline_before_head = Bool::True;
-                          $!margin_L = 4; }
-            when 'code' { if $!newline_before_para { self.emit(''); }
-                          $!newline_before_head = Bool::True;
-                          $!wrap_enable = Bool::False;
-                          $!margin_L = 4; }
-        }
-    }
-
-    multi method blk_beg( $refblock ) {
+    method blk_beg( $refblock ) {
         my Str $typename = $refblock<typename>;
         given $typename {
             when 'pod'  { $!newline_before_para = Bool::False; }
@@ -142,6 +125,7 @@ utility.
 L<RT#62030|http://rt.perl.org/rt3/Public/Bug/Display.html?id=62030> after
 r34090 Rakudo -e ignores command line arguments for @*ARGS,
 so the L<#SYNOPSIS> shell example above does not get the file name.
+r35568: .pm -> .pir Lexical 'self' not found
 
 =head1 SEE ALSO
 L<doc:Pod::Parser>

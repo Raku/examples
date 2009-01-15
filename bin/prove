@@ -1,14 +1,14 @@
 #!/usr/local/bin/perl6
 use Test::Harness;
 
-my $invalid;
-my $help = False;
-my $recurse = False;
-my $perl = 'perl6';    # unless overridden by --perl
+my Str  $invalid;
+my Bool $help    = Bool::False;
+my Bool $recurse = Bool::False;
+my Str  $perl    = 'perl6';    # unless overridden by --perl
 my @files;
 my @inc;
-my $taking_options = True;
-for @*ARGS -> $arg {
+my Bool $taking_options = Bool::True;
+for @*ARGS -> Str $arg {
     $taking_options = $taking_options && substr($arg,0,1) eq '-';
     if $taking_options {
         option($arg); }
@@ -23,30 +23,30 @@ else                { Test::Harness::runtests( $perl, @files ) }
                     # passing $perl via %*ENV<HARNESS_PERL> would be better
                     # but doesn't work (yet)
 
-sub option( $arg ) {
+sub option( Str $arg ) {
     given $arg {
-        when '-h' | '--help'    { $help = True;    }
+        when '-h' | '--help'    { $help = Bool::True; }
         when '-I'               { say "include not implemented!"; }
-        when '-r' | '--recurse' { $recurse = True; }
+        when '-r' | '--recurse' { $recurse = Bool::True; }
         when / '--perl='(.*) /  { $perl = ~ $0; }
         default                 { $invalid = $arg; }
     }
 }
 
-sub file_or_dir( $arg ) {
+sub file_or_dir( Str $arg ) {
     if   is_file( $arg ) { push @files, $arg; }
     elsif is_dir( $arg ) {
-        my $dirname = $arg;
+        my Str $dirname = $arg;
 	    if substr( $arg, -1, 1 ) eq '/' { # does directory name end with '/'?
 	        $dirname = substr( $arg, 0, $arg.chars - 1); # remove the '/'
 	    }
         my @tests = glob( "$dirname/*.t" );
         push @files, @tests;
-        # my @tests_rakudo = glob( "$dirname/*.rakudo" );
-        # push @files, @tests_rakudo;
+        # my @tests_rakudo = glob( "$dirname/*.rakudo" ); # fudging
+        # push @files, @tests_rakudo;                     # fudging
         if $recurse {
             my @names = glob( "$dirname/*" );
-            for @names -> $name {
+            for @names -> Str $name {
                 if is_dir( $name ) {
                     file_or_dir( $name );
                 }
@@ -57,27 +57,28 @@ sub file_or_dir( $arg ) {
 
 sub help() {
     say "usage: prove [options] [files/directories]";
-    say "  -h  --help   display this help";
-    say "  -r  --recurse  also test subdirectories";
+    say "      --perl=/path/to/perl6  forces a perl6 version";
+    say "  -r  --recurse              also test subdirectories";
+    say "  -h  --help                 display this help";
 }
 
 # inefficient workaround - remove when Rakudo gets $name.:f or $name ~~ :f
 # fixed by masak++ in r35338 but that revision dies as documented in BUGS
-sub is_file( $name ) {
-    my $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
+sub is_file( Str $name ) {
+    my Str $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
     return ( substr( $result, 0, 1 ) eq '-' );
 }
 
 # inefficient workaround - remove when Rakudo gets $name.:d or $name ~~ :d
-sub is_dir( $name ) {
-    my $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
+sub is_dir( Str $name ) {
+    my Str $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
     return ( substr( $result, 0, 1 ) eq 'd' );
 }
 
 # inefficient workaround - remove when Rakudo gets a glob function
 sub glob( Str $pattern ) {
-    my $tempfile = "/tmp/prove.tmp";
-    my $command = "ls -d $pattern >$tempfile 2>/dev/null";
+    my Str $tempfile = "/tmp/prove.tmp";
+    my Str $command = "ls -d $pattern >$tempfile 2>/dev/null";
     run $command;
     my @filenames = slurp($tempfile).split("\n");
     # $*ERR.say: "FILENAMES: {@filenames.perl}";
@@ -111,10 +112,11 @@ Runs a series of tests (usually named *.t in a t/ directory) and
 displays the results.
 
 =head1 TODO
-Replace is_file() and is_dir with :f and :d as added by masak++ in r35338.
+Replace is_file() and is_dir() with :f and :d as added by masak++ in r35338.
 
 =head1 BUGS
-In r35310 t/01-parser.t t/02-text.t and t/03-man.t began to die with
+35309 good
+35310 t/01-parser.t t/02-text.t and t/03-man.t began to die with
 "compiler returned NULL ByteCode '../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found. Check the type and
 number of the arguments" during .pir precompile of to/text.pm
 
@@ -122,13 +124,8 @@ In a later revision (on or before r35338) another error began to occur:
 'Cannot write to a filehandle not opened for write'
 during parse_begin() in Pod/Parser.pm
 
-Therefore to test the Pod suite check out an older Parrot like this:
-cd parrot
-make realclean
-svn update --revision 35309
-perl Makefile.PL
-make
-make perl6
+ To test the Pod suite check out an older Parrot like this:
+ make PARROT_REV=35300 testrev
 
 =head1 SEE ALSO
 Run C<perldoc prove> to see the Perl 5 L<doc:prove> documentation.
