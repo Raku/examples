@@ -7,10 +7,10 @@ class Pod::to::man is Pod::Parser
     has Str  $!docname;         # file name with .pl or .pm removed
     has Str  $!prefix;          # characters that must be output before content
     has Bool $!undertext;       # true when line above has text
-    has      $!manfile;         # file handle for output
+    has IO   $!manfile;         # file handle for output
 
     # used by perldoc to redirect output from $*OUT to a temp file.
-    method set_manfile( $file ) { $!manfile = $file; }
+    method set_manfile( IO $file ) { $!manfile = $file; }
 
     method doc_beg( Str $name ) {
         $!margin_R       = 75;
@@ -27,33 +27,10 @@ class Pod::to::man is Pod::Parser
         self.emit( ".ad l" ); # adjust left (ragged right margin)
     }
 
-    multi method blk_beg( PodBlock $podblock ) {
+    method blk_beg( PodBlock $podblock ) {
+#   method blk_beg( Hash $refblock ) {
+#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
-        self.buf_flush;
-        $!needspace = Bool::False;
-        given $typename {
-            when 'code' {
-                if $!undertext { self.emit( '.sp' ); }   # sp downwards
-                self.emit( '.nf' );                      # no-fill mode
-            }
-            when 'head' {
-                my $level = $podblock.config<level>;
-                if $level == 1 { $!prefix ~= '.SH '; } # section heading
-                else { $!prefix ~= '.SS '; }        # section subheading
-            }
-            when 'para' {
-                if not $!codeblock { self.emit( '.PP' ); }  # paragraph
-            }
-            when 'pod'     { }
-            when 'comment' { }
-            default {
-                self.emit( ".\\\" unhandled block typename=$typename" );
-            }
-        }
-    }
-
-    multi method blk_beg( $refblock ) {
-        my Str $typename = $refblock<typename>;
         self.buf_flush;
         $!needspace = Bool::False;
         given $typename {
@@ -62,7 +39,8 @@ class Pod::to::man is Pod::Parser
                 self.emit( '.nf' );                       # no-fill mode
             }
             when 'head' {
-                my $level = $refblock<config><level>;
+                my Int $level = int $podblock.config<level>;
+#               my Int $level = int $refblock<config><level>;
                 if $level == 1 { $!prefix ~= '.SH '; } # section heading
                 else { $!prefix ~= '.SS '; }        # section subheading
             }
@@ -77,18 +55,24 @@ class Pod::to::man is Pod::Parser
         }
     }
 
-    method fmt_beg( $refblock ) {
-        my $typename = $refblock<typename>;
-        $!needspace=Bool::False;
+    method fmt_beg( PodBlock $podblock ) {
+#   method fmt_beg( Hash $refblock ) {
+#       my Str $typename = $refblock<typename>;
+        my Str $typename = $podblock.typename;
+        $!needspace = Bool::False;
         given $typename {                   # S26 meaning  render
             when 'B' { $!prefix ~= '\fB'; } # basis        bold
             when 'D' { $!prefix ~= '\fI'; } # definition   italic
             when 'L' {                      # link         link
-                       my Str $alt      = ~ $refblock<config><alternate>;
-                       my Str $scheme   = ~ $refblock<config><scheme>;
-                       my Str $external = ~ $refblock<config><external>;
-                       my Str $internal = ~ $refblock<config><internal>;
-                       my $link;
+                       my Str $alt      = ~ $podblock.config<alternate>;
+                       my Str $scheme   = ~ $podblock.config<scheme>;
+                       my Str $external = ~ $podblock.config<external>;
+                       my Str $internal = ~ $podblock.config<internal>;
+#                      my Str $alt      = ~ $refblock<config><alternate>;
+#                      my Str $scheme   = ~ $refblock<config><scheme>;
+#                      my Str $external = ~ $refblock<config><external>;
+#                      my Str $internal = ~ $refblock<config><internal>;
+                       my Str $link;
                        if $external ne '' and $internal ne '' {
                            $link = "$external#$internal";
                        }
@@ -114,15 +98,18 @@ class Pod::to::man is Pod::Parser
         }
     }
 
-    method content( $reftopblock, Str $content ) {
+    method content( PodBlock $podblock, Str $content ) {
+#   method content( Hash $reftopblock, Str $content ) {
         self.buf_print( $!prefix ~ $content );
         if $!codeblock { self.buf_flush; }
         $!prefix    = '';
         $!undertext = Bool::True;
     }
 
-    method fmt_end( $refblock ) {
-        my Str $typename = $refblock<typename>;
+    method fmt_end( PodBlock $podblock ) {
+#   method fmt_end( Hash $refblock ) {
+#       my Str $typename = $refblock<typename>;
+        my Str $typename = $podblock.typename;
         $!buf_out_enable = Bool::True;
         given $typename {
             when 'B' { $!needspace=Bool::False; self.buf_print('\fR'); $!needspace=Bool::False; } # basis
@@ -134,8 +121,10 @@ class Pod::to::man is Pod::Parser
         }
     }
 
-    method blk_end( $refblock ) {
-        my $typename = $refblock<typename>;
+    method blk_end( PodBlock $podblock ) {
+#   method blk_end( Hash $refblock ) {
+#       my Str $typename = $refblock<typename>;
+        my Str $typename = $podblock.typename;
         self.buf_flush;
         given $typename {
             when 'code' {
@@ -168,6 +157,7 @@ class Pod::to::man is Pod::Parser
         return sprintf( "%4d-%02d-%02d", $year+1970, $month+1, $day+1 );
     }
 }
+
 =begin pod
 
 =head1 NAME
@@ -233,6 +223,7 @@ currently an approximation of today's date.
 L<RT#62030|http://rt.perl.org/rt3/Public/Bug/Display.html?id=62030> after
 r34090 Rakudo -e ignores command line arguments for @*ARGS,
 so the L<#SYNOPSIS> shell example above does not get the file name.
+Fixed in ??
 
 =head1 SEE ALSO
 L<doc:Pod::Parser>, L<S26|http://perlcabal.org/syn/S26.html> (Perl 6 POD).

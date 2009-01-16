@@ -200,7 +200,7 @@ blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p07-basis.pod format B<basic>' );
-#$*ERR.say: "OUTPUT: $output";
+ $*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = q[doc beg test

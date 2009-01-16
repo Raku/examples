@@ -105,8 +105,13 @@ Pass $perl parameter via %*ENV<HARNESS_PERL> to be compatible with the
 Perl 5 interface.
 
 =head1 BUGS
+precompile .pm -> .pir
+35400-35568 good
+
+use Harness.pir (from prove)
+35300 good
 35309 Type mismatch in assignment
-35568 Could not find non-existent sub !keyword_class
+35400-35568 Could not find non-existent sub !keyword_class
 
 =head1 SEE ALSO
 L<doc:prove>

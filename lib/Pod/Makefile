@@ -56,6 +56,10 @@
 # The most recent successfully tested Rakudo revision is Parrot r35300.
 # If you have problems with a later revision of Rakudo, try bisecting:
 #     make PARROT_REV=35300 testrev              # or make testrev
+# 35309 good 35568 Lexical 'self' not found 
+
+# RT#62376 notes that perl6 --target=pir fails and parrot perl6.pbc
+# --target=pir works. This Makefile has switched to the latter.
 
 # Configuration variables:
 # override one or more of these to adapt to local parrot and perl6-examples directories
