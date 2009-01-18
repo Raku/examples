@@ -1,24 +1,34 @@
 use v6;
 
-my $number  = (1..50).pick(1).shift;
-my $guesses = 0;
+our $number  = (1..50).pick(1).shift;
+our $guesses = 0;
 
-loop {
-  print "Enter a number between 1 and 50: ";
+sub prompt(Str $text) {
+  print $text;
+  return =$*IN; # it would be nice to do something like Int $input = =$*IN;
+}
 
-  my $guess = =$*IN;
+sub is_valid($guess) {
+    unless $guess ~~ /^ \d+ $/ && 1 <= $guess <= 50 {
+      warn "Invalid input ($guess).";
+      return;
+    }
+    return $guess;
+}
 
-  unless $guess ~~ /^ \d+ $/ && 1 <= $guess <= 50 {
-    warn "Invalid input ($guess).";
-    next;
+sub MAIN() {
+  loop {
+    my $guess = prompt "Enter a number between 1 and 50: ";
+
+    next unless is_valid $guess;
+
+    $guesses++;
+
+    if $guess == $number {
+      say "Got it in $guesses guess(es)!";
+      last;
+    }
+    elsif $guess  > $number { say 'Too high' }
+    elsif $guess  < $number { say 'Too low'  }
   }
-
-  $guesses++;
-
-  if $guess == $number {
-    say "Got it in $guesses guess(es)!";
-    last;
-  }
-  elsif $guess  > $number { say 'Too high' }
-  elsif $guess  < $number { say 'Too low'  }
 }
