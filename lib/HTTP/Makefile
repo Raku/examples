@@ -37,13 +37,24 @@ run:
 	@# line in a separate child shell. The multiple commands must be
 	@# combined this way to share the _DIR and PERL6LIB variables.
 
+#testrev:
+#	svn update --revision $(PARROT_REV) $(PARROT_DIR)
+#	$(MAKE) -C $(PARROT_DIR) realclean
+#	cd $(PARROT_DIR) &&	perl Makefile.PL
+#	$(MAKE) -C $(PARROT_DIR)
+#	$(MAKE) -C $(PARROT_DIR) perl6
+#	$(MAKE) run
+
 testrev:
-	svn update --revision $(PARROT_REV) $(PARROT_DIR)
-	$(MAKE) -C $(PARROT_DIR) realclean
-	cd $(PARROT_DIR) &&	perl Makefile.PL
-	$(MAKE) -C $(PARROT_DIR)
-	$(MAKE) -C $(PARROT_DIR) perl6
-	$(MAKE) run
+	rm -rf /tmp/parrot
+	svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
+	cd /tmp/parrot; perl Makefile.PL
+	$(MAKE) --no-print-directory -C /tmp/parrot
+	$(MAKE) --no-print-directory -C /tmp/parrot perl6
+	@/tmp/parrot/languages/perl6/perl6 -e 'say "Parrot/Rakudo r{%*VM<config><revision>}"'
+	@$(MAKE) --no-print-directory clean
+	@$(MAKE) --no-print-directory PARROT_DIR=/tmp/parrot precompile
+	$(MAKE) --no-print-directory PARROT_DIR=/tmp/parrot run
 
 # Configuration variables:
 # Override one or more of these on the command line to adapt to local
@@ -60,7 +71,8 @@ PERL6LIB   = ..
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
 .pm.pir: $(RAKUDO_EXE)
-	$(RAKUDO_EXE) --target=pir --output=$@ $<
+	@echo 'precompile $< -> $@'
+	@$(RAKUDO_EXE) --target=pir --output=$@ $<
 
 # List the targets to be made by users
 help:
@@ -70,7 +82,7 @@ help:
 	@echo 'all     - default, precompile .pm to .pir for speed'
 	@echo 'clean   - removes .pir and editor backup files'
 	@echo 'run     - run httpd web server with or without precompile'
-	@echo 'testrev - revises Parrot to PARROT_REV and tries to run'
+	@echo 'testrev - builds temporary Parrot r$(PARROT_REV) and attempts run'
 	@echo 'help    - this text. See also: head --lines=14 Makefile'
 	@echo ''
 	@echo 'PARROT_DIR: default ../../../parrot'

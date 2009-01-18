@@ -3,50 +3,32 @@
 # Normally each class would be in a separate file, but they were
 # combined here to be able to start using them easily.
 
-class HTTP::Daemon
-{
-    has Str  $.host;
-    has Int  $.port;
-    has Bool $!running;
-    has Str  $!temporary_prog;
-    has Bool $!accepted;
+# only a subset emulation of the Perl 5 HTTP::Headers design - no tuits!
 
-    method daemon {
-        my $rakudo = '';
-        if defined( %*ENV<RAKUDO_DIR> ) { $rakudo = %*ENV<RAKUDO_DIR> ~ '/perl6 '; }
-        $*ERR.say: "RAKUDO: $rakudo";
-        $!running = Bool::True;
-        while $!running {
-            # my Str $command = "$*PROG --request"; # Rakudo needs this
-            my Str $command = "$rakudo{$!temporary_prog} --request";            
-            run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
-            # spawning netcat here is a temporary measure until
-            # Rakudo gets socket(), listen(), accept() etc.
-        }
+class HTTP::Headers {
+    has %!header_values;    
+    method header( Str $fieldname ) {
+        return %!header_values{ $fieldname };
     }
-
-    # This works around the lack of a $*PROG variable. See daemon above.
-    method temporary_set_prog( Str $prog ) {
-        $!temporary_prog = $prog;
+    method header_field_names {
+        return %!header_values.keys;
     }
+}
 
-    # Where to find this server - used for messages, logs, hyperlinks
-    method url { return "http://{$.host}:{$.port}/"; }
+class HTTP::Request {
+    has HTTP::Headers $!headers;
+    has HTTP::url     $!req_url;
+    has Str           $.uurl;
+    has Str           $.req_method  is rw;
 
-    # Waits to receive a browser request and then returns.
-    # Because netcat exits after a single receive + transmit, this
-    # routine is different than the normal endless loop. It sets a flag
-    # when it has returned one client connection and always returns
-    # undef when called a second time, because the netcat client
-    # connection will be gone.
-    # This is also why HTTP 1.1 chunked transfer cannot work with netcat.
-    method accept {
-        if defined $!accepted { return undef; }
-        else {
-            $!accepted = Bool::True;
-            my HTTP::Daemon::ClientConn $clientconn .= new;
-            return $clientconn;
-        }
+    method url {
+        return $!req_url;
+    }
+    method header( Str $fieldname ) {
+        return $!headers.header( $fieldname );
+    }
+    method header_field_names {
+        return $!headers.header_field_names;
     }
 }
 
@@ -83,7 +65,8 @@ class HTTP::Daemon::ClientConn {
             } until $headerline eq ""; # blank line terminates
             return HTTP::Request.new(
                 req_url    => HTTP::url.new( path=>@fields[1] ),
-                headers    => HTTP::Headers.new( header_values => %headers ),
+                headers    => HTTP::Headers.new(
+                                  header_values => %headers ),
                 req_method => @fields[0]
             );
         }
@@ -154,35 +137,7 @@ class HTTP::Daemon::ClientConn {
     }
 }
 
-class HTTP::Request {
-    has HTTP::Headers $!headers;
-    has HTTP::url     $!req_url;
-    has Str           $.uurl;
-    has Str           $.req_method  is rw;
-
-    method url {
-        return $!req_url;
-    }
-    method header( Str $fieldname ) {
-        return $!headers.header( $fieldname );
-    }
-    method header_field_names {
-        return $!headers.header_field_names;
-    }
-}
-
 class HTTP::Response {
-}
-
-# an only partial emulation of the Perl 5 HTTP::Headers design - no tuits!
-class HTTP::Headers {
-    has %!header_values;    
-    method header( Str $fieldname ) {
-        return %!header_values{ $fieldname };
-    }
-    method header_field_names {
-        return %!header_values.keys;
-    }
 }
 
 class HTTP::url {
@@ -195,6 +150,55 @@ grammar HTTP::headerline {
     regex value { .+ } # or should that be .* to allow an "empty" value?
 }
 
+class HTTP::Daemon
+{
+    has Str  $.host;
+    has Int  $.port;
+    has Bool $!running;
+    has Str  $!temporary_prog;
+    has Bool $!accepted;
+
+    method daemon {
+        my $rakudo = '';
+        if defined( %*ENV<RAKUDO_DIR> ) {
+            $rakudo = %*ENV<RAKUDO_DIR> ~ '/perl6 ';
+        }
+        $*ERR.say: "RAKUDO: $rakudo";
+        $!running = Bool::True;
+        while $!running {
+            # my Str $command = "$*PROG --request"; # Rakudo needs this
+            my Str $command = "$rakudo{$!temporary_prog} --request";            
+            run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
+            # spawning netcat here is a temporary measure until
+            # Rakudo gets socket(), listen(), accept() etc.
+        }
+    }
+
+    # This works around the lack of a $*PROG variable. See daemon above.
+    method temporary_set_prog( Str $prog ) {
+        $!temporary_prog = $prog;
+    }
+
+    # Where to find this server - used for messages, logs, hyperlinks
+    method url { return "http://{$.host}:{$.port}/"; }
+
+    # accept() waits for a browser connection and request and then
+    # returns. Because netcat exits after a single receive + transmit,
+    # this routine is different than the normal endless loop. It sets a
+    # flag when it has returned one client connection and always returns
+    # undef when called a second time, because by then the netcat client
+    # connection will be gone.
+    # This is also why netcat cannot do HTTP 1.1 chunked transfer.
+    method accept {
+        if defined $!accepted { return undef; }
+        else {
+            $!accepted = Bool::True;
+            my HTTP::Daemon::ClientConn $clientconn .= new;
+            return $clientconn;
+        }
+    }
+}
+
 =begin pod
 
 =head1 NAME
@@ -204,9 +208,8 @@ HTTP::Daemon - a (very) simple web server using Rakudo Perl 6
 
  git clone git://github.com/eric256/perl6-examples.git
  cd perl6-examples/lib/HTTP
- make clean
- make PARROT_DIR=/path/to/parrot-r34088 all
- make PARROT_DIR=/path/to/parrot-r34088 run
+ make PARROT_REV=34088 testrev
+ # make PARROT_DIR=/tmp/parrot run
 
 =head1 DESCRIPTION
 You can make your own web server using L<doc:HTTP::Daemon> without using
@@ -320,11 +323,16 @@ On Debian based Linux distributions, this should set it up:
 Remove temporary_set_prog() when rakudo gets $*PROG.
 
 =head1 BUGS
-This L<doc:HTTP::Daemon> may give errors running with certain revisions
-of Rakudo. They most recently working together in Rakudo r34088,
-but r35449 failed with a segmentation fault.
+This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions. Bisecting:
+Debian x86-32: 35309 good, 35310 compiler returned NULL ByteCode
+               35400 Cannot write to a filehandle not opened for write
+             >=35500 Lexical 'self' not found
+Debian x86-64: 34088 good
+Tested with "make PARROT_REV=# testrev" where #=34309 etc. for newest PARROT_REV=HEAD
 
 =head1 SEE ALSO
+The Makefile comments describe additional testing options.
+
 L<man:netcat(1)> calls itself a TCP/IP swiss army knife.
 
 HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>) describes all methods
