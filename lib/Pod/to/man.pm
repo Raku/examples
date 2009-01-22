@@ -28,8 +28,6 @@ class Pod::to::man is Pod::Parser
     }
 
     method blk_beg( PodBlock $podblock ) {
-#   method blk_beg( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         self.buf_flush;
         $!needspace = Bool::False;
@@ -40,7 +38,6 @@ class Pod::to::man is Pod::Parser
             }
             when 'head' {
                 my Int $level = int $podblock.config<level>;
-#               my Int $level = int $refblock<config><level>;
                 if $level == 1 { $!prefix ~= '.SH '; } # section heading
                 else { $!prefix ~= '.SS '; }        # section subheading
             }
@@ -56,8 +53,6 @@ class Pod::to::man is Pod::Parser
     }
 
     method fmt_beg( PodBlock $podblock ) {
-#   method fmt_beg( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         $!needspace = Bool::False;
         given $typename {                   # S26 meaning  render
@@ -68,10 +63,6 @@ class Pod::to::man is Pod::Parser
                        my Str $scheme   = ~ $podblock.config<scheme>;
                        my Str $external = ~ $podblock.config<external>;
                        my Str $internal = ~ $podblock.config<internal>;
-#                      my Str $alt      = ~ $refblock<config><alternate>;
-#                      my Str $scheme   = ~ $refblock<config><scheme>;
-#                      my Str $external = ~ $refblock<config><external>;
-#                      my Str $internal = ~ $refblock<config><internal>;
                        my Str $link;
                        if $external ne '' and $internal ne '' {
                            $link = "$external#$internal";
@@ -99,7 +90,6 @@ class Pod::to::man is Pod::Parser
     }
 
     method content( PodBlock $podblock, Str $content ) {
-#   method content( Hash $reftopblock, Str $content ) {
         self.buf_print( $!prefix ~ $content );
         if $!codeblock { self.buf_flush; }
         $!prefix    = '';
@@ -107,8 +97,6 @@ class Pod::to::man is Pod::Parser
     }
 
     method fmt_end( PodBlock $podblock ) {
-#   method fmt_end( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         $!buf_out_enable = Bool::True;
         given $typename {
@@ -122,8 +110,6 @@ class Pod::to::man is Pod::Parser
     }
 
     method blk_end( PodBlock $podblock ) {
-#   method blk_end( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         self.buf_flush;
         given $typename {

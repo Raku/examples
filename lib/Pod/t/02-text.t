@@ -21,11 +21,11 @@ class TestParser is Pod::to::text {
 
 plan 7;
 
-my $p = TestParser.new; $p.parse_file( '/dev/null' ); # warming up
+my TestParser $p .= new; $p.parse_file( '/dev/null' ); # warming up
 
-my $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "    document 01 plain text";
-my $output = $p.parse( $pod ).join("\n");
+my Str $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
+my Str $expected = "    document 01 plain text";
+my Str $output = $p.parse( $pod ).join("\n");
 is( $output, $expected, "p01-plain.pod simplest text" );
 #$*ERR.say: "OUTPUT:\n$output";
 

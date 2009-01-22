@@ -6,6 +6,17 @@
 # statements that are almost duplicated are in transition, for example
 # @.blocks -> @!podblocks and $line -> $!line.
 
+class PodBlock {
+    has $.typename is rw;
+    has $.style    is rw;
+    has %.config   is rw;
+    method perl {
+        my Str $typename = defined $.typename ?? $.typename !! 'undef';
+        my Str $style    = defined $.style    ?? $.style    !! 'undef';
+        return "( 'typename'=>'$typename', 'style'=>'$style' )";
+    }
+};
+
 class Pod::Parser {
 
     has PodBlock @!podblocks;       # stack of nested Pod blocks
@@ -125,9 +136,7 @@ class Pod::Parser {
         # (hopefully not premature) optimization: format only if contains < or > chars.
         $!line = $line;
         my Int $topindex = @!podblocks.end;
-        if $!line ~~ /[<lt>|<gt>|'«'|'»']/ {self.parse_formatting;}
-#       else {self.content(@.blocks[$topindex],$line);}  # [*-1]
-#       else {self.content(@.blocks[$topindex],$!line);} # [*-1]
+        if $!line ~~ / [<lt>|<gt>|'«'|'»'] / {self.parse_formatting;}
         else {self.content(@!podblocks[$topindex],$line);}  # [*-1]
 #       else {self.content(@!podblocks[$topindex],$!line);} # [*-1]
     }
@@ -154,7 +163,6 @@ class Pod::Parser {
                 my Int $topindex = @!podblocks.end;
                 my Hash $reftopblock = @.blocks[$topindex]; # [*-1]
                 my PodBlock $topblock = @!podblocks[$topindex]; # [*-1]
-#               my          $topblock = @!podblocks[$topindex]; # [*-1]
 #               $*ERR.say: "TOPBLOCK: {$topblock.WHAT}";
                 if $topblock.style eq 'FORMATTING_CODE' {
                     # Found an open formatting code. Get its delimiters.
@@ -187,7 +195,6 @@ class Pod::Parser {
                         'style'    => 'FORMATTING_CODE',
                         'config'   => { 'angle_L' => ~ $new_angle_L, 'angle_R' => ~ $new_angle_R }
                     );
-#                   my PodBlock $formatcodeblock = PodBlock.new(
                     my PodBlock $formatcodeblock .= new(
                         typename => ~ $format_begin,
                         style    => 'FORMATTING_CODE',
@@ -201,13 +208,11 @@ class Pod::Parser {
                         # There is text before the new formatting code
                         my Str $before = $content.substr( 0, $format_begin_pos );
                         my Int $topindex = @!podblocks.end;
-#                       self.content( @.blocks[$topindex], $before ); # [*-1]
                         self.content( @!podblocks[$topindex], $before ); # [*-1]
                     }
                     @.blocks.push( \%formatblock );
                     @!podblocks.push( $formatcodeblock );
                     self.fmt_beg( $formatcodeblock );
-#                   self.fmt_beg( %formatblock );
                     $chars_to_delete = $format_end_pos;
                     $output_buffer = "";
                 }
@@ -218,7 +223,6 @@ class Pod::Parser {
                     'style'    => 'FORMATTING_CODE',
                     'config'   => { 'angle_L' => $angle_L, 'angle_R' => $angle_R }
                 );
-#               my PodBlock $formatcodeblock = PodBlock.new(
                 my PodBlock $formatcodeblock .= new(
                     typename => "NESTED_ANGLE_BRACKET",
                     style    => 'FORMATTING_CODE',
@@ -232,8 +236,6 @@ class Pod::Parser {
             }
             elsif $angle_R_pos < $format_begin_pos and $angle_R_pos < $angle_L_pos {
                 my Hash $reftopblock = pop @.blocks;
-#               $*ERR.say: "REFTOPBLOCK: " ~ $reftopblock.perl;
-                # my PodBlock $topblock
                 my PodBlock $topblock = pop @!podblocks;
 #               $*ERR.say: "TOPBLOCK:" ~ $topblock.perl;
                 my Str $typename = $topblock.typename;
@@ -243,17 +245,14 @@ class Pod::Parser {
                 else {
                     $output_buffer = $content.substr( 0, $angle_R_pos );
                     my Int $topindex = @!podblocks.end;
-#                   self.content( @.blocks[$topindex], $output_buffer ); # [*-1]
                     self.content( @!podblocks[$topindex], $output_buffer ); # [*-1]
                     $output_buffer = "";
                     self.fmt_end( $topblock );
-#                   self.fmt_end( $reftopblock );
                 }        
                 $chars_to_delete = $angle_R_pos + $angle_R.chars;
             }
             if $output_buffer.chars > 0 { # TODO: if $output_buffer.chars
                 my Int $topindex = @!podblocks.end;
-#               self.content( $.blocks[$topindex], $output_buffer ); # [*-1]
                 self.content( @!podblocks[$topindex], $output_buffer ); # [*-1]
             }
             $content = $content.substr( $chars_to_delete );
@@ -310,7 +309,6 @@ class Pod::Parser {
     method parse_end(       $match ) { # from parse_directive
         self.set_context( 'AMBIENT' );
         my Hash $reftopblock = pop @.blocks;
-        # my PodBlock $topblock = pop @!podblocks;
         my PodBlock $topblock = pop @!podblocks;
         my Str $poptypename = $topblock.typename;
         my Str $endtypename = ~ $match<typename>;
@@ -320,7 +318,6 @@ class Pod::Parser {
         }
         if $endtypename eq 'code' { $!codeblock = Bool::False; $!wrap_enable = Bool::True; }
         self.blk_end( $topblock );
-#       self.blk_end( $reftopblock );
     }
 
 #   method parse_for( Match $match ) { # from parse_directive
@@ -356,9 +353,7 @@ class Pod::Parser {
         self.set_context( 'POD_CONTENT' ); # this one won't add a PARAGRAPH block
         $!line = ~ $match<heading>;
         self.parse_formatting;
-#       self.blk_end( pop @.blocks ); # the 'head'
         self.blk_end( pop @!podblocks ); # the 'head'
-#       pop @!podblocks;
         pop @.blocks;
         self.set_context( 'AMBIENT' );
     }
@@ -389,14 +384,12 @@ class Pod::Parser {
     method parse_p5cut { # from parse_directive
         self.set_context( 'AMBIENT' );
         my Hash $reftopblock = pop @.blocks;
-        # my PodBlock $topblock = pop @!podblocks;
         my PodBlock $topblock = pop @!podblocks;
         if ( $topblock.typename ne 'pod' ) {
             # TODO: change to non fatal diagnostic
             die "=cut expected pod, got {$reftopblock<typename>}";
         }
         self.blk_end( $topblock );
-#       self.blk_end( $reftopblock );
     }
 
     method set_context( Str $new_context ) {
@@ -410,7 +403,6 @@ class Pod::Parser {
                 when 'BLOCK_DECLARATION' {
                     my Int $topindex = @!podblocks.end;
                     self.blk_beg( @!podblocks[$topindex] ); # [*-1]
-#                   self.blk_beg( @.blocks[$topindex] ); # [*-1]
                 }
                 when 'POD_CONTENT' {
                     my Int $topindex = @!podblocks.end;
@@ -420,7 +412,6 @@ class Pod::Parser {
                         # my PodBlock $top = pop @!podblocks;
                         my PodBlock $top = pop @!podblocks;
                         self.blk_end( $top );
-#                       self.blk_end( $reftopblock );
                     }
                 }
                 default {
@@ -433,7 +424,6 @@ class Pod::Parser {
                     if @!podblocks {
                         my Int $topindex = @!podblocks.end;
                         if @!podblocks[$topindex].style ne 'DELIMITED' { # ABBREVIATED or POD_BLOCK
-#                           self.blk_end( @.blocks[$topindex] ); # [*-1]
                             self.blk_end( @!podblocks[$topindex] ); # [*-1]
                         }
                     }
@@ -469,7 +459,6 @@ class Pod::Parser {
                             config   => { }
                         );
                         self.blk_beg( $newpodblock );
-#                       self.blk_beg( %newblock );
                         @.blocks.push( \%newblock );
                         @!podblocks.push( $newpodblock );
                     }
@@ -522,46 +511,23 @@ class Pod::Parser {
     }
 
     sub config( PodBlock $b ) {
-#   sub config( Hash $b ) {
-#       my @keys = $b<config>.keys.sort; my Str $r = '';
         my @keys = $b.config.keys.sort; my Str $r = '';
         for @keys -> Str $key {
-#           $r ~= " $key=>{$b<config>{$key}}";
             $r ~= " $key=>{$b.config{$key}}";
         }
         return $r;
     }
     # override these in your subclass to make a custom translator
-    # ($b or $f for $refblock, $t for $text).
     method doc_beg(Str $name){ self.emit("doc beg $name"); }
     method doc_end           { self.emit("doc end"); }
-
-#   method blk_beg(Hash $b)       { self.emit("blk beg {$b<typename>} {$b<style>}"~config($b));}
-#   method blk_end(Hash $b)       { self.emit("blk end {$b<typename>} {$b<style>}"); }
-#   method fmt_beg(Hash $f)       { self.emit("fmt beg {$f<typename>}<..."~config($f)); }
-#   method fmt_end(Hash $f)       { self.emit("fmt end  {$f<typename>}...>"); }
-#   method content(Hash $b,Str $t){ self.emit("content $t"); }
     method blk_beg(PodBlock $b) { self.emit("blk beg {$b.typename} {$b.style}"~config($b));}
     method blk_end(PodBlock $b) { self.emit("blk end {$b.typename} {$b.style}"); }
     method fmt_beg(PodBlock $f) { self.emit("fmt beg {$f.typename}<..."~config($f)); }
     method fmt_end(PodBlock $f) { self.emit("fmt end  {$f.typename}...>"); }
     method content(PodBlock $b,Str $t){ self.emit("content $t"); }
-
     method ambient(Str $t)   { self.emit("ambient $t"); }
     method warning(Str $t)   { self.emit("warning $t"); }
 }
-
-class PodBlock {
-    has $.typename is rw;
-    has $.style    is rw;
-    has %.config   is rw;
-    method perl {
-        my Str $typename = defined $.typename ?? $.typename !! 'undef';
-        my Str $style    = defined $.style    ?? $.style    !! 'undef';
-        return "( 'typename'=>'$typename', 'style'=>'$style' )";
-    }
-};
-
 
 grammar Pod6 {
     regex directive { ^ '=' <[a..zA..Z]> }; # TODO: rewrite parse_line
@@ -662,11 +628,11 @@ use Pod::Parser;
 class Pod::to::xxx is Pod::Parser {
     method doc_beg($name){ self.emit("doc beg $name"); }
     method doc_end       { self.emit("doc end"); }
-    method blk_beg($b)   { self.emit("blk beg {$b<typename>} {$b<style>}"~config($b));}
-    method blk_end($b)   { self.emit("blk end {$b<typename>} {$b<style>}"); }
-    method fmt_beg($f)   { self.emit("fmt beg {$f<typename>}<..."~config($f)); }
-    method fmt_end($f)   { self.emit("fmt end  {$f<typename>}...>"); }
-    method content($b,$t){ self.emit("content $t"); }
+    method blk_beg(PodBlock $b) { self.emit("blk beg {$b.typename} {$b.style}"~config($b));}
+    method blk_end(PodBlock $b) { self.emit("blk end {$b.typename} {$b.style}"); }
+    method fmt_beg(PodBlock $f) { self.emit("fmt beg {$f.typename}<..."~config($f)); }
+    method fmt_end(PodBlock $f) { self.emit("fmt end  {$f.typename}...>"); }
+    method content(PodBlock $b,Str $t){ self.emit("content $t"); }
     method ambient($t)   { self.emit("ambient $t"); }
     method warning($t)   { self.emit("warning $t"); }
 }
@@ -752,42 +718,6 @@ V<verbatim does not process formatting codes> W<undefined>
 X<index entry|entry1,subentry1;entry2,subentry2> Y<undefined>
 Z<zero-width comment never rendered>
 
-=head1 BUGS
-Test: perl6 -e 'use Pod::Parser; Pod::Parser.new.parse_file(@*ARGS[0]);' Pod/Parser.pm
-35300 good
-35000 Segmentation fault
-35309 Type mismatch in assignment
-35400 ?
-35477 - 35500 Segmentation fault. no output at all.
-35568-35571 Could not find non-existent sub !keyword_class
-
-precompile .pm -> .pir
-35568
-
-Test: perl6 t/01-parser.t
-34088-35309 good
-35310 bad
-35400 ?
-35477 Method '!create' not found for invocant of class ''
-35568-35571 Lexical 'self' not found (precompile text.pm -> text.pir)
-35609 Segmentation fault
-
-Formatting codes at the beginning or end of POD lines are not padded
-with a space when word wrapped.
-
-Formatting code L<Pod::to::whatever> parses as scheme=>Pod :(
-
-Nested formatting codes cause internal errors.
-
-Enums are not (yet) available for properties. A fails, B passes and C fails:
-=begin code
- class A {                 has $.e is rw; method m {   $.e = 1; say $.e; }; }; A.m; # fails
- class B { enum E <X Y Z>;                method m { my $e = Y; say  $e; }; }; B.m; # works
- class C { enum E <X Y Z>; has $.e is rw; method m {   $.e = Y; say $.e; }; }; C.m; # fails
-=end code
-
-Long or complex documents randomly suffer segmentation faults.
-
 =head1 TODO
 Complete support for the full =marker set.
 
@@ -813,7 +743,33 @@ Or.. make a pod6checker with helpful diagnostics.
 
 Verify parser and emitters on Pugs, Mildew, Elf etc too.
 
+=head1 BUGS
+Formatting codes at the beginning or end of POD lines are not padded
+with a space when word wrapped.
+
+Formatting code L<Pod::to::whatever> parses as scheme=>Pod :(
+
+Nested formatting codes cause internal errors.
+
+Enums are not (yet) available for properties. A fails, B passes and C fails:
+=begin code
+ class A {                 has $.e is rw; method m {   $.e = 1; say $.e; }; }; A.m; # fails
+ class B { enum E <X Y Z>;                method m { my $e = Y; say  $e; }; }; B.m; # works
+ class C { enum E <X Y Z>; has $.e is rw; method m {   $.e = Y; say $.e; }; }; C.m; # fails
+=end code
+
+Long or complex documents randomly suffer segmentation faults.
+
+=head2 Rakudo dependencies
+Bisect with 'make PARROT_REV=35309 testrev' and so on, see Makefile.
+35308 good
+35309 01-parser.t fails 1/7 (segfault), 02-text.t and 03-man.t all pass
+35338 Method 'postcircumfix:{ }' not found for invocant of class 'Failure'
+35568 Unable to parse multisig; couldn't find final ')' at line 264, near ", PodBlock"
+35875 Unable to parse multisig; couldn't find final ')' at line 264, near ", PodBlock"
+
 =head1 SEE ALSO
+The Makefile in the Pod::Parser directory for build and test procedures.
 L<http://perlcabal.org/syn/S26.html>
 L<doc:Pod::to::man> L<doc:Pod::to::xhtml> L<doc:Pod::to::wordcount>
 L<doc:perl6pod> L<doc:perl6style> The Perl 5 L<Pod::Parser>.

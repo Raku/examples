@@ -18,14 +18,11 @@ class Pod::to::text is Pod::Parser
     }
 
     method blk_beg( PodBlock $podblock ) {
-#   method blk_beg( Hash     $refblock ) {
         my Str $typename = $podblock.typename;
-#       my Str $typename = $refblock<typename>;
         given $typename {
             when 'pod'  { $!newline_before_para = Bool::False; }
             when 'head' { if $!newline_before_head { self.emit(''); }
                           my Int $level = int $podblock.config<level>;
-#                         my Int $level = int $refblock<config><level>;
                           $!margin_L = ($level - 1) * 2; }
             when 'para' { if $!newline_before_para { self.emit(''); }
                           $!newline_before_head = Bool::True;
@@ -38,17 +35,11 @@ class Pod::to::text is Pod::Parser
     }
 
     method fmt_beg( PodBlock $podblock ) {
-#   method fmt_beg( Hash     $refblock ) {
         my Str $typename = $podblock.typename;
-#       my Str $typename = $refblock<typename>;
         given $typename {
             when 'B' { $!needspace = Bool::False; } # basis
             when 'D' { $!needspace = Bool::False; } # definition
             when 'L' {                              # link
-#               my Str $alt      = ~ $refblock<config><alternate>;
-#               my Str $scheme   = ~ $refblock<config><scheme>;
-#               my Str $external = ~ $refblock<config><external>;
-#               my Str $internal = ~ $refblock<config><internal>;
                 my Str $alt      = ~ $podblock.config<alternate>;
                 my Str $scheme   = ~ $podblock.config<scheme>;
                 my Str $external = ~ $podblock.config<external>;
@@ -71,14 +62,11 @@ class Pod::to::text is Pod::Parser
     }
 
     method content( PodBlock $podblock, Str $content ) {
-#   method content( Hash $reftopblock, Str $content ) {
         self.buf_print( $content );
         if $!codeblock { self.buf_flush; }
     }
 
     method fmt_end( PodBlock $podblock ) {
-#   method fmt_end( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         given $typename {
             when 'B' { $!needspace = Bool::False; } # basis
@@ -89,8 +77,6 @@ class Pod::to::text is Pod::Parser
     }
 
     method blk_end( PodBlock $podblock ) {
-#   method blk_end( Hash $refblock ) {
-#       my Str $typename = $refblock<typename>;
         my Str $typename = $podblock.typename;
         self.buf_flush;
         given $typename {

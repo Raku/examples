@@ -12,20 +12,17 @@ class Test::Harness {
         for @filenames -> $name {
             if $name.chars > $max_namechars { $max_namechars = $name.chars; }
         }
-#       for @filenames -> $name {
         for @filenames -> Str $name {
 #           $*ERR.say: "NAME: $name";
             print "$name{'.'x($max_namechars+4-$name.chars)}";
             # run a single test as a child process and collect the output
             my @results = qx( "$perl $name" ).split("\n");
-#           $*ERR.say: "RESULT: {@results.join('|')}";
-            # remove blank lines at the end of qx output (usually two)
-            my Int $topindex = @results.end;
-            while @results[$topindex] eq '' { @results.pop; $topindex--; }
+            @results = grep( { $_ ~~ / ^ <![#]> / }, @results ); # remove comments
+            @results = grep( { $_ ~~ / ^ \S.* $ / }, @results ); # remove blank lines
+            # say "RESULT: {@results.join('|')}";
             # the first line must announce the number of planned tests
             if @results[0] ~~ / <digit>+ <dot> <dot> ( <digit>+ ) / {
                 my Int $tests_planned = int ~ $0;
-#               my     $tests_planned =     $0;
                 my Int $tests_passed  = 0;
                 my Int $tests_failed  = 0;
                 my Int $tests_done    = @results.end; # first line says 1..count
@@ -39,7 +36,6 @@ class Test::Harness {
                     }
                 }
                 my @failures;
-#               for 1 .. $tests_done ->     $test_number {
                 for 1 .. $tests_done -> Int $test_number {
 #                   $*ERR.say: "TEST: $test_number";
                     if @results[$test_number] ~~ / ^ ok <sp> (<digit>+) / {
@@ -62,8 +58,7 @@ class Test::Harness {
                     for @failures { .say; }
                 }
 #               $*ERR.say: "PLANNED: {$tests_planned.WHAT}";
-                $total_test +=     $tests_planned;
-#               $total_test += int $tests_planned;
+                $total_test += $tests_planned;
                 $total_pass += $tests_passed;
                 $total_fail += $tests_failed;
                 $total_file++;

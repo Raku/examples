@@ -57,6 +57,15 @@
 # If you have problems with a later revision of Rakudo, try bisecting:
 #     make PARROT_REV=35300 testrev              # or make testrev
 # 35309 good 35568 Lexical 'self' not found 
+# Bisect results of 'make PARROT_REV=nnnnn testrev':
+# Debian x86-32 35300 good
+# Debian x86-64 35309 good
+#               35310 precompile to/text.pm -> to/text.pir: compiler returned NULL ByteCode '/home/martin/perl6-examples/lib/Pod/../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found.
+#         35311-35338 Method ':_block2435' not found for invocant of class 'PodBlock' current instr.: 'parrot;Perl6Pair;ACCEPTS'
+#               35360 in prove/Test::Harness - Parameter type check failed in call to _block91
+#               35400 Method ':_block2435' not found for invocant of class 'PodBlock' current instr.: 'parrot;Perl6Pair;ACCEPTS'
+#         35500-35760 cannot test - does not build perl6.pbc
+#         35770-35824 Unable to parse multisig; couldn't find final ')' at line 234, near ", PodBlock"
 
 # RT#62376 notes that perl6 --target=pir fails and parrot perl6.pbc
 # --target=pir works. This Makefile has switched to the latter.
@@ -96,22 +105,40 @@ test: all $(PARROT)
 	@echo 'prove --perl="$(PERL6)" --recurse t'
 	@export PERL6LIB=$(PERL6LIB); $(PERL6) $(EXAMPLES_BIN)/prove --perl='$(PERL6)' --recurse t
 
+# in 'make PARROT_DIR=/path/to/parrot PARROT_REV=12345 test' the default
+# or overridden values interact as follows:
+#   PARROT_DIR   PARROT_REV   action
+#   omitted      omitted      uses whatever parrot you have under ../../..
+#   omitted      set          does svn update --revision nnnnn, then test
+#   set          omitted      uses whatever parrot you have in /set/
+#   set          set          does svn checkout --revision nnnnn in /set/
+ifeq "$(PARROT_DIR)" "../../../parrot"
+PARROT_TMP_DIR=/tmp/parrot
+else
+PARROT_TMP_DIR=$(PARROT_DIR)
+endif
 testrev:
+ifeq "$(PARROT_DIR)" "$(PARROT_TMP_DIR)"
+	@echo "You specified $(PARROT_TMP_DIR), so svn update there (faster)"
+	time svn update --revision $(PARROT_REV) $(PARROT_TMP_DIR)
+else
+	@echo "You did not specify PARROT_DIR, so make a new default /tmp/parrot (slower)"
 	rm -rf /tmp/parrot
-	svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
-	cd /tmp/parrot; perl Makefile.PL
-	$(MAKE) --silent -C /tmp/parrot
-	$(MAKE) --silent -C /tmp/parrot perl6
-	$(MAKE) --silent clean
-	$(MAKE) --silent precompile
-	$(MAKE) --silent PARROT_DIR=/tmp/parrot test
-	@echo 'Parrot/Rakudo r$(PARROT_REV)'
+	time svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
+endif
+	cd $(PARROT_TMP_DIR); perl Makefile.PL
+	$(MAKE) --no-print-directory -C $(PARROT_TMP_DIR)
+	$(MAKE) --no-print-directory -C $(PARROT_TMP_DIR) perl6
+	@$(PARROT_TMP_DIR)/languages/perl6/perl6 -e 'say "Parrot/Rakudo r{%*VM<config><revision>}"'
+	@$(MAKE) --no-print-directory clean
+	@$(MAKE) --no-print-directory PARROT_DIR=$(PARROT_TMP_DIR) precompile
+	$(MAKE)  --no-print-directory PARROT_DIR=$(PARROT_TMP_DIR) test
 
 clean:
-	@find . -name '*.pir'             -exec rm {} ';' # Parser.pir etc
-	@find .. -name 'Test.pir'         -exec rm {} ';'
+	@find .       -name '*.pir'       -exec rm {} ';' # Parser.pir etc
+	@find ..      -name 'Test.pir'    -exec rm {} ';'
 	@find ../Test -name 'Harness.pir' -exec rm {} ';'
-	@find ../.. -name '*~'            -exec rm {} ';' # editor backups
+	@find ../..   -name '*~'          -exec rm {} ';' # editor backups
 
 # List the targets to be made by users
 help:
@@ -124,10 +151,10 @@ help:
 	@echo 'testrev - build and test PARROT_REV=nnnnn in /tmp/parrot'
 	@echo 'clean   - removes .pir and editor backup files'
 	@echo ''
-	@echo 'PARROT_DIR: default ../../../parrot'
+	@echo 'PARROT_DIR: default=../../../parrot'
 	@echo 'Example: make PARROT_DIR=/other/parrot test'
 	@echo ''
-	@echo 'PARROT_REV: default HEAD'
-	@echo 'Example: make PARROT_REV=35300 testrev     # or make testrev'
+	@echo 'PARROT_REV: default=HEAD'
+	@echo 'Example: make PARROT_REV=35309 testrev     # or make testrev'
 	@echo ''
 

@@ -28,15 +28,15 @@ class Test::Parser is Pod::Parser {
 
 my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up
 
-my $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
-my $expected = "doc beg test
+my Str $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
+my Str $expected = "doc beg test
 blk beg pod DELIMITED version=>6
 blk beg para PARAGRAPH
 content document 01 plain text
 blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
-my $output = $p.parse( $pod ).join("\n");
+my Str $output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p01-plain.pod simplest text' );
 #$*ERR.say: "OUTPUT: $output";
 
@@ -200,7 +200,7 @@ blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
 is( $output, $expected, 'p07-basis.pod format B<basic>' );
- $*ERR.say: "OUTPUT: $output";
+#$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = q[doc beg test
@@ -232,11 +232,7 @@ fmt end  C...>
 content  markup characters.
 blk end para PARAGRAPH
 blk beg para PARAGRAPH
-content Careful, this 
-fmt beg C<... angle_L=>< angle_R=>>
-content if $a > 0 and $a < 5 { say "yes"; }
-fmt end  C...>
-content  needs a different
+content Careful, this C«if $a > 0 and $a < 5 { say "yes"; }» needs a different
 content delimiter because the > inside the code closes before it opens.
 content Type these with AltGr-Z and AltGr-X.
 blk end para PARAGRAPH
@@ -249,7 +245,7 @@ content  also delimit.
 blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end];
-#$output = $p.parse( $pod ).join("\n");
+$output = $p.parse( $pod ).join("\n");
 #is( $output, $expected, 'p08-code.pod format C<code>' );
 #$*ERR.say: "OUTPUT: $output";
 
