@@ -1,7 +1,16 @@
 # Makefile for the Pod utilities Pod::Parser and Pod::to::whatever
-
+#
+# Try it out: copy and execute the following without the leading '# '
+# cd /tmp; rm -rf parrot perl6-examples # (or your dir, eg /usr/masak/junk)
+# svn checkout --revision 35308 http://svn.perl.org/parrot/trunk parrot
+# #                       ^^^^^ (your sys latest good rev in Parser.pm)
+# git clone git://github.com/eric256/perl6-examples.git
+# cd /tmp/parrot;perl Makefile.PL;make;make perl6;cd /tmp
+# cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/tmp/parrot test
+# # Or 'make PARROT_REV=HEAD PARROT_DIR=/tmp/parrot testrev' # new bugs.
+#
 # Default paths assume that parrot/ and perl6-examples/ are in the same
-# parent directory. See Configuration variables below to override.
+# parent directory. Override with Configuration variables: below.
 
 # Getting started: execute commands below without the initial # sign,
 # or edit them first into a shell script.
@@ -10,40 +19,22 @@
 # The 'time' option in these lines is, er, optional.
 # You may also skip lines containing any form of 'test' to save time,
 # but tests are valuable to confirm that the software is working.
-# Bugs appear in the source code occasionally, for help connect to the
-# IRC server irc.freenode.net and join the #perl6 channel, or see below.
+# Bugs appear in the source code occasionally ;) , for help connect to
+# irc.freenode.net and join the #perl6 channel, or read on...
 #
-# sudo apt-get update
+# # if svn does not work (in Debian, Ubuntu and similar systems):
 # sudo apt-get --yes install subversion
-# time svn checkout https://svn.perl.org/parrot/trunk parrot
-# cd parrot
-# perl Makefile.PL
-# time make
-# make test
-# cd languages/perl6
-# time make perl6
-# make test
-# make spectest
-# alias perl6=`pwd`/perl6 # or # sudo ln -s `pwd`/perl6 /usr/local/bin
-# cd
+## # if git does not work (in Debian, Ubuntu and similar systems):
 # sudo apt-get --yes install git-core
-# git clone git://github.com/eric256/perl6-examples.git
-# PATH=$PATH:`pwd`/perl6-examples/bin
-# export PERL6LIB=`pwd`/perl6-examples/lib
-# cd perl6-examples/lib/Pod
-# make
-# make help
-# make test
+#
+# Later, if you still have /tmp/parrot and /tmp/perl6-examples and other
+# people have updated the repositories, do:
+# cd /tmp/parrot;svn up;make realclean;perl Makefile.PL;make;make perl6
+# cd /tmp/perl6-examples;git pull;
 
-# Later, when new code has appeared in parrot or perl6-examples, do:
-# cd parrot
-# svn up
-# cd ../perl6-examples
-# git pull
-
-# Later still, if you are a contributor (see perl6-examples/README)
-# and you have edited files, do:
-# cd ../perl6-examples
+# Later still, if you improve ments (see perl6-examples/README) and
+# you have files, do:
+# cd /tmp/perl6-examples
 # git diff
 # git commit -a
 # git push

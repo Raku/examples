@@ -6,9 +6,70 @@
 # statements that are almost duplicated are in transition, for example
 # @.blocks -> @!podblocks and $line -> $!line.
 
+grammar Pod6 {
+    regex directive { ^ '=' <[a..zA..Z]> }; # TODO: rewrite parse_line
+    # fundamental directives 
+    regex begin    { ^ '=begin' <.ws> <typename> [ <.ws> <option> ]* };
+    regex end      { ^ '=end'   <.ws> <typename> };
+    regex for      { ^ '=for'   <.ws> <typename> [ <.ws> <option> ]* };
+    regex extra    { ^ '='                       [ <.ws> <option> ]+ };
+    regex typename { code | comment | head\d+ | input | output | para | pod | table };
+    # standard block types (section Blocks in order of appearance in S26)
+    regex head     { ^ '=head'<level> <.ws> <heading> };
+    regex para     { ^ '=para'    <.ws> <txt> };
+    regex code     { ^ '=code'                   [ <.ws> <option> ]* };
+    regex input    { ^ '=input'   <.ws> <txt> };
+    regex output   { ^ '=output'  <.ws> <txt> };
+    regex item     { ^ '=item'    <.ws> <txt> };
+    regex nested   { ^ '=nested'  <.ws> <txt> };
+    regex table    { ^ '=table'   <.ws> <txt> };
+    regex comment  { ^ '=comment' <.ws> <txt> };
+    regex END      { ^ '=END'     <.ws> <txt> };
+    regex DATA     { ^ '=DATA'    <.ws> <txt> }; 
+    regex semantic { <[ A..Z ]>+ };
+    # other directives (pre-configuration, modules)
+    regex encoding { ^ '=encoding' <.ws> <txt> };
+    regex config   { ^ '=config' <.ws> <typename> [ <.ws> <option> ]* };
+    regex use      { ^ '=use'      <.ws> <txt> };
+    # optional backward compatibility with Perl 5 POD
+    regex p5pod    { ^ '=pod'                }; # begin Perl 5 POD 
+    regex p5over   { ^ '=over' <.ws> <level> }; # begin Perl 5 indent
+    regex p5back   { ^ '=back'               }; # end Perl 5 indent
+    regex p5cut    { ^ '=cut'                }; # end Perl 5 POD
+    # building blocks
+    regex txt      { .* };
+    regex heading  { .+ };
+    regex blank    { ^ <.ws>? $ };
+    regex level    { <.digit>+ };
+    regex option   { <option_false> | <option_true> | <option_string> };
+    regex option_false  { ':!' <option_key> |
+                          ':'  <option_key> '(' <.ws>? '0'  <.ws>? ')' |
+                          ':'  <option_key> <.ws>? '=' <.gt> <.ws>? '0'
+                        };
+    regex option_true   {
+    # problem: the next line masks option_string?
+    #                     ':' <option_key> | # TODO: reinstate
+                          ':' <option_key> '(' <.ws>? '1'  <.ws>? ')' |
+                          ':' <option_key>     <.ws>? '=>' <.ws>?    '1'
+                        };
+    # would token or rule be better than regex above?
+    regex option_string { ':' <option_key> <.lt> <option_value> <.gt> };
+    regex option_key    { <.ident> };
+    regex option_value  { .* };
+}
+
+grammar Pod6_link {
+    regex TOP { <alternate> [ <ws> '|' <ws> ] ? <scheme> <external> <internal> };
+    regex alternate { [ .* <?before [ <ws> '|' <ws> ] > ] ?  };
+    regex scheme { [ [ http | https | file | mailto | man | doc | defn
+        | isbn | issn ] ? ':' ] ? }; # TODO: non standard schemes
+    regex external { [ <-[#]> + ] ? };
+    regex internal { [ '#' .+ ] ? };
+}
+
 class PodBlock {
-    has $.typename is rw;
-    has $.style    is rw;
+    has Str $.typename is rw;
+    has Str $.style    is rw;
     has %.config   is rw;
     method perl {
         my Str $typename = defined $.typename ?? $.typename !! 'undef';
@@ -60,9 +121,9 @@ class Pod::Parser {
     method parse_line( Str $line ) { # from parse_file
         $!line = $line;
         given $!line {
-            when Pod6::directive {   self.parse_directive; } # eg '=xxx :ccc'
-            when Pod6::extra     {   self.parse_configuration( $0 ); } # eg '= :ccc'
-            when Pod6::blank     {   self.parse_blank; }     # eg '' or ' '
+            when / <Pod6::directive> / {   self.parse_directive; } # eg '=xxx :ccc'
+            when / <Pod6::extra>     / {   self.parse_configuration( $0 ); } # eg '= :ccc'
+            when / <Pod6::blank>     / {   self.parse_blank; }     # eg '' or ' '
             default              {   if @!podblocks {        # eg 'xxx' or ' xxx'
                                          self.parse_content( $line );
 #                                        self.parse_content;
@@ -98,7 +159,7 @@ class Pod::Parser {
             when Pod6::p5pod    { self.parse_p5pod; }
             when Pod6::p5over   { }
             when Pod6::p5back   { }
-            when Pod6::p5cut    { self.parse_p5cut;}
+            when / <Pod6::p5cut> /    { self.parse_p5cut;}
             default             {
                                 # self.parse_user_defined;
                                 }
@@ -529,74 +590,13 @@ class Pod::Parser {
     method warning(Str $t)   { self.emit("warning $t"); }
 }
 
-grammar Pod6 {
-    regex directive { ^ '=' <[a..zA..Z]> }; # TODO: rewrite parse_line
-    # fundamental directives 
-    regex begin    { ^ '=begin' <.ws> <typename> [ <.ws> <option> ]* };
-    regex end      { ^ '=end'   <.ws> <typename> };
-    regex for      { ^ '=for'   <.ws> <typename> [ <.ws> <option> ]* };
-    regex extra    { ^ '='                       [ <.ws> <option> ]+ };
-    regex typename { code | comment | head\d+ | input | output | para | pod | table };
-    # standard block types (section Blocks in order of appearance in S26)
-    regex head     { ^ '=head'<level> <.ws> <heading> };
-    regex para     { ^ '=para'    <.ws> <txt> };
-    regex code     { ^ '=code'                   [ <.ws> <option> ]* };
-    regex input    { ^ '=input'   <.ws> <txt> };
-    regex output   { ^ '=output'  <.ws> <txt> };
-    regex item     { ^ '=item'    <.ws> <txt> };
-    regex nested   { ^ '=nested'  <.ws> <txt> };
-    regex table    { ^ '=table'   <.ws> <txt> };
-    regex comment  { ^ '=comment' <.ws> <txt> };
-    regex END      { ^ '=END'     <.ws> <txt> };
-    regex DATA     { ^ '=DATA'    <.ws> <txt> }; 
-    regex semantic { <[ A..Z ]>+ };
-    # other directives (pre-configuration, modules)
-    regex encoding { ^ '=encoding' <.ws> <txt> };
-    regex config   { ^ '=config' <.ws> <typename> [ <.ws> <option> ]* };
-    regex use      { ^ '=use'      <.ws> <txt> };
-    # optional backward compatibility with Perl 5 POD
-    regex p5pod    { ^ '=pod'                }; # begin Perl 5 POD 
-    regex p5over   { ^ '=over' <.ws> <level> }; # begin Perl 5 indent
-    regex p5back   { ^ '=back'               }; # end Perl 5 indent
-    regex p5cut    { ^ '=cut'                }; # end Perl 5 POD
-    # building blocks
-    regex txt      { .* };
-    regex heading  { .+ };
-    regex blank    { ^ <.ws>? $ };
-    regex level    { <.digit>+ };
-    regex option   { <option_false> | <option_true> | <option_string> };
-    regex option_false  { ':!' <option_key> |
-                          ':'  <option_key> '(' <.ws>? '0'  <.ws>? ')' |
-                          ':'  <option_key> <.ws>? '=' <.gt> <.ws>? '0'
-                        };
-    regex option_true   {
-    # problem: the next line masks option_string?
-    #                     ':' <option_key> | # TODO: reinstate
-                          ':' <option_key> '(' <.ws>? '1'  <.ws>? ')' |
-                          ':' <option_key>     <.ws>? '=>' <.ws>?    '1'
-                        };
-    # would token or rule be better than regex above?
-    regex option_string { ':' <option_key> <.lt> <option_value> <.gt> };
-    regex option_key    { <.ident> };
-    regex option_value  { .* };
-}
-
-grammar Pod6_link {
-    regex TOP { <alternate> [ <ws> '|' <ws> ] ? <scheme> <external> <internal> };
-    regex alternate { [ .* <?before [ <ws> '|' <ws> ] > ] ?  };
-    regex scheme { [ [ http | https | file | mailto | man | doc | defn
-        | isbn | issn ] ? ':' ] ? }; # TODO: non standard schemes
-    regex external { [ <-[#]> + ] ? };
-    regex internal { [ '#' .+ ] ? };
-}
-
 =begin pod
 
 =head1 NAME
 Pod6Parser - stream based parser for Perl 6 Plain Old Documentation
 
 =head1 SYNOPSIS
- # in Perl 6 (Rakudo)
+ # in Perl 6 (Rakudo) - see Makefile for install and test suggestions
  use v6;
  use Pod6Parser;
  my $p = Pod6Parser.new;
@@ -761,12 +761,13 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head2 Rakudo dependencies
-Bisect with 'make PARROT_REV=35309 testrev' and so on, see Makefile.
-35308 good
-35309 01-parser.t fails 1/7 (segfault), 02-text.t and 03-man.t all pass
+Test with 'make PARROT_REV=35308 testrev' and so on, see Makefile.
+35308 good (and $*ERR good until r35310, r35311 bad (RT#62540))
+35309 good but may segfault
+35310 in text.pm->text.pir compiler returned NULL ByteCode '/home/martin/perl6-examples/lib/Pod/../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found. Check the type and number of the arguments
 35338 Method 'postcircumfix:{ }' not found for invocant of class 'Failure'
-35568 Unable to parse multisig; couldn't find final ')' at line 264, near ", PodBlock"
-35875 Unable to parse multisig; couldn't find final ')' at line 264, near ", PodBlock"
+35568 Type mismatch in assignment. prove -> file_or_dir -> is_file
+35890-35894 Method 'ACCEPTS' not found for invocant of class 'PGE;Match'
 
 =head1 SEE ALSO
 The Makefile in the Pod::Parser directory for build and test procedures.
