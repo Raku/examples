@@ -2,9 +2,9 @@
 #
 # Try it out: copy and execute the following without the leading '# '
 # cd /tmp; rm -rf parrot perl6-examples # (or your dir, eg /usr/masak/junk)
-# svn checkout --revision 35308 http://svn.perl.org/parrot/trunk parrot
-# #                       ^^^^^ (your sys latest good rev in Parser.pm)
 # git clone git://github.com/eric256/perl6-examples.git
+# svn checkout --revision 35309 http://svn.perl.org/parrot/trunk parrot
+# #                       ^^^^^ (your sys latest good rev in Parser.pm)
 # cd /tmp/parrot;perl Makefile.PL;make;make perl6;cd /tmp
 # cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/tmp/parrot test
 # # Or 'make PARROT_REV=HEAD PARROT_DIR=/tmp/parrot testrev' # new bugs.
@@ -16,9 +16,6 @@
 # or edit them first into a shell script.
 # The following assumes a freshly installed Linux system such as Ubuntu.
 # If your system is already being used, skip commands you don't need.
-# The 'time' option in these lines is, er, optional.
-# You may also skip lines containing any form of 'test' to save time,
-# but tests are valuable to confirm that the software is working.
 # Bugs appear in the source code occasionally ;) , for help connect to
 # irc.freenode.net and join the #perl6 channel, or read on...
 #
@@ -47,16 +44,10 @@
 # The most recent successfully tested Rakudo revision is Parrot r35300.
 # If you have problems with a later revision of Rakudo, try bisecting:
 #     make PARROT_REV=35300 testrev              # or make testrev
-# 35309 good 35568 Lexical 'self' not found 
 # Bisect results of 'make PARROT_REV=nnnnn testrev':
 # Debian x86-32 35300 good
 # Debian x86-64 35309 good
-#               35310 precompile to/text.pm -> to/text.pir: compiler returned NULL ByteCode '/home/martin/perl6-examples/lib/Pod/../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found.
-#         35311-35338 Method ':_block2435' not found for invocant of class 'PodBlock' current instr.: 'parrot;Perl6Pair;ACCEPTS'
-#               35360 in prove/Test::Harness - Parameter type check failed in call to _block91
-#               35400 Method ':_block2435' not found for invocant of class 'PodBlock' current instr.: 'parrot;Perl6Pair;ACCEPTS'
-#         35500-35760 cannot test - does not build perl6.pbc
-#         35770-35824 Unable to parse multisig; couldn't find final ')' at line 234, near ", PodBlock"
+#               35311 t/01-parser.t....Null PMC access in get_string() current instr.: 'infix:ne'
 
 # RT#62376 notes that perl6 --target=pir fails and parrot perl6.pbc
 # --target=pir works. This Makefile has switched to the latter.
@@ -78,7 +69,8 @@ PERL6LIB     = ..
 
 all: precompile
 
-precompile: Parser.pir to/text.pir to/man.pir\
+precompile: Parser.pir to/text.pir to/man.pir to/xhtml.pir to/pod5.pir \
+ to/pod6.pir \
  $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir
 
 # define how to precompile a module from its source code

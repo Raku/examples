@@ -19,7 +19,7 @@ class TestParser is Pod::to::text {
     # workaround: redundantly copy base class method here, fails too!
 }
 
-plan 7;
+plan 8;
 
 my TestParser $p .= new; $p.parse_file( '/dev/null' ); # warming up
 
@@ -111,17 +111,13 @@ $expected = q[    Document p08-code.pod tests the C formatting code. The C < > f
     tags. The contents of a C < > code are space-preserved and verbatim. The C
     < > code is the inline equivalent of the =code block.
 
-    Preserve the punctuation and C<say "---   ---";> three spaces.
+    Preserve the punctuation and "say "---   ---";" three spaces.
 
-    Also preserve C<if $a < 5 and $a > 0 { say "yes"; }> markup characters.
+    Also preserve "if $a <  5 and $a >  0 { say "yes"; }" markup characters.
 
-    Careful, this C«if $a > 0 and $a < 5 { say "yes"; }» needs a different
-    delimiter because the > in the code is unmatched. Type these with AltGr-Z
-    and AltGr-X.
-
-    Multiple angles C<< $a = ( $b > $c );>> also delimit.];
-#$output = $p.parse( $pod ).join("\n");
-#is( $output, $expected, "p08-code.pod format C<code>" );
+    Multiple angles " $a = ( $b > $c );" also delimit.];
+$output = $p.parse( $pod ).join("\n");
+is( $output, $expected, "p08-code.pod format C<code>" );
 #$*ERR.say: "OUTPUT:\n$output";
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"

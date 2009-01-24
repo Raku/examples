@@ -81,8 +81,7 @@ class PodBlock {
 class Pod::Parser {
 
     has PodBlock @!podblocks;       # stack of nested Pod blocks
-    has          @.blocks is rw;    # stack of nested blocks.
-#   has          %!config;          # for =config definitions
+    # has        %!config;          # for =config definitions
     has IO       $!outfile;         # could be replaced by select()
     has Str      $!context;         # 'AMBIENT', 'BLOCK_DECLARATION' or 'POD_CONTENT'
     has Str      $!line;
@@ -121,49 +120,49 @@ class Pod::Parser {
     method parse_line( Str $line ) { # from parse_file
         $!line = $line;
         given $!line {
-            when / <Pod6::directive> / {   self.parse_directive; } # eg '=xxx :ccc'
-            when / <Pod6::extra>     / {   self.parse_configuration( $0 ); } # eg '= :ccc'
-            when / <Pod6::blank>     / {   self.parse_blank; }     # eg '' or ' '
-            default              {   if @!podblocks {        # eg 'xxx' or ' xxx'
-                                         self.parse_content( $line );
-#                                        self.parse_content;
-                                     } else {
-                                         self.ambient( $!line ); # not pod
+            when /<Pod6::directive>/ {   self.parse_directive; } # eg '=xxx :ccc' /
+            when /<Pod6::extra>/     {   self.parse_configuration( $0 ); } # eg '= :ccc' /
+            when /<Pod6::blank>/     {   self.parse_blank; }     # eg '' or ' ' /
+            default                  {   if @!podblocks {        # eg 'xxx' or ' xxx' /
+                                             self.parse_content( $line );
+                                           # self.parse_content;
+                                         } else {
+                                             self.ambient( $!line ); # not pod
+                                         }
                                      }
-                                 }
         }
     }
 
     method parse_directive { # from parse_line
         given $!line {
             # Keywords from Synopsis 26 section "markers"
-            when Pod6::begin    { self.parse_begin(    $/ ); }
-            when Pod6::end      { self.parse_end(      $/ ); }
-            when Pod6::for      { self.parse_for(      $/ ); }
+            when / <Pod6::begin>    / { self.parse_begin(    $/ ); }
+            when / <Pod6::end>      / { self.parse_end(      $/ ); }
+            when / <Pod6::for>      / { self.parse_for(      $/ ); }
             # Keywords from Synopsis 26 section "Blocks"
-            when Pod6::code     { self.parse_code(     $/ ); }
-            when Pod6::comment  { self.parse_comment(  $/ ); }
-            when Pod6::head     { self.parse_head(     $/ ); }
-            when Pod6::input    { }
-            when Pod6::item     { }
-            when Pod6::nested   { }
-            when Pod6::output   { }
-            when Pod6::table    { }
-            when Pod6::DATA     { }
-            when Pod6::END      { }
+            when / <Pod6::code>     / { self.parse_code(     $/ ); }
+            when / <Pod6::comment>  / { self.parse_comment(  $/ ); }
+            when / <Pod6::head>     / { self.parse_head(     $/ ); }
+            when / <Pod6::input>    / { }
+            when / <Pod6::item>     / { }
+            when / <Pod6::nested>   / { }
+            when / <Pod6::output>   / { }
+            when / <Pod6::table>    / { }
+            when / <Pod6::DATA>     / { }
+            when / <Pod6::END>      / { }
             # Keywords from Synopsis 26 section "Block pre-configuration"
-            when Pod6::encoding { }
-            when Pod6::config   { self.parse_config(   $/ ); }
-            when Pod6::use      { }
+            when / <Pod6::encoding> / { }
+            when / <Pod6::config>   / { self.parse_config(   $/ ); }
+            when / <Pod6::use>      / { }
             # Keywords from Perl 5 POD
-            when Pod6::p5pod    { self.parse_p5pod; }
-            when Pod6::p5over   { }
-            when Pod6::p5back   { }
-            when / <Pod6::p5cut> /    { self.parse_p5cut;}
-            default             {
-                                # self.parse_user_defined;
-                                }
-        }
+            when / <Pod6::p5pod>    / { self.parse_p5pod; }
+            when / <Pod6::p5over>   / { }
+            when / <Pod6::p5back>   / { }
+            when / <Pod6::p5cut>    / { self.parse_p5cut;}
+            default                   {
+                                        # self.parse_user_defined;
+                                      } # /
+        } 
     }
 
     method parse_configuration( Str $line ) # from parse_line
@@ -184,14 +183,13 @@ class Pod::Parser {
             }
             elsif @!podblocks[$topindex].typename eq 'code' {
                 self.content( @!podblocks[$topindex], '' ); # blank line is part of code
-#               self.content( @.blocks[$topindex], '' ); # blank line is part of code
             }
         }
         else { self.ambient( '' ); } # a non POD part of the file
     }
 
     method parse_content( Str $line ) # from parse_line
-#   method parse_content # from parse_line
+    # method parse_content            # from parse_line
     {
         self.set_context( 'POD_CONTENT' );
         # (hopefully not premature) optimization: format only if contains < or > chars.
@@ -199,7 +197,7 @@ class Pod::Parser {
         my Int $topindex = @!podblocks.end;
         if $!line ~~ / [<lt>|<gt>|'«'|'»'] / {self.parse_formatting;}
         else {self.content(@!podblocks[$topindex],$line);}  # [*-1]
-#       else {self.content(@!podblocks[$topindex],$!line);} # [*-1]
+        # else {self.content(@!podblocks[$topindex],$!line);} # [*-1]
     }
 
     method parse_formatting { # from parse_content and parse_head
@@ -222,9 +220,8 @@ class Pod::Parser {
                 # What if '=begin comment' is nested inside a format
                 # block (S26)?
                 my Int $topindex = @!podblocks.end;
-                my Hash $reftopblock = @.blocks[$topindex]; # [*-1]
                 my PodBlock $topblock = @!podblocks[$topindex]; # [*-1]
-#               $*ERR.say: "TOPBLOCK: {$topblock.WHAT}";
+              # $*ERR.say: "TOPBLOCK: {$topblock.WHAT}";
                 if $topblock.style eq 'FORMATTING_CODE' {
                     # Found an open formatting code. Get its delimiters.
                     $angle_L     = $topblock.config<angle_L>;
@@ -240,7 +237,7 @@ class Pod::Parser {
                 }
             }
             # TODO: rewrite pattern with variable list of allowed codes
-#           if $content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+|'«')(.*) / {
+          # if $content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+|'«')(.*) / {
             if $content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+)(.*) / {
                 my Str $before      = ~ $0;
                 $format_begin       = ~ $1;
@@ -251,11 +248,6 @@ class Pod::Parser {
                 if $format_begin_pos < $angle_L_pos and $format_begin_pos < $angle_R_pos {
                     my Str $new_angle_R = $new_angle_L eq '«' ?? '»' !!
                         '>' x $new_angle_L.chars;
-                    my %formatblock = (
-                        'typename' => ~ $format_begin,
-                        'style'    => 'FORMATTING_CODE',
-                        'config'   => { 'angle_L' => ~ $new_angle_L, 'angle_R' => ~ $new_angle_R }
-                    );
                     my PodBlock $formatcodeblock .= new(
                         typename => ~ $format_begin,
                         style    => 'FORMATTING_CODE',
@@ -263,7 +255,7 @@ class Pod::Parser {
                                       'angle_R' => ~ $new_angle_R }
                     );
                     if $format_begin eq 'L' {
-                        parse_link( $/, \%formatblock, $formatcodeblock );
+                        parse_link( $/, $formatcodeblock );
                     }
                     if $format_begin_pos > 0 {
                         # There is text before the new formatting code
@@ -271,7 +263,6 @@ class Pod::Parser {
                         my Int $topindex = @!podblocks.end;
                         self.content( @!podblocks[$topindex], $before ); # [*-1]
                     }
-                    @.blocks.push( \%formatblock );
                     @!podblocks.push( $formatcodeblock );
                     self.fmt_beg( $formatcodeblock );
                     $chars_to_delete = $format_end_pos;
@@ -279,26 +270,19 @@ class Pod::Parser {
                 }
             }
             if $angle_L_pos < $format_begin_pos and $angle_L_pos < $angle_R_pos {
-                my %formatblock = (
-                    'typename' => "NESTED_ANGLE_BRACKET",
-                    'style'    => 'FORMATTING_CODE',
-                    'config'   => { 'angle_L' => $angle_L, 'angle_R' => $angle_R }
-                );
                 my PodBlock $formatcodeblock .= new(
                     typename => "NESTED_ANGLE_BRACKET",
                     style    => 'FORMATTING_CODE',
                     config   => { 'angle_L' => $angle_L,
                                   'angle_R' => $angle_R }
                 );
-                @.blocks.push( \%formatblock );
                 @!podblocks.push( $formatcodeblock );
                 $output_buffer = $content.substr( 0, $angle_L_pos + $angle_L.chars );
                 $chars_to_delete = $angle_L_pos + $angle_L.chars;
             }
             elsif $angle_R_pos < $format_begin_pos and $angle_R_pos < $angle_L_pos {
-                my Hash $reftopblock = pop @.blocks;
                 my PodBlock $topblock = pop @!podblocks;
-#               $*ERR.say: "TOPBLOCK:" ~ $topblock.perl;
+              # $*ERR.say: "TOPBLOCK:" ~ $topblock.perl;
                 my Str $typename = $topblock.typename;
                 if $typename eq "NESTED_ANGLE_BRACKET" {
                     $output_buffer = $content.substr( 0, $angle_R_pos + $angle_R.chars );
@@ -320,10 +304,9 @@ class Pod::Parser {
         }
     }
 
-#   sub parse_link( Match $match, Hash $refblock, PodBlock $podblock ) { # from parse_formatting
-    sub parse_link(       $match, Hash $refblock, PodBlock $podblock ) { # from parse_formatting
+    sub parse_link( Match $match, PodBlock $podblock ) { # from parse_formatting
         # matched / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+)(.*) /
-        my Str $angle_R = $refblock<config><angle_R>;
+        my Str $angle_R = $podblock.config<angle_R>;
         my Str $s = ~ $match[3];
         my Int $index = $s.index( $angle_R );
         my Str $link = $s.substr( 0, $index );
@@ -332,47 +315,34 @@ class Pod::Parser {
             $podblock.config<scheme>    = ~ $/<scheme>;
             $podblock.config<external>  = ~ $/<external>;
             $podblock.config<internal>  = ~ $/<internal>;
-            $refblock<config><alternate> = ~ $/<alternate>;
-            $refblock<config><scheme>    = ~ $/<scheme>;
-            $refblock<config><external>  = ~ $/<external>;
-            $refblock<config><internal>  = ~ $/<internal>;
             # tweak some of the link fields
-            $refblock<config><scheme>   .= subst( / ^ $ /, {'doc'} ); # no scheme becomes doc
-            $refblock<config><scheme>   .= subst( / \: $ /, { '' } ); # remove : from scheme:
-            $refblock<config><internal> .= subst( / ^ \# /, { '' } ); # remove # from #internal
             $podblock.config<scheme>   .= subst( / ^ $ /, {'doc'} ); # no scheme becomes doc
             $podblock.config<scheme>   .= subst( / \: $ /, { '' } ); # remove : from scheme:
             $podblock.config<internal> .= subst( / ^ \# /, { '' } ); # remove # from #internal
         }
     }
 
-#   method parse_begin( Match $match ) { # from parse_directive
-    method parse_begin(       $match ) { # from parse_directive
+    method parse_begin( Match $match ) { # from parse_directive
         # $*ERR.say: "MATCH: {$match.WHAT}";
-        my Str $typename = ~ $match<typename>;
+        my Str $typename = ~ $match<Pod6::begin><typename>;
         self.set_context( 'AMBIENT' ); # finish any previous block
         self.set_context( 'BLOCK_DECLARATION' );
         my Int $topindex = @!podblocks.end;
-        @.blocks[$topindex]<typename> = $typename;    # [*-1] eventually
-        @.blocks[$topindex]<style> = 'DELIMITED';     # [*-1]
         @!podblocks[$topindex].typename = $typename;  # [*-1] eventually
         @!podblocks[$topindex].style    = 'DELIMITED';# [*-1]
         given $typename {
             when 'pod' {
-                @.blocks[$topindex]<config><version> = 6;   # [*-1]
                 @!podblocks[$topindex].config<version> = 6; # [*-1]
             }
             when 'code' { $!codeblock = Bool::True; $!wrap_enable = Bool::False; }
         }
     }
 
-#   method parse_end( Match $match ) { # from parse_directive
-    method parse_end(       $match ) { # from parse_directive
+    method parse_end( Match $match ) { # from parse_directive
         self.set_context( 'AMBIENT' );
-        my Hash $reftopblock = pop @.blocks;
         my PodBlock $topblock = pop @!podblocks;
         my Str $poptypename = $topblock.typename;
-        my Str $endtypename = ~ $match<typename>;
+        my Str $endtypename = ~ $match<Pod6::end><typename>;
         if ( $poptypename ne $endtypename ) {
             # TODO: change to non fatal diagnostic
             die "=end expected $poptypename, got $endtypename";
@@ -381,52 +351,41 @@ class Pod::Parser {
         self.blk_end( $topblock );
     }
 
-#   method parse_for( Match $match ) { # from parse_directive
-    method parse_for(       $match ) { # from parse_directive
+    method parse_for( Match $match ) { # from parse_directive
         self.set_context( 'BLOCK_DECLARATION' );
         my Int $topindex = @!podblocks.end;
-        @.blocks[$topindex]<typename> = ~ $match<typename>; # [*-1]
-        @.blocks[$topindex]<style> = 'ABBREVIATED';         # [*-1]
-        @!podblocks[$topindex].typename = ~ $match<typename>; # [*-1]
-        @!podblocks[$topindex].style = 'ABBREVIATED';         # [*-1]
+        @!podblocks[$topindex].typename = ~ $match<Pod6::for><typename>; # [*-1]
+        @!podblocks[$topindex].style    = 'ABBREVIATED';         # [*-1]
     }
 
-#   method parse_code( Match $match ) # from parse_directive
-    method parse_code(       $match ) # from parse_directive
+    method parse_code( Match $match ) # from parse_directive
     {
     }
 
-#   method parse_head( Match $match ) { # from parse_directive
-    method parse_head(       $match ) { # from parse_directive
+    method parse_head( Match $match ) { # from parse_directive
         # when not in pod, =head implies Perl 5 =pod
-        if + @.blocks == 0 { self.parse_p5pod; } # inserts =pod version=>5
-        
-        my Str $heading = ~ $match<heading>;
+        if + @!podblocks == 0 { self.parse_p5pod; } # inserts =pod version=>5
+
+        my Str $heading = ~ $match<Pod6::head><heading>;
         self.set_context( 'AMBIENT' );        
         self.set_context( 'BLOCK_DECLARATION' ); # pushes a new empty block onto the stack
         my Int $topindex = @!podblocks.end;
-        @.blocks[$topindex]<typename> = 'head';               # [*-1]
-        @.blocks[$topindex]<style>    = 'POD_BLOCK';          # [*-1]
-        @.blocks[$topindex]<config><level> = ~ $match<level>; # [*-1]
         @!podblocks[$topindex].typename = 'head';               # [*-1]
         @!podblocks[$topindex].style    = 'POD_BLOCK';          # [*-1]
-        @!podblocks[$topindex].config<level> = ~ $match<level>; # [*-1]
+        @!podblocks[$topindex].config<level> = ~ $match<Pod6::head><level>; # [*-1]
         self.set_context( 'POD_CONTENT' ); # this one won't add a PARAGRAPH block
-        $!line = ~ $match<heading>;
+        $!line = ~ $match<Pod6::head><heading>;
         self.parse_formatting;
         self.blk_end( pop @!podblocks ); # the 'head'
-        pop @.blocks;
         self.set_context( 'AMBIENT' );
     }
 
-#   method parse_comment( Match $match ) { # from parse_directive
-    method parse_comment(       $match ) { # from parse_directive
+    method parse_comment( Match $match ) { # from parse_directive
     }
 
-#   method parse_config( Match $match ) { # from parse_directive
-    method parse_config(       $match ) { # from parse_directive
-        my Str $typename = $match<typename>;
-        my $options  = $match<option>[0];
+    method parse_config( Match $match ) { # from parse_directive
+        my Str $typename = $match<Pod6::config><typename>;
+        my $options  = $match<Pod6::config><option>[0];
         self.emit( "=config $typename $options" );
     }
 
@@ -434,9 +393,6 @@ class Pod::Parser {
         self.set_context( 'AMBIENT' ); # finish any previous block
         self.set_context( 'BLOCK_DECLARATION' );
         my Int $topindex = @!podblocks.end;
-        @.blocks[$topindex]<typename>        = 'pod';       # [*-1] eventually
-        @.blocks[$topindex]<style>           = 'DELIMITED'; # [*-1]
-        @.blocks[$topindex]<config><version> = 5;           # [*-1]
         @!podblocks[$topindex].typename        = 'pod';       # [*-1] eventually
         @!podblocks[$topindex].style           = 'DELIMITED'; # [*-1]
         @!podblocks[$topindex].config<version> = 5;           # [*-1]
@@ -444,11 +400,10 @@ class Pod::Parser {
     }
     method parse_p5cut { # from parse_directive
         self.set_context( 'AMBIENT' );
-        my Hash $reftopblock = pop @.blocks;
         my PodBlock $topblock = pop @!podblocks;
         if ( $topblock.typename ne 'pod' ) {
             # TODO: change to non fatal diagnostic
-            die "=cut expected pod, got {$reftopblock<typename>}";
+            die "=cut expected pod, got {$topblock.typename}";
         }
         self.blk_end( $topblock );
     }
@@ -469,8 +424,6 @@ class Pod::Parser {
                     my Int $topindex = @!podblocks.end;
                     my Str $style = @!podblocks[$topindex].style; # [*-1]
                     if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' ) {
-                        my Hash $reftopblock = pop @.blocks;
-                        # my PodBlock $top = pop @!podblocks;
                         my PodBlock $top = pop @!podblocks;
                         self.blk_end( $top );
                     }
@@ -490,18 +443,11 @@ class Pod::Parser {
                     }
                 }
                 when 'BLOCK_DECLARATION' {
-                    my %newblock = (
-                        'typename' => undef,
-                        'style'    => undef,
-                        'config'   => { }
-                    );
-                    # my PodBlock $newpodblock .= new(
-                    my PodBlock $newpodblock = PodBlock.new(
+                    my PodBlock $newpodblock .= new(
                         typename => undef,
                         style    => undef,
                         config   => { }
                     );
-                    @.blocks.push( \%newblock );
                     @!podblocks.push( $newpodblock );
                 }
                 when 'POD_CONTENT' {
@@ -513,14 +459,12 @@ class Pod::Parser {
                             'typename' => $!codeblock ?? 'code' !! 'para',
                             'style' => 'PARAGRAPH',
                             'config' => {} );
-                        # my PodBlock $newpodblock .= new(
-                        my PodBlock $newpodblock = PodBlock.new(
+                        my PodBlock $newpodblock .= new(
                             typename => $!codeblock ?? 'code' !! 'para',
                             style    => 'PARAGRAPH',
                             config   => { }
                         );
                         self.blk_beg( $newpodblock );
-                        @.blocks.push( \%newblock );
                         @!podblocks.push( $newpodblock );
                     }
                 }
@@ -579,26 +523,26 @@ class Pod::Parser {
         return $r;
     }
     # override these in your subclass to make a custom translator
-    method doc_beg(Str $name){ self.emit("doc beg $name"); }
-    method doc_end           { self.emit("doc end"); }
+    method doc_beg(Str $name)   { self.emit("doc beg $name"); }
+    method doc_end              { self.emit("doc end"); }
     method blk_beg(PodBlock $b) { self.emit("blk beg {$b.typename} {$b.style}"~config($b));}
     method blk_end(PodBlock $b) { self.emit("blk end {$b.typename} {$b.style}"); }
     method fmt_beg(PodBlock $f) { self.emit("fmt beg {$f.typename}<..."~config($f)); }
     method fmt_end(PodBlock $f) { self.emit("fmt end  {$f.typename}...>"); }
     method content(PodBlock $b,Str $t){ self.emit("content $t"); }
-    method ambient(Str $t)   { self.emit("ambient $t"); }
-    method warning(Str $t)   { self.emit("warning $t"); }
+    method ambient(Str $t)      { self.emit("ambient $t"); }
+    method warning(Str $t)      { self.emit("warning $t"); }
 }
 
 =begin pod
 
 =head1 NAME
-Pod6Parser - stream based parser for Perl 6 Plain Old Documentation
+Pod::Parser - stream based parser for Perl 6 Plain Old Documentation
 
 =head1 SYNOPSIS
  # in Perl 6 (Rakudo) - see Makefile for install and test suggestions
  use v6;
- use Pod6Parser;
+ use Pod::Parser;
  my $p = Pod6Parser.new;
  $p.parse_file( "lib/Pod/Parser.pm" );
 

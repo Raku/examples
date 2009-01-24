@@ -57,6 +57,7 @@ class Pod::to::man is Pod::Parser
         $!needspace = Bool::False;
         given $typename {                   # S26 meaning  render
             when 'B' { $!prefix ~= '\fB'; } # basis        bold
+            when 'C' { $!prefix ~= '\f(CW"'; }   # code    monospace
             when 'D' { $!prefix ~= '\fI'; } # definition   italic
             when 'L' {                      # link         link
                        my Str $alt      = ~ $podblock.config<alternate>;
@@ -101,6 +102,7 @@ class Pod::to::man is Pod::Parser
         $!buf_out_enable = Bool::True;
         given $typename {
             when 'B' { $!needspace=Bool::False; self.buf_print('\fR'); $!needspace=Bool::False; } # basis
+            when 'C' { $!needspace=Bool::False; self.buf_print('"\fR'); $!needspace=Bool::False; } # code
             when 'D' { $!needspace=Bool::False; self.buf_print('\fR'); $!needspace=Bool::True;  } # definition
             when 'L' { $!needspace=Bool::False; self.buf_print('\fR'); $!needspace=Bool::False; } # link
             default {

@@ -38,6 +38,7 @@ class Pod::to::text is Pod::Parser
         my Str $typename = $podblock.typename;
         given $typename {
             when 'B' { $!needspace = Bool::False; } # basis
+            when 'C' { $!needspace = Bool::False; self.buf_print('"'); $!needspace = Bool::False; } # code
             when 'D' { $!needspace = Bool::False; } # definition
             when 'L' {                              # link
                 my Str $alt      = ~ $podblock.config<alternate>;
@@ -70,6 +71,7 @@ class Pod::to::text is Pod::Parser
         my Str $typename = $podblock.typename;
         given $typename {
             when 'B' { $!needspace = Bool::False; } # basis
+            when 'C' { $!needspace = Bool::False; self.buf_print('"'); $!needspace = Bool::False; } # code
             when 'D' { $!needspace = Bool::False; } # definition
             when 'L' { $!needspace = Bool::False;   # link
                        $!buf_out_enable = Bool::True; }

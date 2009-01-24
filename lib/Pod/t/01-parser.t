@@ -2,7 +2,7 @@
 use Test;
 use Pod::Parser;
 
-plan 7;
+plan 8;
 
 # Note: the 'content ' and 'ambient ' lines always contain a space, and
 # possibly other significant spaces, even at the end of the line.
@@ -232,13 +232,8 @@ fmt end  C...>
 content  markup characters.
 blk end para PARAGRAPH
 blk beg para PARAGRAPH
-content Careful, this C«if $a > 0 and $a < 5 { say "yes"; }» needs a different
-content delimiter because the > inside the code closes before it opens.
-content Type these with AltGr-Z and AltGr-X.
-blk end para PARAGRAPH
-blk beg para PARAGRAPH
 content Multiple angles 
-fmt beg C<... angle_L=>< angle_R=>>
+fmt beg C<... angle_L=><< angle_R=>>>
 content  $a = ( $b > $c );
 fmt end  C...>
 content  also delimit.
@@ -246,7 +241,7 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end];
 $output = $p.parse( $pod ).join("\n");
-#is( $output, $expected, 'p08-code.pod format C<code>' );
+is( $output, $expected, 'p08-code.pod format C<code>' );
 #$*ERR.say: "OUTPUT: $output";
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"

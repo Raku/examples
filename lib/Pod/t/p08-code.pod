@@ -12,9 +12,5 @@ Preserve the punctuation and C<say "---   ---";> three spaces.
 
 Also preserve C<if $a < 5 and $a > 0 { say "yes"; }> markup characters.
 
-Careful, this C«if $a > 0 and $a < 5 { say "yes"; }» needs a different
-delimiter because the > inside the code closes before it opens.
-Type these with AltGr-Z and AltGr-X.
-
 Multiple angles C<< $a = ( $b > $c );>> also delimit.
 =end pod
