@@ -384,9 +384,9 @@ class Pod::Parser {
     }
 
     method parse_config( Match $match ) { # from parse_directive
-        my Str $typename = $match<Pod6::config><typename>;
-        my $options  = $match<Pod6::config><option>[0];
-        self.emit( "=config $typename $options" );
+        my Str $typename = ~ $match<Pod6::config><typename>;
+#       my $options  = $match<Pod6::config><option>[0];
+#       self.emit( "=config $typename $options" );
     }
 
     method parse_p5pod { # from parse_directive

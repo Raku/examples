@@ -7,6 +7,10 @@
 # #                       ^^^^^ (your sys latest good rev in Parser.pm)
 # cd /tmp/parrot;perl Makefile.PL;make;make perl6;cd /tmp
 # cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/tmp/parrot test
+# alias perl6=/tmp/parrot/languages/perl6/perl6; cd /tmp/perl6-examples/lib
+# perl6 ../bin/perldoc Pod/Parser.pm
+# perl6 ../bin/pod2text Pod/to/text.pm
+# perl6 ../bin/pod2xhtml Pod/to/xhtml.pm
 # # Or 'make PARROT_REV=HEAD PARROT_DIR=/tmp/parrot testrev' # new bugs.
 #
 # Default paths assume that parrot/ and perl6-examples/ are in the same
