@@ -2,12 +2,13 @@
 
 # Names, meanings and sequence according to Synopsis 26 - Documentation
 
-# warning - code in here is being significantly refactored.
-# statements that are almost duplicated are in transition, for example
-# @.blocks -> @!podblocks and $line -> $!line.
-
 grammar Pod6 {
-    regex directive { ^ '=' <[a..zA..Z]> }; # TODO: rewrite parse_line
+    regex directive { <begin> | <end> | <for> | <extra> |
+                      <head>  | <para> | <code> | <input> | <output> |
+                      <item>  | <nested> | <table> | <comment> |
+                      <END> | <DATA> | <semantic> |
+                      <encoding> | <config> | <use> |
+                      <p5pod> | <p5over> | <p5back> | <p5cut> };
     # fundamental directives 
     regex begin    { ^ '=begin' <.ws> <typename> [ <.ws> <option> ]* };
     regex end      { ^ '=end'   <.ws> <typename> };
@@ -26,7 +27,7 @@ grammar Pod6 {
     regex comment  { ^ '=comment' <.ws> <txt> };
     regex END      { ^ '=END'     <.ws> <txt> };
     regex DATA     { ^ '=DATA'    <.ws> <txt> }; 
-    regex semantic { <[ A..Z ]>+ };
+    regex semantic { ^ '='<[ A..Z ]>+ };
     # other directives (pre-configuration, modules)
     regex encoding { ^ '=encoding' <.ws> <txt> };
     regex config   { ^ '=config' <.ws> <typename> [ <.ws> <option> ]* };
@@ -59,12 +60,12 @@ grammar Pod6 {
 }
 
 grammar Pod6_link {
-    regex TOP { <alternate> [ <ws> '|' <ws> ] ? <scheme> <external> <internal> };
-    regex alternate { [ .* <?before [ <ws> '|' <ws> ] > ] ?  };
+    regex TOP { <alternate> [ <ws> '|' <ws> ] ? <scheme> <external> <internal> }
+    regex alternate { [ .* <?before [ <ws> '|' <ws> ] > ] ?  }
     regex scheme { [ [ http | https | file | mailto | man | doc | defn
-        | isbn | issn ] ? ':' ] ? }; # TODO: non standard schemes
-    regex external { [ <-[#]> + ] ? };
-    regex internal { [ '#' .+ ] ? };
+        | isbn | issn ] ? ':' ] ? } # TODO: non standard schemes
+    regex external { [ <-[#]> + ] ? }
+    regex internal { [ '#' .+ ] ? }
 }
 
 class PodBlock {
@@ -78,58 +79,56 @@ class PodBlock {
     }
 };
 
-class Pod::Parser {
+enum Context <AMBIENT BLOCK_DECLARATION POD_CONTENT>;
 
-    has PodBlock @!podblocks;       # stack of nested Pod blocks
-    # has        %!config;          # for =config definitions
-    has IO       $!outfile;         # could be replaced by select()
-    has Str      $!context;         # 'AMBIENT', 'BLOCK_DECLARATION' or 'POD_CONTENT'
-    has Str      $!line;
-    has Str      $!buf_out_line;
-    has Bool     $!buf_out_enable;
-    has Bool     $!wrap_enable;
-    has Bool     $!codeblock;
-    has Bool     $!needspace;       # would require ' ' if more text follows
-    has Int      $!margin_L;
-    has Int      $!margin_R;
-    # enum Context <AMBIENT BLOCK_DECLARATION POD_CONTENT>;
-    # has $!context is rw is Context; # not (yet) in Rakudo
+class Pod::Parser {
+    # attributes, alphabetically
+    has Bool     $!buf_out_enable = Bool::True; # for Z<> to suppress output
+    has Str      $!buf_out_line;                # where buf_print puts text
+    has Bool     $!codeblock;                   # True within =begin code / =end code
+    # has        %!config;                      # for =config definitions
+    has          $!context is Context;          # not (yet) in Rakudo r35960
+    has Str      $!line;                        # current line being processed
+    has Int      $!margin_L;                    # first output column - default 0
+    has Int      $!margin_R;                    # last output column - default 79
+    has Match    $!match;                       # result of $!line matching a regex
+    has Bool     $!needspace;                   # would require ' ' if more text follows
+    has IO       $!outfile;                     # could be replaced by select()
+    has PodBlock @!podblocks;                   # stack of nested Pod blocks
+    has Bool     $!wrap_enable;                 # do word wrap between margins
 
     method parse_file( Str $filename )
     {
-        $!context        = 'AMBIENT';
+        $!context        = Context::AMBIENT;
         $!outfile        = $*OUT;     # for possible redirection to other files
         $!buf_out_line   = '';
-        $!buf_out_enable = Bool::True;
         $!wrap_enable    = Bool::True;
         $!codeblock      = Bool::False;
         $!needspace      = Bool::True;
         $!margin_L       = 0;
         $!margin_R       = 79;
+        # @!podblocks is wrongly vivified with a single element (RT#62838)
+        if @!podblocks { @!podblocks.pop; }
+        # say "STACK: {@!podblocks.perl}";
+
         # the main stream based parser begins here
         self.doc_beg( $filename );
         my IO $handle = open $filename, :r ;
-        for =$handle -> Str $line {
-            self.parse_line( $line );
-        }
+        for =$handle -> Str $line  { $!line = $line; self.parse_line; }
+#       for =$handle -> Str $!line {                 self.parse_line; }
         close $handle;
         self.doc_end;
     }
 
     # TODO: change most following methods to submethods ASAP
-    method parse_line( Str $line ) { # from parse_file
-        $!line = $line;
+    method parse_line { # from parse_file
         given $!line {
-            when /<Pod6::directive>/ {   self.parse_directive; } # eg '=xxx :ccc' /
-            when /<Pod6::extra>/     {   self.parse_configuration( $0 ); } # eg '= :ccc' /
-            when /<Pod6::blank>/     {   self.parse_blank; }     # eg '' or ' ' /
-            default                  {   if @!podblocks {        # eg 'xxx' or ' xxx' /
-                                             self.parse_content( $line );
-                                           # self.parse_content;
-                                         } else {
-                                             self.ambient( $!line ); # not pod
-                                         }
-                                     }
+            when /<Pod6::directive>/ { self.parse_directive; } # '=xx :cc'  /
+            when /<Pod6::extra>/     { self.parse_extra; }     # '=    :cc' /
+            when /<Pod6::blank>/     { self.parse_blank; }     # '' or ' '  /
+            default { if @!podblocks { self.parse_content; }   # 'xx' or ' xx'
+                      else           { self.ambient($!line); } # outside pod
+            }
         }
     }
 
@@ -143,31 +142,30 @@ class Pod::Parser {
             when / <Pod6::code>     / { self.parse_code(     $/ ); }
             when / <Pod6::comment>  / { self.parse_comment(  $/ ); }
             when / <Pod6::head>     / { self.parse_head(     $/ ); }
-            when / <Pod6::input>    / { }
-            when / <Pod6::item>     / { }
-            when / <Pod6::nested>   / { }
-            when / <Pod6::output>   / { }
-            when / <Pod6::table>    / { }
-            when / <Pod6::DATA>     / { }
-            when / <Pod6::END>      / { }
+            when / <Pod6::input>    / { } # /
+            when / <Pod6::item>     / { } # /
+            when / <Pod6::nested>   / { } # /
+            when / <Pod6::output>   / { } # /
+            when / <Pod6::table>    / { } # /
+            when / <Pod6::DATA>     / { } # /
+            when / <Pod6::END>      / { } # /
             # Keywords from Synopsis 26 section "Block pre-configuration"
-            when / <Pod6::encoding> / { }
+            when / <Pod6::encoding> / { } # /
             when / <Pod6::config>   / { self.parse_config(   $/ ); }
-            when / <Pod6::use>      / { }
+            when / <Pod6::use>      / { } # /
             # Keywords from Perl 5 POD
-            when / <Pod6::p5pod>    / { self.parse_p5pod; }
-            when / <Pod6::p5over>   / { }
-            when / <Pod6::p5back>   / { }
-            when / <Pod6::p5cut>    / { self.parse_p5cut;}
+            when / <Pod6::p5pod>    / { self.parse_p5pod; } # /
+            when / <Pod6::p5over>   / { } # /
+            when / <Pod6::p5back>   / { } # /
+            when / <Pod6::p5cut>    / { self.parse_p5cut;} # /
             default                   {
                                         # self.parse_user_defined;
                                       } # /
         } 
     }
 
-    method parse_configuration( Str $line ) # from parse_line
-    {
-        if $!context ne 'BLOCK_DECLARATION' {
+    method parse_extra { # from parse_line
+        if $!context != Context::BLOCK_DECLARATION {
             warning "extended configuration without marker";
         };
         # TODO: parse various pair notations
@@ -175,29 +173,27 @@ class Pod::Parser {
 
     method parse_blank { # from parse_line
         if @!podblocks { # in some POD block
-            my Int $topindex = @!podblocks.end;
-            my Str $style = @!podblocks[$topindex].style; # does Rakudo [*-1] yet?
+            my Str $style = @!podblocks[*-1].style;
             if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' | 'FORMATTING_CODE' ) {
                 # TODO: consider loop for possible nested formatting codes still open
-                self.set_context( 'AMBIENT' ); # close paragraph block
+                self.set_context( Context::AMBIENT ); # close paragraph block
             }
-            elsif @!podblocks[$topindex].typename eq 'code' {
-                self.content( @!podblocks[$topindex], '' ); # blank line is part of code
+            elsif @!podblocks[*-1].typename eq 'code' {
+                self.content( @!podblocks[*-1], '' ); # blank line is part of code
             }
         }
         else { self.ambient( '' ); } # a non POD part of the file
     }
 
-    method parse_content( Str $line ) # from parse_line
-    # method parse_content            # from parse_line
-    {
-        self.set_context( 'POD_CONTENT' );
+    method parse_content { # from parse_line
+        self.set_context( Context::POD_CONTENT );
         # (hopefully not premature) optimization: format only if contains < or > chars.
-        $!line = $line;
-        my Int $topindex = @!podblocks.end;
-        if $!line ~~ / [<lt>|<gt>|'«'|'»'] / {self.parse_formatting;}
-        else {self.content(@!podblocks[$topindex],$line);}  # [*-1]
-        # else {self.content(@!podblocks[$topindex],$!line);} # [*-1]
+        if $!line ~~ / <lt> | <gt> | '«' | '»' / {
+            self.parse_formatting;
+        }
+        else {
+            self.content( @!podblocks[*-1], $!line );
+        }
     }
 
     method parse_formatting { # from parse_content and parse_head
@@ -208,60 +204,62 @@ class Pod::Parser {
             my Str $format_begin;
             my Str $angle_L; #  « | < | << | <<< etc char(s) found
             my Str $angle_R; #  >>> | >> | > | »     char(s) to find
+            # For the "no formatting codes found" (most common) case, set
+            # these character pointers to beyond the end of the content.
             my Int $format_begin_pos = $content.chars;
             my Int $angle_L_pos      = $content.chars;
             my Int $angle_R_pos      = $content.chars;
-            my Str $output_buffer    = $content; # assuming all formatting done
             my Int $chars_to_delete  = $content.chars;
-            # Check for possible formatting codes currently open
-            if @!podblocks {
-                # TODO: check that it is correct to look only at the
-                # innermost block (last pushed).
-                # What if '=begin comment' is nested inside a format
-                # block (S26)?
-                my Int $topindex = @!podblocks.end;
-                my PodBlock $topblock = @!podblocks[$topindex]; # [*-1]
-              # $*ERR.say: "TOPBLOCK: {$topblock.WHAT}";
-                if $topblock.style eq 'FORMATTING_CODE' {
-                    # Found an open formatting code. Get its delimiters.
-                    $angle_L     = $topblock.config<angle_L>;
-                    $angle_R     = $topblock.config<angle_R>;
-                    # Search for possible nested delimiters.
-                    # eg this 'C< if $a < $b or $a > $b >' is all code.
-                    if $content.index( $angle_L ) {
-                        $angle_L_pos = $content.index( $angle_L );
-                    }
-                    if $content.index( $angle_R ) {
-                        $angle_R_pos = $content.index( $angle_R );
-                    }
+            my Str $output_buffer    = $content; # assuming all formatting done
+            # Check for possible formatting codes opened in previous content
+            if @!podblocks[*-1].style eq 'FORMATTING_CODE' {
+                # Found an open formatting code. Get its delimiters.
+                # TODO: check that it is enough to look only at the
+                # innermost block (last pushed). For example, what if
+                # '=begin comment' is nested inside a format block (S26)?
+                $angle_L = @!podblocks[*-1].config<angle_L>;
+                $angle_R = @!podblocks[*-1].config<angle_R>;
+                # Search for possible nested delimiters.
+                # eg this 'C< if $a < $b or $a > $b >' is all code.
+                #      $angle_L_pos ^          ^ $angle_R_pos
+                if $content.index( $angle_L ) {
+                    $angle_L_pos = $content.index( $angle_L );
+                }
+                if $content.index( $angle_R ) {
+                    $angle_R_pos = $content.index( $angle_R );
                 }
             }
+            # Search for a formatting code opening sequence eg 'C<'
             # TODO: rewrite pattern with variable list of allowed codes
-          # if $content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+|'«')(.*) / {
+            # TODO: also allow French quotes on formatting codes
+            #if$content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+|'«')(.*) / {
             if $content ~~ / (.*?)(<[BCDEIKLMNPRSTUVXZ]>)(\<+)(.*) / {
-                my Str $before      = ~ $0;
-                $format_begin       = ~ $1;
-                my Str $new_angle_L = ~ $2;
-                my Str $after       = ~ $3;
-                $format_begin_pos   = $1.from;
+                # captures    $0   $1                     $2   $3
+                # Found a formatting code opening sequence
+                my Str $before          = ~ $0;
+                $format_begin           = ~ $1;
+                my Str $new_angle_L     = ~ $2;
+                my Str $after           = ~ $3;
+                $format_begin_pos       = $1.from;
                 my Int $format_end_pos  = $2.to;
-                if $format_begin_pos < $angle_L_pos and $format_begin_pos < $angle_R_pos {
-                    my Str $new_angle_R = $new_angle_L eq '«' ?? '»' !!
-                        '>' x $new_angle_L.chars;
-                    my PodBlock $formatcodeblock .= new(
-                        typename => ~ $format_begin,
-                        style    => 'FORMATTING_CODE',
-                        config   => { 'angle_L' => ~ $new_angle_L,
-                                      'angle_R' => ~ $new_angle_R }
-                    );
-                    if $format_begin eq 'L' {
-                        parse_link( $/, $formatcodeblock );
-                    }
+                if $format_begin_pos < $angle_L_pos and
+                   $format_begin_pos < $angle_R_pos {
+                    # This formatting code is leftmost in the content
                     if $format_begin_pos > 0 {
                         # There is text before the new formatting code
                         my Str $before = $content.substr( 0, $format_begin_pos );
-                        my Int $topindex = @!podblocks.end;
-                        self.content( @!podblocks[$topindex], $before ); # [*-1]
+                        self.content( @!podblocks[*-1], $before );
+                    }
+                    my Str $new_angle_R = $new_angle_L eq '«' ?? '»' !!
+                        '>' x $new_angle_L.chars;
+                    my PodBlock $formatcodeblock .= new(
+                        typename => $format_begin,
+                        style    => 'FORMATTING_CODE',
+                        config   => { 'angle_L' => $new_angle_L,
+                                      'angle_R' => $new_angle_R }
+                    );
+                    if $format_begin eq 'L' {
+                        parse_link( $/, $formatcodeblock );
                     }
                     @!podblocks.push( $formatcodeblock );
                     self.fmt_beg( $formatcodeblock );
@@ -269,7 +267,15 @@ class Pod::Parser {
                     $output_buffer = "";
                 }
             }
-            if $angle_L_pos < $format_begin_pos and $angle_L_pos < $angle_R_pos {
+            # Look for the same delimiter as the innermost format uses,
+            # such as C<< some time earlier,
+            # and then $a<<=1; $b>>=1; >>
+            if $angle_L_pos < $format_begin_pos and
+               $angle_L_pos < $angle_R_pos {
+                # the opening delimiter was first, so remember it on the
+                # stack. That way the first closing delimiter will
+                # balance this one, and the second closing delimiter
+                # will end the formatting code.
                 my PodBlock $formatcodeblock .= new(
                     typename => "NESTED_ANGLE_BRACKET",
                     style    => 'FORMATTING_CODE',
@@ -280,14 +286,19 @@ class Pod::Parser {
                 $output_buffer = $content.substr( 0, $angle_L_pos + $angle_L.chars );
                 $chars_to_delete = $angle_L_pos + $angle_L.chars;
             }
-            elsif $angle_R_pos < $format_begin_pos and $angle_R_pos < $angle_L_pos {
+            elsif $angle_R_pos < $format_begin_pos and
+                  $angle_R_pos < $angle_L_pos {
+                # First in content is the current closing delimiter.
+                # It will either balance an opening delimiter inside the
+                # formatting code, or mark the end of the formatting code.
                 my PodBlock $topblock = pop @!podblocks;
-              # $*ERR.say: "TOPBLOCK:" ~ $topblock.perl;
                 my Str $typename = $topblock.typename;
                 if $typename eq "NESTED_ANGLE_BRACKET" {
+                    # The closing delimiter balances a nested opening delimiter
                     $output_buffer = $content.substr( 0, $angle_R_pos + $angle_R.chars );
                 }
                 else {
+                    # The closing delimiter ends the formatting code
                     $output_buffer = $content.substr( 0, $angle_R_pos );
                     my Int $topindex = @!podblocks.end;
                     self.content( @!podblocks[$topindex], $output_buffer ); # [*-1]
@@ -296,9 +307,8 @@ class Pod::Parser {
                 }        
                 $chars_to_delete = $angle_R_pos + $angle_R.chars;
             }
-            if $output_buffer.chars > 0 { # TODO: if $output_buffer.chars
-                my Int $topindex = @!podblocks.end;
-                self.content( @!podblocks[$topindex], $output_buffer ); # [*-1]
+            if $output_buffer.chars > 0 {
+                self.content( @!podblocks[*-1], $output_buffer );
             }
             $content = $content.substr( $chars_to_delete );
         }
@@ -310,11 +320,11 @@ class Pod::Parser {
         my Str $s = ~ $match[3];
         my Int $index = $s.index( $angle_R );
         my Str $link = $s.substr( 0, $index );
-        if $link ~~ Pod6_link {
-            $podblock.config<alternate> = ~ $/<alternate>;
-            $podblock.config<scheme>    = ~ $/<scheme>;
-            $podblock.config<external>  = ~ $/<external>;
-            $podblock.config<internal>  = ~ $/<internal>;
+        if $link ~~ / <Pod6_link::TOP> / {
+            $podblock.config<alternate> = ~ $/<Pod6_link::TOP><alternate>;
+            $podblock.config<scheme>    = ~ $/<Pod6_link::TOP><scheme>;
+            $podblock.config<external>  = ~ $/<Pod6_link::TOP><external>;
+            $podblock.config<internal>  = ~ $/<Pod6_link::TOP><internal>;
             # tweak some of the link fields
             $podblock.config<scheme>   .= subst( / ^ $ /, {'doc'} ); # no scheme becomes doc
             $podblock.config<scheme>   .= subst( / \: $ /, { '' } ); # remove : from scheme:
@@ -323,43 +333,56 @@ class Pod::Parser {
     }
 
     method parse_begin( Match $match ) { # from parse_directive
-        # $*ERR.say: "MATCH: {$match.WHAT}";
         my Str $typename = ~ $match<Pod6::begin><typename>;
-        self.set_context( 'AMBIENT' ); # finish any previous block
-        self.set_context( 'BLOCK_DECLARATION' );
-        my Int $topindex = @!podblocks.end;
-        @!podblocks[$topindex].typename = $typename;  # [*-1] eventually
-        @!podblocks[$topindex].style    = 'DELIMITED';# [*-1]
+        self.set_context( Context::AMBIENT ); # finish any previous block
+        self.set_context( Context::BLOCK_DECLARATION ); # push a protoblock
+        @!podblocks[*-1].typename = $typename;  
+        @!podblocks[*-1].style    = 'DELIMITED';
         given $typename {
-            when 'pod' {
-                @!podblocks[$topindex].config<version> = 6; # [*-1]
-            }
-            when 'code' { $!codeblock = Bool::True; $!wrap_enable = Bool::False; }
+            when 'pod'  { @!podblocks[*-1].config<version> = 6; }
+            when 'code' { $!codeblock   = Bool::True;
+                          $!wrap_enable = Bool::False; }
         }
     }
 
     method parse_end( Match $match ) { # from parse_directive
-        self.set_context( 'AMBIENT' );
-        my PodBlock $topblock = pop @!podblocks;
-        my Str $poptypename = $topblock.typename;
+        self.set_context( Context::AMBIENT ); # pops PARAGRAPH style block
         my Str $endtypename = ~ $match<Pod6::end><typename>;
-        if ( $poptypename ne $endtypename ) {
-            # TODO: change to non fatal diagnostic
-            die "=end expected $poptypename, got $endtypename";
+        if $endtypename ne @!podblocks[*-1].typename { # simple nesting error?
+            # oops! either badly nested Pod or a bug in Parser.pm.
+            # Does the Pod merely lack the innermost =end?
+            if @!podblocks.elems >= 2 and @!podblocks[*-2].typename eq $endtypename {
+                # assume a forgotten =end and forgive the error
+                my $forgotten = pop @!podblocks;
+                self.warning( "you probably forgot '=end " ~
+                  "{$forgotten.typename}' before '=end $endtypename'" );
+            }
         }
-        if $endtypename eq 'code' { $!codeblock = Bool::False; $!wrap_enable = Bool::True; }
-        self.blk_end( $topblock );
+        if $endtypename eq @!podblocks[*-1].typename { # correct nesting
+            self.blk_end( pop @!podblocks );
+        }
+        else { # a worse nesting error, so leave the stack alone.
+            self.warning(   "the '=end $endtypename' " ~
+                "has no matching '=begin $endtypename'" );
+        }
+        if $endtypename eq 'code' {
+            $!codeblock   = Bool::False;
+            $!wrap_enable = Bool::True;
+        }
     }
 
     method parse_for( Match $match ) { # from parse_directive
-        self.set_context( 'BLOCK_DECLARATION' );
-        my Int $topindex = @!podblocks.end;
-        @!podblocks[$topindex].typename = ~ $match<Pod6::for><typename>; # [*-1]
-        @!podblocks[$topindex].style    = 'ABBREVIATED';         # [*-1]
+        self.set_context( Context::BLOCK_DECLARATION );
+        @!podblocks[*-1].typename = ~ $match<Pod6::for><typename>;
+        @!podblocks[*-1].style    = 'ABBREVIATED';
     }
 
-    method parse_code( Match $match ) # from parse_directive
-    {
+    method parse_code( Match $match ) { # from parse_directive
+        say "STUB CODE";
+    }
+
+    method parse_comment( Match $match ) { # from parse_directive
+        say "STUB COMMENT";
     }
 
     method parse_head( Match $match ) { # from parse_directive
@@ -367,39 +390,34 @@ class Pod::Parser {
         if + @!podblocks == 0 { self.parse_p5pod; } # inserts =pod version=>5
 
         my Str $heading = ~ $match<Pod6::head><heading>;
-        self.set_context( 'AMBIENT' );        
-        self.set_context( 'BLOCK_DECLARATION' ); # pushes a new empty block onto the stack
+        self.set_context( Context::AMBIENT );        
+        self.set_context( Context::BLOCK_DECLARATION ); # pushes a new empty block onto the stack
         my Int $topindex = @!podblocks.end;
-        @!podblocks[$topindex].typename = 'head';               # [*-1]
-        @!podblocks[$topindex].style    = 'POD_BLOCK';          # [*-1]
-        @!podblocks[$topindex].config<level> = ~ $match<Pod6::head><level>; # [*-1]
-        self.set_context( 'POD_CONTENT' ); # this one won't add a PARAGRAPH block
+        @!podblocks[*-1].typename = 'head';
+        @!podblocks[*-1].style    = 'POD_BLOCK';
+        @!podblocks[*-1].config<level> = ~ $match<Pod6::head><level>;
+        self.set_context( Context::POD_CONTENT ); # this one won't add a PARAGRAPH block
         $!line = ~ $match<Pod6::head><heading>;
         self.parse_formatting;
         self.blk_end( pop @!podblocks ); # the 'head'
-        self.set_context( 'AMBIENT' );
-    }
-
-    method parse_comment( Match $match ) { # from parse_directive
+        self.set_context( Context::AMBIENT );
     }
 
     method parse_config( Match $match ) { # from parse_directive
-        my Str $typename = ~ $match<Pod6::config><typename>;
-#       my $options  = $match<Pod6::config><option>[0];
-#       self.emit( "=config $typename $options" );
+        say "STUB CONFIG";
     }
 
     method parse_p5pod { # from parse_directive
-        self.set_context( 'AMBIENT' ); # finish any previous block
-        self.set_context( 'BLOCK_DECLARATION' );
-        my Int $topindex = @!podblocks.end;
-        @!podblocks[$topindex].typename        = 'pod';       # [*-1] eventually
-        @!podblocks[$topindex].style           = 'DELIMITED'; # [*-1]
-        @!podblocks[$topindex].config<version> = 5;           # [*-1]
-        self.set_context( 'AMBIENT' );              # issues blk_beg
+        self.set_context( Context::AMBIENT ); # finish any previous block
+        self.set_context( Context::BLOCK_DECLARATION ); # pushes protoblock
+        @!podblocks[*-1].typename        = 'pod';
+        @!podblocks[*-1].style           = 'DELIMITED';
+        @!podblocks[*-1].config<version> = 5;
+        self.set_context( Context::AMBIENT );           # issues blk_beg
     }
+
     method parse_p5cut { # from parse_directive
-        self.set_context( 'AMBIENT' );
+        self.set_context( Context::AMBIENT );
         my PodBlock $topblock = pop @!podblocks;
         if ( $topblock.typename ne 'pod' ) {
             # TODO: change to non fatal diagnostic
@@ -408,21 +426,19 @@ class Pod::Parser {
         self.blk_end( $topblock );
     }
 
-    method set_context( Str $new_context ) {
+    method set_context( Context $new_context ) {
         # manages the emission of context switch function calls
         # depending on the difference between old and new context types.
-        my Str $old_context = $!context;
-        if ( $new_context ne $old_context ) {
-            # $*ERR.say: "CONTEXT from $old_context to $new_context";
-            given $old_context {
-                when 'AMBIENT' { }
-                when 'BLOCK_DECLARATION' {
-                    my Int $topindex = @!podblocks.end;
-                    self.blk_beg( @!podblocks[$topindex] ); # [*-1]
+#       say "CONTEXT: from {$!context} to $new_context";
+        if ( $new_context ne $!context ) {
+            given $!context {
+                when 0 { }                  # Context::AMBIENT
+                when 1 {                    # Context::BLOCK_DECLARATION
+#                   my Int $topindex = @!podblocks.end;
+                    self.blk_beg( @!podblocks[*-1] );
                 }
-                when 'POD_CONTENT' {
-                    my Int $topindex = @!podblocks.end;
-                    my Str $style = @!podblocks[$topindex].style; # [*-1]
+                when 2 {                    # Context::POD_CONTENT
+                    my Str $style = @!podblocks[*-1].style;
                     if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' ) {
                         my PodBlock $top = pop @!podblocks;
                         self.blk_end( $top );
@@ -430,35 +446,26 @@ class Pod::Parser {
                 }
                 default {
                     # TODO: make better diagnostic and add unit test
-                    die "unknown old context: $old_context";
+#                   die "unknown old context: $sOld_context";
                 }
             }
             given $new_context {
-                when 'AMBIENT' {
+                when 0 {                    # Context::AMBIENT
                     if @!podblocks {
-                        my Int $topindex = @!podblocks.end;
-                        if @!podblocks[$topindex].style ne 'DELIMITED' { # ABBREVIATED or POD_BLOCK
-                            self.blk_end( @!podblocks[$topindex] ); # [*-1]
+                        if @!podblocks[*-1].style ne 'DELIMITED' {
+                            # ABBREVIATED or POD_BLOCK
+                            self.blk_end( @!podblocks[*-1] );
                         }
                     }
                 }
-                when 'BLOCK_DECLARATION' {
-                    my PodBlock $newpodblock .= new(
-                        typename => undef,
-                        style    => undef,
-                        config   => { }
-                    );
-                    @!podblocks.push( $newpodblock );
+                when 1 {                    # Context::BLOCK_DECLARATION
+                    @!podblocks.push( PodBlock.new );
                 }
-                when 'POD_CONTENT' {
+                when 2 {                    # Context::POD_CONTENT
                     # if the only containing block is the outer 'pod',
                     # wrap this content in a PARAGRAPH style 'para' or 'code'
                     if @!podblocks == 1 {
-                        $!codeblock = ? ( $!line ~~ /^<sp>/ ); # convert Match to Bool
-                        my %newblock = (
-                            'typename' => $!codeblock ?? 'code' !! 'para',
-                            'style' => 'PARAGRAPH',
-                            'config' => {} );
+                        $!codeblock = ? ( $!line ~~ / ^ <sp> / );
                         my PodBlock $newpodblock .= new(
                             typename => $!codeblock ?? 'code' !! 'para',
                             style    => 'PARAGRAPH',
@@ -470,14 +477,12 @@ class Pod::Parser {
                 }
                 default {
                     # TODO: make better diagnostic and add unit test
-                    die "unknown new context: $old_context";
+#                   die "unknown new context: $sNew_context";
                 }
             }
             $!context = $new_context;
         }
     }
-
-    method emit( Str $text ) { $!outfile.say: $text; }
 
     method buf_print( Str $text ) {
         if $!buf_out_enable {
@@ -515,13 +520,9 @@ class Pod::Parser {
         }
     }
 
-    sub config( PodBlock $b ) {
-        my @keys = $b.config.keys.sort; my Str $r = '';
-        for @keys -> Str $key {
-            $r ~= " $key=>{$b.config{$key}}";
-        }
-        return $r;
-    }
+    method emit( Str $text ) {           say  $text; }
+#   method emit( Str $text ) { $!outfile.say: $text; }
+
     # override these in your subclass to make a custom translator
     method doc_beg(Str $name)   { self.emit("doc beg $name"); }
     method doc_end              { self.emit("doc end"); }
@@ -531,7 +532,14 @@ class Pod::Parser {
     method fmt_end(PodBlock $f) { self.emit("fmt end  {$f.typename}...>"); }
     method content(PodBlock $b,Str $t){ self.emit("content $t"); }
     method ambient(Str $t)      { self.emit("ambient $t"); }
-    method warning(Str $t)      { self.emit("warning $t"); }
+    method warning(Str $t)      { self.emit("warning - $t"); }
+    sub config( PodBlock $b ) {
+        my @keys = $b.config.keys.sort; my Str $r = '';
+        for @keys -> Str $key {
+            $r ~= " $key=>{$b.config{$key}}";
+        }
+        return $r;
+    }
 }
 
 =begin pod
@@ -705,13 +713,7 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head2 Rakudo dependencies
-Test with 'make PARROT_REV=35308 testrev' and so on, see Makefile.
-35308 good (and $*ERR good until r35310, r35311 bad (RT#62540))
-35309 good but may segfault
-35310 in text.pm->text.pir compiler returned NULL ByteCode '/home/martin/perl6-examples/lib/Pod/../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found. Check the type and number of the arguments
-35338 Method 'postcircumfix:{ }' not found for invocant of class 'Failure'
-35568 Type mismatch in assignment. prove -> file_or_dir -> is_file
-35890-35894 Method 'ACCEPTS' not found for invocant of class 'PGE;Match'
+Tested OK with Parrot/Rakudo revisions 36101-36119 (as at 2009-01-28).
 
 =head1 SEE ALSO
 The Makefile in the Pod::Parser directory for build and test procedures.

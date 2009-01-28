@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl6
-use Test;
+use Test::Differences;
 use Pod::to::man;
 
 class Test::Parser is Pod::to::man {
@@ -8,7 +8,7 @@ class Test::Parser is Pod::to::man {
     method parse( $self: $text ) {
         @.out = ();
         self.doc_beg( 'test' );
-        for $text.split( "\n" ) -> $line { self.parse_line( $line ); }
+        for $text.split( "\n" ) -> $line { $!line = $line; self.parse_line; }
         self.doc_end;
         return @.out;
     }
@@ -32,8 +32,7 @@ my $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
 document 01 plain text
 .\\" test end.];
 my $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, "p01-plain.pod simplest text" );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, "p01-plain.pod simplest text" );
 
 $pod = slurp('t/p02-para.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -51,8 +50,7 @@ The third paragraph is declared in the abbreviated style.
 The fourth paragraph is declared in the delimited style.
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p02-para.pod paragraphs' );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, 'p02-para.pod paragraphs' );
 
 $pod = slurp('t/p03-head.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -68,8 +66,7 @@ The specification for Perl 6 POD is Synopsis 26, which can be found at
 http://perlcabal.org/syn/S26.html
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p03-head.pod =head1 and =head2' );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, 'p03-head.pod =head1 and =head2' );
 
 $pod = slurp('t/p04-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -93,8 +90,7 @@ say 'second';
 .fi
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p04-code.pod code paragraphs' );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, 'p04-code.pod code paragraphs' );
 
 $pod = slurp('t/p05-pod5.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -110,8 +106,7 @@ p05-pod5.pod - Perl 5 Plain Old Document to test backward compatibility
 This document starts with a marker that indicates POD 5 and not POD 6.
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p05-pod5.pod legacy compatibility' );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, 'p05-pod5.pod legacy compatibility' );
 
 $pod = slurp('t/p07-basis.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -134,8 +129,7 @@ Fourth, \fBa basis phrase that is so long that it should be word wrapped in
 whatever output format it is rendered\fR.
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, "p07-basis.pod format B<basis>" );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, "p07-basis.pod format B<basis>" );
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -158,8 +152,7 @@ characters.
 Multiple angles \f(CW" $a = ( $b > $c );"\fR also delimit.
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, "p08-code.pod format C<code>" );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, "p08-code.pod format C<code>" );
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = qq[.TH test 6 "$docdate" "Perl 6" "Plain Old Documentation"] ~ q[
@@ -205,6 +198,5 @@ To treat his chronic \fIlexiphania\fR the doctor prescribed
 The Perl Journal (\fI1087-903X\fR).
 .\" test end.];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, "p13-link.pod format L<link>" );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, "p13-link.pod format L<link>" );
 

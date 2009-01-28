@@ -34,8 +34,8 @@ sub option( Str $arg ) {
 }
 
 sub file_or_dir( Str $arg ) {
-    if   is_file( $arg ) { push @files, $arg; }
-    elsif is_dir( $arg ) {
+    if    $arg ~~ :f { push @files, $arg; }
+    elsif $arg ~~ :d {
         my Str $dirname = $arg;
 	    if substr( $arg, -1, 1 ) eq '/' { # does directory name end with '/'?
 	        $dirname = substr( $arg, 0, $arg.chars - 1); # remove the '/'
@@ -47,9 +47,7 @@ sub file_or_dir( Str $arg ) {
         if $recurse {
             my @names = glob( "$dirname/*" );
             for @names -> Str $name {
-                if is_dir( $name ) {
-                    file_or_dir( $name );
-                }
+                if $name ~~ :d { file_or_dir( $name ); }  # recurse
             }
         }
     }
@@ -62,19 +60,6 @@ sub help() {
     say "  -h  --help                 display this help";
 }
 
-# inefficient workaround - remove when Rakudo gets $name.:f or $name ~~ :f
-# fixed by masak++ in r35338 but that revision dies as documented in BUGS
-sub is_file( Str $name ) {
-    my Str $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
-    return ( substr( $result, 0, 1 ) eq '-' );
-}
-
-# inefficient workaround - remove when Rakudo gets $name.:d or $name ~~ :d
-sub is_dir( Str $name ) {
-    my Str $result = Test::Harness::qx( "ls -ld $name 2>/dev/null" );
-    return ( substr( $result, 0, 1 ) eq 'd' );
-}
-
 # inefficient workaround - remove when Rakudo gets a glob function
 sub glob( Str $pattern ) {
     my Str $tempfile = "/tmp/prove.tmp";
@@ -83,7 +68,7 @@ sub glob( Str $pattern ) {
     my @filenames = slurp($tempfile).split("\n");
     # $*ERR.say: "FILENAMES: {@filenames.perl}";
     # slurp may append an empty line that is not in the file
-    if @filenames[@filenames.end] eq "" { pop @filenames; } # [*-1] in newer rakudo
+    if @filenames[*-1] eq "" { pop @filenames; }
     unlink $tempfile;
     return @filenames;
 }
@@ -115,17 +100,7 @@ displays the results.
 Replace is_file() and is_dir() with :f and :d as added by masak++ in r35338.
 
 =head1 BUGS
-35309 good
-35310 t/01-parser.t t/02-text.t and t/03-man.t began to die with
-"compiler returned NULL ByteCode '../Pod/Parser.pir' - The opcode 'getattribute_p_ic_sc' (getattribute<3>) was not found. Check the type and
-number of the arguments" during .pir precompile of to/text.pm
-
-In a later revision (on or before r35338) another error began to occur:
-'Cannot write to a filehandle not opened for write'
-during parse_begin() in Pod/Parser.pm
-
- To test the Pod suite check out an older Parrot like this:
- make PARROT_REV=35300 testrev
+Tested OK with Parrot/Rakudo revisions 36101-36119 (as at 2009-01-28).
 
 =head1 SEE ALSO
 Run C<perldoc prove> to see the Perl 5 L<doc:prove> documentation.

@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl6
-use Test;
+use Test::Differences;
 use Pod::Parser;
 
 plan 8;
@@ -15,7 +15,7 @@ class Test::Parser is Pod::Parser {
         my @lines = $text.split( "\n" );
         @!out = ();
         self.doc_beg( 'test' );
-        for @lines -> $line { self.parse_line( $line ); }
+        for @lines -> Str $line { $!line = $line; self.parse_line; }
         self.doc_end;
         return @!out;
     }
@@ -37,8 +37,7 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
 my Str $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p01-plain.pod simplest text' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p01-plain.pod simplest text' );
 
 $pod = slurp('t/p02-para.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = "doc beg test
@@ -60,8 +59,7 @@ blk end para DELIMITED
 blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p02-para.pod paragraphs' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p02-para.pod paragraphs' );
 
 $pod = slurp('t/p03-head.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = "doc beg test
@@ -85,8 +83,7 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p03-head.pod =head1 and =head2' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p03-head.pod =head1 and =head2' );
 
 $pod = slurp('t/p04-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = "doc beg test
@@ -114,8 +111,7 @@ blk end code DELIMITED
 blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p04-code.pod code paragraphs' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p04-code.pod code paragraphs' );
 
 $pod = slurp('t/p05-pod5.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = q(doc beg test
@@ -149,8 +145,7 @@ blk end pod DELIMITED
 ambient 
 doc end);
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p05-pod5.pod legacy compatibility' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p05-pod5.pod legacy compatibility' );
 
 $pod = slurp('t/p07-basis.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = "doc beg test
@@ -199,8 +194,7 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p07-basis.pod format B<basic>' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p07-basis.pod format B<basic>' );
 
 $pod = slurp('t/p08-code.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = q[doc beg test
@@ -241,8 +235,7 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end];
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p08-code.pod format C<code>' );
-#$*ERR.say: "OUTPUT: $output";
+eq_or_diff( $output, $expected, 'p08-code.pod format C<code>' );
 
 $pod = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
 $expected = "doc beg test
@@ -381,6 +374,5 @@ blk end para PARAGRAPH
 blk end pod DELIMITED
 doc end";
 $output = $p.parse( $pod ).join("\n");
-is( $output, $expected, 'p13-link.pod format L<link>' );
-#$*ERR.say: "OUTPUT:\n$output";
+eq_or_diff( $output, $expected, 'p13-link.pod format L<link>' );
 

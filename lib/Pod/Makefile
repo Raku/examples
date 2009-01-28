@@ -1,17 +1,13 @@
 # Makefile for the Pod utilities Pod::Parser and Pod::to::whatever
 #
 # Try it out: copy and execute the following without the leading '# '
-# cd /tmp; rm -rf parrot perl6-examples # (or your dir, eg /usr/masak/junk)
+# cd /tmp; rm -rf perl6-examples # (or your dir, eg /usr/masak/junk)
 # git clone git://github.com/eric256/perl6-examples.git
-# svn checkout --revision 35309 http://svn.perl.org/parrot/trunk parrot
-# #                       ^^^^^ (your sys latest good rev in Parser.pm)
-# cd /tmp/parrot;perl Makefile.PL;make;make perl6;cd /tmp
-# cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/tmp/parrot test
-# alias perl6=/tmp/parrot/languages/perl6/perl6; cd /tmp/perl6-examples/lib
+# cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/your/parrot test
+# alias perl6=/your/parrot/languages/perl6/perl6; cd /tmp/perl6-examples/lib
 # perl6 ../bin/perldoc Pod/Parser.pm
 # perl6 ../bin/pod2text Pod/to/text.pm
 # perl6 ../bin/pod2xhtml Pod/to/xhtml.pm
-# # Or 'make PARROT_REV=HEAD PARROT_DIR=/tmp/parrot testrev' # new bugs.
 #
 # Default paths assume that parrot/ and perl6-examples/ are in the same
 # parent directory. Override with Configuration variables: below.
@@ -64,8 +60,8 @@ PARROT       = $(PARROT_DIR)/parrot
 PERL6_DIR    = $(PARROT_DIR)/languages/perl6
 # in Parrot 1.0 PERL6_DIR will be outside of PARROT_DIR (fly the nest).
 PERL6_PBC    = $(PERL6_DIR)/perl6.pbc
-#PERL6       = $(PERL6_DIR)/perl6     # causes segfaults
-PERL6        = $(PARROT) $(PERL6_PBC)
+PERL6        = $(PERL6_DIR)/perl6     # may cause occasional segfaults
+#PERL6       = $(PARROT) $(PERL6_PBC) # may cause occasional segfaults
 PARROT_REV   = HEAD
 EXAMPLES_DIR = ../..
 EXAMPLES_BIN = $(EXAMPLES_DIR)/bin
@@ -75,7 +71,8 @@ all: precompile
 
 precompile: Parser.pir to/text.pir to/man.pir to/xhtml.pir to/pod5.pir \
  to/pod6.pir \
- $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir
+ $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
+ $(PERL6LIB)/Test/Differences.pir
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir

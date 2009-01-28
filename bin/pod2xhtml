@@ -5,3 +5,8 @@ my Pod::to::xhtml $translator .= new;
 my Str $podfilename = @*ARGS[0];
 $translator.parse_file( $podfilename );
 
+=begin pod
+=head1 NAME
+pod2xhtml - executable launcher for Pod::to::xhtml
+=end pod
+
