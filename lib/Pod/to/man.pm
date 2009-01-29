@@ -20,7 +20,7 @@ class Pod::to::man is Pod::Parser
         $!undertext      = Bool::False;
         $!docname        = $name;        # default entire filename
         if $!docname ~~ /(.+)<dot>p<[lm]>$/ { $!docname = ~ $0; } # drop extension
-        if defined( $!manfile ) { $!outfile = $!manfile; } # $!outfile is a member of Pod6Parser
+        if defined( $!manfile ) { $!outfile = $!manfile; } # $!outfile is a member of Pod::Parser
         my $docdate = docdate( int(time) ); # TODO: replace with mtime when stat() works
         self.emit( ".TH $!docname 6 \"$docdate\" \"Perl 6\" \"Plain Old Documentation\"" );
         self.emit( ".nh"   ); # no hyphenation (broken words look ugly)
@@ -166,14 +166,14 @@ perldoc in Perl 6 (Rakudo):
 use v6;
 use Pod::to::man;
 if + @*ARGS == 0 {
-    $*ERR.say( "usage: rakudoc <filename>" );
+    $*ERR.say( "usage: perldoc <filename>" );
 }
 else {
     my Str $filename = @*ARGS[0];
     my Str $docname = $filename;
     $docname .= subst( / <dot> p<[lm]> $ /, {} ); # remove .pl, .pm suffixes
     $docname .= subst( / .* \/ /, {} ); # delete directory if exists before name
-    my Str $tempfilename = "/tmp/rakudoc.$docname.temp";
+    my Str $tempfilename = "/tmp/perldoc.$docname.temp";
     my Str $manprompt =
         "Perl 6 $docname line %lb ?Lof %L (?eEND:%Pb\\%.).";
     my Pod::to::man $parser .= new;
@@ -187,12 +187,12 @@ else {
 =end code
 or a shell command:
 =begin code
-perl6 -e'use Pod::to::man; Pod::to::man.new.parse_file(~ @*ARGS[0]);' lib/Pod/to/man.pm
+perl6 -e'use Pod::to::man;Pod::to::man.new.parse_file(@*ARGS[0]);' Pod/to/man.pm
 =end code
 
 =head1 DESCRIPTION
-The perldoc shell script uses this L<doc:Pod::to::man> to create the
-temporary nroff file displayed by the Unix L<man:man> command.
+The Perl 6 L<man:perldoc> shell script uses this L<doc:Pod::to::man> to
+create a temporary nroff file displayed by the Unix L<man:man> command.
 
 An attempt is being made to handle both Perl 6 and Perl 5 documentation.
 
@@ -208,10 +208,7 @@ The document date (docdate) should be when the source file was last
 edited. In the absence of stat() and localtime() functions, it is
 currently an approximation of today's date.
 
-L<RT#62030|http://rt.perl.org/rt3/Public/Bug/Display.html?id=62030> after
-r34090 Rakudo -e ignores command line arguments for @*ARGS,
-so the L<#SYNOPSIS> shell example above does not get the file name.
-Fixed in ??
+This Pod formatter depends on (the bugs in) L<doc:Pod::Parser>.
 
 =head1 SEE ALSO
 L<doc:Pod::Parser>, L<S26|http://perlcabal.org/syn/S26.html> (Perl 6 POD).

@@ -1,60 +1,55 @@
-# Makefile for the Pod utilities Pod::Parser and Pod::to::whatever
-#
-# Try it out: copy and execute the following without the leading '# '
+# Makefile for Pod::Parser and Pod::to::whatever utilities
+
+# Try it out (without the leading '# ', with a sensible /my/parrot):
 # cd /tmp; rm -rf perl6-examples # (or your dir, eg /usr/masak/junk)
 # git clone git://github.com/eric256/perl6-examples.git
-# cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/your/parrot test
-# alias perl6=/your/parrot/languages/perl6/perl6; cd /tmp/perl6-examples/lib
-# perl6 ../bin/perldoc Pod/Parser.pm
-# perl6 ../bin/pod2text Pod/to/text.pm
+# cd /tmp/perl6-examples/lib/Pod;make PARROT_DIR=/my/parrot test
+# alias perl6=/my/parrot/languages/perl6/perl6; cd /tmp/perl6-examples/lib
+# perl6 ../bin/pod2text  Pod/to/text.pm
+# perl6 ../bin/perldoc   Pod/to/man.pm
 # perl6 ../bin/pod2xhtml Pod/to/xhtml.pm
-#
-# Default paths assume that parrot/ and perl6-examples/ are in the same
-# parent directory. Override with Configuration variables: below.
 
-# Getting started: execute commands below without the initial # sign,
-# or edit them first into a shell script.
-# The following assumes a freshly installed Linux system such as Ubuntu.
-# If your system is already being used, skip commands you don't need.
-# Bugs appear in the source code occasionally ;) , for help connect to
-# irc.freenode.net and join the #perl6 channel, or read on...
-#
-# # if svn does not work (in Debian, Ubuntu and similar systems):
-# sudo apt-get --yes install subversion
-## # if git does not work (in Debian, Ubuntu and similar systems):
+# If you want to keep a more permanent perl6-examples tree, the default
+# paths in this Makefile assumes that parrot/ and perl6-examples/ use the
+# same base directory. Some people (they do not need to be named) have
+# odd directory layouts, and those are accommodated with the PARROT_DIR
+# option to the make command, described in Configuration variables: below.
+
+# Chat with the author (and other helpful people) on irc.freenode.net in
+# the #perl6 channel.
+
+# To install git on Debian, Ubuntu and similar systems:
 # sudo apt-get --yes install git-core
-#
-# Later, if you still have /tmp/parrot and /tmp/perl6-examples and other
-# people have updated the repositories, do:
-# cd /tmp/parrot;svn up;make realclean;perl Makefile.PL;make;make perl6
-# cd /tmp/perl6-examples;git pull;
 
-# Later still, if you improve ments (see perl6-examples/README) and
-# you have files, do:
-# cd /tmp/perl6-examples
-# git diff
-# git commit -a
+# To bring your perl6-examples up to date from the github repository:
+# cd perl6-examples     # from your base directory
+# git pull
+
+# To send your improvements to the repository, become a contributor
+# (see perl6-examples/README) and then do:
+# cd perl6-examples     # from your base directory
+# git diff              # to review what you have changed
+# git commit -a         # or git add <specific files>
 # git push
 
 # The above is minimal. See svn --help and git --help for more options.
 
+# Configuration variables:
+# Some people keep several parrots or just one in a special place.
+# Replace /my/parrot if it is not perl6-examples/../parrot:
+#   make PARROT_DIR=/stuff/my/parrot test
+
 # Bugs:
 # These Pod tools may give errors running with certain revisions of
 # Rakudo. Rakudo and the Pod tools are undergoing rapid development.
-# The most recent successfully tested Rakudo revision is Parrot r35300.
-# If you have problems with a later revision of Rakudo, try bisecting:
-#     make PARROT_REV=35300 testrev              # or make testrev
-# Bisect results of 'make PARROT_REV=nnnnn testrev':
-# Debian x86-32 35300 good
-# Debian x86-64 35309 good
-#               35311 t/01-parser.t....Null PMC access in get_string() current instr.: 'infix:ne'
+# The most recent successfully tested Rakudo revision is Parrot r36134.
+# If some revision of Rakudo seems faulty, try to bisect revisions:
+#   make PARROT_REV=36134 testrev            # full /tmp/parrot checkout
+#   make PARROT_REV=36097 PARROT_DIR=/tmp/parrot testrev # parrot update
 
-# RT#62376 notes that perl6 --target=pir fails and parrot perl6.pbc
-# --target=pir works. This Makefile has switched to the latter.
+# Very occasionally either 'perl6' or 'parrot perl6.pbc' segfault,
+# try the other PERL6 definition for a temporary alternative.
 
-# Configuration variables:
-# override one or more of these to adapt to local parrot and perl6-examples directories
-# eg: make PARROT_DIR=/stuff/my/parrot test
 PARROT_DIR   = ../../../parrot
 PARROT       = $(PARROT_DIR)/parrot
 PERL6_DIR    = $(PARROT_DIR)/languages/perl6
@@ -92,8 +87,8 @@ test: all $(PARROT)
 # in 'make PARROT_DIR=/path/to/parrot PARROT_REV=12345 test' the default
 # or overridden values interact as follows:
 #   PARROT_DIR   PARROT_REV   action
-#   omitted      omitted      uses whatever parrot you have under ../../..
-#   omitted      set          does svn update --revision nnnnn, then test
+#   omitted      omitted      use whatever parrot you have in ../../..
+#   omitted      set          do svn update --revision nnnnn, then test
 #   set          omitted      uses whatever parrot you have in /set/
 #   set          set          does svn checkout --revision nnnnn in /set/
 ifeq "$(PARROT_DIR)" "../../../parrot"
@@ -122,6 +117,7 @@ clean:
 	@find .       -name '*.pir'       -exec rm {} ';' # Parser.pir etc
 	@find ..      -name 'Test.pir'    -exec rm {} ';'
 	@find ../Test -name 'Harness.pir' -exec rm {} ';'
+	@find ../Test -name 'Differences.pir' -exec rm {} ';'
 	@find ../..   -name '*~'          -exec rm {} ';' # editor backups
 
 # List the targets to be made by users

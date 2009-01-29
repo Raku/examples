@@ -2,18 +2,18 @@
 use v6;
 use Pod::to::man;
 if + @*ARGS == 0 {
-    $*ERR.say( "usage: rakudoc <filename>" );
+    $*ERR.say( "usage: perldoc <filename>" );
 }
 else {
     my Str $filename = @*ARGS[0];
     my Str $docname = $filename;
     $docname .= subst( / <dot> p<[lm]> $ /, {} ); # remove .pl, .pm suffixes
     $docname .= subst( / .* \/ /, {} ); # delete directory if exists before name
-    my Str $tempfilename = "/tmp/rakudoc.$docname.temp";
+    my Str $tempfilename = "/tmp/perldoc.$docname.temp";
     my Str $manprompt =
         "Perl 6 $docname line %lb ?Lof %L (?eEND:%Pb\\%.).";
     my Pod::to::man $parser .= new;
-    my $tempfile = open( $tempfilename, :w );
+    my IO $tempfile = open( $tempfilename, :w );
     $parser.set_manfile( $tempfile );
     $parser.parse_file( $filename );
     $tempfile.close();
@@ -22,8 +22,15 @@ else {
 }
 
 =begin pod
+
 =head1 BUGS
 Paths based on @*INC (for example Pod::To::Man) are not resolved.
+
+=head2 Parrot and Rakudo dependency
+L<r35311> broke the $*OUT file handle that should be switched by the
+C<set_manfile()> in L<doc:Pod::to::man>, so a workaround is being
+developed.
+
 =head1 SEE ALSO
 L<doc:Pod::Parser>
 L<man:man(7)> L<man:man-pages(7)> PROMPTS in L<man:less(1)>

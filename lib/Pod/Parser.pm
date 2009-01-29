@@ -93,14 +93,17 @@ class Pod::Parser {
     has Int      $!margin_R;                    # last output column - default 79
     has Match    $!match;                       # result of $!line matching a regex
     has Bool     $!needspace;                   # would require ' ' if more text follows
+
+    # $*OUT broke in r35311, reported in RT#62540
     has IO       $!outfile;                     # could be replaced by select()
+
     has PodBlock @!podblocks;                   # stack of nested Pod blocks
     has Bool     $!wrap_enable;                 # do word wrap between margins
 
     method parse_file( Str $filename )
     {
         $!context        = Context::AMBIENT;
-        $!outfile        = $*OUT;     # for possible redirection to other files
+#       $!outfile        = $*OUT;     # for possible redirection to other files
         $!buf_out_line   = '';
         $!wrap_enable    = Bool::True;
         $!codeblock      = Bool::False;
@@ -300,8 +303,7 @@ class Pod::Parser {
                 else {
                     # The closing delimiter ends the formatting code
                     $output_buffer = $content.substr( 0, $angle_R_pos );
-                    my Int $topindex = @!podblocks.end;
-                    self.content( @!podblocks[$topindex], $output_buffer ); # [*-1]
+                    self.content( @!podblocks[*-1], $output_buffer );
                     $output_buffer = "";
                     self.fmt_end( $topblock );
                 }        
@@ -392,7 +394,7 @@ class Pod::Parser {
         my Str $heading = ~ $match<Pod6::head><heading>;
         self.set_context( Context::AMBIENT );        
         self.set_context( Context::BLOCK_DECLARATION ); # pushes a new empty block onto the stack
-        my Int $topindex = @!podblocks.end;
+#       my Int $topindex = @!podblocks.end;
         @!podblocks[*-1].typename = 'head';
         @!podblocks[*-1].style    = 'POD_BLOCK';
         @!podblocks[*-1].config<level> = ~ $match<Pod6::head><level>;
@@ -434,14 +436,12 @@ class Pod::Parser {
             given $!context {
                 when 0 { }                  # Context::AMBIENT
                 when 1 {                    # Context::BLOCK_DECLARATION
-#                   my Int $topindex = @!podblocks.end;
                     self.blk_beg( @!podblocks[*-1] );
                 }
                 when 2 {                    # Context::POD_CONTENT
                     my Str $style = @!podblocks[*-1].style;
                     if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' ) {
-                        my PodBlock $top = pop @!podblocks;
-                        self.blk_end( $top );
+                        self.blk_end( pop @!podblocks );
                     }
                 }
                 default {
@@ -520,9 +520,14 @@ class Pod::Parser {
         }
     }
 
-    method emit( Str $text ) {           say  $text; }
-#   method emit( Str $text ) { $!outfile.say: $text; }
-
+    # $*OUT broke in r35311, reported in RT#62540
+    # method emit( Str $text ) { $!outfile.say: $text; }
+    # method emit( Str $text ) {           say  $text; }
+    method emit( Str $text ) {
+        if defined $!outfile { $!outfile.say: $text; }
+        else                 {           say  $text; }
+    }
+    
     # override these in your subclass to make a custom translator
     method doc_beg(Str $name)   { self.emit("doc beg $name"); }
     method doc_end              { self.emit("doc end"); }
@@ -686,8 +691,6 @@ to detect unhandled POD.
 Calls to C<self.content()> should pass a structure of format
 requirements, not a reference to a block.
 
-Use [*-1] where possible to access the top of the Pod block stack.
-
 Recover gracefully and issue warnings when parsing invalid or badly
 formed POD.
 
@@ -713,7 +716,7 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head2 Rakudo dependencies
-Tested OK with Parrot/Rakudo revisions 36101-36119 (as at 2009-01-28).
+Tested OK with Parrot/Rakudo revisions 36097-36134 (as at 2009-01-29).
 
 =head1 SEE ALSO
 The Makefile in the Pod::Parser directory for build and test procedures.
