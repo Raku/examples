@@ -8,6 +8,7 @@
 # perl6 ../bin/pod2text  Pod/to/text.pm
 # perl6 ../bin/perldoc   Pod/to/man.pm
 # perl6 ../bin/pod2xhtml Pod/to/xhtml.pm
+# perl6 ../bin/pod2xhtml Pod/Parser.pm /tmp/Parser.html # and browse it!
 
 # If you want to keep a more permanent perl6-examples tree, the default
 # paths in this Makefile assumes that parrot/ and perl6-examples/ use the
@@ -44,7 +45,7 @@
 # Rakudo. Rakudo and the Pod tools are undergoing rapid development.
 # The most recent successfully tested Rakudo revision is Parrot r36134.
 # If some revision of Rakudo seems faulty, try to bisect revisions:
-#   make PARROT_REV=36134 testrev            # full /tmp/parrot checkout
+#   make PARROT_REV=36167 testrev            # full /tmp/parrot checkout
 #   make PARROT_REV=36097 PARROT_DIR=/tmp/parrot testrev # parrot update
 
 # Very occasionally either 'perl6' or 'parrot perl6.pbc' segfault,
@@ -103,7 +104,7 @@ ifeq "$(PARROT_DIR)" "$(PARROT_TMP_DIR)"
 else
 	@echo "You did not specify PARROT_DIR, so make a new default /tmp/parrot (slower)"
 	rm -rf /tmp/parrot
-	time svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
+	time svn checkout --revision $(PARROT_REV) https://svn.parrot.org/parrot/trunk
 endif
 	cd $(PARROT_TMP_DIR); perl Makefile.PL
 	$(MAKE) --no-print-directory -C $(PARROT_TMP_DIR)

@@ -522,9 +522,8 @@ class Pod::Parser {
 
     # $*OUT broke in r35311, reported in RT#62540
     # method emit( Str $text ) { $!outfile.say: $text; }
-    # method emit( Str $text ) {           say  $text; }
     method emit( Str $text ) {
-        if defined $!outfile { $!outfile.say: $text; }
+        if defined $!outfile { $!outfile.say: $text; } # workaround
         else                 {           say  $text; }
     }
     
