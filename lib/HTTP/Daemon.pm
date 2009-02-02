@@ -15,6 +15,10 @@ class HTTP::Headers {
     }
 }
 
+class HTTP::url {
+    has $.path;
+}
+
 class HTTP::Request {
     has HTTP::Headers $!headers;
     has HTTP::url     $!req_url;
@@ -30,6 +34,9 @@ class HTTP::Request {
     method header_field_names {
         return $!headers.header_field_names;
     }
+}
+
+class HTTP::Response {
 }
 
 # This maintains the connected TCP session and handles chunked data
@@ -73,14 +80,14 @@ class HTTP::Daemon::ClientConn {
     }
 
     # the method servers should mainly use for normal page output
-    method send_response( Str $content ) {
-        self.send_basic_header;
-        self.send_crlf;
+    method send_response( $self: Str $content ) {
+        $self.send_basic_header;
+        $self.send_crlf;
         say $content;
     }
 
     # provided for Perl 5 compatibility, send_response calls this
-    method send_basic_header { self.send_status_line; }
+    method send_basic_header( $self: ) { $self.send_status_line; }
 
     # normally not called directly, send_basic_header calls this
     multi method send_status_line(
@@ -93,10 +100,10 @@ class HTTP::Daemon::ClientConn {
     method send_crlf { print "\x0D\x0A"; }
 
     # untested so far
-    method send_file_response( Str $filename ) {
-        self.send_basic_header;
-        self.send_crlf;
-        self.send_file( $filename );
+    method send_file_response( $self: Str $filename ) {
+        $self.send_basic_header;
+        $self.send_crlf;
+        $self.send_file( $filename );
     }
 
     # untested so far
@@ -106,7 +113,7 @@ class HTTP::Daemon::ClientConn {
     }
 
     # not sure whether this and the next method might be inefficient
-    multi method send_error( Int $status ) {
+    multi method send_error( $self: Int $status ) {
         my %message = (
             200 => 'OK',
             403 => 'RC_FORBIDDEN',
@@ -114,11 +121,11 @@ class HTTP::Daemon::ClientConn {
             500 => 'RC_INTERNALERROR',
             501 => 'RC_NOTIMPLEMENTED'
         );
-        self.send_error( $status, %message{$status} );
+        $self.send_error( $status, %message{$status} );
     }
 
     # seems inefficient
-    multi method send_error( Str $message ) {
+    multi method send_error( $self: Str $message ) {
         my %status = (
             'OK'                => 200,
             'RC_FORBIDDEN'      => 403,
@@ -126,22 +133,16 @@ class HTTP::Daemon::ClientConn {
             'RC_INTERNALERROR'  => 500,
             'RC_NOTIMPLEMENTED' => 501
         );
-        self.send_error( %status{$message}, $message );
+        $self.send_error( %status{$message}, $message );
     }
 
-    multi method send_error( Int $status, Str $message ) {
-        self.send_status_line( $status, $message );
-        self.send_crlf;
+    multi method send_error( $self: Int $status, Str $message ) {
+        $self.send_status_line( $status, $message );
+        $self.send_crlf;
         say "<title>$status $message</title>";
         say "<h1>$status $message</h1>";
     }
-}
 
-class HTTP::Response {
-}
-
-class HTTP::url {
-    has $.path;
 }
 
 grammar HTTP::headerline {
@@ -163,7 +164,8 @@ class HTTP::Daemon
         if defined( %*ENV<RAKUDO_DIR> ) {
             $rakudo = %*ENV<RAKUDO_DIR> ~ '/perl6 ';
         }
-        $*ERR.say: "RAKUDO: $rakudo";
+        # $*ERR.say: "RAKUDO: $rakudo";
+        # $*ERR broken in r35311, reported in RT#62540
         $!running = Bool::True;
         while $!running {
             # my Str $command = "$*PROG --request"; # Rakudo needs this
@@ -323,12 +325,11 @@ On Debian based Linux distributions, this should set it up:
 Remove temporary_set_prog() when rakudo gets $*PROG.
 
 =head1 BUGS
-This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions. Bisecting:
-Debian x86-32: 35309 good, 35310 compiler returned NULL ByteCode
-               35400 Cannot write to a filehandle not opened for write
-             >=35500 Lexical 'self' not found
-Debian x86-64: 34088 good
-Tested with "make PARROT_REV=# testrev" where #=34309 etc. for newest PARROT_REV=HEAD
+This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions.
+# The most recent successfully tested Rakudo revision is Parrot r36299.
+# If some revision of Rakudo seems faulty, try to bisect revisions:
+#   make PARROT_REV=36285 testrev            # full /tmp/parrot checkout
+#   make PARROT_REV=36097 PARROT_DIR=/tmp/parrot testrev # parrot update
 
 =head1 SEE ALSO
 The Makefile comments describe additional testing options.

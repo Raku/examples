@@ -10,7 +10,8 @@ sub request {
             my $method = $r.req_method; # dodgy to call it 'method' in Perl 6
             if $r.req_method eq 'GET' and $r.url.path ne '/favicon.ico' {
                 # log this request to $*ERR
-                $*ERR.say: "{hhmm} GET {$r.url.path} {$r.header('User-Agent')}";
+                # $*ERR.say: "{hhmm} GET {$r.url.path} {$r.header('User-Agent')}";
+                # $*ERR broken in r35311 reported in RT#62540
                 given $r.url.path { # the web server's "directory"
                     when / ^ '/'                $ / { home(        $c, $r ); }
                     when / ^ '/dir/'            $ / { directory(   $c, $r ); }
@@ -322,8 +323,7 @@ Network compatibility is approximately HTTP 1.0, but is not verified.
 Bug reports and suggestions are very welcome.
 
 This L<doc:httpd> may give errors running with certain revisions of
-Rakudo. They most recently worked together in Rakudo r35200,
-but from r35300 to r35477 fail with a segmentation fault.
+Rakudo. They most recently worked together in Rakudo r36167.
 
 =head1 SEE ALSO
 <doc:HTTP::Daemon>
