@@ -1,0 +1,44 @@
+# Makefile.in for SVG::Tiny
+# To be read by Makefile.p6
+
+# <VARIABLES> will be replaced by Makefile.p6
+PERL6=<PERL6>
+RAKUDO_DIR=<RAKUDO_DIR>
+PERL6LIB=<PERL6LIB>
+BIN_DIR=<BIN_DIR>
+
+all: precompile
+
+precompile: Tiny.pir $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
+ $(PERL6LIB)/Test/Differences.pir
+
+# define how to precompile a module from its source code
+.SUFFIXES: .pm .pir
+.pm.pir: $(PARROT)
+	@echo 'precompile $< -> $@'
+	@export PERL6LIB=`pwd`/.. ;	$(PERL6) --target=pir --output=$@ $<
+
+# avoid duplication - precompile the Test module from the Parrot source
+$(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm
+	@echo 'precompile $(RAKUDO_DIR)/Test.pm -> $(PERL6LIB)/Test.pir'
+	@$(PERL6) --target=pir --output=$(PERL6LIB)/Test.pir $(RAKUDO_DIR)/Test.pm
+
+clean:
+	@find .       -name '*.pir'       -exec rm {} ';' # Parser.pir etc
+	@find ..      -name 'Test.pir'    -exec rm {} ';'
+	@find ../Test -name 'Harness.pir' -exec rm {} ';'
+	@find ../Test -name 'Differences.pir' -exec rm {} ';'
+	@find ../..   -name '*~'          -exec rm {} ';' # editor backups
+
+test: Tiny.pir $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
+ $(PERL6LIB)/Test/Differences.pir
+	$(PERL6) $(BIN_DIR)/prove --perl='$(PERL6)' --recurse t
+
+help:
+	@echo ""
+	@echo "These make targets are defined:"
+	@echo "clean      - delete .pir files and editor backups"
+	@echo "precompile - compile .pm -> .pir for faster loading"
+	@echo "test       - run prove --recurse t on SVG::Tiny"
+	@echo "help       - display this list"
+	@echo ""
