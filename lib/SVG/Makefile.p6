@@ -6,7 +6,22 @@ use v6;
 
 say "\nHi, this is Makefile.p6 getting ready to make your Makefile.\n";
 
+# Determine how this Makefile.p6 was invoked, so that the same way can
+# be used in the Makefile variables.
+# These are the ways amenable to this script:
+# 1. /path/to/parrot/parrot /path/to/rakudo/perl6.pbc Makefile.p6
+# 2. # use pbc_to_exe to make /path/to/rakudo/perl6, then
+#    /path/to/rakudo/perl6 Makefile.p6
+# 3. # do 2., then sudo ln -s /path/to/rakudo/perl6 <any dir in search path>, then
+#    perl6 Makefile.p6
+# 4. # do alias perl6='/path/to/parrot/parrot /path/to/rakudo/perl6.pbc', then
+#    perl6 Makefile.p6
+
+# Are there other ways to run Rakudo? Please tell the author.
+
 # Operating System
+# One day we shall not have to do this any more, when Rakudo gives the
+# required information in special variables such as $*PROG.
 my $ps_command;
 given %*VM<config><osname> {
     when 'linux' | 'darwin' {
@@ -26,7 +41,7 @@ given %*VM<config><osname> {
 say "osname     = {%*VM<config><osname>}";
 
 # Identify the current process executable and arguments.
-# Workaround with 'ps' because $*PROG is not yet implemented in r36318.
+# Workaround with 'ps' because $*PROG not yet implemented as at r36318.
 my @ps = qx($ps_command).split("\n");         # all procs and their args
 my @makeproc = grep( { $_ ~~ / Makefile.p6 $ / }, @ps);  # find Makefile
 if @makeproc.elems != 1 {
@@ -43,12 +58,16 @@ if @makeproc[0] !~~ / (.*) Makefile.p6 $ / {
 }
 
 # The executable running this script, to be written in Makefile.
-my $perl6 = $0;
-#my $perl6 = $0.trim;
+#my $perl6 = $0;        # $*PROG one day...
+my $perl6 = $0.trim;   # $*PROG one day...
 say "PERL6      = $perl6";
 
-# RAKUDO_DIR may be in or out of the parrot tree. Needed for Test.pm.
+# PARROT needed by dependencies to check whether to do .pm -> .pir
+# recompiles.
 my $parrot = %*VM<config><prefix> ~ '/parrot';
+say "PARROT     = $parrot";
+
+# RAKUDO_DIR may be in or out of the parrot tree. Needed for Test.pm.
 my $rakudo_dir = $perl6.subst( $parrot, '' ); # remove possible parrot
 $rakudo_dir .= subst( / ^ <.ws> /, '' ); # remove possible leading spaces
 $rakudo_dir .= subst( / \/perl6[\.pbc]?<.ws> $ /, '' ); # remove trailing perl6
@@ -68,6 +87,7 @@ my $maketext = slurp( 'Makefile.in' );
 $maketext .= subst( 'Makefile.in', 'Makefile' );
 $maketext .= subst( 'To be read', 'Written' );
 $maketext .= subst( '<VARIABLES> will be replaced', 'Variables defined' );
+$maketext .= subst( '<PARROT>', $parrot );
 $maketext .= subst( '<PERL6>', $perl6 );
 $maketext .= subst( '<RAKUDO_DIR>', $rakudo_dir );
 $maketext .= subst( '<PERL6LIB>', $perl6lib );

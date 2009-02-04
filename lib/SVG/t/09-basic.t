@@ -1,9 +1,9 @@
-# 05-basic.t - SVG-Tiny-1.2 section 9 - Basic Shapes
+# 09-basic.t - SVG-Tiny-1.2 section 9 - Basic Shapes
 
 use Test::Differences;
 use SVG::Tiny;
 
-plan 6;
+plan 7;
 
 my SVG::Tiny $image;
 my Str $expected;
@@ -28,6 +28,21 @@ $expected = q[<?xml version="1.0"?>
 </svg>];
 $output = $image.svg;
 eq_or_diff( $output, $expected, "rect with all parameters" );
+
+$image .= new( viewbox=>'0 0 1200 400' );
+$image.rect( width=>400, height=>200, x=>100, y=>100, fill=>'green', rx=>50 );
+$image.g( transform=>'translate(700 210) rotate(-30)',
+    $image.rect( width=>400, height=>200, x=>0, stroke=>'purple', y=>0, fill=>'none', rx=>50, stroke_width=>30 )
+);
+$expected = q[<?xml version="1.0"?>
+<svg viewbox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny">
+<rect x="100" y="100" width="400" height="200" rx="50" fill="green" />
+<g transform="translate(700 210) rotate(-30)">
+<rect x="0" y="0" width="400" height="200" rx="50" fill="none" stroke="purple" stroke-width="30" />
+</g>
+</svg>]; # almost 09_02.svg
+$output = $image.svg;
+eq_or_diff( $output, $expected, "rect rounded and transformed" );
 
 # 9.3 circle
 $image .= new( viewbox=>'0 0 100 100' );

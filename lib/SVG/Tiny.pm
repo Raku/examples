@@ -15,7 +15,8 @@ class SVG::Tiny
     method svg {
         return join( "\n",
             "<?xml version=\"1.0\"?>",
-            "<svg viewbox=\"$!viewbox\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.2\" baseProfile=\"tiny\">",
+            "<svg viewbox=\"$!viewbox\" xmlns=\"http://www.w3.org/2000/svg\""
+                ~ " version=\"1.2\" baseProfile=\"tiny\">",
             @!elements,
             "</svg>"
         );
@@ -24,25 +25,26 @@ class SVG::Tiny
     # 5.2 g
     # Groups the elements generated within its parameter list.
     # eg $image.g( $image.circle(...), $image.rect(...) );
-    method g( :$id, :$xml_id, *@subscripts ) {
+    method g( :$id, :$xml_id, :$transform, *@subscripts ) {
         # the slurpy *@subscripts receives the element numbers returned
         # by the elements (rect(), circle(), even g() called in the
-        # parameter list of this g element.
+        # parameter list of this g() element.
         my $pid = defined( $id ) ?? " id=\"$id\"" !! "";
         my $pxml_id = defined( $xml_id ) ?? " xml:id=\"$xml_id\"" !! "";
+        my $ptransform = defined( $transform ) ?? " transform=\"$transform\"" !! "";
         my Int $groupstart = int @!elements;
         if @subscripts {
             # need to insert a <g> before the 
             $groupstart = @subscripts[0];
             # Rakudo r36322 has no splice (yet)
-            # @!elements.splice( $firstelement, 0, "<g>" );
-            # Therefore this ugly workaround :(
+            # @!elements.splice( $groupstart, 0, "" );
+            # Therefore this inelegant workaround :(
             my $i = @!elements.end + 1;
             while $i > $groupstart {
                 @!elements[$i] = @!elements[--$i];
             }
         }
-        @!elements[$groupstart] = "<g$pid$pxml_id>";
+        @!elements[$groupstart] = "<g$pid$pxml_id$ptransform>";
         @!elements.push( "</g>" );
         return $groupstart .. + @!elements.end;
     }
@@ -148,14 +150,42 @@ This SVG::Tiny class creates images in SVG format.
 =head2 circle( cx, cy, r, fill, stroke, stroke_width )
 =head2 ellipse( cx, cy, rx, ry, Str fill, stroke, stroke_width )
 
+=head1 TESTING
+The W3C has test suites for SVG 1.1 and SVG Tiny 1.2, consisting of
+hundreds of SVG documents accompanied by PNG files depicting how each
+one should look when rendered by a user agent such as a web browser.
+A typical current browser such as Firefox 3.0.6 fails many of the tests.
+The volume and complexity of the tests is too much to be practical for
+testing a module whose job is merely to emit valid SVG.
+A small representative sampling will be taken to test whether the
+document structures can be generated.
+
+The SVG-Tiny-1.2 specification document contains many compact examples
+of correct usage, with distinct and mostly meaningful file names.
+
+Lacking another practical approach, and aware that full coverage is
+overly ambitious, the testing plan will aim to use Perl 6 test cases to
+generate near equivalents of as many of the spec examples as possible.
+Near equivalents will mean elements and attributes must match, but
+newlines and blanks may differ. 
+
+Copies of the unaltered example files are therefore kept in the SVG/t/
+directory.
+
+If you can think of a more effective testing strategy, particularly one
+that saves time and space whilst equalling or improving thoroughness,
+please let the author know.
+
+The current code passes 9 tests and covers 0 of 1 (0%) of the examples.
+
 =head1 TODO
-Expand the test suite to cover nearly all of SVG-Tiny-1.2.
+Add missing functionality. Improve testing coverage.
 
 =head1 BUGS
-Changes to Parrot or Rakudo might expose errors in this module.
-All tests were successful with r36332 on 2009-02-03.
-
 Named parameters cannot be typed.
+
+Changes to Parrot or Rakudo might expose errors in this module.
+All tests passed on 2009-02-04 with r36361.
 
 =head1 SEE ALSO
 L<http://www.w3.org/TR/SVGTiny12/>
@@ -164,5 +194,4 @@ L<http://www.w3.org/TR/SVGTiny12/>
 Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
 
 =end pod
-# dta@talk21.com
 
