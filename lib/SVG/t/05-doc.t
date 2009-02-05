@@ -1,4 +1,4 @@
-# 01-svg.t - SVG-Tiny-1.2 section 5 - Document Structure
+# 05-doc.t - SVG-Tiny-1.2 section 5 - Document Structure
 
 use Test::Differences;
 use SVG::Tiny;
@@ -28,6 +28,7 @@ $expected = q[<?xml version="1.0"?>
 </svg>];
 $output = $image.svg;
 eq_or_diff( $output, $expected, "empty group" );
+
 # nested and named groups
 $image .= new( viewbox=>'0 0 100 100' );
 $image.g( id=>'first',
@@ -46,7 +47,7 @@ $expected = q[<?xml version="1.0"?>
 </g>
 </svg>];
 $output = $image.svg;
-eq_or_diff( $output, $expected, "empty group" );
+eq_or_diff( $output, $expected, "nested and named groups" );
 
 =begin pod
 

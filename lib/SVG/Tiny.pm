@@ -1,5 +1,19 @@
 # Module SVG::Tiny
 
+grammar SVG::attribute {
+    regex path { <d> | <stroke> | <stroke_width> }
+    regex line { <x1> | <y1> |<x2> | <y2> | <stroke> | <stroke_width> }
+    regex d { d '="' .* '"' }
+    regex x1 { x1 '="' <.digit>+ '"' }
+    regex y1 { y1 '="' <.digit>+ '"' }
+    regex x2 { x2 '="' <.digit>+ '"' }
+    regex y2 { y2 '="' <.digit>+ '"' }
+    regex fill { fill '=>' <fill_value> }
+    regex fill_value { red | green | blue }
+    regex stroke { stroke }
+    regex stroke_width { stroke_width }
+}
+
 class SVG::Tiny
 {
     has $!viewbox;
@@ -29,16 +43,17 @@ class SVG::Tiny
         # the slurpy *@subscripts receives the element numbers returned
         # by the elements (rect(), circle(), even g() called in the
         # parameter list of this g() element.
-        my $pid = defined( $id ) ?? " id=\"$id\"" !! "";
-        my $pxml_id = defined( $xml_id ) ?? " xml:id=\"$xml_id\"" !! "";
+        my $pid        = defined( $id ) ?? " id=\"$id\"" !! "";
+        my $pxml_id    = defined( $xml_id ) ?? " xml:id=\"$xml_id\"" !! "";
         my $ptransform = defined( $transform ) ?? " transform=\"$transform\"" !! "";
         my Int $groupstart = int @!elements;
         if @subscripts {
-            # need to insert a <g> before the 
+            # need to insert a <g> before the elements that were
+            # created in the parameter list to this g() method.
             $groupstart = @subscripts[0];
             # Rakudo r36322 has no splice (yet)
             # @!elements.splice( $groupstart, 0, "" );
-            # Therefore this inelegant workaround :(
+            # Therefore this inferior workaround :(
             my $i = @!elements.end + 1;
             while $i > $groupstart {
                 @!elements[$i] = @!elements[--$i];
@@ -47,6 +62,13 @@ class SVG::Tiny
         @!elements[$groupstart] = "<g$pid$pxml_id$ptransform>";
         @!elements.push( "</g>" );
         return $groupstart .. + @!elements.end;
+    }
+
+    # 8.2 path
+    method path( *%params )
+    {
+        self.element( 'path', %params, regex { <SVG::attribute::path> } );
+        return @!elements.end;
     }
 
     # 9.2 rect
@@ -122,6 +144,27 @@ class SVG::Tiny
         @!elements.push( "<ellipse $pcx$pcy$prx$pry$pfill$pstroke$pstroke_width/>" );
         return @!elements.end;
     }
+
+    # 9.5 line
+    method line( *%params )
+    {
+        self.element( 'line', %params, regex { <SVG::attribute::line> } );
+        return @!elements.end;
+    }
+
+    submethod element( Str $element is copy, %parameters, $regex )
+    {
+        my @attributes;
+        for %parameters.kv -> $key, $value {
+            my $attribute = qq[$key="$value"];
+            if $attribute ~~ $regex { @attributes.push( $attribute ); }
+            else {
+                # TODO: give a helpful diagnostic but keep going
+            }
+        }
+        if @attributes { $element ~= ' '; } # needs just one more space
+        @!elements.push( "<$element" ~ @attributes ~ " />" );
+    }
 }
 
 =begin pod
@@ -140,12 +183,14 @@ print $image.svg;
 =head1 DESCRIPTION
 SVG Tiny is a compact yet functional subset of Scalar Vector Graphics
 for use in low memory browsers, for example in mobile telephones.
+Do not be fooled by the name. SVG-Tiny covers most normal images.
 
-This SVG::Tiny class creates images in SVG format.
+This SVG::Tiny class creates images as strings in SVG format, without
+pretty printing.
 
 =head1 METHODS
 =head2 svg()
-=head2 g( id, xml_id, fill )
+=head2 g( id, xml_id, transform, fill )
 =head2 rect( x, y, width, height, fill, stroke, stroke_width )
 =head2 circle( cx, cy, r, fill, stroke, stroke_width )
 =head2 ellipse( cx, cy, rx, ry, Str fill, stroke, stroke_width )
@@ -160,14 +205,16 @@ testing a module whose job is merely to emit valid SVG.
 A small representative sampling will be taken to test whether the
 document structures can be generated.
 
-The SVG-Tiny-1.2 specification document contains many compact examples
-of correct usage, with distinct and mostly meaningful file names.
+The SVG-Tiny-1.2 specification contains many compact examples of correct
+usage, with distinct and mostly meaningful file names.
 
 Lacking another practical approach, and aware that full coverage is
 overly ambitious, the testing plan will aim to use Perl 6 test cases to
 generate near equivalents of as many of the spec examples as possible.
 Near equivalents will mean elements and attributes must match, but
-newlines and blanks may differ. 
+newlines and blanks may differ.
+A plainformat() routine will reduce each element to a single line, with
+attributes in alpabetical order, single spaced and without indentation.
 
 Copies of the unaltered example files are therefore kept in the SVG/t/
 directory.
@@ -176,10 +223,11 @@ If you can think of a more effective testing strategy, particularly one
 that saves time and space whilst equalling or improving thoroughness,
 please let the author know.
 
-The current code passes 9 tests and covers 0 of 1 (0%) of the examples.
+The present code passes 10 tests and covers 0 of 1 (0%) of the examples.
 
 =head1 TODO
-Add missing functionality. Improve testing coverage.
+Add missing functionality. Generate transform and path attributes in
+code. Improve testing coverage.
 
 =head1 BUGS
 Named parameters cannot be typed.
