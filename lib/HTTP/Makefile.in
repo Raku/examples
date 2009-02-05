@@ -22,20 +22,23 @@ clean:
 	@find . -name '*~'    -exec rm {} ';' # editor backups
 
 run:
-	@# $(RAKUDO_EXE) being ../ based usually goes wrong when you cd.
-	@# Fortunately `pwd` always outputs an absolute path. Note the
-	@# difference between $(VAR) make variables and $VAR shell variables.
-	@DAEMON_DIR=`pwd`                                     ;\
-	cd $(RAKUDO_DIR)                                      ;\
-	export RAKUDO_DIR=`pwd`                               ;\
-	cd $$DAEMON_DIR/..                                    ;\
-	export PERL6LIB=`pwd`                                 ;\
-	cd ../bin                                             ;\
-	$$RAKUDO_DIR/perl6 httpd                           #  ^ these ;\ are
-	@# to make this a single logical command line spread over several
-	@# physical lines. The make utility executes each logical command
-	@# line in a separate child shell. The multiple commands must be
-	@# combined this way to share the _DIR and PERL6LIB variables.
+	export PERL6='$(PERL6)' PERL6LIB=$(PERL6LIB); cd $(PERL6BIN); $(PERL6) httpd
+
+#run:
+#	@# $(PERL6) being ../ based usually goes wrong when you cd.
+#	@# Fortunately `pwd` always outputs an absolute path. Note the
+#	@# difference between $(VAR) make variables and $VAR shell variables.
+#	@DAEMON_DIR=`pwd`                                     ;\
+#	cd $(RAKUDO_DIR)                                      ;\
+#	export RAKUDO_DIR=`pwd`                               ;\
+#	cd $$DAEMON_DIR/..                                    ;\
+#	export PERL6LIB=`pwd`                                 ;\
+#	cd ../bin                                             ;\
+#	$$RAKUDO_DIR/perl6 httpd                           #  ^ these ;\ are
+#	@# to make this a single logical command line spread over several
+#	@# physical lines. The make utility executes each logical command
+#	@# line in a separate child shell. The multiple commands must be
+#	@# combined this way to share the _DIR and PERL6LIB variables.
 
 #testrev:
 #	svn update --revision $(PARROT_REV) $(PARROT_DIR)
@@ -61,18 +64,18 @@ testrev:
 # parrot, rakudo and perl6-examples directories. Note these are make
 # variables, not shell variables.
 #     eg: make PARROT_DIR=/my/parrot run
-PARROT_DIR = ../../../parrot
-RAKUDO_DIR = $(PARROT_DIR)/languages/perl6
-RAKUDO_EXE = $(RAKUDO_DIR)/perl6
+PERL6 = <PERL6>
+PARROT_DIR = <PARROT_DIR>
+RAKUDO_DIR = <RAKUDO_DIR>
+PERL6LIB   = <PERL6LIB>
+PERL6BIN   = <PERL6BIN>
 PARROT_REV = HEAD
-PERL6BIN   = ../../bin
-PERL6LIB   = ..
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
-.pm.pir: $(RAKUDO_EXE)
+.pm.pir: $(PERL6)
 	@echo 'precompile $< -> $@'
-	@$(RAKUDO_EXE) --target=pir --output=$@ $<
+	@$(PERL6) --target=pir --output=$@ $<
 
 # List the targets to be made by users
 help:
@@ -85,7 +88,7 @@ help:
 	@echo 'testrev - builds temporary Parrot r$(PARROT_REV) and attempts run'
 	@echo 'help    - this text. See also: head --lines=14 Makefile'
 	@echo ''
-	@echo 'PARROT_DIR: default ../../../parrot'
+	@echo 'PARROT_DIR: default $(PARROT_DIR)'
 	@echo 'Example: make PARROT_DIR=/other/parrot run'
 	@echo ''
 	@echo 'PARROT_REV: default HEAD (needs Subversion)'

@@ -160,16 +160,15 @@ class HTTP::Daemon
     has Bool $!accepted;
 
     method daemon {
-        my $rakudo = '';
-        if defined( %*ENV<RAKUDO_DIR> ) {
-            $rakudo = %*ENV<RAKUDO_DIR> ~ '/perl6 ';
-        }
-        # $*ERR.say: "RAKUDO: $rakudo";
+        # one day Rakudo will set $*PROG automatically
+        my $perl6 = %*ENV<PERL6>;
+        $*PROG = $!temporary_prog;
+        # $*ERR.say: "perl6: $perl6";
         # $*ERR broken in r35311, reported in RT#62540
         $!running = Bool::True;
         while $!running {
             # my Str $command = "$*PROG --request"; # Rakudo needs this
-            my Str $command = "$rakudo{$!temporary_prog} --request";            
+            my Str $command = "$perl6 $*PROG --request";
             run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
             # spawning netcat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.

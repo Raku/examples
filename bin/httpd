@@ -32,7 +32,8 @@ sub request {
 # netcat after every page request.
 sub daemon {
     my HTTP::Daemon $d .= new( host=>'127.0.0.1', port=>8888 );
-    $d.temporary_set_prog( './httpd' ); # lack of $*PROG workaround
+    # This workaround instead of using the $*PROG special variable.
+    $d.temporary_set_prog( "./httpd" );
     say "Browse this Perl 6 (Rakudo) web server at {$d.url}";
     $d.daemon();
 }
