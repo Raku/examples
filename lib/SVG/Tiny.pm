@@ -1,17 +1,26 @@
 # Module SVG::Tiny
 
-grammar SVG::attribute {
-    regex path { <d> | <stroke> | <stroke_width> }
-    regex line { <x1> | <y1> |<x2> | <y2> | <stroke> | <stroke_width> }
-    regex d { d '="' .* '"' }
-    regex x1 { x1 '="' <.digit>+ '"' }
-    regex y1 { y1 '="' <.digit>+ '"' }
-    regex x2 { x2 '="' <.digit>+ '"' }
-    regex y2 { y2 '="' <.digit>+ '"' }
-    regex fill { fill '=>' <fill_value> }
-    regex fill_value { red | green | blue }
-    regex stroke { stroke }
-    regex stroke_width { stroke_width }
+grammar SVG_Tiny {
+    # elements and their allowed attributes
+    regex path     { <d> | <stroke> | <stroke_width> }
+    regex line     { <x1> | <y1> |<x2> | <y2> | <stroke> | <stroke_width> }
+    regex polyline { <points> | <stroke> | <stroke_width> }
+    regex polygon  { <points> | <stroke> | <stroke_width> }
+    # attributes
+    regex d            { d      '="' .* '"' }
+    regex x1           { x1     '="' <.digit>+ '"' }
+    regex y1           { y1     '="' <.digit>+ '"' }
+    regex x2           { x2     '="' <.digit>+ '"' }
+    regex y2           { y2     '="' <.digit>+ '"' }
+    regex fill         { fill   '="' <.color> '"' }
+    regex stroke       { stroke '="' <.color> '"' }
+    regex stroke_width { stroke'-'width '="' <.digit>+ '"' }
+    regex points       { points '="' <.point> [ <.ws> <.point> ]* '"' }
+    # contents of attributes
+    regex point  { <.digit>+ ',' <.digit>+ }
+    regex color  { black | silver | gray | white | maroon | red | purple
+        fuchsia | green | lime | olive | yellow | navy | blue | teal |
+        aqua }
 }
 
 class SVG::Tiny
@@ -19,6 +28,7 @@ class SVG::Tiny
     has $!viewbox;
     has $!namespace_prefix;
     has @!elements;
+    my  @.paths is rw;
 
     method comment( Str $comment ) {
         @!elements.push( "<!-- $comment -->" );
@@ -67,9 +77,29 @@ class SVG::Tiny
     # 8.2 path
     method path( *%params )
     {
-        self.element( 'path', %params, regex { <SVG::attribute::path> } );
+        self.element( 'path', %params, regex { <SVG_Tiny::path> } );
         return @!elements.end;
     }
+    # In order to be able to write more compact programs without having
+    # to repetitively state the image object name, the other functions
+    # for section 8 are implemented as exported subs below (and outside)
+    # class SVG_Tiny.
+    # for example,
+    # $image.path( d=>pathdata( moveto(10,10), lineto(10,20) ) );
+    # instead of,
+    # $image.path( d=>$image.pathdata( $image.moveto(10,10), $image.lineto(10,20) ) );
+
+    # 8.3.6 curveto smooth_curveto
+    method curveto( ) {
+    }
+    method smooth_curveto( ) {
+    }
+    # 8.3.7 qcurveto sqcurveto
+    method qcurveto( ) {
+    }
+    method qscurveto( ) {
+    }
+    
 
     # 9.2 rect
     method rect( :$x, :$y, :$width, :$height, :$rx, :$ry,
@@ -148,24 +178,61 @@ class SVG::Tiny
     # 9.5 line
     method line( *%params )
     {
-        self.element( 'line', %params, regex { <SVG::attribute::line> } );
+        self.element( 'line', %params, regex { <SVG_Tiny::line> } );
+        return @!elements.end;
+    }
+
+    # 9.6 polyline
+    method polyline( *%params )
+    {
+        self.element( 'polyline', %params, regex { <SVG_Tiny::polyline> } );
+        return @!elements.end;
+    }
+
+    # 9.7 polygon
+    method polygon( *%params )
+    {
+        self.element( 'polygon', %params, regex { <SVG_Tiny::polygon> } );
         return @!elements.end;
     }
 
     submethod element( Str $element is copy, %parameters, $regex )
     {
         my @attributes;
-        for %parameters.kv -> $key, $value {
+        for %parameters.kv -> $key is copy, $value {
+            # mangle names containing certain awkward characters
+            # a little wrinkle in an otherwise elegant design
+            $key .= subst( '__', ':' ); # eg xml__id -> xml:id
+            $key .= subst( '_', '-' ); # eg stroke_width -> stroke-width
+            # format the attribute how it must look in the SVG document
             my $attribute = qq[$key="$value"];
             if $attribute ~~ $regex { @attributes.push( $attribute ); }
             else {
                 # TODO: give a helpful diagnostic but keep going
             }
         }
-        if @attributes { $element ~= ' '; } # needs just one more space
-        @!elements.push( "<$element" ~ @attributes ~ " />" );
+        if @attributes { @attributes[@attributes.end] ~= ' '; }
+                         # need just one more space
+        @!elements.push( "<$element {@attributes}/>" );
     }
+    method pushpath( $s ) { @.paths.push( $s ); }
 }
+
+# 8.3 pathdata
+sub pathdata( *@params ) {
+    # TODO: minimize the path data in all the ways listed in 8.3.1.
+    return SVG::Tiny.paths.join(' ');
+}
+# 8.3.2 moveto
+sub moveto( :$x, :$y, :$abs, :$rel ) {
+    SVG::Tiny.pushpath( "M$x $y" );
+}
+# 8.3.3 closepath
+sub closepath {
+    SVG::Tiny.pushpath( 'z' );
+}
+# 8.3.4 lineto
+sub lineto( :$x, :$y ) { SVG::Tiny.pushpath( "L$x $y"); }
 
 =begin pod
 
@@ -233,7 +300,7 @@ code. Improve testing coverage.
 Named parameters cannot be typed.
 
 Changes to Parrot or Rakudo might expose errors in this module.
-All tests passed on 2009-02-04 with r36361.
+All tests passed on 2009-02-09 with r36486.
 
 =head1 SEE ALSO
 L<http://www.w3.org/TR/SVGTiny12/>
