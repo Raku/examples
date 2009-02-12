@@ -6,8 +6,8 @@ use SVG::Tiny;
 plan 3;
 
 my SVG::Tiny $image;
-my Str $expected;
-my Str $output;
+my Str       $expected;
+my Str       $output;
 
 # 5.1 svg
 $image .= new( viewbox=>'0 0 100 100' );
@@ -32,8 +32,8 @@ eq_or_diff( $output, $expected, "empty group" );
 # nested and named groups
 $image .= new( viewbox=>'0 0 100 100' );
 $image.g( id=>'first',
-    $image.g( xml_id=>'second', $image.g( id=>'third' ) ),
-    $image.g( xml_id=>'fourth')
+    $image.g( xml__id=>'second', $image.g( id=>'third' ) ),
+    $image.g( xml__id=>'fourth')
 );
 $expected = q[<?xml version="1.0"?>
 <svg viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny">
