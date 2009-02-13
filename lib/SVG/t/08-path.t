@@ -14,7 +14,7 @@ my Str       $output;
 $image .= new( viewbox=>'0 0 100 100' );
 $image.path( d=>'M 100 100 L 300 100 L 200 300 z', stroke=>'aqua' );
 $expected = q[<?xml version="1.0"?>
-<svg viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny">
+<svg baseProfile="tiny" version="1.2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <path d="M 100 100 L 300 100 L 200 300 z" stroke="aqua" />
 </svg>];
 $output = $image.svg;
@@ -30,7 +30,7 @@ $image.path(
     ), stroke_width=>5, stroke=>'yellow'
 );
 $expected = q[<?xml version="1.0"?>
-<svg viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny">
+<svg baseProfile="tiny" version="1.2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <path d="M3,4 L5,6 z" stroke-width="5" stroke="yellow" />
 </svg>];
 $output = $image.svg;

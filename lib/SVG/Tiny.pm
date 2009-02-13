@@ -10,6 +10,7 @@ grammar SVG_Tiny {
     regex line     { <x1> | <y1> | <x2> | <y2> | <stroke> | <stroke_width> }
     regex polyline { <points> | <stroke> | <stroke_width> }
     regex polygon  { <points> | <stroke> | <stroke_width> }
+    regex text     { <x> | <y> | <font_family> | <font_size> | <fill> }
     # attributes
     regex d            { d      '="' .* '"' }
     regex x            { x      '="' <.digit>+ '"' }
@@ -28,6 +29,8 @@ grammar SVG_Tiny {
     regex fill         { fill   '="' [ <.color> | none ] '"' }
     regex stroke       { stroke '="' <.color>  '"' }
     regex stroke_width { stroke'-'width '="' <.digit>+ '"' }
+    regex font_family  { font'-'family  '="' .* '"' }
+    regex font_size    { font'-'size    '="' <.digit>+ '"' }
     regex points       { points '="' <.point> [ <.ws> <.point> ]* '"' }
     # contents of attributes
     regex point  { <.digit>+ ',' <.digit>+ }
@@ -41,6 +44,8 @@ grammar SVG_Tiny {
 class SVG::Tiny
 {
     has $!viewbox;
+    has $!width;
+    has $!height;
     has $!namespace_prefix;
     has @!elements;
     my  @.paths is rw;
@@ -50,12 +55,25 @@ class SVG::Tiny
     # 5.1 svg
     # Returns the entire SVG image as a Str.
     method svg {
+        # horrible TLA var ;) names for compacting the return expression
+        my Str $bpf = qq[ baseProfile="tiny"];
+        my Str $hei = defined $!height ?? qq[ height="$!height"] !! qq[];
+        my Str $pbo = qq[]; # TODO playbackOrder
+        my Str $par = qq[]; # TODO preserveAspectRatio
+        my Str $sst = qq[]; # TODO snapshotTime
+        my Str $tlb = qq[]; # TODO timelineBegin
+        my Str $ver = qq[ version="1.2"];
+        my Str $vbx = qq[ viewBox="$!viewbox"];
+        my Str $wid = defined $!width  ?? qq[ width="$!width"]   !! qq[];
+        my Str $xns = qq[ xmlns="http://www.w3.org/2000/svg"];
+        # Any attribute order is allowed, and no example is fully
+        # comprehensive. Therefore full name alphabetical is used here.
+        # TODO: design a better standard order
         return join( "\n",
-            "<?xml version=\"1.0\"?>",
-            "<svg viewbox=\"$!viewbox\" xmlns=\"http://www.w3.org/2000/svg\""
-                ~ " version=\"1.2\" baseProfile=\"tiny\">",
+            qq[<?xml version="1.0"?>],
+            qq[<svg$bpf$hei$pbo$par$sst$tlb$ver$vbx$wid$xns>],
             @!elements,
-            "</svg>"
+            qq[</svg>]
         );
     }
 
@@ -91,6 +109,9 @@ class SVG::Tiny
         return $groupstart .. + @!elements.end;
     }
 
+    # 5.5 desc
+    method desc( Str $s ) { @!elements.push( "<desc>$s</desc>" ); }
+
     # 8.2 path
     method path( *%params ) {
         self.element( 'path', %params, regex { <SVG_Tiny::path> } ); }
@@ -125,6 +146,51 @@ class SVG::Tiny
     # 9.7 polygon
     method polygon( *%params ) {
         self.element( 'polygon', %params, regex { <SVG_Tiny::polygon> } ); }
+
+    # 10.4 text # WARNING - FAULTY - UNDER CONSTRUCTION
+#   method text( *%params ) {
+#       self.element( 'text', %params, regex { <SVG_Tiny::text> } ); }
+    method text( *%params, *@content ) {
+        # two slurpy , one for named 
+        my $regex = regex { <SVG_Tiny::text> };
+        my @attributes;
+        my @warnings;
+        for %params.kv -> $key is copy, $value {
+            # mangle names containing certain awkward characters,
+            # a blemish in an otherwise nice design
+            $key .= subst( '__', ':' ); # eg xml__id -> xml:id
+            $key .= subst( '_', '-' ); # eg stroke_width -> stroke-width
+            # format the attribute how it must look in the SVG document
+            my $attribute = qq[$key="$value"];
+            if $attribute ~~ $regex { @attributes.push( $attribute ); }
+            else                    { @warnings.push(   $attribute ); }
+        }
+        if @attributes { @attributes[@attributes.end] ~= ' '; }
+        @!elements.push( "<text {@attributes}>" );
+        if @warnings {
+            @!elements[*-1] ~= "<!-- invalid {@warnings} -->";
+        }
+        # the slurpy *@subscripts receives the element numbers returned
+        # by the elements (rect(), circle(), even g() called in the
+        # parameter list of this g() element.
+        my Int $groupstart = int @!elements;
+        if @content {
+            # need to insert a <g> before the elements that were
+            # created in the parameter list to this g() method.
+            $groupstart = @content[0];
+            # Rakudo r36322 has no splice (yet)
+            # @!elements.splice( $groupstart, 0, "" );
+            # Therefore this inferior workaround :(
+            my $i = @!elements.end + 1;
+            while $i > $groupstart {
+                @!elements[$i] = @!elements[--$i];
+            }
+        }
+#       @!elements[$groupstart] = "<g$pid$pxml_id$ptransform>";
+        @!elements.push( "</text>" );
+#       @!elements.end;
+        return $groupstart .. + @!elements.end;
+    }
 
     submethod element( Str $element is copy, %parameters, $regex )
     {
@@ -258,7 +324,7 @@ code. Improve testing coverage.
 Named parameters cannot be typed.
 
 Changes to Parrot or Rakudo might expose errors in this module.
-It passed 14/14 tests on 2009-02-12 with r36634.
+It passed 15/15 tests on 2009-02-13 with r36690.
 
 =head1 SEE ALSO
 L<http://www.w3.org/TR/SVGTiny12/>
