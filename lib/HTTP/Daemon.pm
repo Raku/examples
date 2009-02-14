@@ -1,7 +1,7 @@
 # This lib/HTTP/Daemon file contains definitions for HTTP::Daemon,
 # HTTP::Daemon::ClientConn, HTTP::Request and HTTP::Response.
-# Normally each class would be in a separate file, but they were
-# combined here to be able to start using them easily.
+# Normally each class would be in a separate file, they were combined
+# here for convenience.
 
 # only a subset emulation of the Perl 5 HTTP::Headers design - no tuits!
 
@@ -163,8 +163,7 @@ class HTTP::Daemon
         # one day Rakudo will set $*PROG automatically
         my $perl6 = %*ENV<PERL6>;
         $*PROG = $!temporary_prog;
-        # $*ERR.say: "perl6: $perl6";
-        # $*ERR broken in r35311, reported in RT#62540
+        # warn "perl6: $perl6";
         $!running = Bool::True;
         while $!running {
             # my Str $command = "$*PROG --request"; # Rakudo needs this

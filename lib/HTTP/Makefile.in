@@ -1,16 +1,16 @@
-# Makefile for HTTP::Daemon
+# Makefile.in for HTTP::Daemon
 #
 # Synopsis:
+#   perl6 Makefile.p6                   # morphs Makefile.in -> Makefile
 #   make help                           # target summary
 #   make all                            # precompile to Daemon.pir
 #   make run                            # start httpd + HTTP::Daemon
-#   make PARROT_DIR=/other/parrot all   # precompile with other parrot
-#   make PARROT_DIR=/other/parrot run   # run with other parrot
+#   make LOCAL_ADDR=192.168.1.100 run   # run with other parrot
 #
 # Bugs:
 # This code may fail with certain revisions of Parrot and Rakudo.
 # All this software is being rapidly developed and frequently updated.
-# Use IRC on irc.freenode.net and join the #perl6 channel for news/help.
+# See #perl6 on irc.freenode.net for news/help.
 #
 
 all: precompile
@@ -22,54 +22,21 @@ clean:
 	@find . -name '*~'    -exec rm {} ';' # editor backups
 
 run:
-	export PERL6='$(PERL6)' PERL6LIB=$(PERL6LIB); cd $(PERL6BIN); $(PERL6) httpd
-
-#run:
-#	@# $(PERL6) being ../ based usually goes wrong when you cd.
-#	@# Fortunately `pwd` always outputs an absolute path. Note the
-#	@# difference between $(VAR) make variables and $VAR shell variables.
-#	@DAEMON_DIR=`pwd`                                     ;\
-#	cd $(RAKUDO_DIR)                                      ;\
-#	export RAKUDO_DIR=`pwd`                               ;\
-#	cd $$DAEMON_DIR/..                                    ;\
-#	export PERL6LIB=`pwd`                                 ;\
-#	cd ../bin                                             ;\
-#	$$RAKUDO_DIR/perl6 httpd                           #  ^ these ;\ are
-#	@# to make this a single logical command line spread over several
-#	@# physical lines. The make utility executes each logical command
-#	@# line in a separate child shell. The multiple commands must be
-#	@# combined this way to share the _DIR and PERL6LIB variables.
-
-#testrev:
-#	svn update --revision $(PARROT_REV) $(PARROT_DIR)
-#	$(MAKE) -C $(PARROT_DIR) realclean
-#	cd $(PARROT_DIR) &&	perl Makefile.PL
-#	$(MAKE) -C $(PARROT_DIR)
-#	$(MAKE) -C $(PARROT_DIR) perl6
-#	$(MAKE) run
-
-testrev:
-	rm -rf /tmp/parrot
-	svn checkout --revision $(PARROT_REV) https://svn.perl.org/parrot/trunk /tmp/parrot
-	cd /tmp/parrot; perl Makefile.PL
-	$(MAKE) --no-print-directory -C /tmp/parrot
-	$(MAKE) --no-print-directory -C /tmp/parrot perl6
-	@/tmp/parrot/languages/perl6/perl6 -e 'say "Parrot/Rakudo r{%*VM<config><revision>}"'
-	@$(MAKE) --no-print-directory clean
-	@$(MAKE) --no-print-directory PARROT_DIR=/tmp/parrot precompile
-	$(MAKE) --no-print-directory PARROT_DIR=/tmp/parrot run
+	export PERL6='$(PERL6)' PERL6LIB=$(PERL6LIB) LOCALADDR=$(LOCALADDR) LOCALPORT=$(LOCALPORT);\
+	 cd $(PERL6BIN); $(PERL6) httpd
 
 # Configuration variables:
 # Override one or more of these on the command line to adapt to local
 # parrot, rakudo and perl6-examples directories. Note these are make
 # variables, not shell variables.
 #     eg: make PARROT_DIR=/my/parrot run
-PERL6 = <PERL6>
+PERL6      = <PERL6>
 PARROT_DIR = <PARROT_DIR>
 RAKUDO_DIR = <RAKUDO_DIR>
 PERL6LIB   = <PERL6LIB>
 PERL6BIN   = <PERL6BIN>
-PARROT_REV = HEAD
+LOCALADDR  = 127.0.0.1
+LOCALPORT  = 8888
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
@@ -83,15 +50,14 @@ help:
 	@echo 'You can make the following targets:'
 	@echo ''
 	@echo 'all     - default, precompile .pm to .pir for speed'
-	@echo 'clean   - removes .pir and editor backup files'
+	@echo 'clean   - removes .pir and backup~ files'
 	@echo 'run     - run httpd web server with or without precompile'
-	@echo 'testrev - builds temporary Parrot r$(PARROT_REV) and attempts run'
-	@echo 'help    - this text. See also: head --lines=14 Makefile'
+	@echo 'help    - this text. See also: head --lines=14 Makefile.in'
 	@echo ''
-	@echo 'PARROT_DIR: default $(PARROT_DIR)'
-	@echo 'Example: make PARROT_DIR=/other/parrot run'
+	@echo 'LOCALADDR: default 127.0.0.1'
+	@echo '  Example: make LOCALADDR=192.168.1.123 run'
 	@echo ''
-	@echo 'PARROT_REV: default HEAD (needs Subversion)'
-	@echo 'Example: make PARROT_REV=35000 testrev'
+	@echo 'LOCALPORT: default 8888, only root may use < 1024'
+	@echo '  Example: make LOCALPORT=8080 LOCALADDR=192.168.1.123 run'
 	@echo ''
 
