@@ -1,3 +1,8 @@
+# pre-declare types
+# XXX should actually be 'class Game { ... }' with the three periods
+class Game { };
+class Move { };
+
 class Player {
     method token { ... }
     method highlighter_token { ... }
@@ -62,7 +67,7 @@ class ComputerPlayer is Player {
     }
 }
 
-class Game {
+class Game is also {
     has Str @board;
     has Int @current_levels;
 
@@ -196,7 +201,9 @@ class Game {
     }
 }
 
-class Move {
+# the 'is also' is a hack because rakudo doesn't allow
+# redeclaration of stubbed classes without it
+class Move is also {
     has Game $.game;
 
     has Player $.who;
