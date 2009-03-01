@@ -33,7 +33,7 @@ for 1..($target-1) {
     .say if $_ % int($target/10) == 0;
     ++$c if ser($_) == 89;
 }
-say $c;
+say "Result: $c";
 
 # vim: ft=perl6
 
