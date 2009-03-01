@@ -59,19 +59,6 @@ class Weapon is WObject {
     method damage () { random($.power - $.powerRange, $.power + $.powerRange);};
 }
 
-class Room is WObject {
-   has Monster @.monsters is rw;
-   has Str     @.exits is rw;
-   method are_monsters () { @.monsters // 0 }
-   method monster ()      {
-      say '@.monsters : ', @.monsters.perl if $DEBUG;
-      my $x = shift @.monsters;
-      say 'shifted    : ', $x.perl if $DEBUG;
-      say '@.monsters : ', @.monsters.perl if $DEBUG;
-      return $x;
-    }
-};
-
 class Mortal is WObject {
     has Int     $.life      is rw;
     has Int     $.max_life  is rw;
@@ -97,6 +84,23 @@ class Mortal is WObject {
     }
     method dead ()  { $.life <= 0 }
 }
+
+class Monster is Mortal {
+	has $.gold is rw;
+}
+
+class Room is WObject {
+   has Monster @.monsters is rw;
+   has Str     @.exits is rw;
+   method are_monsters () { @.monsters // 0 }
+   method monster ()      {
+      say '@.monsters : ', @.monsters.perl if $DEBUG;
+      my $x = shift @.monsters;
+      say 'shifted    : ', $x.perl if $DEBUG;
+      say '@.monsters : ', @.monsters.perl if $DEBUG;
+      return $x;
+    }
+};
 
 class Person is Mortal {
     has Weapon  @.weapons   is rw;
@@ -155,10 +159,6 @@ class Person is Mortal {
 
 
 }
-
-class Monster is Mortal {
-	has $.gold is rw;
- }
 
 my $person = Person.new( Mortal{ :life(100),:max_life(100) },
     :weapons((Weapon.new(WObject{ :name<sword> }, :power(4), :powerRange(2)),
@@ -222,3 +222,5 @@ until ($person.dead) {
      cls;
   }
 }
+
+# vim: ft=perl6
