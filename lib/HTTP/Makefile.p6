@@ -39,7 +39,7 @@ say "osname     = {%*VM<config><osname>}";
 
 # Identify the current process executable and arguments.
 # Workaround with 'ps' because $*PROG not yet implemented as at r36318.
-my @ps = qx($ps_command).split("\n");         # all procs and their args
+my @ps = fake_qx($ps_command).split("\n");         # all procs and their args
 my @makeproc = grep( { $_ ~~ / Makefile.p6 $ / }, @ps);  # find Makefile
 if @makeproc.elems != 1 {
     say "Strange, cannot find myself in your process list.";
@@ -102,8 +102,8 @@ sub squirt( Str $filename, Str $text ) {
 }
 
 # inefficient workaround - replace when Rakudo gets qx{} or `backtick`.
-sub qx( $command ) {
-    my Str $tempfile = "/tmp/rakudo_svg_tiny_makefile_qx.tmp";
+sub fake_qx( $command ) {
+    my Str $tempfile = "/tmp/rakudo_http_daemon_makefile_qx.tmp";
     my Str $fullcommand = "$command >$tempfile";
     run $fullcommand;
     my Str $result = slurp( $tempfile );

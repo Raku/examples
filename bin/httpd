@@ -73,7 +73,7 @@ or Linux, and of course <a href="http://parrot.org">Parrot</a>.<p/>
 sub directory( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     my $html = qq[{page_top($c,$r)}
 <pre>
-{qx('ls -l')}
+{fake_qx('ls -l')}
 </pre>
 {page_bottom($c,$r)}];
     $c.send_response( $html );
@@ -83,7 +83,7 @@ sub directory( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
 sub processes( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     my $html = qq[{page_top($c,$r)}
 <pre>
-{qx('ps -el')}
+{fake_qx('ps -el')}
 </pre>
 {page_bottom($c,$r)}];
     $c.send_response( $html );
@@ -283,7 +283,7 @@ sub hhmm {
 }
 
 # inefficient workaround - remove when Rakudo gets a qx operator
-sub qx( $command ) {
+sub fake_qx( $command ) {
     my $tempfile = "/tmp/rakudo_httpd_qx.tmp";
     my $fullcommand = "$command >$tempfile";
     run $fullcommand;
