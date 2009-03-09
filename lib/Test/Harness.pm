@@ -15,7 +15,7 @@ class Test::Harness {
         for @filenames -> Str $name {
             print "$name{'.'x($max_namechars+4-$name.chars)}";
             # run a single test as a child process and collect the output
-            my @results = qx( "$perl $name" ).split("\n");
+            my @results = fake_qx( "$perl $name" ).split("\n");
             # the first line must announce the number of planned tests
             if @results[0] ~~ / <digit>+ <dot> <dot> ( <digit>+ ) / {
                 shift @results;
@@ -76,8 +76,8 @@ class Test::Harness {
     }
 
     # inefficient workaround - remove when Rakudo gets a qx operator
-    sub qx( $command ) {
-        my Str $tempfile = "/tmp/rakudo_qx.tmp";
+    sub fake_qx( $command ) {
+        my Str $tempfile = "/tmp/rakudo_fake_qx.tmp";
         my Str $fullcommand = "$command >$tempfile";
         run $fullcommand;
         my Str $result = slurp( $tempfile );
