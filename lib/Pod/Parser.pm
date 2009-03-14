@@ -68,6 +68,7 @@ grammar Pod6_link {
     regex internal { [ '#' .+ ] ? }
 }
 
+# RAKUDO: add 'is rw' on the class instead [perl #60636]
 class PodBlock {
     has Str $.typename is rw;
     has Str $.style    is rw;
