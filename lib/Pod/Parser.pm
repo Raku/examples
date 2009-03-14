@@ -74,8 +74,8 @@ class PodBlock {
     has Str $.style    is rw;
     has %.config   is rw;
     method perl {
-        my Str $typename = defined $.typename ?? $.typename !! 'undef';
-        my Str $style    = defined $.style    ?? $.style    !! 'undef';
+        my Str $typename = $.typename // 'undef';
+        my Str $style    = $.style    // 'undef';
         return "( 'typename'=>'$typename', 'style'=>'$style' )";
     }
 };
