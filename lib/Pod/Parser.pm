@@ -88,7 +88,7 @@ class Pod::Parser {
     has Str      $!buf_out_line;                # where buf_print puts text
     has Bool     $!codeblock;                   # True within =begin code / =end code
     # has        %!config;                      # for =config definitions
-    has          $!context is Context;          # not (yet) in Rakudo r35960
+    has Context  $!context;                     # which state is the parser in?
     has Str      $!line;                        # current line being processed
     has Int      $!margin_L;                    # first output column - default 0
     has Int      $!margin_R;                    # last output column - default 79
