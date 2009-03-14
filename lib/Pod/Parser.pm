@@ -431,7 +431,11 @@ class Pod::Parser {
     method set_context( Context $new_context ) {
         # manages the emission of context switch function calls
         # depending on the difference between old and new context types.
-#       say "CONTEXT: from {$!context} to $new_context";
+
+        # RAKUDO: Death when Str-comparing an uninitialized enum value.
+        # [perl #63878] the following line works around the problem:
+        $!context //= Context::AMBIENT;
+
         if ( $new_context ne $!context ) {
             given $!context {
                 when 0 { }                  # Context::AMBIENT
