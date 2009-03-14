@@ -61,8 +61,7 @@ class Pod::to::pod6 is Pod::Parser
         given $!pod6context {
             when 'HEAD' { self.buf_print( $content ); }
             when 'PARA' {
-                $!needspace = $!needspace and (substr($content,0,1) ne " ");
-#               $!needspace &&= (substr($content,0,1) ne " "); # crashes
+                $!needspace &&= substr($content,0,1) ne " ";
                 self.buf_print( $content );
                 $!needspace = (substr($content,$content.chars-1,1) ne " ");
             }
