@@ -64,7 +64,8 @@ say "";
 
 # The opposite of slurp
 sub squirt( Str $filename, Str $text ) {
-    my $handle = open( $filename, :w );    # should check for success
+    my $handle = open( $filename, :w )
+        or die $!;
     $handle.print: $text;
     $handle.close;
 }
