@@ -3,11 +3,11 @@ use Test::Differences;
 use Pod::to::xhtml;
 use Test::Mock::Parser;
 
-class TestParser is Pod::to::xhtml does Test::Mock::Parser {}
+class Test::Parser is Pod::to::xhtml does Test::Mock::Parser {}
 
 plan 8;
 
-my TestParser $p .= new; $p.parse_file('/dev/null'); # warming up
+my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up
 
 my $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
 my $expected = q[<?xml version="1.0" ?>
