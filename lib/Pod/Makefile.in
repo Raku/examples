@@ -44,7 +44,7 @@ all: precompile
 precompile: Parser.pir to/text.pir to/man.pir to/xhtml.pir to/pod5.pir \
  to/pod6.pir \
  $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
- $(PERL6LIB)/Test/Differences.pir
+ $(PERL6LIB)/Test/Differences.pir $(PERL6LIB)/Test/Mock/Parser.pir
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir

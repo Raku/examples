@@ -1,6 +1,7 @@
 #!/usr/local/bin/perl6
 use Test::Differences;
 use Pod::Parser;
+use Test::Mock::Parser;
 
 plan 8;
 
@@ -8,23 +9,7 @@ plan 8;
 # possibly other significant spaces, even at the end of the line.
 
 # wrapper class for testing overrides file input and standard output
-class Test::Parser is Pod::Parser {
-    has @!out is rw;
-    # parse source lines from a text document instead of a file
-    method parse( $self: $text ) {
-        my @lines = $text.split( "\n" );
-        @!out = ();
-        self.doc_beg( 'test' );
-        for @lines -> Str $line { $!line = $line; self.parse_line; }
-        self.doc_end;
-        return @!out;
-    }
-    # capture Pod6Parser output into array @.out for inspection
-    method emit( $self: $text ) { push @!out, $text; }
-    # Possible Rakudo bug: calling a base class method ignores other
-    # overrides in derived class, such as the above emit() redefine.
-    # workaround: redundantly copy base class method here, fails too!
-}
+class Test::Parser is Pod::Parser does Test::Mock::Parser {}
 
 my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up
 

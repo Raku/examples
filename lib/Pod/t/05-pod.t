@@ -2,45 +2,15 @@
 use Test::Differences;
 use Pod::to::pod5;
 use Pod::to::pod6;
+use Test::Mock::Parser;
 
 # This scripts checks bidirectional pod5 <--> pod6 conversion.
 # The test suite intentionally contains only one file in pod5 format.
 # The remaining pod5 source is all within this file.
 
 # wrapper class for testing overrides file input and standard output
-class P5 is Pod::to::pod5 {
-    has @.out is rw;
-    # parse source lines from a text document instead of a file
-    method parse( $text ) {
-        @.out = ();
-        self.doc_beg( 'test' );
-        for $text.split( "\n" ) -> $line { $!line = $line; self.parse_line; }
-        self.doc_end;
-        return @.out;
-    }
-    # capture Pod6Parser output into array @.out for inspection
-    method emit( $self: Str $text ) { push @.out, $text; }
-    # Possible Rakudo bug: calling a base class method ignores other
-    # overrides in derived class, such as the above emit() redefine.
-    # workaround: redundantly copy base class method here, fails too!
-}
-
-class P6 is Pod::to::pod6 {
-    has @.out is rw;
-    # parse source lines from a text document instead of a file
-    method parse( $text ) {
-        @.out = ();
-        self.doc_beg( 'test' );
-        for $text.split( "\n" ) -> $line { $!line = $line; self.parse_line; }
-        self.doc_end;
-        return @.out;
-    }
-    # capture Pod6Parser output into array @.out for inspection
-    method emit( $self: Str $text ) { push @.out, $text; }
-    # Possible Rakudo bug: calling a base class method ignores other
-    # overrides in derived class, such as the above emit() redefine.
-    # workaround: redundantly copy base class method here, fails too!
-}
+class P5 is Pod::to::pod5 does Test::Mock::Parser {}
+class P6 is Pod::to::pod6 does Test::Mock::Parser {}
 
 plan 15; # test 'p04-code.pod code paragraphs 5->6' temporarily skipped
 

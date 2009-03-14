@@ -1,23 +1,9 @@
 #!/usr/local/bin/perl6
 use Test::Differences;
 use Pod::to::man;
+use Test::Mock::Parser;
 
-class Test::Parser is Pod::to::man {
-    has @.out is rw;
-    # parse source lines from a text document instead of a file
-    method parse( $self: $text ) {
-        @.out = ();
-        self.doc_beg( 'test' );
-        for $text.split( "\n" ) -> $line { $!line = $line; self.parse_line; }
-        self.doc_end;
-        return @.out;
-    }
-    # capture Pod6Parser output into array @.out for inspection
-    method emit( $self: Str $text ) { @.out.push( $text ); }
-    # Possible Rakudo bug: calling a base class method ignores other
-    # overrides in derived class, such as the above emit() redefine.
-    # workaround: redundantly copy base class method here, fails too!
-}
+class Test::Parser is Pod::to::man does Test::Mock::Parser {}
 
 plan 8;
 
