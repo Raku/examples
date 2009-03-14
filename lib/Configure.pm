@@ -69,16 +69,6 @@ sub squirt( Str $filename, Str $text ) {
     $handle.close;
 }
 
-# inefficient workaround - replace when Rakudo gets qx{} or `backtick`.
-sub qx( $command ) {
-    my Str $tempfile = "/tmp/Rakudo_Configure_qx.tmp";
-    my Str $fullcommand = "$command >$tempfile";
-    run $fullcommand;
-    my Str $result = slurp( $tempfile );
-    unlink $tempfile;
-    return $result;
-}
-
 # This Configure.pm can work with the following ways of starting up:
 # 1. The explicit way Parrot runs any Parrot Byte Code:
 #    my/parrot/parrot my/rakudo/perl6.pbc Configure.p6
