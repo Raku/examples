@@ -15,7 +15,8 @@ class P6 is Pod::to::pod6 does Test::Mock::Parser {}
 plan 15; # test 'p04-code.pod code paragraphs 5->6' temporarily skipped
 
 my P5 $p5 .= new; $p5.parse_file('/dev/null'); # warming up
-my P6 $p6 .= new; $p6.parse_file('/dev/null'); # warming up
+my P6 $p6 .= new; $p6.parse_file('/dev/null'); # warming up,
+# initializes Parser state even though testing parses strings not files.
 
 my $pod6 = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
 my $pod5 = q[=pod

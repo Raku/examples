@@ -15,3 +15,9 @@ role Test::Mock::Parser {
     method emit( $self: $text ) { push @!out, $text; }
 }
 
+=begin pod
+
+=head1 AUTHOR
+Carl Mäsak
+
+=end pod

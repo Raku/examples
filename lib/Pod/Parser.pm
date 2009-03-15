@@ -720,7 +720,7 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head2 Rakudo dependencies
-Tested OK with Parrot/Rakudo revisions 36097-36134 (as at 2009-01-29).
+Tested OK with Parrot/Rakudo revisions 36097-37407 (as at 2009-03-14).
 
 =head1 SEE ALSO
 The Makefile in the Pod::Parser directory for build and test procedures.
@@ -729,7 +729,7 @@ L<doc:Pod::to::man> L<doc:Pod::to::xhtml> L<doc:Pod::to::wordcount>
 L<doc:perl6pod> L<doc:perl6style> The Perl 5 L<Pod::Parser>.
 
 =head1 AUTHOR
-Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
+Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =head1 ACKNOWLEDGEMENTS
 Many thanks to (in order of contribution):

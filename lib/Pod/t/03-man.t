@@ -7,7 +7,8 @@ class Test::Parser is Pod::to::man does Test::Mock::Parser {}
 
 plan 8;
 
-my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up
+my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up,
+# initializes Parser state even though testing parses strings not files.
 
 my $docdate = Pod::to::man::docdate( time() ); # TODO: replace with mtime when stat() works
 my $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"

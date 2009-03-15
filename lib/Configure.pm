@@ -126,6 +126,6 @@ text to Makefile in the same directory. Finally it runs the standard
 'make' utility, which builds the first target defined in Makefile.
 
 =head1 AUTHOR
-Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
+Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =end pod

@@ -11,7 +11,8 @@ plan 8;
 # wrapper class for testing overrides file input and standard output
 class Test::Parser is Pod::Parser does Test::Mock::Parser {}
 
-my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up
+my Test::Parser $p .= new; $p.parse_file('/dev/null'); # warming up,
+# initializes Parser state even though testing parses strings not files.
 
 my Str $pod = slurp('t/p01-plain.pod').chomp; # Rakudo slurp appends a "\n"
 my Str $expected = "doc beg test

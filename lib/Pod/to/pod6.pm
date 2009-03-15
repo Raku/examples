@@ -116,8 +116,10 @@ class Pod::to::pod6 is Pod::Parser
 }
 
 =begin pod
+
 =head1 NAME
 Pod::to::pod6 - translate any pod to Perl 6 pod
+
 =head1 SYNOPSIS
 
     # in Perl 6 (Rakudo)
@@ -133,8 +135,11 @@ Pod::to::pod6 - translate any pod to Perl 6 pod
     perl6 -e $SCRIPT podfile
 
 =head1 DESCRIPTION
+
 =head1 BUGS
 Incomplete.
+
 =head1 SEE ALSO
 L<doc:Pod::Parser>
+
 =end pod

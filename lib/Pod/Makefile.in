@@ -31,7 +31,7 @@
 # Bugs:
 # These Pod tools may give errors running with certain revisions of
 # Rakudo. Rakudo and the Pod tools are undergoing rapid development.
-# The most recent successfully tested Rakudo revision is Parrot r36134.
+# The most recent successfully tested Rakudo revision is Parrot r37407.
 
 # Configure.p6 replaces <TOKENS> when converting Makefile.in -> Makefile
 PERL6      = <PERL6>
@@ -76,7 +76,7 @@ help:
 	@echo ''
 	@echo 'You can make the following targets:'
 	@echo ''
-	@echo 'help      - this list. See also: head --lines=67 Makefile'
+	@echo 'help      - this list. See also: head --lines=14 Makefile'
 	@echo 'all       - compiles .pm files to .pir for faster loading'
 	@echo 'test      - runs prove on the t/*.t scripts'
 	@echo 'clean     - removes .pir and editor backup files'
