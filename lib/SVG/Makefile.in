@@ -1,12 +1,11 @@
 # Makefile.in for SVG::Tiny
-# To be read by Makefile.p6
+# To be read by Configure.pm
 
-# <VARIABLES> will be replaced by Makefile.p6
-PARROT=<PARROT>
+# <VARIABLES> will be replaced by Configure.pm
 PERL6=<PERL6>
-RAKUDO_DIR=<RAKUDO_DIR>
 PERL6LIB=<PERL6LIB>
-BIN_DIR=<BIN_DIR>
+PERL6BIN=<PERL6BIN>
+RAKUDO_DIR=<RAKUDO_DIR>
 
 all: precompile
 
@@ -15,12 +14,12 @@ precompile: Tiny.pir $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
 
 # define how to precompile a module from its source code
 .SUFFIXES: .pm .pir
-.pm.pir: $(PARROT) $(RAKUDO_DIR)/perl6.pbc
+.pm.pir: $(PERL6)
 	@echo 'precompile $< -> $@'
 	@export PERL6LIB=`pwd`/.. ;	$(PERL6) --target=pir --output=$@ $<
 
 # avoid duplication - precompile the Test module from the Parrot source
-$(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm $(PARROT) $(RAKUDO_DIR)/perl6.pbc
+$(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm $(PERL6)
 	@echo 'precompile $(RAKUDO_DIR)/Test.pm -> $(PERL6LIB)/Test.pir'
 	@$(PERL6) --target=pir --output=$(PERL6LIB)/Test.pir $(RAKUDO_DIR)/Test.pm
 
@@ -31,9 +30,12 @@ clean:
 	@find ../Test -name 'Differences.pir' -exec rm {} ';'
 	@find ../..   -name '*~'          -exec rm {} ';' # editor backups
 
-test: Tiny.pir $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir \
- $(PERL6LIB)/Test/Differences.pir
-	export PERL6LIB=$(PERL6LIB); $(PERL6) $(BIN_DIR)/prove --perl='$(PERL6)' --recurse t
+realclean: clean
+	@rm Makefile
+
+#test: Tiny.pir $(PERL6LIB)/Test.pir $(PERL6LIB)/Test/Harness.pir $(PERL6LIB)/Test/Differences.pir
+test: precompile
+	export PERL6LIB=$(PERL6LIB); $(PERL6) $(PERL6BIN)/prove --perl='$(PERL6)' --recurse t
 
 help:
 	@echo ""

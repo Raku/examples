@@ -35,10 +35,8 @@ sub request {
 # netcat after every page request.
 sub daemon {
     my Str $host =     %*ENV<LOCALADDR>  // '127.0.0.1';
-    my Int $port = int(%*ENV<LOCALPORT>) // 8888;
+    my Int $port = int(%*ENV<LOCALPORT>) // 8888; #/ - p5 highlighting
     my HTTP::Daemon $d .= new( host=>$host, port=>$port );
-    # This workaround instead of using the $*PROG special variable.
-    $d.temporary_set_prog( "./httpd" );
     say "Browse this Perl 6 (Rakudo) web server at {$d.url}";
     $d.daemon();
 }
@@ -302,8 +300,8 @@ httpd - HyperText Transfer Protocol Daemon or Perl 6 (Rakudo) web server
  git clone git://github.com/eric256/perl6-examples.git
  cd perl6-examples/lib/HTTP
  make clean
- make PARROT_DIR=/path/to/parrot-r34088 all
- make PARROT_DIR=/path/to/parrot-r34088 run
+ make all
+ make run
 
 =head1 DESCRIPTION
 This program runs a simple web server within itself, so there is no need
@@ -335,12 +333,12 @@ Network compatibility is approximately HTTP 1.0, but is not verified.
 Bug reports and suggestions are very welcome.
 
 This L<doc:httpd> may give errors running with certain revisions of
-Rakudo. They most recently worked together in Rakudo r36167.
+Rakudo. They most recently worked together in Rakudo r37432.
 
 =head1 SEE ALSO
 <doc:HTTP::Daemon>
 
 =head1 AUTHOR
-Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
+Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =end pod

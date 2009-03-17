@@ -156,27 +156,18 @@ class HTTP::Daemon
     has Str  $.host;
     has Int  $.port;
     has Bool $!running;
-    has Str  $!temporary_prog;
     has Bool $!accepted;
 
     method daemon {
-        # one day Rakudo will set $*PROG automatically
         my $perl6 = %*ENV<PERL6>;
-        $*PROG = $!temporary_prog;
         # warn "perl6: $perl6";
         $!running = Bool::True;
         while $!running {
-            # my Str $command = "$*PROG --request"; # Rakudo needs this
-            my Str $command = "$perl6 $*PROG --request";
+            my Str $command = "$perl6 $*PROGRAM_NAME --request";
             run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
             # spawning netcat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.
         }
-    }
-
-    # This works around the lack of a $*PROG variable. See daemon above.
-    method temporary_set_prog( Str $prog ) {
-        $!temporary_prog = $prog;
     }
 
     # Where to find this server - used for messages, logs, hyperlinks
@@ -257,7 +248,6 @@ sub request {
 # start the main server and enter the endless loop in the inner daemon.
 sub daemon {
     my HTTP_Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
-    $d.temporary_set_prog( './test.pl' );
     say "Browse this Perl 6 web server at {$d.url}";
     $d.daemon();
 }
@@ -319,15 +309,9 @@ On Debian based Linux distributions, this should set it up:
 
  sudo apt-get install netcat
 
-=head1 TODO
-Remove temporary_set_prog() when rakudo gets $*PROG.
-
 =head1 BUGS
 This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions.
-# The most recent successfully tested Rakudo revision is Parrot r36299.
-# If some revision of Rakudo seems faulty, try to bisect revisions:
-#   make PARROT_REV=36285 testrev            # full /tmp/parrot checkout
-#   make PARROT_REV=36097 PARROT_DIR=/tmp/parrot testrev # parrot update
+# The most recent successfully tested Rakudo revision is Parrot r37432.
 
 =head1 SEE ALSO
 The Makefile comments describe additional testing options.
@@ -338,6 +322,6 @@ HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>) describes all methods
 and status codes.
 
 =head1 AUTHOR
-Martin Berends (mberends on CPAN github #perl6 and @flashmail.com).
+Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =end pod
