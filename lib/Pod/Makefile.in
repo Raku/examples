@@ -58,8 +58,16 @@ $(PERL6LIB)/Test.pir: $(RAKUDO_DIR)/Test.pm $(PERL6)
 	@$(PERL6) --target=pir --output=$(PERL6LIB)/Test.pir $(RAKUDO_DIR)/Test.pm
 
 test: all $(PERL6)
-	@echo 'prove --perl="$(PERL6)" --recurse t'
+	@echo 'starting prove --perl="$(PERL6)" --recurse t'
 	@export PERL6LIB=$(PERL6LIB); $(PERL6) $(PERL6BIN)/prove --perl='$(PERL6)' --recurse t
+
+# podserver configuration copied from HTTP::Daemon and httpd
+LOCALADDR = '127.0.0.1'
+LOCALPORT = 2080
+podserver: all $(PERL6) $(PERL6LIB)/Pod/Server.pir $(PERL6LIB)/HTTP/Daemon.pir
+	@echo 'starting podserver'
+	export PERL6='$(PERL6)' PERL6LIB=$(PERL6LIB) LOCALADDR=$(LOCALADDR) LOCALPORT=$(LOCALPORT);\
+	 cd $(PERL6BIN); $(PERL6) podserver
 
 clean:
 	@find .       -name '*.pir'       -exec rm {} ';' # Parser.pir etc

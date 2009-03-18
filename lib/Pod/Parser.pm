@@ -720,7 +720,7 @@ Enums are not (yet) available for properties. A fails, B passes and C fails:
 Long or complex documents randomly suffer segmentation faults.
 
 =head2 Rakudo dependencies
-Tested OK with Parrot/Rakudo revisions 36097-37407 (as at 2009-03-14).
+Tested OK with Parrot/Rakudo revisions 36097-37432 (as at 2009-03-15).
 
 =head1 SEE ALSO
 The Makefile in the Pod::Parser directory for build and test procedures.
