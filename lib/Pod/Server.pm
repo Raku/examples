@@ -18,11 +18,12 @@ class Pod::Server is HTTP::Daemon {
     method server( $self: ) {
         my Str $host =      %*ENV<LOCALADDR>  // '127.0.0.1';
         my Int $port = int( %*ENV<LOCALPORT>  // '2080' );
+        my Str $perl6 =     %*ENV<PERL6>      // 'perl6';
         say "Perl 6 (Rakudo) podserver listening at http://$host:$port";
         while Bool::True {
             # spawning netcat here is a temporary measure until Rakudo
             # gets socket(), listen(), accept() etc.
-            run( "netcat -c './$*PROGRAM_NAME rq' -l -s $host -p $port" );
+            run( "netcat -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
         }
     }
 
@@ -86,7 +87,8 @@ class Pod::Server is HTTP::Daemon {
             $pod = $podlator.parse( slurp("$!directory/$!filename") ).join("\n");
         }
         else {
-            $pod = 'This is a directory. Click on a file to see its contents.';
+            $pod = 'This is a directory. Click on another directory link,'
+                 ~ ' or on a POD file name to see its contents.';
         }
         return $pod;
     }
