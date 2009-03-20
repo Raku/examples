@@ -15,29 +15,28 @@ class Pod::Server is HTTP::Daemon {
     has $!filename;
     has $!parameters;
 
-    method server( $self: ) {
+    method server {
         my Str $host =      %*ENV<LOCALADDR>  // '127.0.0.1';
         my Int $port = int( %*ENV<LOCALPORT>  // '2080' );
         my Str $perl6 =     %*ENV<PERL6>      // 'perl6';
-        say "Perl 6 (Rakudo) podserver listening at http://$host:$port";
+        my $currentpath = %*ENV<PERL6LIB> ~ '/Pod/Server.pm';
+        say "Browse this Perl 6 (Rakudo) podserver at http://$host:$port$currentpath";
         while Bool::True {
-            # spawning netcat here is a temporary measure until Rakudo
-            # gets socket(), listen(), accept() etc.
-            run( "netcat -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
+            # spawning netcat (nc) here is a temporary measure until
+            # Rakudo gets socket(), listen(), accept() etc.
+            run( "nc -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
         }
     }
 
-    method request( $self: ) {
-        $self.parse_request();
-        my $path_links = $self.path_links.join(" /\n");
-        my $pod = $self.getpod();
+    method request {
+        self.parse_request();
+        my $path_links = self.path_links.join(" /\n");
+        my $pod = self.getpod();
         say "{header()}<html>\n<head>\n{stylesheet()}\n</head>\n<body>";
-        say "<h1>Pod::Server</h1>";
+        say "<h1>Pod::Server $!filename</h1>";
         say "Path: $path_links<br/>";
-        say "File name: $!filename<br/>";
         say "<table><tr>";
         say "<td>\n{directory_list($!directory)}\n</td>";
-#       say "<td id=\"pod\">hello</td>";
         say "<td id=\"pod\">$pod</td>";
         say "</tr></table>";
         say "</body>\n</html>";
@@ -52,7 +51,8 @@ class Pod::Server is HTTP::Daemon {
         regex parameters { .* };
     }
 
-    method parse_request( $self: ) {
+#    method parse_request( $self: ) {
+    method parse_request {
         $!request_line = =$*IN;
         my Str $url = $!request_line.split(' ')[1];
         if $url ~~ / <Pod::Server::URL::TOP> / {
@@ -83,8 +83,13 @@ class Pod::Server is HTTP::Daemon {
             my Xhtml::emitter $podlator .= new;
             $podlator.parse_file( '/dev/null' ); # sorry, it's crufty,
             # but it's the easiest way to initialize the parser at runtime.
-            # I promise to eradicate thsi soon -- mberends
-            $pod = $podlator.parse( slurp("$!directory/$!filename") ).join("\n");
+            # I promise to eradicate this soon -- mberends
+            my $filecontents = slurp("$!directory/$!filename");
+            $pod = $podlator.parse( $filecontents ).join("\n");
+            if $pod ~~ / '<body>' \n '</body>' / { #' (for p5 editors)
+                $pod = "This '$!filename' has no Pod. Here are the "
+                     ~ "contents:<br/>\n<pre>\n$filecontents</pre>\n";
+            }
         }
         else {
             $pod = 'This is a directory. Click on another directory link,'
@@ -149,6 +154,7 @@ h1 { font-family: Sans; }
 table { }
 td { vertical-align: top; }
 td#pod { border-style: solid; width: 100%; }
+td#pod > pre { font-size: 7pt; }
 ];
     return "<style type=\"text/css\">$sheet</style>\n";
 }
@@ -181,7 +187,36 @@ sub fake_qx( $command ) {
 
 =begin pod
 
+=head1 NAME
+Pod::Server - guts of the podserver daemon
+
+=head1 SYNOPSIS
+=begin code
+# try it out:      (with your way to run perl6)
+git clone git://github.com/eric256/perl6-examples.git
+cd perl6-examples/lib/Pod
+perl6 Configure.p6
+make podserver
+# then browse the displayed URL and other docs.
+=end code
+
+=head1 DESCRIPTION
+The L<doc:podserver> daemon is a web server that dynamically converts
+POD to xhtml.
+It is useful for previewing POD markup while editing, and for perusing
+documentation files such as rakudo/doc/*.pod.
+The parser handles common Perl 5 POD as well, so many older documents
+in the Parrot and Pugs repositories also look presentable.
+
+This L<doc:Pod::Server> module contains almost all the logic in
+L<doc:podserver>. It uses L<doc:Pod::Parser> and L<doc:Pod::to::xhtml> for
+the POD to xhtml conversion, and L<doc:HTTP::Daemon> for the webserver bits.
+
 =head1 SEE ALSO
-HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>)
+L<doc:podserver>,
+L<doc:HTTP::Daemon>, HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>)
+
+=head1 AUTHOR
+Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =end pod

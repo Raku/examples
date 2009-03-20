@@ -435,7 +435,7 @@ class Pod::Parser {
 
         # RAKUDO: Death when Str-comparing an uninitialized enum value.
         # [perl #63878] the following line works around the problem:
-        $!context //= Context::AMBIENT;
+        $!context //= Context::AMBIENT; #/ (slash for p5 highlighters)
 
         if ( $new_context ne $!context ) {
             given $!context {

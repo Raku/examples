@@ -5,21 +5,6 @@ use Pod::Server;
 if @*ARGS.elems == 0 { Pod::Server.new.server(); }  # run from command line
 else                 { Pod::Server.new.request(); } # run from netcat
 
-# Executed as main parent process with an endless loop that re-starts
-# netcat after every page request.
-sub daemon {
-    my Str $host =     %*ENV<LOCALADDR>  // '127.0.0.1';
-    my Int $port = int(%*ENV<LOCALPORT>) // 8888; #/(fix p5 highlighting)
-    my Pod::Server $s .= new( host=>$host, port=>$port );
-    say "Browse this Perl 6 (Rakudo) podserver at {$s.url}";
-#   $s.daemon();
-    $s.server();
-}
-
-sub request {
-    Pod::Server.new.request();
-}
-
 =begin pod
 
 =head1 SEE ALSO

@@ -5,7 +5,7 @@ use Pod::Parser;
 $*stylesheet = q[code { font-size:large; font-weight:bold; }
 h1 { font-family:helvetica,sans-serif; font-weight:bold; }
 h2 { font-family:helvetica,sans-serif; font-weight:bold; }
-pre { font-size: 12pt; background-color: lightgray; border-style: solid;
+pre { font-size: 10pt; background-color: lightgray; border-style: solid;
  border-width: 1px; padding-left: 1em; }];  # TODO: use heredoc
 
 class Pod::to::xhtml is Pod::Parser
