@@ -118,12 +118,8 @@ class Pod::Server is HTTP::Daemon {
     # Generate the list of directory contents for the left margin
     sub directory_list( Str $directory ) {
         my @names = glob( $directory eq '/' ?? "/*" !! "$directory/*" );
-        # BUG: the following two case insensitive sorts do not work as intended
-#       my @subdirectories = grep( { $_  ~~ :d }, @names).sort: { lc $^a cmp lc $^b };
-#       my @files          = grep( { $_ !~~ :d }, @names).sort: { lc $^a cmp lc $^b };
-        # The following two case sensitive sorts do work
-        my @subdirectories = grep( { $_  ~~ :d }, @names).sort;
-        my @files          = grep( { $_ !~~ :d }, @names).sort;
+        my @subdirectories = grep( { $_  ~~ :d }, @names).sort: { .lc };
+        my @files          = grep( { $_ !~~ :d }, @names).sort: { .lc };
         my $html;
         for @subdirectories -> Str $name {
             if $name ~~ / ( .* ) \/ ( <-[\/]>+ ) / {
