@@ -25,7 +25,6 @@ class Pod::Server is HTTP::Daemon {
             # spawning socat here is a temporary measure until Rakudo
             # gets socket(), listen(), accept() etc.
             run( "socat TCP-LISTEN:$port,bind=$host,fork EXEC:'$perl6 $*PROGRAM_NAME rq'" );
-#           run( "socat tcp-l:$port,fork EXEC:'$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
             # previous versions used netcat, but on BSD lacked -c and -e
             # run( "nc -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
         }
@@ -72,12 +71,6 @@ class Pod::Server is HTTP::Daemon {
             }
             # if the directory is not / but ends in /, trim that ending /
             if $!directory ~~ / ( .+ ) \/ $ / { $!directory = ~ $0; }
-#           warn "PARSE URL:    '$url'";
-#           warn "PARSE SCHEME: '$!scheme'";
-#           warn "PARSE SERVER: '$!server'";
-#           warn "PARSE DIR:    '$!directory'";
-#           warn "PARSE FILE:   '$!filename'";
-#           warn "PARSE PARAM:  '$!parameters'";
         }        
     }
 
@@ -109,7 +102,6 @@ class Pod::Server is HTTP::Daemon {
     }
 
     method path_links {
-#       warn "DIR: '$!directory'";
         my @directory_parts = $!directory.split( / <[/\\]> / ); #/
         if @directory_parts[0]   eq '' { @directory_parts.shift; }
         if @directory_parts[*-1] eq '' { @directory_parts.pop; }
@@ -120,17 +112,18 @@ class Pod::Server is HTTP::Daemon {
             my $link = qq[<a href="$url">$part</a>];
             @links.push( $link );
         }
-#       warn "LINKS: {@links}";
         return @links;
     }
 
     # Generate the list of directory contents for the left margin
     sub directory_list( Str $directory ) {
         my @names = glob( $directory eq '/' ?? "/*" !! "$directory/*" );
-        my @subdirectories = grep { $_  ~~ :d }, @names.sort;
-        my @files          = grep { $_ !~~ :d }, @names.sort;
-#       warn "SUBDIR={@subdirectories}";
-#       warn "FILES={@files}";
+        # BUG: the following two case insensitive sorts do not work as intended
+#       my @subdirectories = grep( { $_  ~~ :d }, @names).sort: { lc $^a cmp lc $^b };
+#       my @files          = grep( { $_ !~~ :d }, @names).sort: { lc $^a cmp lc $^b };
+        # The following two case sensitive sorts do work
+        my @subdirectories = grep( { $_  ~~ :d }, @names).sort;
+        my @files          = grep( { $_ !~~ :d }, @names).sort;
         my $html;
         for @subdirectories -> Str $name {
             if $name ~~ / ( .* ) \/ ( <-[\/]>+ ) / {
@@ -169,7 +162,6 @@ sub glob( Str $pattern ) {
     my Str $command = "ls -d $pattern >$tempfile 2>/dev/null";
     run $command;
     my @filenames = slurp($tempfile).split("\n");
-#   warn "GLOB: {@filenames}";
     if @filenames[*-1] eq "" { pop @filenames; } # slurp may append an empty line that is not in the file
     unlink $tempfile;
     return @filenames;
@@ -203,25 +195,34 @@ make podserver
 =end code
 
 =head1 DESCRIPTION
-The L<doc:podserver> daemon is a web server that dynamically converts
-POD to xhtml.
+The L<podserver|http://github.com/eric256/perl6-examples/blob/master/bin/podserver>
+daemon is a web server that dynamically converts POD to xhtml.
 It is useful for previewing POD markup while editing, and for perusing
 documentation files such as rakudo/docs/*.pod.
 The parser handles common Perl 5 POD as well, so many older documents
 in the Parrot and Pugs repositories also look presentable.
 
-This L<doc:Pod::Server> module contains almost all the logic for
-L<doc:podserver>. It uses L<doc:Pod::Parser> and L<doc:Pod::to::xhtml> for
-the POD to xhtml conversion, and L<doc:HTTP::Daemon> for the webserver bits.
+This L<Pod::Server|http://github.com/eric256/perl6-examples/blob/master/lib/Pod/Server.pm>
+module contains almost all the logic for C<podserver>.
+It uses L<Pod::Parser|http://github.com/eric256/perl6-examples/blob/master/lib/Pod/Parser.pm>
+and L<Pod::Parser|http://github.com/eric256/perl6-examples/blob/master/lib/Pod/to/xhtml.pm>
+for the POD to xhtml conversion, and L<HTTP::Daemon|http://github.com/eric256/perl6-examples/blob/master/lib/HTTP/Daemon.pm>
+for the webserver bits.
 
 =head1 DEPENDENCY
 Until Rakudo implements Socket I/O, this module uses the
 L<socat|http://www.dest-unreach.org/socat/> utility that needs to be
 installed for your Unix compatible operating system.
 
+=head1 BUGS
+The case insensive sort on line 123 does not work properly.
+
 =head1 SEE ALSO
-L<doc:podserver>,
-L<doc:HTTP::Daemon>, HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>)
+L<podserver|http://github.com/eric256/perl6-examples/blob/master/bin/podserver>,
+L<Pod::Server|http://github.com/eric256/perl6-examples/blob/master/lib/Pod/Server.pm>,
+L<Pod::Parser|http://github.com/eric256/perl6-examples/blob/master/lib/Pod/Parser.pm>,
+L<HTTP::Daemon|http://github.com/eric256/perl6-examples/blob/master/lib/HTTP/Daemon.pm>,
+L<HTTP 1.1|http://www.ietf.org/rfc/rfc2616.txt>
 
 =head1 AUTHOR
 Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
