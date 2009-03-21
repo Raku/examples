@@ -22,9 +22,12 @@ class Pod::Server is HTTP::Daemon {
         my Str $currentpath =      %*ENV<PERL6LIB> ~ '/Pod/Server.pm';
         say "Browse this Perl 6 (Rakudo) podserver at http://$host:$port$currentpath";
         while Bool::True {
-            # spawning netcat (nc) here is a temporary measure until
-            # Rakudo gets socket(), listen(), accept() etc.
-            run( "nc -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
+            # spawning socat here is a temporary measure until Rakudo
+            # gets socket(), listen(), accept() etc.
+            run( "socat TCP-LISTEN:$port,bind=$host,fork EXEC:'$perl6 $*PROGRAM_NAME rq'" );
+#           run( "socat tcp-l:$port,fork EXEC:'$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
+            # previous versions used netcat, but on BSD lacked -c and -e
+            # run( "nc -c '$perl6 $*PROGRAM_NAME rq' -l -s $host -p $port" );
         }
     }
 
@@ -189,7 +192,9 @@ Pod::Server - guts of the podserver daemon
 
 =head1 SYNOPSIS
 =begin code
-# try it out:      (with your way to run perl6)
+# try it out:              (with your way to run perl6)
+sudo apt-get install socat # only on Debian compatibles
+sudo port    install socat # only on BSD compatibles
 git clone git://github.com/eric256/perl6-examples.git
 cd perl6-examples/lib/Pod
 perl6 Configure.p6
@@ -205,9 +210,14 @@ documentation files such as rakudo/docs/*.pod.
 The parser handles common Perl 5 POD as well, so many older documents
 in the Parrot and Pugs repositories also look presentable.
 
-This L<doc:Pod::Server> module contains almost all the logic in
+This L<doc:Pod::Server> module contains almost all the logic for
 L<doc:podserver>. It uses L<doc:Pod::Parser> and L<doc:Pod::to::xhtml> for
 the POD to xhtml conversion, and L<doc:HTTP::Daemon> for the webserver bits.
+
+=head1 DEPENDENCY
+Until Rakudo implements Socket I/O, this module uses the
+L<socat|http://www.dest-unreach.org/socat/> utility that needs to be
+installed for your Unix compatible operating system.
 
 =head1 SEE ALSO
 L<doc:podserver>,
