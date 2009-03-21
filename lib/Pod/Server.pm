@@ -16,10 +16,10 @@ class Pod::Server is HTTP::Daemon {
     has $!parameters;
 
     method server {
-        my Str $host =      %*ENV<LOCALADDR>  // '127.0.0.1';
-        my Int $port = int( %*ENV<LOCALPORT>  // '2080' );
-        my Str $perl6 =     %*ENV<PERL6>      // 'perl6';
-        my $currentpath = %*ENV<PERL6LIB> ~ '/Pod/Server.pm';
+        my Str $host        =      %*ENV<LOCALADDR>  // '127.0.0.1';
+        my Int $port        = int( %*ENV<LOCALPORT>  // '2080' );
+        my Str $perl6       =      %*ENV<PERL6>      // 'perl6';
+        my Str $currentpath =      %*ENV<PERL6LIB> ~ '/Pod/Server.pm';
         say "Browse this Perl 6 (Rakudo) podserver at http://$host:$port$currentpath";
         while Bool::True {
             # spawning netcat (nc) here is a temporary measure until
@@ -30,10 +30,12 @@ class Pod::Server is HTTP::Daemon {
 
     method request {
         self.parse_request();
+        my $title = $!filename eq '' ?? 'Pod::Server' !! $!filename;
         my $path_links = self.path_links.join(" /\n");
         my $pod = self.getpod();
-        say "{header()}<html>\n<head>\n{stylesheet()}\n</head>\n<body>";
-        say "<h1>Pod::Server $!filename</h1>";
+        say "{header()}<html>\n<head><title>$title</title>";
+        say "{stylesheet()}\n</head>\n<body>";
+        say "<h1>$title</h1>";
         say "Path: $path_links<br/>";
         say "<table><tr>";
         say "<td>\n{directory_list($!directory)}\n</td>";
@@ -51,7 +53,6 @@ class Pod::Server is HTTP::Daemon {
         regex parameters { .* };
     }
 
-#    method parse_request( $self: ) {
     method parse_request {
         $!request_line = =$*IN;
         my Str $url = $!request_line.split(' ')[1];
@@ -154,7 +155,7 @@ h1 { font-family: Sans; }
 table { }
 td { vertical-align: top; }
 td#pod { border-style: solid; width: 100%; }
-td#pod > pre { font-size: 7pt; }
+td#pod > pre { font-size: 8pt; }
 ];
     return "<style type=\"text/css\">$sheet</style>\n";
 }
@@ -181,10 +182,6 @@ sub fake_qx( $command ) {
     return $result;
 }
 
-# finally, the main program
-#if @*ARGS.elems == 0 { PodServer.new.server(); }  # run from command line
-#else                 { PodServer.new.request(); } # run from netcat
-
 =begin pod
 
 =head1 NAME
@@ -204,7 +201,7 @@ make podserver
 The L<doc:podserver> daemon is a web server that dynamically converts
 POD to xhtml.
 It is useful for previewing POD markup while editing, and for perusing
-documentation files such as rakudo/doc/*.pod.
+documentation files such as rakudo/docs/*.pod.
 The parser handles common Perl 5 POD as well, so many older documents
 in the Parrot and Pugs repositories also look presentable.
 

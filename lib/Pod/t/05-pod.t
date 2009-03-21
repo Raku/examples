@@ -6,7 +6,7 @@ use Test::Mock::Parser;
 
 # This scripts checks bidirectional pod5 <--> pod6 conversion.
 # The test suite intentionally contains only one file in pod5 format.
-# The remaining pod5 source is all within this file.
+# The remaining pod5 source is all within this set of tests.
 
 # wrapper class for testing overrides file input and standard output
 class P5 is Pod::to::pod5 does Test::Mock::Parser {}
@@ -285,7 +285,7 @@ verbatim. The C < > code is the inline equivalent of the =code block.
 Preserve the punctuation and C<say "---   ---";> three spaces.
 =end para
 =begin para
-Also preserve C<if $a <   5 and $a >   0 { say "yes"; }> markup
+Also preserve C<if $a <  5 and $a >  0 { say "yes"; }> markup
 characters.
 =end para
 =begin para
@@ -293,7 +293,7 @@ Multiple angles C< $a = ( $b > $c );> also delimit.
 =end para
 =end pod];
 $output = $p6.parse( $pod5 ).join("\n");
-is( $output, $pod6, 'p08-code.pod format C<code> 5->6' );
+eq_or_diff( $output, $pod6, 'p08-code.pod format C<code> 5->6' );
 
 $pod6 = slurp('t/p13-link.pod').chomp; # Rakudo slurp appends a "\n"
 $pod5 = q[=pod

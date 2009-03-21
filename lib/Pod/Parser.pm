@@ -165,7 +165,7 @@ class Pod::Parser {
             default                   {
                                         # self.parse_user_defined;
                                       } # /
-        } 
+        }
     }
 
     method parse_extra { # from parse_line
@@ -439,11 +439,11 @@ class Pod::Parser {
 
         if ( $new_context ne $!context ) {
             given $!context {
-                when 0 { }                  # Context::AMBIENT
-                when 1 {                    # Context::BLOCK_DECLARATION
+                when int Context::AMBIENT { } # RAKUDO: is int necessary? http://rt.perl.org/rt3/Public/Bug/Display.html?id=64046
+                when int Context::BLOCK_DECLARATION {
                     self.blk_beg( @!podblocks[*-1] );
                 }
-                when 2 {                    # Context::POD_CONTENT
+                when int Context::POD_CONTENT {
                     my Str $style = @!podblocks[*-1].style;
                     if $style eq ( 'PARAGRAPH' | 'ABBREVIATED' ) {
                         self.blk_end( pop @!podblocks );
@@ -455,7 +455,7 @@ class Pod::Parser {
                 }
             }
             given $new_context {
-                when 0 {                    # Context::AMBIENT
+                when int Context::AMBIENT {
                     if @!podblocks {
                         if @!podblocks[*-1].style ne 'DELIMITED' {
                             # ABBREVIATED or POD_BLOCK
@@ -463,10 +463,10 @@ class Pod::Parser {
                         }
                     }
                 }
-                when 1 {                    # Context::BLOCK_DECLARATION
+                when int Context::BLOCK_DECLARATION {
                     @!podblocks.push( PodBlock.new );
                 }
-                when 2 {                    # Context::POD_CONTENT
+                when int Context::POD_CONTENT {
                     # if the only containing block is the outer 'pod',
                     # wrap this content in a PARAGRAPH style 'para' or 'code'
                     if @!podblocks == 1 {
