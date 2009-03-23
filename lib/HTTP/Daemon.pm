@@ -163,10 +163,12 @@ class HTTP::Daemon
         # warn "perl6: $perl6";
         $!running = Bool::True;
         while $!running {
-            my Str $command = "$perl6 $*PROGRAM_NAME --request";
-            run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
-            # spawning netcat here is a temporary measure until
+            # spawning socat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.
+            my Str $command = "$perl6 $*PROGRAM_NAME --request";
+            run( "socat TCP-LISTEN:{$.port},bind={$.host},fork EXEC:'$command'" );
+            # previous versions used netcat, but on BSD lacked -c and -e
+            # run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
         }
     }
 
@@ -199,8 +201,9 @@ HTTP::Daemon - a (very) simple web server using Rakudo Perl 6
 
  git clone git://github.com/eric256/perl6-examples.git
  cd perl6-examples/lib/HTTP
- make PARROT_REV=34088 testrev
- # make PARROT_DIR=/tmp/parrot run
+ perl6 Configure.p6
+ make help
+ make LOCALADDR=127.0.0.1 run
 
 =head1 DESCRIPTION
 You can make your own web server using L<doc:HTTP::Daemon> without using
@@ -303,20 +306,26 @@ sub daemon {
 =end code
 
 =head1 DEPENDENCIES
-Temporarily (see L<#TODO>) HTTP_Daemon depends on the L<man:netcat>
+Temporarily (see L<#TODO>) HTTP_Daemon depends on the L<man:socat>
 utility to receive and send on a TCP port.
 On Debian based Linux distributions, this should set it up:
 
- sudo apt-get install netcat
+ sudo apt-get install socat
+
+On BSD systems including AIX:
+
+ sudo port install socat
 
 =head1 BUGS
 This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions.
-# The most recent successfully tested Rakudo revision is Parrot r37432.
+The most recent successfully tested Rakudo revision is Parrot r37432.
 
 =head1 SEE ALSO
 The Makefile comments describe additional testing options.
 
-L<man:netcat(1)> calls itself a TCP/IP swiss army knife.
+L<socat|http://www.dest-unreach.org/socat/> provides the Sockets that
+Parrot and Rakudo lack.
+Its predecessor L<man:netcat(1)> calls itself a TCP/IP swiss army knife.
 
 HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>) describes all methods
 and status codes.
