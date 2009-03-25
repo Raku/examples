@@ -5,8 +5,59 @@
 
 # only a subset emulation of the Perl 5 HTTP::Headers design - no tuits!
 
+# Interim subs to expose Parrot socket functions in Rakudo.
+# Names and parameters correspond to the Perl 5 definitions, not the
+# slightly different BSD Socket ones that Parrot actually links to.
+
+sub socket( IO $socket, $domain, $type, $protocol ) {
+    # $socket handle to be opened
+    # $domain ?=PF_INET (read 'man socket') 
+    # $type ?=SOCK_STREAM ?=SOCK_DGRAM
+    # $protocol is 'udp' | 'tcp'
+    q:PIR{
+    }
+}
+
+sub sockaddr_in( Int $port, $iaddr ) {
+    # $port obtained from getservbyname()
+    # $iaddr is a packed binary structure obtained from gethostbyname()
+    my $sin;
+    return $sin;
+}
+
+sub sockaddr( ) { # in Parrot, unsure if needs to be Rakudo wrapped
+
+}
+
+sub connect( IO $socket, Str $address ) {
+    # the Perl 5 version expects a packed binary $address for total C
+    # compatibility, but 'host.domain.com:1234' is nicer.
+    my Bool $success;
+    $success = Bool::True;
+    return $success;
+}
+
+sub send( $handle, $message, $flags, $sin? ) {
+    # $handle created by socket()
+    # $message 
+    # $sin used with unconnected (eg udp) sockets but not connected (tcp) ones
+    my $characters_sent;
+    return $characters_sent; # must return undef if error
+}
+
+sub read( IO $handle, Str $buffer, Int $character_count, Int $offset? ) {
+    # $handle created by socket()
+    # $buffer receives the incoming characters
+    # $character_count indicates maximum number of characters to receive
+    # $offset indicates where in buffer to begin receiving characters
+    my Int $characters_received; # and undef means error, 0 means EOF
+    return $characters_received;
+}
+
+# End interim subs
+
 class HTTP::Headers {
-    has %!header_values;    
+    has %!header_values;
     method header( Str $fieldname ) {
         return %!header_values{ $fieldname };
     }

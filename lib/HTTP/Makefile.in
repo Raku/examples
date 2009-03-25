@@ -21,6 +21,9 @@ clean:
 	@find . -name '*.pir' -exec rm {} ';' # precompiled modules
 	@find . -name '*~'    -exec rm {} ';' # editor backups
 
+realclean: clean
+	@rm Makefile
+
 run:
 	export PERL6='$(PERL6)' PERL6LIB=$(PERL6LIB) LOCALADDR=$(LOCALADDR) LOCALPORT=$(LOCALPORT);\
 	 cd $(PERL6BIN); $(PERL6) httpd
@@ -49,10 +52,11 @@ help:
 	@echo ''
 	@echo 'You can make the following targets:'
 	@echo ''
-	@echo 'all     - default, precompile .pm to .pir for speed'
-	@echo 'clean   - removes .pir and backup~ files'
-	@echo 'run     - run httpd web server with or without precompile'
-	@echo 'help    - this text. See also: head --lines=14 Makefile.in'
+	@echo 'all       - default, precompile .pm to .pir for speed'
+	@echo 'clean     - removes .pir and backup~ files'
+	@echo 'realclean - clean and also remove Makefile'
+	@echo 'run       - run httpd web server with or without precompile'
+	@echo 'help      - this text. See also: head --lines=14 Makefile.in'
 	@echo ''
 	@echo 'LOCALADDR: default 127.0.0.1'
 	@echo '  Example: make LOCALADDR=192.168.1.123 run'
@@ -60,4 +64,9 @@ help:
 	@echo 'LOCALPORT: default 8888, only root may use < 1024'
 	@echo '  Example: make LOCALPORT=8080 LOCALADDR=192.168.1.123 run'
 	@echo ''
-
+	@echo 'There are two unusual aspects to his Makefile:'
+	@echo '1. There is no "test" target yet, because that involves fetching web pages.'
+	@echo '2. The "run" target deliberately does not depend on "all", so that you can'
+	@echo '   "make clean run", edit Daemon.pm and refresh the browser page immediately.'
+	@echo '   For quicker response times, "make all run" uses Daemon.pir instead.'
+	@echo ''
