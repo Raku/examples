@@ -5,28 +5,76 @@
 
 # only a subset emulation of the Perl 5 HTTP::Headers design - no tuits!
 
-# Interim subs to expose Parrot socket functions in Rakudo.
+# Interim subs to expose Parrot socket functions (r37707) in Rakudo.
 # Names and parameters correspond to the Perl 5 definitions, not the
-# slightly different BSD Socket ones that Parrot actually links to.
+# sometimes different BSD Socket ones that Parrot actually provides.
+# Read 'perldoc perlipc' and search for Sockets for the explanation.
+
+# subs 'Under Construction': nothing works or even makes sense!
 
 sub socket( IO $socket, $domain, $type, $protocol ) {
     # $socket handle to be opened
     # $domain ?=PF_INET (read 'man socket') 
     # $type ?=SOCK_STREAM ?=SOCK_DGRAM
     # $protocol is 'udp' | 'tcp'
-    q:PIR{
+    # returns Bool::True for success or Bool::False for failure
+    q:PIR{        # from q:PIR in socket() in Daemon.pm
+        .local pmc sock
+        $P0 = socket 2,1,0   # guessing that's domain, type, protocol
+        socket sock, 2, 1, 6 # PF_INET, SOCK_STREAM, tcp
+
+        %r = $P0
+    }
+}
+
+sub setsockopt( IO $socket, Int $level, Int $optname, Str $optval ) {
+    # $optval is a string containing packed binary data
+    # returns Bool::True for success or Bool::False for failure
+    q:PIR{        # from q:PIR in setsockopt() in Daemon.pm
     }
 }
 
 sub sockaddr_in( Int $port, $iaddr ) {
     # $port obtained from getservbyname()
     # $iaddr is a packed binary structure obtained from gethostbyname()
-    my $sin;
+    my $sin = q:PIR{        # from q:PIR in sockaddr_in() in Daemon.pm
+        %r = box '123'
+    };
     return $sin;
 }
 
-sub sockaddr( ) { # in Parrot, unsure if needs to be Rakudo wrapped
+sub bind( IO $socket, $packed_address ) {
+    # returns Bool::True for success or Bool::False for failure
+    return q:PIR{        # from q:PIR in listen() in Daemon.pm
+        get_hll_global $P0, ["Bool"], "True"
+        .local int ret
+        .local pmc sock
+        .local pmc address
+        ret = bind sock, address
+        %r = $P0
+    }
+}
 
+sub listen( IO $socket, Int $queuesize ) {
+    # returns Bool::True for success or Bool::False for failure
+    return q:PIR{        # from q:PIR in listen() in Daemon.pm
+        get_hll_global $P0, ["Bool"], "True"
+        .local int ret
+        .local pmc sock
+        listen ret, sock, 1
+        %r = $P0
+    }
+}
+
+sub accept( IO $newsocket, IO $genericsocket ) {
+    # returns the packed remote address for success or Bool::False for failure
+    return q:PIR{        # from q:PIR in accept() in Daemon.pm
+        get_hll_global $P0, ["Bool"], "False"
+        .local pmc work
+        .local pmc sock
+        accept work, sock
+        %r = $P0
+    }
 }
 
 sub connect( IO $socket, Str $address ) {
@@ -34,6 +82,10 @@ sub connect( IO $socket, Str $address ) {
     # compatibility, but 'host.domain.com:1234' is nicer.
     my Bool $success;
     $success = Bool::True;
+    $success = q:PIR{        # from q:PIR in connect() in Daemon.pm
+        get_hll_global $P0, ["Bool"], "True"
+        %r = $P0
+    };
     return $success;
 }
 
@@ -42,6 +94,13 @@ sub send( $handle, $message, $flags, $sin? ) {
     # $message 
     # $sin used with unconnected (eg udp) sockets but not connected (tcp) ones
     my $characters_sent;
+    $characters_sent = q:PIR{        # from q:PIR in send() in Daemon.pm
+        new $P0, "Int"
+        $P1 = "undef"()
+        "infix:="($P0, $P1) # set result to undef in the event of error
+        assign $P0, 1234    # number of characters sent
+        %r = $P0
+    };
     return $characters_sent; # must return undef if error
 }
 
@@ -51,6 +110,15 @@ sub read( IO $handle, Str $buffer, Int $character_count, Int $offset? ) {
     # $character_count indicates maximum number of characters to receive
     # $offset indicates where in buffer to begin receiving characters
     my Int $characters_received; # and undef means error, 0 means EOF
+    $characters_received = 5432;
+    $characters_received = undef;
+    $characters_received = q:PIR{        # from q:PIR in read() in Daemon.pm
+        new $P0, "Int"
+        $P1 = "undef"()
+        "infix:="($P0, $P1) # set result to undef in the event of error
+        assign $P0, 1234    # number of characters received
+        %r = $P0
+    };
     return $characters_received;
 }
 
