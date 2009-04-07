@@ -345,14 +345,14 @@ Internet security breaches.
 #!/usr/local/bin/perl6
 
 use v6;
-use HTTP_Daemon;
+use HTTP::Daemon;
 defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
 
 # handle a single browser request, executed in a child process of netcat
 sub request {
-    my HTTP_Daemon $d .= new;
-    while my HTTP_Daemon_ClientConn $c = $d.accept {
-        while my HTTP_Request $r = $c.get_request {
+    my HTTP::Daemon $d .= new;
+    while my HTTP::Daemon::ClientConn $c = $d.accept {
+        while my HTTP::Request $r = $c.get_request {
             my $method = $r.method;
             if $r.method eq 'GET' {
                 given $r.url.path {
@@ -369,13 +369,13 @@ sub request {
 
 # start the main server and enter the endless loop in the inner daemon.
 sub daemon {
-    my HTTP_Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
+    my HTTP::Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
     say "Browse this Perl 6 web server at {$d.url}";
     $d.daemon();
 }
 
 # called from sub request for the '/' url
-sub root_dir( HTTP_Daemon_ClientConn $c, HTTP_Request $r ) {
+sub root_dir( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     my $content = q[<html><head><title>Hello</title>
 <body><h1>Rakudo web server</h1>
 Hello, world! This is root. Go to <a href="/pub/">pub</a>.
@@ -384,7 +384,7 @@ Hello, world! This is root. Go to <a href="/pub/">pub</a>.
 }
 
 # called from sub request for the '/pub/' url
-sub pub_dir( HTTP_Daemon_ClientConn $c, HTTP_Request $r ) {
+sub pub_dir( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
     my $content = q[<html><head><title>Hello</title>
 <body><h1>Rakudo web server</h1>
 Hello again, this is pub. Go <a href="/">Home</a>.
@@ -398,13 +398,13 @@ Hello again, this is pub. Go <a href="/">Home</a>.
 #!/usr/local/bin/perl6
 
 use v6;
-use HTTP_Daemon;
+use HTTP::Daemon;
 defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
 
 sub request {
-    my HTTP_Daemon $d .= new;
-    while my HTTP_Daemon_ClientConn $c = $d.accept {
-        while my HTTP_Request $r = $c.get_request {
+    my HTTP::Daemon $d .= new;
+    while my HTTP::Daemon::ClientConn $c = $d.accept {
+        while my HTTP::Request $r = $c.get_request {
             if $r.method eq 'GET' and $r.url.path eq '/xyzzy' {
                 # remember, this is *not* recommended practice :-)
                 $c.send_file_response("/etc/passwd");
@@ -417,7 +417,7 @@ sub request {
 }
 
 sub daemon {
-    my HTTP_Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
+    my HTTP::Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
     $d.temporary_set_prog( './test.pl' );
     say "Browse this Perl 6 web server at {$d.url}";
     $d.daemon();
@@ -425,7 +425,7 @@ sub daemon {
 =end code
 
 =head1 DEPENDENCIES
-Temporarily (see L<#TODO>) HTTP_Daemon depends on the L<man:socat>
+Temporarily (see L<#TODO>) HTTP::Daemon depends on the L<man:socat>
 utility to receive and send on a TCP port.
 On Debian based Linux distributions, this should set it up:
 
