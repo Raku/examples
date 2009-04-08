@@ -306,7 +306,7 @@ httpd - HyperText Transfer Protocol Daemon or Perl 6 (Rakudo) web server
 
 =head1 DESCRIPTION
 This program runs a simple web server within itself, so there is no need
-for Apache, IIS, mod_perl or other products. It must temporarily use the
+for Apache, IIS, mod_perl or other such products. It must temporarily use the
 Unix L<man:socat> utility for the TCP part, but will soon use the socket
 functions in Parrot and Rakudo.
 The overhead of communicating through socat is two process forks per
@@ -315,7 +315,7 @@ Performance will definitely improve a lot when Rakudo handle the I/O
 in-process.
 
 This program uses L<doc:HTTP::Daemon> for the low level work. Thus the
-the programmer can concentrate on the web content, as this source code
+programmer can concentrate on the web content, as this source code
 shows.
 
 =head1 INSTALLATION
