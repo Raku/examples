@@ -303,7 +303,7 @@ The Daemon start a subprocess with C<perl6> so the Rakudo C<perl6> fake
 executable must be in a search path directory, or symbolically linked to
 one. For example, in Linux:
 
- sudo ln --symbolic --force /path/to/rakudo/perl6 /usr/local/bin/
+ sudo ln -s -f /path/to/rakudo/perl6 /usr/local/bin/
  perl6 -v           # just checking that perl6 is now in the search path
 
 Temporarily (see L<#TODO>) HTTP::Daemon depends on the L<man:socat>
