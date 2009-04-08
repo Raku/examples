@@ -13,7 +13,7 @@ class Pod::to::xhtml is Pod::Parser
     has Int  $!indentlevel;
     has Str  $!name;
     has Str  $!prefix;
-    has Str  $!buffer;
+    has Str  $!buffer;        # TODO: defer to same in Pod::Parser
     has Bool $!do_emit;
     has Bool $!do_definition;
     has Str  $!definition;

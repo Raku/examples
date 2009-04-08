@@ -5,125 +5,6 @@
 
 # only a subset emulation of the Perl 5 HTTP::Headers design - no tuits!
 
-# Interim subs to expose Parrot socket functions (r37707) in Rakudo.
-# Names and parameters correspond to the Perl 5 definitions, not the
-# sometimes different BSD Socket ones that Parrot actually provides.
-# Read 'perldoc perlipc' and search for Sockets for the explanation.
-
-# subs 'Under Construction': nothing works or even makes sense!
-
-#sub socket( IO $socket, $domain, $type, $protocol ) {
-#    # $socket handle to be opened
-#    # $domain ?=PF_INET (read 'man socket') 
-#    # $type ?=SOCK_STREAM ?=SOCK_DGRAM
-#    # $protocol is 'udp' | 'tcp'
-#    # returns Bool::True for success or Bool::False for failure
-#    q:PIR{        # from q:PIR in socket() in Daemon.pm
-#        .local pmc sock
-#        $P0 = socket 2,1,0   # guessing that's domain, type, protocol
-#        socket sock, 2, 1, 6 # PF_INET, SOCK_STREAM, tcp##
-#
-#        %r = $P0
-#    }
-#}
-
-#sub setsockopt( IO $socket, Int $level, Int $optname, Str $optval ) {
-#    # $optval is a string containing packed binary data
-#    # returns Bool::True for success or Bool::False for failure
-#    q:PIR{        # from q:PIR in setsockopt() in Daemon.pm
-#    }
-#}
-
-#sub sockaddr_in( Int $port, $iaddr ) {
-#    # $port obtained from getservbyname()
-#    # $iaddr is a packed binary structure obtained from gethostbyname()
-#    my $sin = q:PIR{        # from q:PIR in sockaddr_in() in Daemon.pm
-#        %r = box '123'
-#    };
-#    return $sin;
-#}
-
-#sub bind( IO $socket, $packed_address ) {
-#    # returns Bool::True for success or Bool::False for failure
-#    return q:PIR{        # from q:PIR in listen() in Daemon.pm
-#        get_hll_global $P0, ["Bool"], "True"
-#        .local int ret
-#        .local pmc sock
-#        .local pmc address
-#        ret = bind sock, address
-#        %r = $P0
-#    }
-#}
-
-#sub listen( IO $socket, Int $queuesize ) {
-#    # returns Bool::True for success or Bool::False for failure
-#    return q:PIR{        # from q:PIR in listen() in Daemon.pm
-#        get_hll_global $P0, ["Bool"], "True"
-#       .local int ret
-#       .local pmc sock
-#       listen ret, sock, 1
-#       %r = $P0
-#   }
-#}
-
-#sub accept( IO $newsocket, IO $genericsocket ) {
-#    # returns the packed remote address for success or Bool::False for failure
-#    return q:PIR{        # from q:PIR in accept() in Daemon.pm
-#        get_hll_global $P0, ["Bool"], "False"
-#        .local pmc work
-#        .local pmc sock
-#        accept work, sock
-#        %r = $P0
-#    }
-#}
-
-#sub connect( IO $socket, Str $address ) {
-#    # the Perl 5 version expects a packed binary $address for total C
-#    # compatibility, but 'host.domain.com:1234' is nicer.
-#    my Bool $success;
-#    $success = Bool::True;
-#    $success = q:PIR{        # from q:PIR in connect() in Daemon.pm
-#        get_hll_global $P0, ["Bool"], "True"
-#        %r = $P0
-#    };
-#    return $success;
-#}
-
-#sub send( $handle, $message, $flags, $sin? ) {
-#    # $handle created by socket()
-#    # $message 
-#    # $sin used with unconnected (eg udp) sockets but not connected (tcp) ones
-#    my $characters_sent;
-#    $characters_sent = q:PIR{        # from q:PIR in send() in Daemon.pm
-#        new $P0, "Int"
-#        $P1 = "undef"()
-#        "infix:="($P0, $P1) # set result to undef in the event of error
-#        assign $P0, 1234    # number of characters sent
-#        %r = $P0
-#    };
-#    return $characters_sent; # must return undef if error
-#}
-
-#sub read( IO $handle, Str $buffer, Int $character_count, Int $offset? ) {
-#    # $handle created by socket()
-#    # $buffer receives the incoming characters
-#    # $character_count indicates maximum number of characters to receive
-#    # $offset indicates where in buffer to begin receiving characters
-#    my Int $characters_received; # and undef means error, 0 means EOF
-#    $characters_received = 5432;
-#    $characters_received = undef;
-#    $characters_received = q:PIR{        # from q:PIR in read() in Daemon.pm
-#        new $P0, "Int"
-#        $P1 = "undef"()
-#        "infix:="($P0, $P1) # set result to undef in the event of error
-#        assign $P0, 1234    # number of characters received
-#        %r = $P0
-#    };
-#    return $characters_received;
-#}
-
-# End interim subs
-
 class HTTP::Headers {
     has %!header_values;
     method header( Str $fieldname ) {
@@ -218,14 +99,14 @@ class HTTP::Daemon::ClientConn {
     # the internet newline is 0x0D 0x0A, "\n" would vary between OSes
     method send_crlf { print "\x0D\x0A"; }
 
-    # untested so far
+    # now tested with /favicon.ico
     method send_file_response( $self: Str $filename ) {
         $self.send_basic_header;
         $self.send_crlf;
         $self.send_file( $filename );
     }
 
-    # untested so far
+    # now tested with /favicon.ico
     method send_file( Str $filename ) {
         my $contents = slurp( $filename );
         print $contents;
@@ -244,7 +125,7 @@ class HTTP::Daemon::ClientConn {
     }
 
     # seems inefficient
-    multi method send_error( $self: Str $message ) {
+    multi method send_error( Str $message ) {
         my %status = (
             'OK'                => 200,
             'RC_FORBIDDEN'      => 403,
@@ -252,16 +133,15 @@ class HTTP::Daemon::ClientConn {
             'RC_INTERNALERROR'  => 500,
             'RC_NOTIMPLEMENTED' => 501
         );
-        $self.send_error( %status{$message}, $message );
+        self.send_error( %status{$message}, $message );
     }
 
-    multi method send_error( $self: Int $status, Str $message ) {
-        $self.send_status_line( $status, $message );
-        $self.send_crlf;
+    multi method send_error( Int $status, Str $message ) {
+        self.send_status_line( $status, $message );
+        self.send_crlf;
         say "<title>$status $message</title>";
         say "<h1>$status $message</h1>";
     }
-
 }
 
 grammar HTTP::headerline {
@@ -278,13 +158,11 @@ class HTTP::Daemon
     has Bool $!accepted;
 
     method daemon {
-        my $perl6 = %*ENV<PERL6>;
-        # warn "perl6: $perl6";
         $!running = Bool::True;
         while $!running {
             # spawning socat here is a temporary measure until
             # Rakudo gets socket(), listen(), accept() etc.
-            my Str $command = "$perl6 $*PROGRAM_NAME --request";
+            my Str $command = "perl6 $*PROGRAM_NAME --request";
             run( "socat TCP-LISTEN:{$.port},bind={$.host},fork EXEC:'$command'" );
             # previous versions used netcat, but on BSD lacked -c and -e
             # run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
@@ -300,7 +178,7 @@ class HTTP::Daemon
     # flag when it has returned one client connection and always returns
     # undef when called a second time, because by then the netcat client
     # connection will be gone.
-    # This is also why netcat cannot do HTTP 1.1 chunked transfer.
+    # This is also why netcat/socat cannot do HTTP 1.1 chunked transfer.
     method accept {
         if defined $!accepted { return undef; }
         else {
@@ -320,7 +198,7 @@ HTTP::Daemon - a (very) simple web server using Rakudo Perl 6
 
  git clone git://github.com/eric256/perl6-examples.git
  cd perl6-examples/lib/HTTP
- perl6 Configure.p6
+ perl6 Configure
  make help
  make LOCALADDR=127.0.0.1 run
 
@@ -343,8 +221,6 @@ Internet security breaches.
 =head2 Small but working
 =begin code
 #!/usr/local/bin/perl6
-
-use v6;
 use HTTP::Daemon;
 defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
 
@@ -353,8 +229,7 @@ sub request {
     my HTTP::Daemon $d .= new;
     while my HTTP::Daemon::ClientConn $c = $d.accept {
         while my HTTP::Request $r = $c.get_request {
-            my $method = $r.method;
-            if $r.method eq 'GET' {
+            if $r.req_method eq 'GET' {
                 given $r.url.path {
                     when '/'             { root_dir( $c, $r ); }
                     when / ^ \/pub\/ $ / { pub_dir(  $c, $r ); }
@@ -405,7 +280,7 @@ sub request {
     my HTTP::Daemon $d .= new;
     while my HTTP::Daemon::ClientConn $c = $d.accept {
         while my HTTP::Request $r = $c.get_request {
-            if $r.method eq 'GET' and $r.url.path eq '/xyzzy' {
+            if $r.req_method eq 'GET' and $r.url.path eq '/xyzzy' {
                 # remember, this is *not* recommended practice :-)
                 $c.send_file_response("/etc/passwd");
             }
@@ -418,33 +293,39 @@ sub request {
 
 sub daemon {
     my HTTP::Daemon $d .= new( host=>'127.0.0.1', port=>2080 );
-    $d.temporary_set_prog( './test.pl' );
     say "Browse this Perl 6 web server at {$d.url}";
     $d.daemon();
 }
 =end code
 
 =head1 DEPENDENCIES
+The Daemon start a subprocess with C<perl6> so the Rakudo C<perl6> fake
+executable must be in a search path directory, or symbolically linked to
+one. For example, in Linux:
+
+ sudo ln --symbolic --force /path/to/rakudo/perl6 /usr/local/bin/
+ perl6 -v           # just checking that perl6 is now in the search path
+
 Temporarily (see L<#TODO>) HTTP::Daemon depends on the L<man:socat>
 utility to receive and send on a TCP port.
 On Debian based Linux distributions, this should set it up:
 
  sudo apt-get install socat
 
-On BSD systems including AIX:
+On BSD systems including OSX:
 
  sudo port install socat
 
 =head1 BUGS
-This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions.
-The most recent successfully tested Rakudo revision is Parrot r37432.
+This L<doc:HTTP::Daemon> may fail with certain Rakudo revisions, it
+worked with the Rakudo of 2009-04-07 and Parrot r37973.
 
 =head1 SEE ALSO
 The Makefile comments describe additional testing options.
 
 L<socat|http://www.dest-unreach.org/socat/> provides the Sockets that
 Parrot and Rakudo lack.
-Its predecessor L<man:netcat(1)> calls itself a TCP/IP swiss army knife.
+Its predecessor L<man:netcat(1)> was called the TCP/IP swiss army knife.
 
 HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>) describes all methods
 and status codes.
@@ -453,3 +334,4 @@ and status codes.
 Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 
 =end pod
+
