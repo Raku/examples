@@ -24,6 +24,7 @@ class HTTP::Request {
     has HTTP::url     $!req_url;
     has Str           $.uurl;
     has Str           $.req_method  is rw;
+    has Str           %.query is rw;
 
     method url {
         return $!req_url;
@@ -39,23 +40,39 @@ class HTTP::Request {
 class HTTP::Response {
 }
 
+sub urldecode($text) {
+    state %hex;
+    unless %hex {
+        for 0..255 {
+            my $h = $_.fmt('%02X');
+            %hex{lc $h} = chr $_;
+            %hex{uc $h} = chr $_;
+        }
+    }
+    return $text.subst('+', ' ', :g).subst(/\%(<[0..9a..fA..F]>**{2})/, {%hex{$/[0]}}, :g);
+}
+
 # This maintains the connected TCP session and handles chunked data
 # transfer, but Rakudo and netcat end the session after every request.
 class HTTP::Daemon::ClientConn {
     has HTTP::Request $.request is rw;
     has Bool $!gave_request;
+    has $.socket;
     
     method get_request {
         if defined $!gave_request { return undef; }
         else {
             $!gave_request = Bool::True;
-            my Str $line = =$*IN;
+            my $buf = $.socket.recv();
+            say $buf;
+            my @lines = split("\x0D\x0A", $buf);
+            my Str $line = @lines.shift();
             my @fields = $line.split(' ');
             # $*ERR.say: "-------------------";
             my Str $headerline;
             my %headers;
             repeat {
-                $headerline = =$*IN;
+                $headerline = @lines.shift();
                 # $*ERR.say: "HEADERLINE: $headerline";
                 # if $headerline ~~ HTTP::headerline {
                 #     my $key   = $/<key>;
@@ -70,20 +87,43 @@ class HTTP::Daemon::ClientConn {
                     %headers{$key} = $value;
                 }
             } until $headerline eq ""; # blank line terminates
+            # deal with body
+            my %query;
+            given %headers<Content-Type> // '' {
+                when 'application/x-www-form-urlencoded' {
+                    my $body = @lines.join('');
+                    for $body.split(/<[&;]>/) -> $pair {
+                        $pair ~~ /$<name>=(.*)\=$<value>=(.*)/ or next;
+                        %query{urldecode($/<name>)} = urldecode($/<value>);
+                    }
+                }
+                when '' {
+                    # no content-type... not a problem
+                }
+                when * {
+                    warn 'unknown content-type in request';
+                }
+            }
             return HTTP::Request.new(
                 req_url    => HTTP::url.new( path=>@fields[1] ),
                 headers    => HTTP::Headers.new(
                                   header_values => %headers ),
-                req_method => @fields[0]
+                req_method => @fields[0],
+                query      => %query,
             );
         }
+    }
+
+    method close {
+        $.socket.close();
     }
 
     # the method servers should mainly use for normal page output
     method send_response( $self: Str $content ) {
         $self.send_basic_header;
         $self.send_crlf;
-        say $content;
+        $.socket.send($content);
+        $.socket.close();
     }
 
     # provided for Perl 5 compatibility, send_response calls this
@@ -94,10 +134,10 @@ class HTTP::Daemon::ClientConn {
         Int $status?   = 200,
         Str $message?  = 'OK',
         Str $protocol? = 'HTTP/1.0'
-    ) { say "$protocol $status $message"; }
+    ) { $.socket.send("$protocol $status $message\n"); }
 
     # the internet newline is 0x0D 0x0A, "\n" would vary between OSes
-    method send_crlf { print "\x0D\x0A"; }
+    method send_crlf { $.socket.send("\x0D\x0A"); }
 
     # now tested with /favicon.ico
     method send_file_response( $self: Str $filename ) {
@@ -109,11 +149,12 @@ class HTTP::Daemon::ClientConn {
     # now tested with /favicon.ico
     method send_file( Str $filename ) {
         my $contents = slurp( $filename );
-        print $contents;
+        $.socket.send($contents);
+        $.socket.close();
     }
 
     # not sure whether this and the next method might be inefficient
-    multi method send_error( $self: Int $status ) {
+    multi method send_error( Int $status ) {
         my %message = (
             200 => 'OK',
             403 => 'RC_FORBIDDEN',
@@ -121,7 +162,7 @@ class HTTP::Daemon::ClientConn {
             500 => 'RC_INTERNALERROR',
             501 => 'RC_NOTIMPLEMENTED'
         );
-        $self.send_error( $status, %message{$status} );
+        self.send_error( $status, %message{$status} );
     }
 
     # seems inefficient
@@ -139,8 +180,16 @@ class HTTP::Daemon::ClientConn {
     multi method send_error( Int $status, Str $message ) {
         self.send_status_line( $status, $message );
         self.send_crlf;
-        say "<title>$status $message</title>";
-        say "<h1>$status $message</h1>";
+        $.socket.send("<title>$status $message</title>");
+        $.socket.send("<h1>$status $message</h1>");
+        $.socket.close();
+    }
+
+    method send_headers(*%headers) {
+        for %headers.kv -> $k, $v {
+            $.socket.send("$k: $v");
+            self.send_crlf;
+        }
     }
 }
 
@@ -159,13 +208,20 @@ class HTTP::Daemon
 
     method daemon {
         $!running = Bool::True;
+
+        # hack until we can get real CALLER support
+        my %callerns := Q:PIR {{ $P0 = getinterp
+                %r = $P0['namespace';1] }};
+
+        my $listener = IO::Socket::INET.socket(2, 1, 6)\
+                                       .bind($.host, $.port)\
+                                       .listen();
         while $!running {
-            # spawning socat here is a temporary measure until
-            # Rakudo gets socket(), listen(), accept() etc.
-            my Str $command = "perl6 $*PROGRAM_NAME --request";
-            run( "socat TCP-LISTEN:{$.port},bind={$.host},fork EXEC:'$command'" );
-            # previous versions used netcat, but on BSD lacked -c and -e
-            # run( "netcat -c '$command' -l -s {$.host} -p {$.port} -v" );
+            my $work = $listener.accept();
+            my HTTP::Daemon::ClientConn $c .= new( :socket($work) );
+
+            # call request($c) in the caller's namespace
+            %callerns<request>($c);
         }
     }
 
@@ -322,10 +378,6 @@ worked with the Rakudo of 2009-04-07 and Parrot r37973.
 
 =head1 SEE ALSO
 The Makefile comments describe additional testing options.
-
-L<socat|http://www.dest-unreach.org/socat/> provides the Sockets that
-Parrot and Rakudo lack.
-Its predecessor L<man:netcat(1)> was called the TCP/IP swiss army knife.
 
 HTTP 1.1 (L<http://www.ietf.org/rfc/rfc2616.txt>) describes all methods
 and status codes.

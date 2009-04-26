@@ -1,12 +1,13 @@
 #!/usr/local/bin/perl6
 use HTTP::Daemon;
-defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
+#defined @*ARGS[0] && @*ARGS[0] eq '--request' ?? request() !! daemon();
 
 # Serve one page
-sub request {
+sub request( $c ) {
+# sub request {
     # Currently executed in a child process of socat - inefficient
-    my HTTP::Daemon $d .= new;
-    while my HTTP::Daemon::ClientConn $c = $d.accept {
+#   my HTTP::Daemon $d .= new;
+#   while my HTTP::Daemon::ClientConn $c = $d.accept {
         while my HTTP::Request $r = $c.get_request {
 #           my $method = $r.req_method; # risky to call it 'method' in Perl 6
             if $r.req_method eq 'GET' { # risky to call it 'method' in Perl 6
@@ -28,18 +29,18 @@ sub request {
             }
             warn ' '; # blank line
         }
-    }
+#    }
 }
 
 # Executed as main parent process with an endless loop that re-starts
 # netcat after every page request.
-sub daemon {
+#sub daemon {
     my Str $host =     %*ENV<LOCALADDR>  // '127.0.0.1';
     my Int $port = int(%*ENV<LOCALPORT>) // 8888; #/ - p5 highlighting
     my HTTP::Daemon $d .= new( host=>$host, port=>$port );
     say "Browse this Perl 6 (Rakudo) web server at {$d.url}";
     $d.daemon();
-}
+#}
 
 # Make a Home page for the / url
 sub home( HTTP::Daemon::ClientConn $c, HTTP::Request $r ) {
