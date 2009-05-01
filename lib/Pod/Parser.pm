@@ -117,10 +117,8 @@ class Pod::Parser {
 
         # the main stream based parser begins here
         self.doc_beg( $filename );
-        my IO $handle = open $filename, :r ;
-        for =$handle -> Str $line  { $!line = $line; self.parse_line; }
-#       for =$handle -> Str $!line {                 self.parse_line; }
-        close $handle;
+        for lines($filename) -> Str $line  { $!line = $line; self.parse_line; }
+#       for lines($filename) -> Str $!line {                 self.parse_line; }
         self.doc_end;
     }
 
