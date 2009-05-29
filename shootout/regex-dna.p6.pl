@@ -2,6 +2,8 @@
 # 
 # Based on the submission for Perl 5.
 # contributed by Daniel carrera
+# 
+# USAGE: perl6 regex-dna.p6.pl < regex-dna.input
 
 my $content = $*IN.slurp;
 my $len_file = $content.chars;
