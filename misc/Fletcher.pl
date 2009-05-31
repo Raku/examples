@@ -21,17 +21,12 @@ sub strencode($str) {
 	return $str.subst(/(<-alpha -[\-_:]>)/,{ charencode($0) },:g);
 }
 sub charencode($char) {
-	my $hex = int2hex(ord $char);
-	my ($len,$url) = (0,'');
+	my ($url,$hex) = ('',int2hex(ord $char));
 
-	while $len = $hex.chars {
-		if ($len == 1) {
-			$url ~= '%0' ~ $hex;
-			last;
-		} else {
+	$hex = '0' ~ $hex if ($hex.chars % 1);
+	while $hex.chars {
 			$url ~= '%' ~ $hex.substr(0,2);
-			$hex = $hex.substr(2,$len-2);
-		}
+			$hex = $hex.substr(2,$hex.chars-2);
 	}
 	return $url;
 }
