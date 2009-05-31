@@ -55,7 +55,7 @@ sub fletcher16($str) {
 			$B = ($B + $A) % 255;
 		}
 	}
-	return int2hex($A*256 + $B);
+	return sprintf "%04s", int2hex($A*256 + $B);
 }
 
 
