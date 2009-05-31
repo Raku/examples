@@ -26,7 +26,7 @@ sub charencode($char) {
 	$hex = '0' ~ $hex if ($hex.chars % 1);
 	while $hex.chars {
 			$url ~= '%' ~ $hex.substr(0,2);
-			$hex = $hex.substr(2,$hex.chars-2);
+			$hex = $hex.substr(2);
 	}
 	return $url;
 }
