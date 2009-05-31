@@ -18,7 +18,7 @@ sub filename($module,%meta) {
 }
 
 sub strencode($str) {
-	return $str.subst(/(<-alpha -[\-_:]>)/,{ charencode($0) },:g);
+	return $str.subst(/(<-alpha -[_:]>)/,{ charencode($0) },:g);
 }
 sub charencode($char) {
 	my ($url,$hex) = ('',int2hex(ord $char));
@@ -52,5 +52,4 @@ sub fletcher16($str) {
 	}
 	return sprintf "%04s", int2hex($A*256 + $B);
 }
-
 
