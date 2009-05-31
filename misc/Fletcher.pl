@@ -42,13 +42,12 @@ sub int2hex($val is rw) {
 sub fletcher16($str) {
 	my ($A,$B) = (0,0);
 	for map { .ord }, $str.split('') -> $val {
-		$A = ($A + $val % 255) % 255;
-		$B = ($B + $A) % 255;
-		
 		if $val > 255 {
 			$A = ($A + int $val/255) % 255;
 			$B = ($B + $A) % 255;
 		}
+		$A = ($A + $val % 255) % 255;
+		$B = ($B + $A) % 255;
 	}
 	return sprintf "%04s", int2hex($A*256 + $B);
 }
