@@ -48,16 +48,16 @@ sub int2hex($val is rw) {
 	my $hex = '';
 	while $val {
 		my $tmp = $val % 16;
-		$val = int $val/16;
+		$val = int($val/16);
 		$hex = ($tmp < 10 ?? $tmp !! chr (97 - 10 + $tmp)) ~ $hex;
 	}
 	return $hex;
 }
 sub fletcher16($str) {
 	my ($A,$B) = (0,0);
-	for map { .ord }, $str.split('') -> $val {
+	for map { .ord }, $str.comb -> $val {
 		if $val > 255 {
-			$A = ($A + int $val/255) % 255;
+			$A = ($A + int($val/255)) % 255;
 			$B = ($B + $A) % 255;
 		}
 		$A = ($A + $val % 255) % 255;
