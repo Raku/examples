@@ -1,4 +1,3 @@
-
 # Example: Foo::Bar-auth:92de-ver:1.2.0
 my @modules = (
 	{name => "Foo::Bar", meta => {auth=>'mailto:dave@example.com', ver=>'1.2.0'}},
@@ -16,7 +15,6 @@ sub filename($module,%meta) {
 	}
 	return $filename;
 }
-
 sub strencode($str) {
 	return $str.subst(/(<-alpha -[_:]>)/,{ charencode($0) },:g);
 }
