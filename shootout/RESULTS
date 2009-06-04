@@ -33,3 +33,10 @@ Date: 4 Jun 2009
         perl6 k-nuc*p6* < k-nuc*in* 14.65s user 0.24s system 99% cpu 15.025 total
 
 	=> Rakudo is 200 times slower than Perl 6.
+
+	Revcomp (.flip and .trans)
+	-------
+	perl  rev*p5* < revcomp.in*  0.00s user 0.00s system 89% cpu 0.009 total
+	perl6 rev*p6* < revcomp.in* 14.12s user 0.16s system 99% cpu 14.366 total
+
+	=> Rakudo is 1600 times slower than Perl 6.
