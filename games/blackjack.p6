@@ -57,7 +57,7 @@ loop {
         my $choice;
         if ($player_is_human) {
             loop {
-                $choice = lc =$*IN;
+                $choice = lc $*IN.get;
                 last if $choice eq "h" | "s";
                 #last if $choice ~~ /h|s/;
                 say "invalid entry: 'h' or 's'";
@@ -77,7 +77,7 @@ loop {
 
 say "";
 
-$player_value = max (4 .. 21).grep: { $_ == $player_value };
+$player_value = [max] (4 .. 21).grep: { $_ == $player_value };
 
 say "DEALER:";
 .key.say for @dealer;

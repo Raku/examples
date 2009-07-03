@@ -1,0 +1,49 @@
+			  Benchmarking Rakudo
+			=======================
+
+Platform:
+---------
+Hardware: An old MacBook
+
+Operating System:	Ubuntu Ibex
+Perl 5 version:		5.10.0
+Rakudo version:		Updated on the date indicated.
+			Compiled with --gen-parrot-option=--optimize
+
+
+Date: 4 Jun 2009
+
+	N-Body  (double precision arithmetic)
+	------
+	perl  n-body.p5.pl 1000   0.10s user 0.00s system 77% cpu 0.135 total
+	perl6 n-body.p6.pl 1000  73.25s user 0.68s system 99% cpu 1:14.61 total
+
+	=> Rakudo is 550 times slower than Perl 5.
+
+	Regex-DNA  (regular expressions)
+	---------
+	perl  reg*p5* < reg*in*  0.19s user 0.01s system 86% cpu 0.232 total
+	perl6 reg*p6* < reg*in* 94.01s user 0.51s system 99% cpu 1:35.21 total
+
+	=> Rakudo is 410 times slower than Perl 5.
+
+	K-Nucleotide (substrings)
+	------------
+	perl  k-nuc*p5* < k-nuc*in*  0.05s user 0.00s system 64% cpu 0.074 total
+        perl6 k-nuc*p6* < k-nuc*in* 14.65s user 0.24s system 99% cpu 15.025 total
+
+	=> Rakudo is 200 times slower than Perl 5.
+
+	Revcomp (.flip and .trans)
+	-------
+	perl  rev*p5* < revcomp.in*  0.00s user 0.00s system 89% cpu 0.009 total
+	perl6 rev*p6* < revcomp.in* 14.12s user 0.16s system 99% cpu 14.366 total
+
+	=> Rakudo is 1600 times slower than Perl 5.
+
+	Fasta (arrays, string concat, substr)
+	-----
+	perl  fasta.p5.pl 1000  0.06s user 0.00s system 99% cpu 0.060 total
+	perl6 fasta.p6.pl 1000  26.35s user 0.32s system 75% cpu 35.217 total
+
+	=> Rakudo is 590 times slower than Perl 5.
