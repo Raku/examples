@@ -1,0 +1,39 @@
+#!/usr/local/bin/perl6
+
+# FROM - http://daniel.carrera.bz/2009/06/rpn-calculator-in-perl-6/
+use v6;
+
+token Op {'/' || '*' || '+' || '-'};
+token Value { \d+[\.\d+]? };
+token Item { <Value> || <Op> };
+token Expr { [<ws> <Item> <ws>]+ };
+
+# Read from the command line.
+my $str = @*ARGS[0];
+
+if $str ~~ /^ <Expr> $/ {
+	my @stack;
+	for $/<Expr><Item> -> $item {
+		if $item<Value> {
+			@stack.push($item<Value>);
+		} else {
+			my $v1 = @stack.pop;
+			my $v0 = @stack.pop;
+			@stack.push(do_op($v0,$v1,$item<Op>));
+		}
+	}
+	say @stack[0];
+} 
+else {
+	say "This is not an RPN expression.";
+}
+
+sub do_op($lhs, $rhs, $op) {
+	given $op {
+		when '*' { $lhs * $rhs }
+		when '+' { $lhs + $rhs }
+		when '-' { $lhs - $rhs }
+		when '/' { $lhs / $rhs }
+	}
+}
+

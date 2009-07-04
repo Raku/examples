@@ -1,0 +1,48 @@
+#!/usr/local/bin/perl6
+
+# FROM: http://blog.afoolishmanifesto.com/archives/341 - fREW Schmidt
+
+use v6;
+
+my %op_dispatch_table = {
+	'+' => sub (@stack) {
+		@stack.push(@stack.pop + @stack.pop);
+	},
+	'-' => sub (@stack) {
+		# this should probably be:
+		# @stack.push(@stack.pop R- @stack.pop);
+		my $s = @stack.pop;
+		@stack.push(@stack.pop - $s);
+	},
+	'*' => sub (@stack) {
+		@stack.push(@stack.pop * @stack.pop);
+	},
+	'/' => sub (@stack) {
+		# this should probably be:
+		# @stack.push(@stack.pop R/ @stack.pop);
+		my $s = @stack.pop;
+		@stack.push(@stack.pop / $s);
+	},
+	'sqrt' => sub (@stack) {
+		@stack.push(@stack.pop.sqrt);
+	},
+};
+
+sub evaluate (%odt, $expr) {
+	my @stack;
+	my @tokens = $expr.split(/\s+/);
+	for @tokens -> $token {
+		if $token ~~ /^\d+$/ {
+			@stack.push($token);
+		} else {
+			if my &fn = %odt{$token} {
+				&fn(@stack);
+			} else {
+				die "Unrecognized token '$token'; aborting";
+			}
+		}
+	}
+	return @stack.pop;
+}
+
+say "Result: { evaluate(%op_dispatch_table, @*ARGS[0]) }";

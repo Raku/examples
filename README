@@ -30,12 +30,13 @@ Goals
 Directories
 -----------
 
-games     - Games should go in here :)
-euler     - Answers for Project Euler <http://projecteuler.net>
-perlmonks - Answers to perlmonks.org questions
-wsg       - Answers for Winter Scripting Games, divided by difficulty and year
-bin       - utility scripts
-lib       - utility modules
+99-problems - Based on lisp 99 problems
+games       - Games should go in here :)
+euler       - Answers for Project Euler <http://projecteuler.net>
+perlmonks   - Answers to perlmonks.org questions
+wsg         - Answers for Winter Scripting Games, divided by difficulty and year
+bin         - utility scripts
+lib         - utility modules
 
 
 License Information
@@ -47,4 +48,3 @@ License 1.0, version 2.0 is GPL compatible by itself, hence there is no benefit
 to having an Artistic 2.0 / GPL disjunction.)  See the file LICENSE for
 details.
 
-just testing commits

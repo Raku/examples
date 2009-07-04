@@ -1,0 +1,17 @@
+=begin pod
+=head1 NAME
+RPN[1..3] - command line reverse polish notation calculators
+=head1 DESCRIPTION
+The three examples provided here are implmented in three very different ways. 
+They provide an excellent example of TMTOWTDI
+=head1 COMPARISON
+=head2 rpn1
+This is done via a loop and dispatch table. It is a direct translation of the
+Perl 5 version (see web site) - http://blog.afoolishmanifesto.com/archives/341
+=head2 rpn2
+This version uses a token parser and is a good example of the power in Perl 6
+pattern matching.
+=head2 rpn3
+This version uses the infix operator and demonstrates writing your own
+operators, or overloading existing ones.
+=end pod

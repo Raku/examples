@@ -1,0 +1,23 @@
+#!/usr/local/bin/perl6
+use v6;
+
+# FROM: http://daniel.ruoso.com/categoria/perl/rpn-calculator-perl6 by daniel@ruoso.com
+
+multi infix:<rpn> (@stack, $num where /^ \d+[\.\d+]? $/) {
+  [ @stack, $num ];
+}
+multi infix:<rpn> (@stack, $op where /^ '+' | '-' | '*' | '/' $/) {
+  my $lhs = @stack.pop;
+  my $rhs = @stack.pop;
+  my $res = do given $op {
+    when '+' { $rhs + $lhs }
+    when '-' { $rhs - $lhs }
+    when '*' { $rhs * $lhs }
+    when '/' { $rhs / $lhs }
+  }
+  [ @stack, $res ]
+}
+multi infix:<rpn> ($any, $unknown) {
+  die "Unkown expression near $any $unknown";
+}
+say [rpn] [], (~@*ARGS).words;
