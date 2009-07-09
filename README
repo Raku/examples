@@ -31,6 +31,7 @@ Directories
 -----------
 
 99-problems - Based on lisp 99 problems
+cookbook    - Cookbook examples, as per pleac project (from Perl cookbook)
 games       - Games should go in here :)
 euler       - Answers for Project Euler <http://projecteuler.net>
 perlmonks   - Answers to perlmonks.org questions
