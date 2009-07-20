@@ -3,7 +3,7 @@ use v6;
 # another case where @array = %*% (100..999) would be nice to have:
 # http://use.perl.org/~dpuu/journal/38142
 sub diagonal_x ($array) {
-    my $result = ();
+    my $result = [];
     my $copy = $array;
     for $copy -> $this {
         $copy.shift;
