@@ -19,7 +19,7 @@ my @array = <a b c d>;
 say @array;
 
 # b. Using a sub
-# 	$inâ @arr, $pos - you can insert an array in the middle of your parameters
+# 	$inÃ¢ @arr, $pos - you can insert an array in the middle of your parameters
 # 	The array is like a reference, so splice on the actual array, not a copy of	it
 sub insert_at ($in, @arr, $pos) {
 	@arr.splice($pos - 1, 0, $in);
