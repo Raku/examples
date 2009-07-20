@@ -11,8 +11,8 @@ class Primes {
    has $.current = 0;
    
    method next {
-     $.current++;
-     $.current++ until is_prime($.current);
+     $!current++;
+     $!current++ until is_prime($.current);
      return $.current;
    }
 }
