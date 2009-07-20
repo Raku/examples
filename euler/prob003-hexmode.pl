@@ -7,7 +7,7 @@ class Prime {
   method next() {
     my $not_prime = 1;
 
-    while($not_prime && $!number++) {
+    while $not_prime && $!number++ {
       $not_prime = @!primes.grep({$!number % $^a == 0});
     }
     @!primes.push($!number);
