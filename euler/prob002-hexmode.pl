@@ -17,8 +17,8 @@ my $f;
 
 my @r = gather {
   $f = $fibber.next;
-  while($f < 4000000) {
-    take $f if $f % 2 == 0;
+  while $f < 4000000 {
+    take (0+$f) if $f % 2 == 0;
     $f = $fibber.next;
   }
 }
