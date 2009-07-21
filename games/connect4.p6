@@ -19,8 +19,8 @@ class HumanPlayer is Player {
         my @legal_moves = $game.legal_moves( self );
 
         loop {
-            say "Enter column number for {$.token} to play:";
-            my $user_input = =$*IN;
+            my $user_input =
+                prompt("Enter column number for {$.token} to play: ");
             if @legal_moves.first: { .column == $user_input-1 } -> $move {
                 return $move;
             }
@@ -68,7 +68,7 @@ class ComputerPlayer is Player {
 }
 
 class Game is also {
-    has Str @board;
+    has @board;
     has Int @current_levels;
 
     has @.player_types;
