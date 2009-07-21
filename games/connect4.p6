@@ -63,7 +63,7 @@ class ComputerPlayer is Player {
     }
 
     method get_move( Game $game ) {
-        my Move $where = | self.get_move_choices($game).pick();
+        my Move $where = $.get_move_choices($game).pick();
     }
 }
 
