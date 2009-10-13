@@ -3,22 +3,19 @@ use v6;
 
 sub log10($n) { return log($n) / log(10) }
 
-my $s = '';
-my $mag = 1;
-my $x = $mag;
+my $mag = 1;        # current power of 10
+my $n = $mag;       # number to start searching from
 loop {
-    my $n = 2 * $x; my $s = $n.comb.sort;
+    my $s = (2*$n).comb.sort;
     last if 
-        $s eq (3*$x).comb.sort &&
-        $s eq (4*$x).comb.sort && 
-        $s eq (5*$x).comb.sort && 
-        $s eq (6*$x).comb.sort;
-    $x++;
-    if log10(6*$x).int > log10(2*$x).int {
+        $s eq (3*$n).comb.sort &&
+        $s eq (4*$n).comb.sort && 
+        $s eq (5*$n).comb.sort && 
+        $s eq (6*$n).comb.sort;
+    $n++;
+    if log10(6*$n).int > log10(2*$n).int {
         $mag *= 10;
-        $x = $mag;
+        $n = $mag;
     }
 }
-
-say $x;
-
+say $n;

@@ -1,20 +1,27 @@
 Perl 6 Examples
 ===============
 
-This is intended to be a repository for all kinds of Perl 6 examples.
+This is intended to be a repository for all kinds of Perl
+6 examples.
 
 All examples should work for any full implementation of Perl 6.
 
-If an example needs an implementation specific version then it should end in
-.implementation.  For example, if you are making an example that only works
-on Rakudo, it should end in .rakudo.
+If an example needs an implementation specific version then it
+should end in .implementation.  For example, if you are making
+an example that only works on Rakudo, it should end in .rakudo.
+
+If you want to contribute, just ask! The quicker choice is to
+use IRC: join #perl6 in Freenode and you'll be welcome.
 
 Why
 ---
 
 Why not just use the Pugs repo?
 
-1. With github we can have collaborators (simply request via github or #perl6 or perl6-users and I'll add you), or you can fork the repository and then send me a request when you want me to pull in your changes. 
+1. With github we can have collaborators (simply request via
+   github or #perl6 or perl6-users and I'll add you), or you can
+   fork the repository and then send me a request when you want
+   me to pull in your changes.
 2. This is not tied in any way to any implementation of Perl 6
 3. Something NEW and FRESH is always more fun (I hope!)
 
@@ -32,20 +39,29 @@ Directories
 
 99-problems - Based on lisp 99 problems
 cookbook    - Cookbook examples, as per pleac project (from Perl cookbook)
-games       - Games should go in here :)
 euler       - Answers for Project Euler <http://projecteuler.net>
+games       - Games should go in here :)
+interpreters- Language or DSL interpreters
+parsers     - Example grammars
 perlmonks   - Answers to perlmonks.org questions
-wsg         - Answers for Winter Scripting Games, divided by difficulty and year
+shootout    - Implementations for The Computer Language Benchmark Game
+              <http://shootout.alioth.debian.org/>
+wsg         - Answers for Winter Scripting Games, by difficulty and year
 bin         - utility scripts
 lib         - utility modules
+doc         - out-of-script documentation
+
+Since you have a commit-bit (if not then talk to the folks at #perl6
+on irc.freenode.net) feel free to commit your changes to the main
+repository.  No need to submit a pull request!
 
 
 License Information
 -------------------
 
-"Perl 6 Examples" is free software; you can redistribute it and/or modify it
-under the terms of the Artistic License 2.0.  (Note that, unlike the Artistic
-License 1.0, version 2.0 is GPL compatible by itself, hence there is no benefit
-to having an Artistic 2.0 / GPL disjunction.)  See the file LICENSE for
-details.
-
+"Perl 6 Examples" is free software; you can redistribute it
+and/or modify it under the terms of the Artistic License 2.0.
+(Note that, unlike the Artistic License 1.0, version 2.0 is
+GPL compatible by itself, hence there is no benefit to having
+an Artistic 2.0 / GPL disjunction.)  See the file LICENSE
+for details.

@@ -12,4 +12,4 @@ sub diagonal_x ($array) {
     return $result;
 }
 
-diagonal_x(100..999).grep({ $_ eq .reverse }).sort.reverse.[0].say;
+diagonal_x(100..999).grep({ $_ eq .flip }).sort.reverse.[0].say;

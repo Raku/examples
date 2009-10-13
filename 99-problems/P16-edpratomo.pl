@@ -1,3 +1,4 @@
+use v6;
 
 sub drop(@ary, $n) {
   gather for 1 .. @ary.elems -> $i { take @ary[$i - 1] if $i % $n }
