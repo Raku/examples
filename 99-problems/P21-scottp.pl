@@ -16,14 +16,16 @@ use v6;
 #		- What to add
 my @array = <a b c d>;
 @array.splice(1, 0, 'alfa');
-say @array;
+say ~@array;
 
 # b. Using a sub
 # 	$inâ @arr, $pos - you can insert an array in the middle of your parameters
 # 	The array is like a reference, so splice on the actual array, not a copy of	it
 sub insert_at ($in, @arr, $pos) {
 	@arr.splice($pos - 1, 0, $in);
+	return @arr;
 }
 my @array2 = <a b c d>;
 insert_at('alfa', @array2, 2);
-say @array2;
+say ~@array2;
+say ~insert_at('alfa', <a b c d>, 2);
