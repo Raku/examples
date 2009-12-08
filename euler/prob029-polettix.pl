@@ -33,7 +33,7 @@ my $max = @*ARGS.shift || 100;
 # to the square root, and count the former according to the possible
 # exponents.
 my (%mark_for, %already_done);
-for 2 .. int(sqrt($max)) -> $i {
+for 2 .. sqrt($max).Int -> $i {
    next if %already_done{$i};
 
    my $x = $i;
