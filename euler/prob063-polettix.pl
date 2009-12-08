@@ -60,7 +60,7 @@ sub multby (@x is copy, $y) {
    my $rest = 0;
    for @x -> $x is rw{
       $x = $x * $y + $rest;
-      $rest = int($x / $limit);
+      $rest = $x div $limit;
       $x %= $limit;
    }
    push @x, $rest if $rest;
