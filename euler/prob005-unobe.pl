@@ -7,7 +7,7 @@ for @numbers -> $num is rw {
     for @factors -> $factor is rw {
         next if $num % $factor;
         my $exp = 0;
-        while int($num /= $factor) { $exp++; }
+        while $num div= $factor { $exp++; }
         if !%factor{$factor} || %factor{$factor} < $exp {
             %factor{$factor} = $exp;
         };
