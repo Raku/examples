@@ -60,58 +60,56 @@ class HTTP::Daemon::ClientConn {
     has $.socket;
     
     method get_request {
-        if defined $!gave_request { return undef; }
-        else {
-            $!gave_request = Bool::True;
-            my $buf = $.socket.recv();
-            say $buf;
-            my @lines = split("\x0D\x0A", $buf);
-            my Str $line = @lines.shift();
-            my @fields = $line.split(' ');
-            # $*ERR.say: "-------------------";
-            my Str $headerline;
-            my %headers;
-            repeat {
-                $headerline = @lines.shift();
-                # $*ERR.say: "HEADERLINE: $headerline";
-                # if $headerline ~~ HTTP::headerline {
-                #     my $key   = $/<key>;
-                #     my $value = $/<value>;
-                #     $*ERR.say: "MATCHED! KEY '$key'  VALUE '$value'";
-                # }
-                # sorry, below isn't perlish, but above is broken
-                my $index = $headerline.index(':');
-                if $index {
-                    my $key   = $headerline.substr( 0, $index );
-                    my $value = $headerline.substr( $index + 2 );
-                    %headers{$key} = $value;
-                }
-            } until $headerline eq ""; # blank line terminates
-            # deal with body
-            my %query;
-            given %headers<Content-Type> // '' {
-                when 'application/x-www-form-urlencoded' {
-                    my $body = @lines.join('');
-                    for $body.split(/<[&;]>/) -> $pair {
-                        $pair ~~ /$<name>=(.*)\=$<value>=(.*)/ or next;
-                        %query{urldecode($/<name>)} = urldecode($/<value>);
-                    }
-                }
-                when '' {
-                    # no content-type... not a problem
-                }
-                when * {
-                    warn 'unknown content-type in request';
+        return unless defined $!gave_request;
+        $!gave_request = Bool::True;
+        my $buf = $.socket.recv();
+        say $buf;
+        my @lines = split("\x0D\x0A", $buf);
+        my Str $line = @lines.shift();
+        my @fields = $line.split(' ');
+        # $*ERR.say: "-------------------";
+        my Str $headerline;
+        my %headers;
+        repeat {
+            $headerline = @lines.shift();
+            # $*ERR.say: "HEADERLINE: $headerline";
+            # if $headerline ~~ HTTP::headerline {
+            #     my $key   = $/<key>;
+            #     my $value = $/<value>;
+            #     $*ERR.say: "MATCHED! KEY '$key'  VALUE '$value'";
+            # }
+            # sorry, below isn't perlish, but above is broken
+            my $index = $headerline.index(':');
+            if $index {
+                my $key   = $headerline.substr( 0, $index );
+                my $value = $headerline.substr( $index + 2 );
+                %headers{$key} = $value;
+            }
+        } until $headerline eq ""; # blank line terminates
+        # deal with body
+        my %query;
+        given %headers<Content-Type> // '' {
+            when 'application/x-www-form-urlencoded' {
+                my $body = @lines.join('');
+                for $body.split(/<[&;]>/) -> $pair {
+                    $pair ~~ /$<name>=(.*)\=$<value>=(.*)/ or next;
+                    %query{urldecode($/<name>)} = urldecode($/<value>);
                 }
             }
-            return HTTP::Request.new(
-                req_url    => HTTP::url.new( path=>@fields[1] ),
-                headers    => HTTP::Headers.new(
-                                  header_values => %headers ),
-                req_method => @fields[0],
-                query      => %query,
-            );
+            when '' {
+                # no content-type... not a problem
+            }
+            when * {
+                warn 'unknown content-type in request';
+            }
         }
+        return HTTP::Request.new(
+            req_url    => HTTP::url.new( path=>@fields[1] ),
+            headers    => HTTP::Headers.new(
+                                header_values => %headers ),
+            req_method => @fields[0],
+            query      => %query,
+        );
     }
 
     method close {
@@ -236,12 +234,10 @@ class HTTP::Daemon
     # connection will be gone.
     # This is also why netcat/socat cannot do HTTP 1.1 chunked transfer.
     method accept {
-        if defined $!accepted { return undef; }
-        else {
-            $!accepted = Bool::True;
-            my HTTP::Daemon::ClientConn $clientconn .= new;
-            return $clientconn;
-        }
+        return unless defined $!accepted;
+        $!accepted = Bool::True;
+        my HTTP::Daemon::ClientConn $clientconn .= new;
+        return $clientconn;
     }
 }
 
