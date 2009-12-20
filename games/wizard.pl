@@ -2,12 +2,6 @@ use v6;
 
 my $DEBUG = 0;
 
-multi prompt ($prompt?) {
-    print $prompt if defined $prompt;
-    my $input = =$*IN;
-    return $input;
-}
-
 multi prompt ($prompt, @options is rw) {
     my $choice;
     for (@options.kv) -> $key, $item {
@@ -167,7 +161,7 @@ my $person = Person.new( Mortal{ :life(100),:max_life(100) },
 
 
 my $frogs  = sub {
-  my $life = (10..20).pick[0];
+  my $life = (10..20).pick;
   my $m =  Monster.new( WObject{ :name("Army of frogs") }, 
                 :gold( (0..100).pick),
                 Mortal{ 
@@ -185,14 +179,14 @@ my $frogs  = sub {
 };
 
 my $bat    = sub {
-    my $life = (20..30).pick[0];
+    my $life = (20..30).pick;
     Monster.new(WObject{ :name("Bat")}, :gold( (0..100).pick ),
                 Mortal{ :life($life), :max_life($life) ,
                         :weapon( Weapon.new(WObject{ :name<claws>}, :power(5), :powerRange(3))) 
                 });
 };
 my $skeleton  = sub {
-    my $life = (30..50).pick[0];
+    my $life = (30..50).pick;
     Monster.new(WObject{ :name("Skeleton")}, :gold( (0..100).pick ), 
                 Mortal{ :life($life),:max_life($life) ,
                         :weapon( Weapon.new(WObject{ :name<Fists> }, :power(5), :powerRange(10)))} );

@@ -13,7 +13,7 @@ loop {
         $s eq (5*$n).comb.sort && 
         $s eq (6*$n).comb.sort;
     $n++;
-    if log10(6*$n).int > log10(2*$n).int {
+    if log10(6*$n).Int > log10(2*$n).Int {
         $mag *= 10;
         $n = $mag;
     }

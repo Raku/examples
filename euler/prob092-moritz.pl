@@ -30,7 +30,7 @@ my $c = 0;
 my $target = @*ARGS[0] // 1e7;
 say "running up to $target";
 for 1..($target-1) {
-    .say if $_ % int($target/10) == 0;
+    .say if $_ % ($target / 10).Int == 0;
     ++$c if ser($_) == 89;
 }
 say "Result: $c";

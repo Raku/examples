@@ -69,7 +69,7 @@ sub addto (@x is rw, @y) {
    # numbers differ by more than one digit
    for @x Z (@y, 0, *) -> $x is rw, $y {
       $x += $y + $rest;
-      $rest = int($x / $limit);
+      $rest = ($x / $limit).Int;
       $x %= $limit;
    }
    push @x, $rest if $rest;
