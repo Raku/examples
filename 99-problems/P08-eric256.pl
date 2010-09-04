@@ -15,6 +15,6 @@ sub compress (@in) {
 	return @return;
 }
 
-compress(qw/a a a a b c c a a d e e e e/).perl.say;
+compress(<a a a a b c c a a d e e e e>).perl.say;
 
 
