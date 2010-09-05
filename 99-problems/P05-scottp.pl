@@ -1,5 +1,8 @@
 use v6;
 
+# Specification:
+#   P05 - Reverse a list
+
 # a. One line example
 # 	<> used to create an array
 # 	.reverse on the object to reverse the order
@@ -17,6 +20,5 @@ say <A B C D>.reverse.join(' ');
 
 P05 - Reverse a list
 
-=cut
 =end
 
