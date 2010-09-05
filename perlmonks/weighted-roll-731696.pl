@@ -38,7 +38,6 @@ my $total = [+] @weights;
 say "Total Weights $total";
 
 sub pick (@weights, $total) {
-   #my $rand = $total.rand.int;
    my $rand = (0..^$total).pick;
    for @weights.kv -> $i, $w {
        $rand -= $w;
