@@ -10,12 +10,11 @@ use v6;
 
 # Example 1: iterative
 #   we specify type constraints on our input parameters
-sub gcdi (Int $a, Int $b) {
-    my ($x,$y) = ($a,$b); 
-    while $x % $y {
-        ($x,$y) = ($y, $x % $y);
+sub gcdi (Int $a is copy, Int $b is copy) {
+    while $a % $b {
+        ($a,$b) = ($b, $a % $b);
     }
-    return $y;
+    return $b;
 }
 
 gcdi(36,63).say;
