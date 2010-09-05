@@ -1,11 +1,16 @@
-#Pack consecutive duplicates of list elements into sublists.
-#If a list contains repeated elements they should be placed in separate sublists.
-#
-#Example:
-#* (pack '(a a a a b c c a a d e e e e))
-# ((A A A A) (B) (C C) (A A) (D) (E E E E))
-
 use v6;
+
+# Specification:
+#   P10 (*) Run-length encoding of a list.
+#       Use the result of problem P09 to implement the so-called run-length
+#       encoding data compression method. Consecutive duplicates of elements
+#       are encoded as arrays [N, E] where N is the number of duplicates of the
+#       element E.
+# Example:
+# > encode(<a a a a b c c a a d e e e e>).perl.say
+# [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]
+
+
 my @l = <a a a a b c c a a d e e e e>;
 sub packit (@in) {
 	my @out;
