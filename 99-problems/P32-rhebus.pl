@@ -33,4 +33,24 @@ sub gcdr (Int $a, Int $b) {
 gcdr(36,63).say;
 gcdr(63,36).say;
 
+
+# Example 3: series operator
+#   The series operator generates series lazily. It takes some start terms, a
+#   generation rule, and possibly a limit, and produces a series.
+#   To create the Fibonacci series, we write:
+#       (1, 1, *+* ... *)
+#   The generation rule is to sum the previous two terms: *+*.
+#   A limit of * continues the series forever.
+#
+#   We exploit this to generate the series of intermediate values in Euclid's
+#   algorithm: each step in the series is the mod of the last two terms. When
+#   we reach 0, the term before that was the gcd.
+sub gcds (Int $a, Int $b) {
+    return ($a, $b, *%* ... 0)[*-2];
+}
+
+gcds(8,12).say;
+gcds(36,63).say;
+gcds(63,36).say;
+
 # vim:ft=perl6
