@@ -46,10 +46,9 @@ say ~@array2;
 
 # c. Using a sub, returning a copy
 #    This time we must copy the sequence and mutate that
-sub insert_at_copy($in, @list, $pos) {
-    my @copy = @list;
-    @copy.splice($pos-1, 0, $in);
-    return @copy;
+sub insert_at_copy($in, @list is copy, $pos) {
+    @list.splice($pos-1, 0, $in);
+    return @list;
 }
 
 say ~insert_at_copy('alfa', <a b c d>, 2);
