@@ -26,8 +26,8 @@ our sub infix:<coprime> (Int $a, Int $b) { gcds($a,$b) == 1 }
 
 
 # Example 1: iteration
-sub totient_phi_i (Int $n) {
-    return 1 if $n ~~ 1;
+multi totient_phi_i (1      --> Int) { 1 }
+multi totient_phi_i (Int $n --> Int) {
     my $total = 0;
     for 1..^$n -> $k { $total++ if $n coprime $k }
     return $total;
@@ -38,7 +38,8 @@ say "phi($_): ", totient_phi_i $_ for (1..20);
 
 
 # Example 2: «coprime« hyper operator
-sub totient_phi (Int $n) {
+multi totient_phi (1      --> Int) { 1 }
+multi totient_phi (Int $n --> Int) {
     return 1 if $n ~~ 1;
     return [+] ($n «coprime« list(1..^$n));
 }
