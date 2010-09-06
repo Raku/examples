@@ -1,11 +1,11 @@
-# Given a run-length code list generated as specified in problem P11. Construct
-# its uncompressed version. 
-#
-#Example:
-#* (unpack '((4 a) b (2 c) (2 a) d (4 e)))
-#(a a a a b c c a a d e e e e)
-
 use v6;
+
+# Specification:
+#   P12 (**) Decode a run-length encoded list.
+#       Given a run-length code list generated as specified in problem P11.
+#       Construct its uncompressed version.
+
+
 my @l = ([<4 a>],'b',[<2 c>],[<2 a>], 'd', [<4 e>]);
 sub prob12 (@in) {
     my @out;

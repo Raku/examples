@@ -1,11 +1,13 @@
-#  Duplicate the elements of a list.
-#  Example:
-#    * (dupli '(a b c c d))<BR>
-#    (A A B B C C C C D D)<P>
-
 use v6;
+# Specification:
+#   P14 (*) Duplicate the elements of a list.
+# Example:
+# > say ~dupli(<a b c c d>);
+# a a b b c c c c d d
+
+
 sub dupli(@l) {
 	return @l.map({$_, $_});
 }
-say dupli(<a b c c d>);
+say ~dupli(<a b c c d>);
 

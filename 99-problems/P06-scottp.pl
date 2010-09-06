@@ -1,5 +1,8 @@
-# NOTE: Experimenting with documentation for tutorials / help
 use v6;
+
+# Specification:
+#   P06 (*) Find out whether a list is a palindrome.
+#   A palindrome can be read forward or backward; e.g. <x a m a x>.
 
 # Create a list palindrome
 my @l = <A B C B A>;
@@ -15,6 +18,8 @@ else {
 	say @l, ' is not a palindrome';
 }
 
+# ORIGINAL LISP SPECIFICATION
+
 =begin
 
 =head1 NAME
@@ -26,6 +31,5 @@ P06 - Find out whether a list is a palindrome.
  P06 (*) Find out whether a list is a palindrome.
  A palindrome can be read forward or backward; e.g. (x a m a x).
 
-=cut
 =end
 

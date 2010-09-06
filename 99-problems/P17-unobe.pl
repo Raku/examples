@@ -1,8 +1,14 @@
-# Split a list into two parts; the length of the first part is given.
+use v6;
+
+# Specification:
+# P17 (*) Split a list into two parts; the length of the first part is given.
+#   Do not use any predefined predicates.
 # Example:
-# * (split '(a b c d e f g h i k) 3)
-# ( (A B C) (D E F G H I K))
-my @l = <a b c d e f g h  i k>;
+# > say bisect(<a b c d e f g h i k>,3).perl
+# (["a", "b", "c"], ["d", "e", "f", "g", "h", "i", "k"])
+
+
+my @l = <a b c d e f g h i k>;
 sub prob17(@in, $n) {
     if @in.end < $n { return @in }
     else {
