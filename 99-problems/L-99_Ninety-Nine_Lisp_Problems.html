@@ -323,8 +323,8 @@ L-99: Ninety-Nine Lisp Problems</h1>
     Let ((p1 m1) (p2 m2) (p3 m3) ...) be the list of prime factors (and 
     their multiplicities) of a given number m. Then phi(m) can be calculated
     with the following formula:<P>
-    phi(m) = (p1 - 1) * p1 ** (m1 - 1) * (p2 - 1) * p2 ** (m2 - 1) * 
-    (p3 - 1) * p3 ** (m3 - 1) * ...<P>
+    phi(m) = (p1 - 1) * p1 ** (m1 - 1) + (p2 - 1) * p2 ** (m2 - 1) + 
+    (p3 - 1) * p3 ** (m3 - 1) + ...<P>
     Note that a ** b stands for the b'th power of a.<P> 
 
   <DT><STRONG><A href="p38.lisp">P38</A> 
