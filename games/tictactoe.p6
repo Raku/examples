@@ -1,0 +1,50 @@
+use v6;
+# From a silly discussion in #perl6...
+# See http://rhebus.posterous.com/learning-perl-6-by-playing-silly-games
+# and feel free to add a further golfed refinement to the end
+
+# Specification:
+# Find out who won, if anyone, in a game of tic-tac-toe.
+
+sub tictactoe-masak (*@b) {
+    my @lines = [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6];
+    for @lines {
+        if ([==] (my @l = slicel(@b, $_))) && all @l {
+            say "Someone won: @l[0]"
+        }
+    }
+}
+
+sub slicel(@a, @s) {
+    map { @a[$_ div 3][$_ % 3] }, @s
+}
+
+tictactoe-masak([-1, 0, 0],
+                [ 0,-1, 0],
+                [ 0, 0,-1]);
+
+sub tictactoe-rhebus (*@b) {
+    my @lines = (0,3,6 X+ 0,1,2),(0,1,2 X+ 0,3,6),0,4,8,2,4,6;
+    for @lines -> $a,$b,$c {
+        if @b[$a] && [==] @b[$a,$b,$c] {
+            say "@b[$a] won"
+        }
+    }
+}
+
+tictactoe-rhebus( 1, 1,-1,
+                 -1,-1, 1,
+                 -1, 0, 0);
+
+sub tictactoe-moritz (*@b) {
+    my @lines = (0,3,6 X+ ^3), (^3 X+ 0,3,6), 0,4,8,2,4,6;
+    for @lines -> $a, $b, $c {
+        if @b[$a] && [==] @b[$a,$b,$c] {
+            say "@b[$a] won"
+        }
+    }
+}
+
+tictactoe-moritz( 1, 1, 1,
+                  0,-1,-1,
+                 -1,-1, 0);
