@@ -50,7 +50,7 @@ while ($current_length < $length) {
    # The most significant part of the number is in the last element
    # of the array; every other element is $digits bytes long by
    # definition.
-   $current_length = @y[*-1].bytes + (@x - 1) * $digits;
+   $current_length = @y[*-1].bytes + (@y - 1) * $digits;
 
    # Print a feedback every 20 steps
    say "$c -> $current_length" unless $c % 20;
