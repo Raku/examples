@@ -5,7 +5,7 @@ use v6;
 #       Construct a list containing the prime factors and their multiplicity.
 # Example:
 # > prime_factors_mult(315).perl.say
-# ([3,2],[5,1],[7,1])
+# (3 => 2, 5 => 1, 7 => 1)
 #
 #   Hint: The problem is similar to problem P13.
 
@@ -18,13 +18,13 @@ sub prime_factors_mult (Int $n) {
             $mult++;
             $residue div= $k;
         }
-        take [$k, $mult] if $mult;
+        take $k => $mult if $mult;
         last if $residue == 1;
         # This if block is an optimisation which reduces number of iterations
         # for numbers with large prime factors (such as large primes)
         # It can be removed without affecting correctness.
         if $k > sqrt $residue {
-            take [$residue,1];
+            take $residue => 1;
             last;
         }
     }

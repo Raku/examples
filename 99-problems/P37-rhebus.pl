@@ -22,10 +22,10 @@ sub prime_factors_mult (Int $n) {
             $mult++;
             $residue div= $k;
         }
-        take [$k, $mult] if $mult;
+        take $k => $mult if $mult;
         last if $residue == 1;
         if $k > sqrt $residue {
-            take [$residue,1];
+            take $residue => 1;
             last;
         }
     }
@@ -33,9 +33,9 @@ sub prime_factors_mult (Int $n) {
 
 
 # 1. One-liner version
-say "phi($_): ", [*] prime_factors_mult($_).map({ ($_[0]-1) * $_[0] ** ($_[1]-1) })
+say "phi($_): ", [*] prime_factors_mult($_).map({ (.key-1) * .key ** (.value-1) })
     for 1..20;
-say [*] prime_factors_mult(315).map: { ($_[0]-1) * $_[0] ** ($_[1]-1) };
+say [*] prime_factors_mult(315).map: { (.key-1) * .key ** (.value-1) };
     
 
 # 2. sub version
@@ -45,7 +45,7 @@ say [*] prime_factors_mult(315).map: { ($_[0]-1) * $_[0] ** ($_[1]-1) };
 sub totient (Int $n) {
     my @factors = prime_factors_mult($n);
     return [*] @factors.map: {
-        ($_[0]-1) * $_[0] ** ($_[1]-1)
+        (.key-1) * .key ** (.value-1)
     }
 }
 
