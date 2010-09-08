@@ -48,3 +48,18 @@ sub tictactoe-moritz (*@b) {
 tictactoe-moritz( 1, 1, 1,
                   0,-1,-1,
                  -1,-1, 0);
+
+sub tictactoe-rhebus2 (*@b) {
+    my @lines = ^9,(^3 X+ 0,3,6),8,4,(^4 Z+ ^4);
+    say ~@lines;
+    for @lines -> $a, $b, $c {
+        if @b[$a] && [==] @b[$a,$b,$c] {
+            say "@b[$a] won"
+        }
+    }
+}
+
+tictactoe-rhebus2( 1, 1, 1,
+                   0,-1,-1,
+                  -1,-1, 0);
+
