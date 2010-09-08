@@ -2,7 +2,7 @@ use v6;
 
 # Specification:
 # P21 (*) Insert an element at a given position into an array.
-#         You may choose to copy the array in-place or to create a new
+#         You may choose to mutate the array in-place or to create a new
 #         sequence and return it.
 #
 # Example 1 (mutating in-place);
