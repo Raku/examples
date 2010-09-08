@@ -10,21 +10,21 @@ L<http://sites.google.com/site/prologsite/prolog-problems>.
 
 =head2 P01 (*) Find the last box of a list.
 
- Example:
- > say my_last <a b c d>;
- d
+    Example:
+    > say my_last <a b c d>;
+    d
 
 =head2 P02 (*) Find the last but one box of a list.
 
- Example:
- > say ~my_but_last(<A B C D>);
- C D
+    Example:
+    > say ~my_but_last(<A B C D>);
+    C D
 
 =head2 P03 (*) Find the K'th element of a list.
 
- Example:
- > say element_at <a b c d e>,3;
- c
+    Example:
+    > say element_at <a b c d e>,3;
+    c
 
 =head2 P04 (*) Find the number of elements of a list.
 
@@ -39,9 +39,9 @@ A palindrome can be read forward or backward; e.g. <x a m a x>.
 Transform an array, possibly holding arrays as elements into a `flat'
 list by replacing each array with its elements (recursively).
 
- Example:
- > splat([1,[2,[3,4],5]]).perl.say;
- (1, 2, 3, 4, 5)
+    Example:
+    > splat([1,[2,[3,4],5]]).perl.say;
+    (1, 2, 3, 4, 5)
 
 =head2 P08 (**) Eliminate consecutive duplicates of list elements.
 
@@ -49,17 +49,17 @@ If a list contains repeated elements they should be replaced with a
 single copy of the element. The order of the elements should not be
 changed.
 
- Example:
- > say ~compress(<a a a a b c c a a d e e e e>)
- a b c a d e
+    Example:
+    > say ~compress(<a a a a b c c a a d e e e e>)
+    a b c a d e
 
 =head2 P09 (**) Pack consecutive duplicates of list elements into sublists.
 
 If a list contains repeated elements they should be placed in separate sublists.
 
- Example:
- > pack_dup(<a a a a b c c a a d e e e e>).perl.say
- [["a","a","a","a"],["b"],["c","c"],["a","a"],["d"],["e","e","e","e"]]
+    Example:
+    > pack_dup(<a a a a b c c a a d e e e e>).perl.say
+    [["a","a","a","a"],["b"],["c","c"],["a","a"],["d"],["e","e","e","e"]]
 
 =head2 P10 (*) Run-length encoding of a list.
 
@@ -68,9 +68,9 @@ encoding data compression method. Consecutive duplicates of elements
 are encoded as arrays [N, E] where N is the number of duplicates of the
 element E.
 
- Example:
- > encode(<a a a a b c c a a d e e e e>).perl.say
- [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]
+    Example:
+    > encode(<a a a a b c c a a d e e e e>).perl.say
+    [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]
 
 =head2 P11 (*) Modified run-length encoding.
 
@@ -78,9 +78,9 @@ Modify the result of problem P10 in such a way that if an element has
 no duplicates it is simply copied into the result list. Only elements
 with duplicates are transferred as (N E) lists.
 
- Example:
- > encode_modified(<a a a a b c c a a d e e e e>).perl.say
- ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
+    Example:
+    > encode_modified(<a a a a b c c a a d e e e e>).perl.say
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
 
 =head2 P12 (**) Decode a run-length encoded list.
 
@@ -93,35 +93,35 @@ directly. I.e. don't explicitly create the sublists containing the
 duplicates, as in problem P09, but only count them. As in problem P11,
 simplify the result list by replacing the singletons [1,X] by X.
 
- Example:
- > encode_direct(<a a a a b c c a a d e e e e>).perl.say
- ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
+    Example:
+    > encode_direct(<a a a a b c c a a d e e e e>).perl.say
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
 
 =head2 P14 (*) Duplicate the elements of a list.
 
- Example:
- > say ~dupli(<a b c c d>);
- a a b b c c c c d d
+    Example:
+    > say ~dupli(<a b c c d>);
+    a a b b c c c c d d
 
 =head2 P15 (**) Replicate the elements of a list a given number of times.
 
- Example:
- > say ~repli <a b c>,3;
- a a a b b b c c c
+    Example:
+    > say ~repli <a b c>,3;
+    a a a b b b c c c
 
 =head2 P16 (**) Drop every N'th element from a list.
 
- Example:
- > say ~drop(<a b c d e f g h i k>, 3);
- a b d e g h k
+    Example:
+    > say ~drop(<a b c d e f g h i k>, 3);
+    a b d e g h k
 
 =head2 P17 (*) Split a list into two parts; the length of the first part is given.
 
 Do not use any predefined predicates.
 
- Example:
- > say bisect(<a b c d e f g h i k>,3).perl
- (["a", "b", "c"], ["d", "e", "f", "g", "h", "i", "k"])
+    Example:
+    > say bisect(<a b c d e f g h i k>,3).perl
+    (["a", "b", "c"], ["d", "e", "f", "g", "h", "i", "k"])
 
 =head2 P18 (**) Extract a slice from a list.
 
@@ -153,23 +153,23 @@ Hint: Use the predefined functions length and append, as well as the result of p
 You may choose to copy the array in-place or to create a new
 sequence and return it.
 
- Example 1 (mutating in-place);
- > my @l = <a b c d>
- > insert_at('alfa',@l,2);
- > say ~@l;
- a alfa b c d
+    Example 1 (mutating in-place);
+    > my @l = <a b c d>
+    > insert_at('alfa',@l,2);
+    > say ~@l;
+    a alfa b c d
 
- Example 2 (creating a copy):
- > say ~insert_at_copy('alfa', <a b c d>, 2);
- a alfa b c d
+    Example 2 (creating a copy):
+    > say ~insert_at_copy('alfa', <a b c d>, 2);
+    a alfa b c d
 
 =head2 P22 (*) Create a list containing all integers within a given range.
 
 If first argument is smaller than second, produce a list in decreasing order.
 
- Example:
- > say ~range(4, 9);
- 4 5 6 7 8 9
+    Example:
+    > say ~range(4, 9);
+    4 5 6 7 8 9
 
 =head2 P23 (**) Extract a given number of randomly selected elements from a list.
 
@@ -247,35 +247,35 @@ Note that in the above example, the first two lists in the result have length 4 
 
 =head2 P31 (**) Determine whether a given integer number is prime.
 
- Example:
- > say is_prime 7
- 1
+    Example:
+    > say is_prime 7
+    1
 
 =head2 P32 (**) Determine the greatest common divisor of two positive integer numbers.
 
 Use Euclid's algorithm.
 
- Example:
- > say gcd(36,63);
- 9
+    Example:
+    > say gcd(36,63);
+    9
 
 =head2 P33 (*) Determine whether two positive integer numbers are coprime.
 
 Two numbers are coprime if their greatest common divisor equals 1.
 
- Example:
- > say coprime(35,64)
- 1
+    Example:
+    > say coprime(35,64)
+    1
 
 =head2 P34 (**) Calculate Euler's totient function phi(m).
 
 Euler's so-called totient function phi(m) is defined as the number of
 positive integers r (1 <= r < m) that are coprime to m.
 
- Example:
+    Example:
     m = 10: r = 1,3,7,9; thus phi(m) = 4. Note the special case: phi(1) = 1.
- > say totient_phi 10
- 4
+    > say totient_phi 10
+    4
 
 Find out what the value of phi(m) is if m is a prime number. Euler's totient
 function plays an important role in one of the most widely used public key
@@ -287,17 +287,17 @@ shall discuss later).
 
 Construct a flat list containing the prime factors in ascending order.
 
- Example:
- > say ~prime_factors 315
- 3 3 5 7
+    Example:
+    > say ~prime_factors 315
+    3 3 5 7
 
 =head2 P36 (**) Determine the prime factors of a given positive integer (2).
 
 Construct a list containing the prime factors and their multiplicity.
 
- Example:
- > prime_factors_mult(315).perl.say
- ([3,2],[5,1],[7,1])
+    Example:
+    > prime_factors_mult(315).perl.say
+    ([3,2],[5,1],[7,1])
 
 Hint: The problem is similar to problem P13.
 
@@ -310,8 +310,8 @@ follows: Let ((p1 m1) (p2 m2) (p3 m3) ...) be the list of prime
 factors (and their multiplicities) of a given number m. Then phi(m)
 can be calculated with the following formula:
 
- phi(m) = (p1-1) * p1 ** (m1-1) * (p2-1) * p2 ** (m2-1)
-        * (p3-1) * p3 ** (m3-1) * ...
+    phi(m) = (p1-1) * p1 ** (m1-1) * (p2-1) * p2 ** (m2-1)
+           * (p3-1) * p3 ** (m3-1) * ...
 
 =head2 P38 (*) Compare the two methods of calculating Euler's totient function.
 
