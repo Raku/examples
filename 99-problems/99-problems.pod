@@ -144,9 +144,18 @@ Hint: Use the predefined functions length and append, as well as the result of p
 
 =head2 P20 (*) Remove the K'th element from a list.
 
-    Example:
-    * (remove-at '(a b c d) 2)
-    (A C D)
+You may choose to mutate the array in-place or create a new sequence and
+return it.
+
+    Example 1 (mutating in-place):
+    > my @l = <a b c d>;
+    > remove-at(@l,2);
+    > say ~@l;
+    a c d
+
+    Example 2 (returning a copy):
+    > say ~remove-at-copy(<a b c d>, 2);
+    a c d
 
 =head2 P21 (*) Insert an element at a given position into a list.
 
@@ -154,13 +163,13 @@ You may choose to mutate the array in-place or to create a new
 sequence and return it.
 
     Example 1 (mutating in-place);
-    > my @l = <a b c d>
-    > insert_at('alfa',@l,2);
+    > my @l = <a b c d>;
+    > insert-at('alfa',@l,2);
     > say ~@l;
     a alfa b c d
 
-    Example 2 (creating a copy):
-    > say ~insert_at_copy('alfa', <a b c d>, 2);
+    Example 2 (returning a copy):
+    > say ~insert-at-copy('alfa', <a b c d>, 2);
     a alfa b c d
 
 =head2 P22 (*) Create a list containing all integers within a given range.
