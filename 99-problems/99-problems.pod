@@ -11,19 +11,19 @@ L<http://sites.google.com/site/prologsite/prolog-problems>.
 =head2 P01 (*) Find the last box of a list.
 
     Example:
-    > say my_last <a b c d>;
+    > say my-last <a b c d>;
     d
 
 =head2 P02 (*) Find the last but one box of a list.
 
     Example:
-    > say ~my_but_last(<A B C D>);
+    > say ~my-but-last(<A B C D>);
     C D
 
 =head2 P03 (*) Find the K'th element of a list.
 
     Example:
-    > say element_at <a b c d e>,3;
+    > say element-at <a b c d e>,3;
     c
 
 =head2 P04 (*) Find the number of elements of a list.
@@ -58,7 +58,7 @@ changed.
 If a list contains repeated elements they should be placed in separate sublists.
 
     Example:
-    > pack_dup(<a a a a b c c a a d e e e e>).perl.say
+    > pack-dup(<a a a a b c c a a d e e e e>).perl.say
     [["a","a","a","a"],["b"],["c","c"],["a","a"],["d"],["e","e","e","e"]]
 
 =head2 P10 (*) Run-length encoding of a list.
@@ -79,7 +79,7 @@ no duplicates it is simply copied into the result list. Only elements
 with duplicates are transferred as (N E) lists.
 
     Example:
-    > encode_modified(<a a a a b c c a a d e e e e>).perl.say
+    > encode-modified(<a a a a b c c a a d e e e e>).perl.say
     ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
 
 =head2 P12 (**) Decode a run-length encoded list.
@@ -94,7 +94,7 @@ duplicates, as in problem P09, but only count them. As in problem P11,
 simplify the result list by replacing the singletons [1,X] by X.
 
     Example:
-    > encode_direct(<a a a a b c c a a d e e e e>).perl.say
+    > encode-direct(<a a a a b c c a a d e e e e>).perl.say
     ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
 
 =head2 P14 (*) Duplicate the elements of a list.
@@ -257,7 +257,7 @@ Note that in the above example, the first two lists in the result have length 4 
 =head2 P31 (**) Determine whether a given integer number is prime.
 
     Example:
-    > say is_prime 7
+    > say is-prime 7
     1
 
 =head2 P32 (**) Determine the greatest common divisor of two positive integer numbers.
@@ -283,7 +283,7 @@ positive integers r (1 <= r < m) that are coprime to m.
 
     Example:
     m = 10: r = 1,3,7,9; thus phi(m) = 4. Note the special case: phi(1) = 1.
-    > say totient_phi 10
+    > say totient-phi 10
     4
 
 Find out what the value of phi(m) is if m is a prime number. Euler's totient
@@ -297,7 +297,7 @@ shall discuss later).
 Construct a flat list containing the prime factors in ascending order.
 
     Example:
-    > say ~prime_factors 315
+    > say ~prime-factors 315
     3 3 5 7
 
 =head2 P36 (**) Determine the prime factors of a given positive integer (2).
@@ -305,7 +305,7 @@ Construct a flat list containing the prime factors in ascending order.
 Construct a list containing the prime factors and their multiplicity.
 
     Example:
-    > prime_factors_mult(315).perl.say
+    > prime-factors-mult(315).perl.say
     ([3,2],[5,1],[7,1])
 
 Hint: The problem is similar to problem P13.
