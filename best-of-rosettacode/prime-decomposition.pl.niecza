@@ -11,6 +11,8 @@
 #
 # http://rosettacode.org/wiki/Prime_decomposition#Perl_6
 
+use v6;
+
 constant @primes = 2, 3, 5, -> $n is copy {
     repeat { $n += 2 } until $n %% none @primes ... { $_ * $_ >= $n }
     $n;
