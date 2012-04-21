@@ -114,17 +114,17 @@ using the Str keyword, and assigning a string value to it.
 Or a string object can be declared implicitly by assigning a string value to 
 a variable, in this case a scalar. 
 
-    my $scalar    = 'String';
-    say '$scalar is ' ~ $scalar.WHAT;   # $scalar is Str
+    my $scalar = 'String';
+    say '$scalar is ', $scalar.^name;   # $scalar is Str
 
 =end pod
 
-my Str $string =  'This is $string: a scalar holding a String';
-say $string ;
-say '$string is ' ~ $string.WHAT ;                 # Str 
-my  $scalar    =  'This is $scalar holding a String';
-say $scalar ; 
-say '$scalar is ' ~ $scalar.WHAT ;                 # Str 
+my Str $string = 'This is $string: a scalar holding a String';
+say $string;
+say '$string is ', $string.^name;                 # Str 
+my $scalar = 'This is $scalar holding a String';
+say $scalar; 
+say '$scalar is ', $scalar.^name;                 # Str 
 
 =begin pod 
 
@@ -133,19 +133,19 @@ appropriate type:
 
 
     my $scalar = 1234;                      
-    say '$scalar is ' ~ $string.WHAT"   # $scalar is Int
+    say '$scalar is ', $string.^name   # $scalar is Int
 
 An object can be stringified, by using the ~ operator immediately
 prior to the variable's sigil
 
-    say '~$scalar is ' ~ (~$scalar).WHAT; # ~$scalar is Str 
+    say '~$scalar is ', (~$scalar).^name; # ~$scalar is Str 
 
 =end pod
 
 $scalar = 1234;
-say $scalar   ;
-say '$scalar is '  ~ $scalar.WHAT; 
-say '~$scalar is ' ~ (~$scalar).WHAT; 
+say $scalar;
+say '$scalar is ', $scalar.^name; 
+say '~$scalar is ', (~$scalar).^name; 
 
 =begin pod
 
