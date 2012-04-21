@@ -25,20 +25,20 @@ Goals
 What you can find here
 ----------------------
 
-best-of-perl6 - The best of the rosettacode.org examples
-99-problems   - Based on lisp 99 problems
-cookbook      - Cookbook examples, as per pleac project (from Perl cookbook)
-euler         - Answers for Project Euler <http://projecteuler.net>
-games         - Games should go in here :)
-interpreters  - Language or DSL interpreters
-parsers       - Example grammars
-perlmonks     - Answers to perlmonks.org questions
-shootout      - Implementations for The Computer Language Benchmark Game
-                <http://shootout.alioth.debian.org/>
-wsg           - Answers for Winter Scripting Games, by difficulty and year
-bin           - utility scripts
-lib           - utility modules
-doc           - out-of-script documentation
+best-of-rosettacode - The best of the rosettacode.org examples
+99-problems         - Based on lisp 99 problems
+cookbook            - Cookbook examples
+euler               - Answers for Project Euler <http://projecteuler.net>
+games               - Games should go in here :)
+interpreters        - Language or DSL interpreters
+parsers             - Example grammars
+perlmonks           - Answers to perlmonks.org questions
+shootout            - Implementations for The Computer Language Benchmark Game
+                      <http://shootout.alioth.debian.org/>
+wsg                 - Answers for Winter Scripting Games, by difficulty and year
+bin                 - utility scripts
+lib                 - utility modules
+doc                 - out-of-script documentation
 
 Since you have a commit-bit (if not then talk to the folks at #perl6
 on irc.freenode.net) feel free to commit your changes to the main
