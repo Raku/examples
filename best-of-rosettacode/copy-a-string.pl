@@ -1,6 +1,8 @@
+use v6;
+
 =begin pod
 
-=head1 Description
+=head1 Copy a string
 
 This task is about copying a string. Where it is relevant, distinguish
 between copying the contents of a string versus making an additional
@@ -8,11 +10,9 @@ reference to an existing string.
 
 =head2 More
 
-http://rosettacode.org/wiki/Copy_a_string#Perl_6
+L<http://rosettacode.org/wiki/Copy_a_string#Perl_6>
 
 =end pod
-
-use v6;
 
 # There is no special handling needed to copy a string.
 {

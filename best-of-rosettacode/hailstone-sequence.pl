@@ -1,6 +1,8 @@
+use v6;
+
 =begin pod
 
-=head1 Description
+=head1 Hailstone sequence
 
 The Hailstone sequence of numbers can be generated from a starting positive
 integer, n by:
@@ -28,9 +30,8 @@ together with that sequences length.
 
 U<http://rosettacode.org/wiki/Hailstone_sequence#Perl_6>
 
-=end pod
 
-use v6;
+=end pod
 
 sub hailstone($n) { $n, { $_ %% 2 ?? $_ div 2 !! $_ * 3 + 1 } ... 1 }
  

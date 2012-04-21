@@ -1,6 +1,8 @@
+use v6;
+
 =begin pod
 
-=head1 Problem
+=head1 100 Doors 
 
 You have 100 doors in a row that are all initially closed. You make 100 passes
 by the doors. The first time through, you visit every door and toggle the door
@@ -9,7 +11,7 @@ time you only visit every 2nd door (door #2, #4, #6, ...).  The third time,
 every 3rd door (door #3, #6, #9, ...), etc, until you only visit the 100th
 door.
 
-=head1 Question
+=head1 Task
 
 What state are the doors in after the last pass? Which are open,
 which are closed?
@@ -28,7 +30,7 @@ say "Door $_ is open" for 1..10 X** 2;
 
 =head1 Features used
 
-C<X**> - http://perlcabal.org/syn/S03.html#Cross_operators
+C<X**> - L<http://perlcabal.org/syn/S03.html#Cross_operators>
 
 =end pod
 

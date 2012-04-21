@@ -8,13 +8,11 @@ in the most natural way possible. Write some element of that array, and then
 output that element. Finally destroy the array if not done by the language
 itself. 
 
-=head1 Rosettacode URL
+=head1 More
 
-http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6
+L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6>
 
 =end pod
-
-=cut
 
 
 my ($major,$minor) = prompt("Dimensions? ").comb(/\d+/);
