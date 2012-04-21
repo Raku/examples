@@ -20,5 +20,5 @@
     my $m max= +hailstone($_) => $_ for 1..99_999;
     say "Max length $m.key() was found for hailstone($m.value()) for numbers < 100_000";
 
-=haed2 More
+=head2 More
     http://rosettacode.org/wiki/Hailstone_sequence#Perl_6
