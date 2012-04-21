@@ -18,13 +18,34 @@ many ways. In fact, this is what Perl does best.
 
 =head1 Description
 
-Perl 6 interprets strings variously, as they appear in different
-contexts.  A string may consist of zero or more characters, including
-letters, spaces, numbers, and other characters: 
+Perl 6 interprets strings depending on context.  A string may consist
+of zero or more characters, including letters, spaces, numbers, and
+other characters.
 
-    Note:
-    text preceded by # is ignored by the Perl 6 interpretor 
-    
+=head1 Declaring and assigning Strings 
+
+A string can be created explictly, by declaring a variable using the
+Str keyword, and assigning a string value to it.
+
+    my Str $string = 'This Str is holding a String';
+
+Or a string can be declared implicitly by assigning a string value to
+a variable, in this case a scalar.  It automatically becomes a string
+variable.
+
+    my $scalar = 'String';
+
+=end pod
+
+my Str $string = 'This Str is holding a String';
+my $scalar = 'String'; # Also a string
+
+=begin pod
+
+=head1 Displaying Strings
+
+We display strings using print or say:
+
     print ""        ; # output is an empty string
     print "Hello\n" ; # output is Hello followed by a new line  
     say   "Hello"   ; # same
@@ -39,23 +60,66 @@ say   'Hello'   ; # same
 
 =begin pod
 
-Strings can be appended to one another, using the concatenation
-operator, ~
+Both print and say accept a list of things to display:
 
-    say "Hello" ~ " World" ~ "!"; 
-
-    # Here, three strings are concatenated into a 
-    # single string.  Output is Hello World! followed by a new line  
+    say "Hello", "World", "!";
 
 =end pod
 
-say "Hello" ~ " World" ~ "!"; 
+say "Hello", "World", "!";
 
 =begin pod
 
+Strings can be appended to one another, using the concatenation
+operator, ~
+
+Here, three strings are concatenated into a single string.  Output is
+Hello World! followed by a newline.
+
+    my Str $str;
+    $str = "Hello" ~ " World" ~ "!";
+    say $str; # Hello World!
+
+=end pod
+
+my Str $string;
+$string = "Hello" ~ " World" ~ "!";
+say $string; # Hello World!
+
+=begin pod
+
+=head1 Introspection
+
+Perl 6 has extensive support for introspection, that is, to see the
+internals of how things are.  It is therefore possible to find out if
+something is a string and act upon that information.
+
+    my Str $string = 'This is $string: a scalar holding a String';
+    say $string;
+    say '$string is ', $string.^name;                 # Str 
+
+    my $scalar = 'This is $scalar holding a String';
+    say $scalar; 
+    say '$scalar is ', $scalar.^name;                 # Str 
+
+=end pod
+
+my Str $string = 'This is $string: a scalar holding a String';
+say $string;
+say '$string is ', $string.^name;                 # Str 
+
+my $scalar = 'This is $scalar holding a String';
+say $scalar; 
+say '$scalar is ', $scalar.^name;                 # Str 
+
+=begin pod
+
+=head1 Numbers as strings
+
 A number might be interpreted as a string, depending on the context
 
-    say  (1+1) ~  " is a number interpreted as a string" ; # 2 is a number interpreted as a string. 
+    say 1; # 1 is interpreted as a number
+    say (1+1), " is a number interpreted as a string" ; # 2 is a number interpreted as a string. 
 
 Note the parentheses around (1+1), which cause 1 + 1 to be evaluated
 as a numeric expression, before the resulting "2" is evaluated as a
@@ -63,8 +127,8 @@ string.
 
 =end pod
 
-say    1  ; # 1 is a number 
-say  (1+1) ~  " is a number interpreted as a string" ; 
+say 1; # 1 is a number 
+say (1+1), " is a number interpreted as a string" ; 
 
 =begin pod
 
@@ -87,12 +151,13 @@ say  "1" + 1  ; # 2
 Context sensitivity is the essence of Perl.  Keeping this in mind, what
 would you expect to be the output string, for the following?  
 
-    print "1" ~ "1" + 1 ; # 12 
+    my $string = "1" ~ "1" + 10; # 12 or 21?
+    say $string;
 
 But, "1+1", surrounded by quotation marks, either '' or "", stringifies
 the expression, so that it is evaluated as a string. 
 
-    print "1 + 1" ; # literally: 1 + 1
+    say "1 + 1"; # literally: 1 + 1
 
 To force the interpretation of a string for any programmatic
 value it might contain, use the built-in eval() function:
@@ -104,35 +169,18 @@ to have it evaluated as a program expression, by using the -e switch:
 
     ./perl6 -e "say 1+1"; # 2
 
-=head1 Assigning Strings 
-
-A string object can be created explictly, by declaring a variable
-using the Str keyword, and assigning a string value to it. 
-
-    my Str $string = 'This Str is holding a String';
-
-Or a string object can be declared implicitly by assigning a string value to 
-a variable, in this case a scalar. 
-
-    my $scalar = 'String';
-    say '$scalar is ', $scalar.^name;   # $scalar is Str
-
 =end pod
 
-my Str $string = 'This is $string: a scalar holding a String';
+my $string = "1" ~ "1" + 10; # 12 or 21?
 say $string;
-say '$string is ', $string.^name;                 # Str 
-my $scalar = 'This is $scalar holding a String';
-say $scalar; 
-say '$scalar is ', $scalar.^name;                 # Str 
 
 =begin pod 
 
-Assignments of non-strings  set the variable to the
+Assignments of non-strings set the variable to the
 appropriate type:
 
-
-    my $scalar = 1234;                      
+    my $scalar = 1234;
+    say $scalar; # 1234
     say '$scalar is ', $string.^name   # $scalar is Int
 
 An object can be stringified, by using the ~ operator immediately
@@ -143,14 +191,11 @@ prior to the variable's sigil
 =end pod
 
 $scalar = 1234;
-say $scalar;
-say '$scalar is ', $scalar.^name; 
-say '~$scalar is ', (~$scalar).^name; 
+say $scalar; # 1234
+say '$scalar is ', $scalar.^name;
+say '~$scalar is ', (~$scalar).^name;
 
 =begin pod
-
-TODO: a short paragraph on the difference between the my $scalar 
-and my Str $string examples above.
 
 =head1 Quotes, Interpolation and Quote-like operators
 
