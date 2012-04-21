@@ -39,6 +39,7 @@ wsg                 - Answers for Winter Scripting Games, by difficulty and year
 bin                 - utility scripts
 lib                 - utility modules
 doc                 - out-of-script documentation
+other               - all other
 
 Since you have a commit-bit (if not then talk to the folks at #perl6
 on irc.freenode.net) feel free to commit your changes to the main
