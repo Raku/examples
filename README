@@ -13,18 +13,6 @@ an example that only works on Rakudo, it should end in .rakudo.
 If you want to contribute, just ask! The quicker choice is to
 use IRC: join #perl6 in Freenode and you'll be welcome.
 
-Why
----
-
-Why not just use the Pugs repo?
-
-1. With github we can have collaborators (simply request via
-   github or #perl6 or perl6-users and I'll add you), or you can
-   fork the repository and then send me a request when you want
-   me to pull in your changes.
-2. This is not tied in any way to any implementation of Perl 6
-3. Something NEW and FRESH is always more fun (I hope!)
-
 
 Goals
 -----
@@ -34,22 +22,23 @@ Goals
    testy and more fun manner ;)
 
 
-Directories
------------
+What you can find here
+----------------------
 
-99-problems - Based on lisp 99 problems
-cookbook    - Cookbook examples, as per pleac project (from Perl cookbook)
-euler       - Answers for Project Euler <http://projecteuler.net>
-games       - Games should go in here :)
-interpreters- Language or DSL interpreters
-parsers     - Example grammars
-perlmonks   - Answers to perlmonks.org questions
-shootout    - Implementations for The Computer Language Benchmark Game
-              <http://shootout.alioth.debian.org/>
-wsg         - Answers for Winter Scripting Games, by difficulty and year
-bin         - utility scripts
-lib         - utility modules
-doc         - out-of-script documentation
+best-of-perl6 - The best of the rosettacode.org examples
+99-problems   - Based on lisp 99 problems
+cookbook      - Cookbook examples, as per pleac project (from Perl cookbook)
+euler         - Answers for Project Euler <http://projecteuler.net>
+games         - Games should go in here :)
+interpreters  - Language or DSL interpreters
+parsers       - Example grammars
+perlmonks     - Answers to perlmonks.org questions
+shootout      - Implementations for The Computer Language Benchmark Game
+                <http://shootout.alioth.debian.org/>
+wsg           - Answers for Winter Scripting Games, by difficulty and year
+bin           - utility scripts
+lib           - utility modules
+doc           - out-of-script documentation
 
 Since you have a commit-bit (if not then talk to the folks at #perl6
 on irc.freenode.net) feel free to commit your changes to the main
