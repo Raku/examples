@@ -102,7 +102,7 @@ value it might contain, use the built-in eval() function:
 On the command-line, you may pass a string to the perl 6 interpretor,
 to have it evaluated as a program expression, by using the -e switch: 
 
-    ./pugs -e "say 1+1"; # 2
+    ./perl6 -e "say 1+1"; # 2
 
 =head1 Assigning Strings 
 
