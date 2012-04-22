@@ -1,8 +1,0 @@
-http://rosettacode.org/wiki/24_game#Perl_6 - a little grammar, casting (?), eval, prompt, roll
-*http://rosettacode.org/wiki/24_game#Perl_6 [the second one] - ZIP, -> ... {, xx, ..., 
-http://rosettacode.org/wiki/Accumulator_factory#Perl_6 - returning a sub, is copy, $^var, static vars in subs
-http://rosettacode.org/wiki/Ackermann_function#Perl_6 - easy example of multi, ?? !!
-http://rosettacode.org/wiki/Arbitrary-precision_integers_(included)#Perl_6 - metaoperator, casting, {} in string,
-http://rosettacode.org/wiki/Balanced_brackets#Perl_6 - lot of ways, idiomatic solutions, roll, given, <<, s///, xx, is copy, prompt, {} in string, grammar (quite a lot)
-
-* something else should be here....
