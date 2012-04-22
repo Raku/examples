@@ -22,7 +22,7 @@ Perl 6 interprets strings depending on context.  A string may consist
 of zero or more characters, including letters, spaces, numbers, and
 other characters.
 
-=head1 Declaring and assigning Strings 
+=head1 Declaring and assigning Strings
 
 A string can be created explictly, by declaring a variable using the
 Str keyword, and assigning a string value to it.
@@ -47,31 +47,34 @@ my $scalar = 'String'; # Also a string
 We display strings using print or say:
 
     print ""        ; # output is an empty string
-    print "Hello\n" ; # output is Hello followed by a new line  
+    print "Hello\n" ; # output is Hello followed by a new line
     say   "Hello"   ; # same
-    say   'Hello'   ; # same 
+    say   'Hello'   ; # same
 
 =end pod
 
 print ""        ; # output is an empty string
-print "Hello\n" ; # output string is Hello followed by a new line  
+print "Hello\n" ; # output string is Hello followed by a new line
 say   "Hello"   ; # same
-say   'Hello'   ; # same 
+say   'Hello'   ; # same
 
 =begin pod
 
-Both print and say accept a list of things to display:
+Both print and say also accept a list of things to display, and will
+attempt to join all the things into a string:
 
-    say "Hello", "World", "!";
+    say "Hello", "World", "!"; # Hello World!
 
 =end pod
 
-say "Hello", "World", "!";
+say "Hello", "World", "!"; # Hello World!
 
 =begin pod
 
 Strings can be appended to one another, using the concatenation
 operator, ~
+
+Beware when using print and say; concatenation is slower than joining.
 
 Here, three strings are concatenated into a single string.  Output is
 Hello World! followed by a newline.
@@ -91,71 +94,81 @@ say $string; # Hello World!
 =head1 Introspection
 
 Perl 6 has extensive support for introspection, that is, to see the
-internals of how things are.  It is therefore possible to find out if
-something is a string and act upon that information.
+internals of types and objects during runtime.  It is therefore
+possible to find out if a variable is a string and act upon that
+information.
+
+We know we get a String when we declare something explicitly as Str:
 
     my Str $string = 'This is $string: a scalar holding a String';
     say $string;
-    say '$string is ', $string.^name;                 # Str 
+    say '$string is ', $string.^name;                 # Str
+
+We can also easily show that a general variable containing a String,
+is in fact just that:
 
     my $scalar = 'This is $scalar holding a String';
-    say $scalar; 
-    say '$scalar is ', $scalar.^name;                 # Str 
+    say $scalar;
+    say '$scalar is ', $scalar.^name;                 # Str
 
 =end pod
 
 my Str $string = 'This is $string: a scalar holding a String';
 say $string;
-say '$string is ', $string.^name;                 # Str 
+say '$string is ', $string.^name;                 # Str
 
 my $scalar = 'This is $scalar holding a String';
-say $scalar; 
-say '$scalar is ', $scalar.^name;                 # Str 
+say $scalar;
+say '$scalar is ', $scalar.^name;                 # Str
 
 =begin pod
 
 =head1 Numbers as strings
 
-A number might be interpreted as a string, depending on the context
+A number may be interpreted as a string, depending on the context:
 
     say 1; # 1 is interpreted as a number
-    say (1+1), " is a number interpreted as a string" ; # 2 is a number interpreted as a string. 
+    say 2, " is a number interpreted as a string"; # 2 is a number interpreted as a string.
+    say 1+2*3, " is a number interpreted as a string"; # 7 is a number interpreted as a string.
 
-Note the parentheses around (1+1), which cause 1 + 1 to be evaluated
-as a numeric expression, before the resulting "2" is evaluated as a
-string. 
+Note that Perl 6 ensures that the arithmetic expression before the
+first comma is evaluated even without enclosing parentheses, and that
+it is only afterwards that it is interpreted as a string.
 
 =end pod
 
-say 1; # 1 is a number 
-say (1+1), " is a number interpreted as a string" ; 
+say 1; # 1 is a number
+say 2, " is a number interpreted as a string"; # 2 is a number interpreted as a string.
+say 1+2*3, " is a number interpreted as a string"; # 7 is a number interpreted as a string.
 
 =begin pod
 
+=head1 Strings as numbers
+
 Conversely, sometimes a string might be interpreted as a number:
 
-    print  +""     ; # a num-ified empty string evaluates as 0 
-    print  "1" + 1 ; # 2 
+    print  +""     ; # a num-ified empty string evaluates as 0
+    print  "1" + 1 ; # 2
 
 The string, "1" is treated as a number in this context, added to the
-number 1 by the + operator, which returns the number, 2, as a 
-string for output.  
+number 1 by the + operator, which returns the number, 2, as a
+string for output.
 
 =end pod
 
-say   +""     ; # a num-ified empty string evaluates as 0 
-say  "1" + 1  ; # 2 
+say   +""     ; # a num-ified empty string evaluates as 0
+say  "1" + 1  ; # 2
 
 =begin pod
 
 Context sensitivity is the essence of Perl.  Keeping this in mind, what
-would you expect to be the output string, for the following?  
+would you expect to be the output string, for the following?
 
     my $string = "1" ~ "1" + 10; # 12 or 21?
     say $string;
 
 But, "1+1", surrounded by quotation marks, either '' or "", stringifies
-the expression, so that it is evaluated as a string. 
+the expression, so that it is evaluated as a string.
 
     say "1 + 1"; # literally: 1 + 1
 
@@ -165,19 +178,21 @@ value it might contain, use the built-in eval() function:
     say eval "1 + 1";    # 2
 
 On the command-line, you may pass a string to the perl 6 interpretor,
-to have it evaluated as a program expression, by using the -e switch: 
+to have it evaluated as a program expression, by using the -e switch:
 
     ./perl6 -e "say 1+1"; # 2
+    ./perl6 -e 'say "1+1"'; # 1+1
 
 =end pod
 
 my $string = "1" ~ "1" + 10; # 12 or 21?
 say $string;
+say "1 + 1"; # literally: 1 + 1
+say eval "1 + 1";    # 2
 
-=begin pod 
+=begin pod
 
-Assignments of non-strings set the variable to the
-appropriate type:
+Assignments of non-strings set the variable to the appropriate type:
 
     my $scalar = 1234;
     say $scalar; # 1234
@@ -186,7 +201,7 @@ appropriate type:
 An object can be stringified, by using the ~ operator immediately
 prior to the variable's sigil
 
-    say '~$scalar is ', (~$scalar).^name; # ~$scalar is Str 
+    say '~$scalar is ', (~$scalar).^name; # ~$scalar is Str
 
 =end pod
 
@@ -203,8 +218,8 @@ say '~$scalar is ', (~$scalar).^name;
 
 Strings that are written with single quotes are almost
 verbatim.  However, backslashes are an escape character.
-This is so that you can write literal single-quotes 
-within a single-quoted string, and also be able to write 
+This is so that you can write literal single-quotes
+within a single-quoted string, and also be able to write
 a backslash at the end of a single-quote-enclosed string:
 
     say 'n\'     ; # Error: perl sees no closing '
@@ -212,40 +227,40 @@ a backslash at the end of a single-quote-enclosed string:
     say 'n\''    ; # n'
     say 'n\n'    ; # n\n
     say 'n\\n'   ; # n\n
-    say 'n\\\n'  ; # n\\n better spelled as: 
-    say 'n\\\\n' ; # n\\n  
+    say 'n\\\n'  ; # n\\n better spelled as:
+    say 'n\\\\n' ; # n\\n
 
 
 A few other backslashy escapes work in single quotes too
 
 =head2 Double-quoted Strings
 
-If you want to interpolate variables and other special characters 
+If you want to interpolate variables and other special characters
 within a literal string, use double quotes around the value:
 
     my $var1 = 'dog' ;
     say "The quick brown fox jumps over the lazy $var1";
-    
+
 
 =head2 Interpolation
 
 Double-quoted strings interpolate the elements of an array or
-a hash, closures, functions, backslashed control characters, and 
+a hash, closures, functions, backslashed control characters, and
 other good stuff.  Single-quoted strings do not.
 
-    # literal whitespace  
+    # literal whitespace
     my $squot = '    The quick brown fox jumps over the lazy dog.
     	dog.';
     my $dquot = "    The quick brown fox jumps over the lazy
     	dog.";
     say $squot;
     say $dquot;
-    
+
     # Double-quotes interpolate special backslash values,
     # but single-quotes do not
     say 'The quick brown fox\n\tjumps over the lazy dog\n';
     say "The quick brown fox\n\tjumps over the lazy dog\n";
-    
+
     # interpolate array elements:
     my @animal = ("fox", "dog");
     say 'The quick brown @animal[0] jumps over the lazy @animal[1]';
@@ -255,14 +270,14 @@ other good stuff.  Single-quoted strings do not.
     my %animal = (quick => 'fox', lazy => 'dog');
     say 'The quick brown %animal{\'quick\'} jumps over the lazy %animal{\'lazy\'}.';
     say "The quick brown %animal{'quick'} jumps over the lazy %animal{'lazy'}.";
-    
+
     # interpolate methods, closures, and functions:
     say '@animal.elems() {@animal.elems} &elems(@animal)';
     say "@animal.elems() {@animal.elems} &elems(@animal)";
-    
+
 =end pod
 
-# literal whitespace  
+# literal whitespace
 my $squot = '    The quick brown fox jumps over the lazy dog.
 	dog.';
 my $dquot = "    The quick brown fox jumps over the lazy
@@ -293,13 +308,13 @@ say "The quick brown %animal{'quick'} jumps over the lazy %animal{'lazy'}.";
 # interpolate methods, closures, and functions:
 say '@animal.elems() {@animal.elems} &elems(@animal)';
 say "@animal.elems() {@animal.elems} &elems(@animal)";
- 
+
 =begin pod
 
 =head2 Perl's Quote-like Operators
 
 It's often useful to use something other than single or double quotes
-when declaring strings. To do so use the q// and qq// quote operators, 
+when declaring strings. To do so use the q// and qq// quote operators,
 which provide advanced interpolation control:
 
     # Single quoted strings
@@ -311,7 +326,7 @@ which provide advanced interpolation control:
     say q/This string allows "double quotes" seamlessly/;
 
 The slashes in q// and qq// can be replaced with most of the
-delimiters that worked in Perl 5. All of Unicode above Latin-1 is reserved 
+delimiters that worked in Perl 5. All of Unicode above Latin-1 is reserved
 for user-defined quotes.
 
     # Single quoted strings
@@ -322,7 +337,7 @@ for user-defined quotes.
     say q<Many delimiters are available for quoting>;
     say q{Many delimiters are available for quoting};
     say q?Many delimiters are available for quoting?;
-    
+
     # But not the colon B<:>
     q:illegal_perl6:; #legal perl 5
 
@@ -412,10 +427,10 @@ environment for your string.
 
 The <> synonym for q:w has many uses
 
-    @animals           = <fox dog monkey>; 
+    @animals           = <fox dog monkey>;
     say @animals[0]    ; # fox
     %animal            = <brown fox lazy dog>;
-    say %animal<lazy>  ; # dog 
+    say %animal<lazy>  ; # dog
 
 =item :ww Split on Quoted Words
 
@@ -423,20 +438,20 @@ The <> synonym for q:w has many uses
     # Quoted words and variable interpolation
     @animals           = qq:ww/"brown $fox" "lazy %animal{'lazy'}"/;
 
-The «» synonym for qq:ww has many uses, also spelled <<>> 
+The «» synonym for qq:ww has many uses, also spelled <<>>
 
     ($fox,$dog)          = «brown lazy»;
     ($fox,$dog)          = <<brown lazy>>; # same
     %animal              = « $fox fox lazy "lazy dog" »;
-    say %animal« $dog »  ; # lazy dog 
-    say %animal<<$dog>>    ; # lazy dog 
+    say %animal« $dog »  ; # lazy dog
+    say %animal<<$dog>>    ; # lazy dog
 
 =item :x Execute
 
 TODO
 
 =back
-   
+
 =item :t Defining Multiline Strings (Here Documents)
 
 Multiline strings (here documents) can be defined using the q// and qq//
