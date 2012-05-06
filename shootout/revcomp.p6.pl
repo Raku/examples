@@ -4,7 +4,7 @@
 #
 # USAGE: perl6 revcomp.p6.pl < revcomp.input
 
-my($desc,$seq) = ('','');
+my ($desc,$seq) = ('','');
 while $*IN.get -> $line {
 	if $line.match(/^ \>/) {
 		print_revcomp();
