@@ -8,7 +8,7 @@ constant PI 		= 3.141592653589793;
 constant SOLAR_MASS 	= (4 * PI * PI);
 constant DAYS_PER_YEAR	= 365.24;
 
-constant LAST = 4;
+constant $LAST = 4;
 
 # @ns = ( sun, jupiter, saturn, uranus, neptune )
 my Num @XS = (0, 4.84143144246472090e+00, 8.34336671824457987e+00,	1.28943695621391310e+01, 1.53796971148509165e+01);
@@ -38,8 +38,8 @@ printf "%.9f\n", energy();
 sub advance($dt) {
 	my Num ($dx, $dy, $dz, $distance, $mag);
 
-	for 0..LAST -> $i {
-		for ($i+1)..LAST -> $k {
+	for 0..$LAST -> $i {
+		for ($i+1)..$LAST -> $k {
 			$dx = @XS[$i] - @XS[$k];
 			$dy = @YS[$i] - @YS[$k];
 			$dz = @ZS[$i] - @ZS[$k];
@@ -64,10 +64,10 @@ sub energy {
 	my Num ($e, $dx, $dy, $dz, $distance);
 
 	$e = 0.0;
-	for 0..LAST -> $i {
+	for 0..$LAST -> $i {
 		$e += 0.5 * @MASS[$i] *
 			(@VXS[$i]*@VXS[$i] + @VYS[$i]*@VYS[$i] + @VZS[$i]*@VZS[$i]);
-		for ($i + 1)..LAST -> $k {
+		for ($i + 1)..$LAST -> $k {
 			$dx = @XS[$i] - @XS[$k];
 			$dy = @YS[$i] - @YS[$k];
 			$dz = @ZS[$i] - @ZS[$k];
@@ -81,7 +81,7 @@ sub energy {
 sub offset_momentum {
 	my Num ($px, $py, $pz) = (0.0, 0.0, 0.0);
 
-	for 0..LAST -> $i {
+	for 0..$LAST -> $i {
 		$px += @VXS[$i] * @MASS[$i];
 		$py += @VYS[$i] * @MASS[$i];
 		$pz += @VZS[$i] * @MASS[$i];
