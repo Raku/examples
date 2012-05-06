@@ -1,5 +1,5 @@
 # The Computer Language Benchmarks Game
-# 
+#
 # Based on the submission for Perl 5.
 # contributed by Daniel carrera
 #
@@ -54,13 +54,13 @@ sub makeRepeatFasta($id, $desc, $n, $s) {
 
 	my $r = $s.chars;
 	my $ss = $s ~ $s ~ $s.substr(0, $n % $r);
-	
-	for 0..int($n / LINELENGTH)-1 -> $k {
+
+	for 0..($n div LINELENGTH)-1 -> $k {
 		my $i = $k*LINELENGTH % $r;
 		say $ss.substr($i, LINELENGTH);
 	}
 	if ($n % LINELENGTH) {
-		say $ss.substr(-($n % LINELENGTH));
+		say $ss.substr(*-($n % LINELENGTH));
 	}
 }
 
@@ -68,11 +68,11 @@ sub makeRandomFasta($id, $desc, $n, @genelist) {
 	say ">$id $desc";
 
 	# print whole lines
-	for 1 .. int($n / LINELENGTH) {
+	for 1 .. ($n div LINELENGTH) {
 		say selectRandom(@genelist, LINELENGTH);
 	}
 	# print remaining line (if required)
-	if ($n % LINELENGTH){
+	if ($n % LINELENGTH) {
 		say selectRandom(@genelist, $n % LINELENGTH);
 	}
 }
@@ -80,7 +80,7 @@ sub makeRandomFasta($id, $desc, $n, @genelist) {
 sub selectRandom(@genelist, $length) {
 	my @rand = gen_random($length);
 	my $seq = '';
-	
+
 	for @rand -> $rand {
 		for @genelist -> @gene {
 			if ($rand < @gene[1]) { $seq ~= @gene[0]; last; }
