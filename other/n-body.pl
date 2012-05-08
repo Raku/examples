@@ -103,8 +103,8 @@ sub step(Num $dt) {
      .r.addmul(.v, $dt) for @bodies;
 }
 
-$_ = @bodies[Sun];
-.v.addmul(total-momentum, -1e0 / .m);
+.v.addmul(total-momentum, -1e0 / .m)
+    given @bodies[Sun];
 
 sub MAIN(Int $n, Num $dt = 1e-2) {
     printf "%.9f\n", total-energy;
