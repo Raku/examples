@@ -19,12 +19,9 @@ print_revcomp();
 sub print_revcomp() {
 	return if not $desc;
 	say $desc;
-	#$seq = $seq.flip.trans('wsatugcyrkmbdhvnATUGCYRKMBDHVN' => 'WSTAACGRYMKVHDBNTAACGRYMKVHDBN');
-	$seq = $seq.flip;
-	$seq = $seq.trans('wsatugcyrkmbdhvnATUGCYRKMBDHVN' => 'WSTAACGRYMKVHDBNTAACGRYMKVHDBN');
-	
-	my ($i,$stop) = (0,$seq.chars/60);
-	loop ($i=0; $i < $stop; $i++) {
+	$seq = $seq.flip.trans('wsatugcyrkmbdhvnATUGCYRKMBDHVN' => 'WSTAACGRYMKVHDBNTAACGRYMKVHDBN');
+
+	for ^($seq.chars/60) -> $i {
 		say $seq.substr($i*60,60);
 	}
 }
