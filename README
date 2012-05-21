@@ -14,6 +14,8 @@ If you want to contribute, just ask! The quicker choice is to
 use IRC: join #perl6 in Freenode and you'll be welcome.
 
 
+Please use POD ( mostly this template <https://github.com/perl6/perl6-examples/blob/master/template_pod> ) when adding a new example.
+
 Goals
 -----
 
