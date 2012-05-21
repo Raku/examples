@@ -1,0 +1,26 @@
+=begin pod
+
+=head1 TITLE
+DESCRIPTION
+
+=head1 What's interesing here?
+
+=item feature1
+=item feature2
+=item ...
+
+=head1 More
+
+L<link-for-more-information>
+
+=end pod
+
+CODE
+
+=begin pod
+
+=head1 Features used
+
+=item C<name> - L<url>
+
+=end pod
