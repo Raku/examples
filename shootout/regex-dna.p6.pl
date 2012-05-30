@@ -1,8 +1,8 @@
 # The Computer Language Benchmarks Game
-# 
+#
 # Based on the submission for Perl 5.
 # contributed by Daniel carrera
-# 
+#
 # USAGE: perl6 regex-dna.p6.pl < regex-dna.input
 
 my $content = $*IN.slurp;
@@ -42,7 +42,7 @@ my %iub = 	'b' => '(c|g|t)',	'd' => '(a|g|t)',	'h' => '(a|c|t)',
 			'r' => '(a|g)',		's' => '(c|g)',		'v' => '(a|c|g)',
 			'w' => '(a|t)',		'y' => '(c|t)';
 
-$content .= subst(/(<[bdhkmnrsvwy]>)/, {%iub{$0}}, :global);
+$content .= subst(/(<[bdhkmnrsvwy]>)/, -> $/ { %iub{$0} }, :global);
 
 say "\n$len_file\n$len_code\n" ~ $content.chars;
 
