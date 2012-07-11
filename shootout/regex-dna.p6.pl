@@ -1,48 +1,33 @@
 # The Computer Language Benchmarks Game
 #
 # Based on the submission for Perl 5.
-# contributed by Daniel carrera
+# originally contributed by Daniel carrera
 #
 # USAGE: perl6 regex-dna.p6.pl < regex-dna.input
 
-my $content = $*IN.slurp;
-my $len_file = $content.chars;
+use v6;
 
-$content .= subst(/ (^^ \> \N*)? \n/, '', :global);
-$content = lc $content;
-my $len_code = $content.chars;
+my $input = slurp;
+my $data = $input.lines.grep({ $_ !~~ /^ \>/}).join.lc;
 
-my @seq = ( 'agggtaaa|tttaccct',
-        '[cgt]gggtaaa|tttaccc[acg]',
-        'a[act]ggtaaa|tttacc[agt]t',
-        'ag[act]gtaaa|tttac[agt]ct',
-        'agg[act]taaa|ttta[agt]cct',
-        'aggg[acg]aaa|ttt[cgt]ccct',
-        'agggt[cgt]aa|tt[acg]accct',
-        'agggta[cgt]a|t[acg]taccct',
-        'agggtaa[cgt]|[acg]ttaccct' );
-my @regex = ( /agggtaaa|tttaccct/,
-        /<[cgt]>gggtaaa|tttaccc<[acg]>/,
-        /a<[act]>ggtaaa|tttacc<[agt]>t/,
-        /ag<[act]>gtaaa|tttac<[agt]>ct/,
-        /agg<[act]>taaa|ttta<[agt]>cct/,
-        /aggg<[acg]>aaa|ttt<[cgt]>ccct/,
-        /agggt<[cgt]>aa|tt<[acg]>accct/,
-        /agggta<[cgt]>a|t<[acg]>taccct/,
-        /agggtaa<[cgt]>|<[acg]>ttaccct/ );
+say $_ ~ ' ' ~ +$data.comb($_) for
+    /agggtaaa|tttaccct/             but 'agggtaaa|tttaccct',
+    /<[cgt]>gggtaaa|tttaccc<[acg]>/ but '[cgt]gggtaaa|tttaccc[acg]',
+    /a<[act]>ggtaaa|tttacc<[agt]>t/ but 'a[act]ggtaaa|tttacc[agt]t',
+    /ag<[act]>gtaaa|tttac<[agt]>ct/ but 'ag[act]gtaaa|tttac[agt]ct',
+    /agg<[act]>taaa|ttta<[agt]>cct/ but 'agg[act]taaa|ttta[agt]cct',
+    /aggg<[acg]>aaa|ttt<[cgt]>ccct/ but 'aggg[acg]aaa|ttt[cgt]ccct',
+    /agggt<[cgt]>aa|tt<[acg]>accct/ but 'agggt[cgt]aa|tt[acg]accct',
+    /agggta<[cgt]>a|t<[acg]>taccct/ but 'agggta[cgt]a|t[acg]taccct',
+    /agggtaa<[cgt]>|<[acg]>ttaccct/ but 'agggtaa[cgt]|[acg]ttaccct';
 
-my @cnt = (0) xx @seq;
-for @seq.keys -> $k {
-	for $content.comb(@regex[$k]) { @cnt[$k]++ }
-	say @seq[$k] ~ " " ~ @cnt[$k];
-}
+say;
 
-my %iub = 	'b' => '(c|g|t)',	'd' => '(a|g|t)',	'h' => '(a|c|t)',
-			'k' => '(g|t)',		'm' => '(a|c)',		'n' => '(a|c|g|t)',
-			'r' => '(a|g)',		's' => '(c|g)',		'v' => '(a|c|g)',
-			'w' => '(a|t)',		'y' => '(c|t)';
+my %iub = 'b' => '(c|g|t)', 'd' => '(a|g|t)', 'h' => '(a|c|t)',
+          'k' => '(g|t)',   'm' => '(a|c)',   'n' => '(a|c|g|t)',
+          'r' => '(a|g)',   's' => '(c|g)',   'v' => '(a|c|g)',
+          'w' => '(a|t)',   'y' => '(c|t)';
 
-$content .= subst(/(<[bdhkmnrsvwy]>)/, -> $/ { %iub{$0} }, :global);
+my $output = $data.subst(/(<[bdhkmnrsvwy]>)/, { %iub{$_} }, :g);
 
-say "\n$len_file\n$len_code\n" ~ $content.chars;
-
+.chars.say for $input, $data, $output;
