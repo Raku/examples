@@ -20,7 +20,7 @@ else {
 
 # ORIGINAL LISP SPECIFICATION
 
-=begin
+=begin pod
 
 =head1 NAME
 
@@ -31,5 +31,5 @@ P06 - Find out whether a list is a palindrome.
  P06 (*) Find out whether a list is a palindrome.
  A palindrome can be read forward or backward; e.g. (x a m a x).
 
-=end
+=end pod
 

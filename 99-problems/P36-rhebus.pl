@@ -12,7 +12,7 @@ use v6;
 
 sub prime_factors_mult (Int $n) {
     my $residue = $n;
-    gather for (2,3,*+2 ... $n) -> $k {
+    gather for (2,3,*+2 ... * > $n) -> $k {
         my $mult=0;
         while $residue %% $k {
             $mult++;

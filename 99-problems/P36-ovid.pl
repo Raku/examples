@@ -100,7 +100,7 @@ sub prime-factors(Int $number is copy) {
         while $number % $prime-number == 0 {
             %factors{$prime-number} //= 0;
             %factors{$prime-number}++;
-            $number /= $prime-number;
+            $number div= $prime-number.Int;
         }
     }
     %factors{$number}++ if $number != 1;  # we have a prime left over

@@ -15,6 +15,10 @@ sub compress (@in) {
 	my @return;
 	my $last;
 	for @in -> $i {
+# The FIRST { } will remove the 'use of uninitialised value of type Any in
+# String context' warning in rakudo, but niecza hasn't implemented it as of
+# Aug 15 2012 so I'll leave it here, but commented out.
+#        FIRST { $last = '' }
 		if ($i ne $last) {
 			@return.push($i);
 			$last = $i;

@@ -31,8 +31,8 @@ sub p09
 
    for @in -> $elem
    {
-      push @out, [] if $elem ne @out[-1][0]; 
-      push @out[-1], $elem;
+      push @out, [] if $elem ne @out[*-1][0]; 
+      push @out[*-1], $elem;
    }
    return @out;
 }

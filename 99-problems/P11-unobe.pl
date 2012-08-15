@@ -15,7 +15,10 @@ sub prob11 (@in) {
     return gather loop {
         last if !@in.elems;
         my $val = @in[0];
-        my @a = gather { loop { @in[0] ~~ $val ?? take shift @in !! last }; };
+        my @a = gather loop {
+            last if !@in.elems;
+            @in[0] ~~ $val ?? take(shift @in) !! last
+        };
         take @a.end ?? [@a.elems, $val] !! $val;
     };
 }

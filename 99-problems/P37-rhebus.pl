@@ -16,7 +16,7 @@ use v6;
 # Straight from P36-rhebus.pl
 sub prime_factors_mult (Int $n) {
     my $residue = $n;
-    gather for (2,3,*+2 ... $n) -> $k {
+    gather for (2,3,*+2 ... * > $n) -> $k {
         my $mult=0;
         while $residue %% $k {
             $mult++;
@@ -33,8 +33,10 @@ sub prime_factors_mult (Int $n) {
 
 
 # 1. One-liner version
+
 say "phi($_): ", [*] prime_factors_mult($_).map({ (.key-1) * .key ** (.value-1) })
     for 1..20;
+
 say [*] prime_factors_mult(315).map: { (.key-1) * .key ** (.value-1) };
     
 
@@ -49,7 +51,8 @@ sub totient (Int $n) {
     }
 }
 
-say "phi2($_): ",  totient($_) for 1..20;
+# This hangs too! \o/
+# say "phi2($_): ",  totient($_) for 1..20;
 say "phi2(315): ", totient(315);
 
 # vim:ft=perl6

@@ -10,7 +10,7 @@ use v6;
 
 
 sub splat (@t) { 
-	my @return;
+	my @return = [];
 	for @t -> $i {
 		if ($i.isa(Array)) {
 			@return.push( splat($i) );

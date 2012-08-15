@@ -15,7 +15,9 @@ use v6;
 # iterations
 
 sub runlength (@a) {
-    gather while @a.elems {
+    gather {
+        last if !@a.elems;
+
         my $val = @a.shift;
         my $num = 1;
         while @a[0] ~~ $val { @a.shift; $num++; }

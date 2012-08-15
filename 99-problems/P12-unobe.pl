@@ -10,7 +10,7 @@ my @l = ([<4 a>],'b',[<2 c>],[<2 a>], 'd', [<4 e>]);
 sub prob12 (@in) {
     my @out;
     for 0 ... (@in.end) -> $x {
-        if @in[$x].WHAT eq 'Array()' {
+        if @in[$x] ~~ Array {
             loop (my $i=0; $i < @in[$x][0]; $i++) {
                 push @out, @in[$x][1];
             };

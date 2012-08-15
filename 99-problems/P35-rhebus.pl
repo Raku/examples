@@ -10,7 +10,7 @@ use v6;
 
 sub prime_factors (Int $n) {
     my $residue = $n;
-    gather for (2,3,*+2 ... $n) -> $k {
+    gather for (2,3,*+2 ... * > $n) -> $k {
         while $residue %% $k {
             # try 'take 0+$k' to work around a known rakudo issue (2010-09-05)
             take $k;
@@ -27,7 +27,7 @@ sub prime_factors (Int $n) {
     }
 }
 
-say ~prime_factors $_ for 2..20;
+say ~prime_factors($_) for 2..20;
 say ~prime_factors(315);
 say ~prime_factors(1723);
     

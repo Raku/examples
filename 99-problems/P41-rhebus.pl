@@ -57,6 +57,6 @@ sub goldbach-list (Int $low, Int $high, Int $limit = 1) {
 }
 
 goldbach-list 9,20;
-goldbach-list 2,3000,10;
+goldbach-list 2,1000,10;
 
 # vim:ft=perl6

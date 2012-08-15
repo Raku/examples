@@ -30,7 +30,7 @@ say element_at <a b c d e>,3;
 
 # ORIGINAL LISP SPECIFICATION
 
-=begin
+=begin pod
 
 =head1 NAME
 
@@ -44,5 +44,5 @@ P03 - Find the K'th element of a list.
  * (element-at '(a b c d e) 3)
  C
 
-=end
+=end pod
 

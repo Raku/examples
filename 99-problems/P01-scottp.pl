@@ -31,8 +31,8 @@ say my_last(<A B C D>);
 # c. Pop like perl5
 #	pop the last element off, which also returns it
 #	say either way
-say <X Y Z>.pop;
-<X Y Z>.pop.say;
+say <X Y Z>.list.pop;
+<X Y Z>.list.pop.say;
 
 
 # ORIGINAL LISP SPECIFICATION
@@ -42,7 +42,7 @@ say <X Y Z>.pop;
 # vice versa; as a result, this example does not distinguish between a
 # single element and a list containing a single element.
 
-=begin
+=begin pod
 
 =head1 NAME
 
@@ -55,5 +55,5 @@ P01 - Find the last box of a list.
  * (my-last '(a b c d))
  (D)
 
-=end
+=end pod
 

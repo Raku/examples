@@ -32,7 +32,7 @@ say ~my_but_last(<a b c d>);
 
 # ORIGINAL LISP SPECIFICATION
 
-=begin
+=begin pod
 
 =head1 NAME
 
@@ -45,5 +45,5 @@ P02 - Find the last but one box of a list.
  * (my-but-last '(a b c d))
  (C D)
 
-=end
+=end pod
 

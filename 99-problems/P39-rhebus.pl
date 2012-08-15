@@ -29,6 +29,6 @@ say ~primes(10..20);
 say ~primes(3,5,17,257,65537);
 
 # or a series...
-say ~primes(1,2,*+*...100);
+say ~primes(1,2,*+1...100);
 
 # vim:ft=perl6

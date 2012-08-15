@@ -17,11 +17,11 @@ say +<a b c d>[0,2]; # works on slices too
 
 # ORIGINAL LISP SPECIFICATION
 
-=begin
+=begin pod
 
 =head1 NAME
 
 P04 - Find the number of elements of a list
 
-=end
+=end pod
 
