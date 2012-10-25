@@ -1,5 +1,7 @@
 use v6;
 
+# FIXME: incorrect result for non-square input
+
 # same algorithm as polettix' solution
 
 # range of bases
