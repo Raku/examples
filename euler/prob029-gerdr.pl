@@ -8,36 +8,28 @@ sub count-naively(Int \A, Int \B --> Int) {
 }
 
 sub count-smartly(Int \A, Int \B --> Int) {
-	# uses the same algorithm as polettix' solution
+	my (%powers, %count);
 
-	my %seen-bases;
-	my $seen-values = [+] gather {
-
-		# visit bases which are powers of preceeding ones
-		for 2..sqrt(A).Int -> \root {
-			next if %seen-bases{root};
-
-			my %seen-exponents;
-			my @powers = root, * * root ...^ * > A;
-
-			for @powers Z 1..* -> \base, \exp {
-				next if %seen-bases{base};
-
-				# mark powers of \base according to their exponent
-				# relative to \root
-				%seen-exponents{(2..B) >>*>> exp} = True xx *;
-
-				# avoid double-counting
-				%seen-bases{base} = True;
-			}
-
-			take +%seen-exponents;
+	# find bases which are powers of a preceeding root base
+	# store decomposition into base and exponent relative to root
+	for 2..Int(sqrt A) -> \a {
+		for 2..* Z a**2, a**3, a**4 ...^ * > A -> \e, \p {
+			%powers{a} //= (a) => 1;
+			%powers{p} //= (a) => e;
 		}
-
 	}
 
-	# without duplicates, the result would be (A - 1) * (B - 1)
-	(A - 1 - %seen-bases) * (B - 1) + $seen-values
+	# count duplicates
+	for %powers.values -> \p {
+		for 2..B -> \e {
+			# raise to power e
+			# classify by root and relative exponent
+			++%count{p.key => p.value * e}
+		}
+	}
+
+	# add +%count as one of the duplicates needs to be kept
+	return (A - 1) * (B - 1) + %count - [+] %count.values;
 }
 
 sub bench(|) {
@@ -47,7 +39,11 @@ sub bench(|) {
 	return result, round (end - start) * 1000;
 }
 
-sub MAIN(Int $A = 100, Int $B = 100, Bool :$verify) {
+multi MAIN(Int $N, Bool :$verify) {
+	nextwith($N, $N, :$verify)
+}
+
+multi MAIN(Int $A = 100, Int $B = 100, Bool :$verify) {
 	&count-smartly.wrap(&bench);
 	&count-naively.wrap(&bench);
 
