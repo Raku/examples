@@ -22,7 +22,7 @@ sub count-smartly(Int \A, Int \B --> Int) {
 	# count duplicates
 	for %powers.values -> \p {
 		for 2..B -> \e {
-			# raise to power e
+			# raise to power \e
 			# classify by root and relative exponent
 			++%count{p.key => p.value * e}
 		}
@@ -32,6 +32,20 @@ sub count-smartly(Int \A, Int \B --> Int) {
 	return (A - 1) * (B - 1) + %count - [+] %count.values;
 }
 
+sub cross(@a, @b) { @a X @b }
+sub dups(@a) { @a - @a.uniq }
+sub count-feedly(Int \A, Int \B --> Int) {
+	2..Int(sqrt A)
+	==> map -> \a { (a, a**2, a**3 ...^ * > A) Z=> (a X 1..*).tree }
+	==> reverse()
+	==> hash()
+	==> values()
+	==> cross(2..B)
+	==> map -> \n, [\r, \e] { (r) => e * n }
+	==> dups()
+	==> ((A - 1) * (B - 1) - *)()
+}
+
 sub bench(|) {
 	my \start = now;
 	my \result = callsame;
@@ -39,14 +53,18 @@ sub bench(|) {
 	return result, round (end - start) * 1000;
 }
 
-multi MAIN(Int $N, Bool :$verify) {
-	nextwith($N, $N, :$verify)
+multi MAIN(Int $N, Bool :$verify, Bool :$feeds) {
+	nextwith($N, $N, :$verify, :$feeds)
 }
 
-multi MAIN(Int $A = 100, Int $B = 100, Bool :$verify) {
-	&count-smartly.wrap(&bench);
+multi MAIN(Int $A = 100, Int $B = 100, Bool :$verify, Bool :$feeds) {
 	&count-naively.wrap(&bench);
+	&count-smartly.wrap(&bench);
+	&count-feedly.wrap(&bench);
 
-	printf "got %u [%ums]\n", count-smartly $A, $B;
-	printf "expected %u [%ums]\n", count-naively $A, $B if $verify;
+	printf "got %u [%ums]\n",
+		($feeds ?? &count-feedly !! &count-smartly)($A, $B);
+
+	printf "expected %u [%ums]\n",
+		count-naively $A, $B if $verify;
 }
