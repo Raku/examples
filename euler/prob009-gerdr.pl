@@ -16,16 +16,9 @@ use v6;
 #
 #	a < (1 - 1/√2)·N
 #
-# which we use in the form
-#
-#	a < (2·N - √(2·N²)) / 2
-#
-# to minimize computational errors.
 
 sub triples(\N) {
-	my \A = Int(2 * N - sqrt(2 * N * N)) div 2;
-
-	for 1..A -> \a {
+	for 1..Int((1 - sqrt(0.5)) * N) -> \a {
 		my \u = N * (N - 2 * a);
 		my \v = 2 * (N - a);
 
