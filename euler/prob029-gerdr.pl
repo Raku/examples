@@ -13,10 +13,8 @@ sub count-smartly(Int \A, Int \B --> Int) {
 	# find bases which are powers of a preceeding root base
 	# store decomposition into base and exponent relative to root
 	for 2..Int(sqrt A) -> \a {
-		for 2..* Z a**2, a**3, a**4 ...^ * > A -> \e, \p {
-			%powers{a} //= (a) => 1;
-			%powers{p} //= (a) => e;
-		}
+		next if a ~~ %powers;
+		%powers{a, a**2, a**3 ...^ * > A} = a X=> 1..*;
 	}
 
 	# count duplicates
