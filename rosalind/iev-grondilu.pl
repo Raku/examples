@@ -1,13 +1,4 @@
 use v6;
 
-given $*IN.get.split: " " {
-    say 2 * [+]
-    .[0],             # AA AA
-    .[1],             # AA Aa
-    .[2],             # AA aa
-    (3/4 * .[3]),     # Aa Aa
-    (1/2 * .[4]),     # Aa aa
-    0,                # aa aa
-    ;
-}
-# vim: ft=perl6
+say 2 * [+] <1 1 1 3/4 1/2 0> Z*  $*IN.get.split: " ";
+
