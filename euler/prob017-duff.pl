@@ -47,11 +47,15 @@ multi sub num-to-word($n is copy) {
     $n = $n % 100;
     @words.push: 'and' if $m > 0 and $n > 0;
 
-    my $r = $n % 10;
-    $n = truncate($n / 10) * 10;
-    @words.push: num-to-word($n) if $n > 0;
-    @words.push: num-to-word($r) if $r > 0;
-    return @words;
+    if 0 < $n < 20 {
+	    @words.push: num-to-word($n);
+    } else {
+	    my $r = $n % 10;
+	    $n = truncate($n / 10) * 10;
+	    @words.push: num-to-word($n) if $n > 0;
+	    @words.push: num-to-word($r) if $r > 0;
+    }
+    return @words.join;
 }
 
 my $max = @*ARGS[0] // 1000;
