@@ -8,4 +8,8 @@ Project Euler inspired platform for teaching bioinformatics).
 Use the file format <id>-<author>.pl replacing <id> with the (lowercase)
 problem ID and <author> with your name.
 
+For a given problem <id>, you can find its full description there:
+
+http://rosalind.info/problems/<id>
+
 Have fun!
