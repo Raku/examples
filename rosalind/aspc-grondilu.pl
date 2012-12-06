@@ -6,8 +6,7 @@ my ($n, $m) = $*IN.get.split(' ')».Int;
 
 my $sum = my $C = C $n, $m;
 for $m+1 .. $n -> $k {
-    $C = $C * ($n - $k + 1) div $k;
-    "$k: ", $sum += $C;
+    $sum += $C = $C * ($n - $k + 1) div $k;
 }
 say $sum % 1_000_000;
 
