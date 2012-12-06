@@ -8,11 +8,8 @@ given $*IN.slurp {
     my ($transitions, $transversions);
     for @dna[0].comb Z @dna[1].comb -> $a, $b {
         next unless $a ne $b;
-        if ($a eq 'A'|'G' and $b eq 'G'|'A') or ($a eq 'C'|'T' and $b eq 'C'|'T') {
-            $transitions++
-        } else {
-            $transversions++
-        }
+        if "$a$b" eq any <AG GA CT TC> { $transitions++ }
+	else { $transversions++ }
     }
     say $transitions/$transversions;
 }
