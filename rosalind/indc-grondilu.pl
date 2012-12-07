@@ -1,8 +1,7 @@
 use v6;
 
-my $n = $*IN.get.Int;
+my $n = 5;  # $*IN.get.Int;
 
-sub postfix:<!>($n) { [*] 1 .. $n }
 sub C($n, $k) {
     state %cache;
     %cache{$n}{$k} //=
