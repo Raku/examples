@@ -25,15 +25,3 @@ my $upper = shift(@*ARGS) || 100;
 my $result = (($upper + 1) * $upper / 2) ** 2;
 $result -= $_ ** 2 for 1 .. $upper;
 say $result;
-
-#######################################################################
-# Another way:
-# I added this because of the mathematical beautity revealing the similarity between the two.
-
-#       use List::Utils qw/sum reduce/                  # Perl5 code...
-my @l = 1..100;
-#       my $sum_of_squares = reduce {$a + $b**2} 0, @l; # Perl5 code...
-#       my $square_of_sum = (sum @l)**2;                # Perl5 code...
-my $sum_of_squares = [+] @l X** 2;      # Perl6 code is much clearer...
-my $square_of_sum = ([+] @l) ** 2;      # Compare with the above line, and note the similarity!
-say $square_of_sum - $sum_of_square;
