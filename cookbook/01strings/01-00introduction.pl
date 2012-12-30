@@ -164,7 +164,7 @@ say  "1" + 1  ; # 2
 Context sensitivity is the essence of Perl.  Keeping this in mind, what
 would you expect to be the output string, for the following?
 
-    my $string = "1" ~ "1" + 10; # 12 or 21?
+    my $string = "1" ~ "1" + 10; # 12, 21, or even... "111"?
     say $string;
 
 But, "1+1", surrounded by quotation marks, either '' or "", stringifies
@@ -185,7 +185,7 @@ to have it evaluated as a program expression, by using the -e switch:
 
 =end pod
 
-my $string = "1" ~ "1" + 10; # 12 or 21?
+my $string = "1" ~ "1" + 10; # 12, 21, or even... "111"?
 say $string;
 say "1 + 1"; # literally: 1 + 1
 say eval "1 + 1";    # 2
