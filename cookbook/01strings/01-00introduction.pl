@@ -367,7 +367,7 @@ qs//.
     :t          :to             Interpret result as heredoc terminator
 
     # Raw quoting: no escaping at all (unless otherwise adverbed)
-    say q:raw(:raw (no interpolation) even backslash has no special meaning: \\ \/;
+    say q:raw/:raw (no interpolation) even backslash has no special meaning: \\ \/;
     say q:0/:0 (no interpolation) even backslash has no special meaning: \\ \/;
     say q0/0 (no interpolation) even backslash has no special meaning: \\ \/;
 
