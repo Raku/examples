@@ -4,12 +4,12 @@
 
 #define MAX(A,B) (((A)>(B))? (A) : (B))
 
-char * lcs(const char *a,const char * b) {
+char * lcsq(const char *a,const char * b) {
     int lena = strlen(a)+1;
     int lenb = strlen(b)+1;
 
-    int bufrlen = 40;
-    char bufr[40], *result;
+    int bufrlen = 1024;
+    char bufr[bufrlen], *result;
 
     int i,j;
     const char *x, *y;
