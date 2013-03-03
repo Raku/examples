@@ -12,7 +12,7 @@ sub trie(@string is copy, $root = $node) {
     }
 }
 
-trie <ATAGA ATC GAT>;
+trie lines;
 
 =END
 use strict;
