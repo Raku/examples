@@ -3,7 +3,7 @@
 grammar CSSGrammar {
         # builtin: ident (we use cssident), alpha
 
-        token TOP         { ^ <import>? <css>* $ | <.panic: "CSS parsing failed"> };
+        token TOP         { ^ <import>* <css>* $ | <.panic: "CSS parsing failed"> };
         token css         { <ruleset> | <media> | <page> };
 #       rule ruleset       { <selector> ** ',' '{' <declaration> ** ';' '}' };
         rule ruleset      { <selector> [ ',' <selector> ]* <declarations> }
@@ -50,7 +50,7 @@ grammar CSSGrammar {
         token FUNCTION    { <cssident> '(' };
         token important_sym {:i '!'important };
 
-        rule import  { \@(:i'import')  [<string>|<uri>] <media_list>? ';' }
+        rule import  {:i'@import' [<string>|<uri>] <media_list>? ';' }
 
         rule media        {:i'@media' <media_list> <media_rules> }
         rule media_list   {<media_type> [',' <media_type>]*}
