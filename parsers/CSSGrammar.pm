@@ -3,7 +3,7 @@
 grammar CSSGrammar {
         # builtin: ident (we use cssident), alpha
 
-        token TOP         { ^ <import>* <css>* $ | <.panic: "CSS parsing failed"> };
+        token TOP         { ^ <import>* <css>* $ || <.panic: "CSS parsing failed"> };
         token css         { <ruleset> | <media> | <page> };
 #       rule ruleset       { <selector> ** ',' '{' <declaration> ** ';' '}' };
         rule ruleset      { <selector> [ ',' <selector> ]* <declarations> }
