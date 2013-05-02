@@ -5,27 +5,23 @@ grammar CSSGrammar {
 
         token TOP         { ^ <import>* <css>* $ || <.panic: "CSS parsing failed"> };
         token css         { <ruleset> | <media> | <page> };
-#       rule ruleset       { <selector> ** ',' '{' <declaration> ** ';' '}' };
-        rule ruleset      { <selector> [ ',' <selector> ]* <declarations> }
-        rule declarations { '{' <declaration> [ ';' <declaration> ]* '}' }
-#       token selector    { <simple_selector> ** <combinator> ] };
-        token selector    { <simple_selector> [ <combinator> <simple_selector> ]* };
+        rule ruleset      { <selector> +% ',' <declarations> }
+        rule declarations { '{' <declaration> +%% ';' '}' }
+        rule selector     { <simple_selector> +% <combinator>? };
         token simple_selector   { <element_name> [ <hcap> ]* | <hcap>+ };
         token hcap        { '#' | <class> | <attrib> | <pseudo> };
         token class       { '.' <cssident> };
         token element_name { <cssident> | '*' };
         token attrib      { '[' <cssident> [ [ '=' | <INCLUDES> | <DASHMATCH> ] [ <cssident> | <string> ] ]? ']' };
         token pseudo      { ':' [ <cssident> | <FUNCTION> <cssident>? ')' ] };
-        token combinator  { '+' | '>' | '' };
+        rule combinator   { '+' | '>' | '' };
 
-        token declaration { <property> ':' <expr> <prio>? | '' };
+        rule declaration  { <property> ':' <expr> <prio>? };
         token property    { <cssident> };
         token prio        { <important_sym> };
-#       token expr        { <term> ** <operator> }
-        token expr        { <term> [ <operator> <term> ]* };
+        token expr        { <term> +% <operator> };
         token cssident    { '-'?<namestart><namechar>* };
         rule term         { <unary_operator>? 
-
                 [ <number> | <percentage> | <length> | <ems> | <exs> | <angle> | <time> | <freq> ]
                 | <string> | <cssident> | <uri> | <hexcolor> | <function>
         };
