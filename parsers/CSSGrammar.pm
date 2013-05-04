@@ -19,13 +19,13 @@ grammar CSSGrammar {
         rule declaration  { <property> ':' <expr> <prio>? };
         token property    { <cssident> };
         token prio        { <important_sym> };
-        token expr        { <term> +% <operator> };
+        token expr        { <term> +% <operator>? };
         token cssident    { '-'?<namestart><namechar>* };
         rule term         { <unary_operator>? 
                 [ <number> | <percentage> | <length> | <ems> | <exs> | <angle> | <time> | <freq> ]
                 | <string> | <cssident> | <uri> | <hexcolor> | <function>
         };
-        token operator    { '/' | ',' | '' };
+        token operator    { '/' | ',' };
         token function    { <FUNCTION> <expr> ')' };
         token hexcolor    { '#' };
         token namestart   { <alpha> | _ };
