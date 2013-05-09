@@ -8,24 +8,24 @@ grammar CSSGrammar {
         rule ruleset      { <selector> +% ',' <declarations> }
         rule declarations { '{' <declaration> +%% ';' '}' }
         rule selector     { <simple_selector> +% <combinator>? };
-        token simple_selector   { <element_name> [ <hcap> ]* | <hcap>+ };
+        rule simple_selector   { <element_name> [ <hcap> ]* | <hcap>+ };
         token hcap        { '#' | <class> | <attrib> | <pseudo> };
         token class       { '.' <cssident> };
         token element_name { <cssident> | '*' };
         token attrib      { '[' <cssident> [ [ '=' | <INCLUDES> | <DASHMATCH> ] [ <cssident> | <string> ] ]? ']' };
         token pseudo      { ':' [ <cssident> | <FUNCTION> <cssident>? ')' ] };
-        rule combinator   { '+' | '>' | '' };
+        token combinator   { '+' | '>' };
 
         rule declaration  { <property> ':' <expr> <prio>? };
         token property    { <cssident> };
         token prio        { <important_sym> };
-        token expr        { <term> +% <operator> };
+        token expr        { <term> +% <operator>? };
         token cssident    { '-'?<namestart><namechar>* };
         rule term         { <unary_operator>? 
                 [ <number> | <percentage> | <length> | <ems> | <exs> | <angle> | <time> | <freq> ]
                 | <string> | <cssident> | <uri> | <hexcolor> | <function>
         };
-        token operator    { '/' | ',' | '' };
+        token operator    { '/' | ',' };
         token function    { <FUNCTION> <expr> ')' };
         token hexcolor    { '#' };
         token namestart   { <alpha> | _ };
