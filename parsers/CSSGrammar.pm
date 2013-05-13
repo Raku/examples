@@ -1,4 +1,4 @@
-# This should be doing css2.1; hopefully CSS3 when that's ready (but that may be a while)
+# This should be doing CSS2.1; hopefully CSS3 when that's ready (but that may be a while)
 
 grammar CSSGrammar {
         # builtin: ident (we use cssident), alpha
@@ -39,8 +39,7 @@ grammar CSSGrammar {
         token angle       {:i <number> [ deg | rad | grad ] };
         token time        {:i <number> [ ms | s ] };
         token freq        {:i <number> k?hz };
-        token string      { ('"' | \') (<- [\n\r\f\\"]>|\\<nl>)* $0 };
-        token nl          { \n | \r\n | \r };
+        token string      { ('"' | \') (<- [\n]>|\\ \n)*? $0 };
         token uri         { url '(' [ <string> | <url>] ')'};
         token url         { ( <- [\( \) \' \" \\]> )* };
         token FUNCTION    { <cssident> '(' };
@@ -54,6 +53,12 @@ grammar CSSGrammar {
         rule media_rules  { '{' <ruleset>* '}' }
 
         rule page         {:i'@page' [':'<cssident>]? <declarations> }
+
+        # Comments and whitespace.
+        token comment {'<!--' .*? '-->' | '/*' .*? '*/'}
+        # override <ws> builtin. Note: \n matches a logical (platform
+        # independent) newline in Perl 6
+        token ws { <!ww> [ \n | "\t" | " " | <comment> ]* }
 
         method panic($e)  {die $e;}
 }
