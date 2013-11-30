@@ -1,8 +1,9 @@
 #!/usr/bin/env perl6
 use v6;
 
-sub encode(@list)
+sub encode(@ls)
 {
+    my @list = @ls[*];
     gather while @list.elems
     {
         my $value = @list[0];
