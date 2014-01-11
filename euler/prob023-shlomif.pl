@@ -26,7 +26,8 @@
 #
 # Find the sum of all the positive integers which cannot be written as
 # the sum of two abundant numbers.
-#
+
+use v6;
 
 my @divisors_sums;
 @divisors_sums[1] = 0;
