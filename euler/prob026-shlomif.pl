@@ -32,7 +32,7 @@ sub find_cycle_len(Int $n) returns Int
 
     while ! ( %states{$r}:exists )
     {
-        $*ERR.say( "Trace: N = $n ; R = $r" );
+        # $*ERR.say( "Trace: N = $n ; R = $r" );
         %states{$r} = $count++;
         ($r *= 10) %= $n;
     }
