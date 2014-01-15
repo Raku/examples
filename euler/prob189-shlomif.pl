@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 use v6;
 
 =begin pod
