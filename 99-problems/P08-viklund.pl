@@ -17,9 +17,8 @@ use v6;
 #   [@a,'a'] compress 'a' gives [ @a,'a']
 #   [@a,'a'] compress 'b' gives [ @a,'a','b']
 #
-# FIXME "our" is needed under rakudo as of 2010-09-04
-our multi infix:<compress> ( $a, $b ) { $a      ~~ $b ?? $a !! [ $a, $b ] }
-our multi infix:<compress> ( @a, $b ) { @a[*-1] ~~ $b ?? @a !! [ @a, $b ] }
+multi infix:<compress> ( $a, $b ) { $a      ~~ $b ?? $a !! [ $a, $b ] }
+multi infix:<compress> ( @a, $b ) { @a[*-1] ~~ $b ?? @a !! [ @a, $b ] }
 
 # Now all we need to do is split our array up and insert compress.
 #   given <a a b c c d> we want:
