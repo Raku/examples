@@ -18,6 +18,6 @@ multi infix:<rpn> (@stack, $op where /^ '+' | '-' | '*' | '/' $/) {
   [ @stack, $res ]
 }
 multi infix:<rpn> ($any, $unknown) {
-  die "Unkown expression near $any $unknown";
+  die "Unknown expression near $any $unknown";
 }
 say [rpn] [], (~@*ARGS).words;

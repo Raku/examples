@@ -99,7 +99,7 @@ sub factors_progressively_asked ($x is copy) {
       %factors_for{$x} = $result;
    }
 
-   # Return as a hash of (factor, occurences) pairs
+   # Return as a hash of (factor, occurrences) pairs
    my %factors;
    %factors{$_}++ for $result.list;
    return %factors;

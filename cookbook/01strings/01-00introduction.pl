@@ -24,7 +24,7 @@ other characters.
 
 =head1 Declaring and assigning Strings
 
-A string can be created explictly, by declaring a variable using the
+A string can be created explicitly, by declaring a variable using the
 Str keyword, and assigning a string value to it.
 
     my Str $string = 'This Str is holding a String';
