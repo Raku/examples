@@ -32,37 +32,27 @@ sub filename($module,%meta) {
 	return $filename ~ "--0";
 }
 sub strencode($str) {
-	return $str.subst(/(<-alpha -[_:]>)/,{ charencode($0) },:g);
+	return $str.subst(/(<-alpha -[:]>)/,{ charencode($0) },:g);
 }
 sub charencode($char) {
-	my ($url,$hex) = ('',int2hex(ord $char));
+	my ($url,$hex) = ('',$char.fmt("%02x"));
 
-	$hex = '0' ~ $hex if ($hex.chars % 1);
 	while $hex.chars {
-			$url ~= '%' ~ $hex.substr(0,2);
-			$hex = $hex.substr(2);
+		$url ~= '%' ~ $hex.substr(0,2);
+		$hex = $hex.substr(2);
 	}
 	return $url;
-}
-sub int2hex($val is rw) {
-	my $hex = '';
-	while $val {
-		my $tmp = $val % 16;
-		$val = int($val/16);
-		$hex = ($tmp < 10 ?? $tmp !! chr (97 - 10 + $tmp)) ~ $hex;
-	}
-	return $hex;
 }
 sub fletcher16($str) {
 	my ($A,$B) = (0,0);
 	for map { .ord }, $str.comb -> $val {
 		if $val > 255 {
-			$A = ($A + int($val/255)) % 255;
+			$A = ($A + $val div 255) % 255;
 			$B = ($B + $A) % 255;
 		}
 		$A = ($A + $val % 255) % 255;
 		$B = ($B + $A) % 255;
 	}
-	return sprintf "%04s", int2hex($A*256 + $B);
+	return ($A*256 + $B).fmt("%04x");
 }
 
