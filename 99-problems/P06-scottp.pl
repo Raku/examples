@@ -8,7 +8,7 @@ use v6;
 my @l = <A B C B A>;
 # Reverse the list (see P05)
 # Then compare it
-# 	==	This will comare two lists, and return true if they contain the same
+# 	==	This will compare two lists, and return true if they contain the same
 # 	elements - but it does not care about the order of the elements.
 # 	eq  This will turn the list into a string, and compare those
 if (@l eq @l.reverse) {
