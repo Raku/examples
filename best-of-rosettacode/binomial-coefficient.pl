@@ -6,7 +6,7 @@ Number of ways to choose P objects among N.  It's also the coefficient of the
 monome of degree P in the expansion of (1 + X)^N, thus the name.
 
 
-     N       (N-P+1)*(N-P)*...*N
+     N       (N-P+1)*(N-P+2)*...*N
    (   ) = ∑ -------------------
      P         1*2*...*P
 
