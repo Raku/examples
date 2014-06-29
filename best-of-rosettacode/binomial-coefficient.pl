@@ -21,7 +21,7 @@ L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Perl_6>
 =item reduction meta-operator
 =item self-declared parameters
 =item range operator with first value excluded
-=item Zip metaoperator with an infinite liste on the right side
+=item Zip metaoperator with an infinite list on the right side
 =item use of rational numbers as a default
 
 =end pod
