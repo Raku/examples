@@ -79,7 +79,7 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
 
 =begin pod
 
-=head2 Prasing with a grammar
+=head2 Parsing with a grammar
 
 =end pod
 
