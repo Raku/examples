@@ -85,9 +85,11 @@ Hello World! followed by a newline.
 
 =end pod
 
-my Str $string;
-$string = "Hello" ~ " World" ~ "!";
-say $string; # Hello World!
+{
+  my Str $string;
+  $string = "Hello" ~ " World" ~ "!";
+  say $string; # Hello World!
+}
 
 =begin pod
 
@@ -113,13 +115,15 @@ is in fact just that:
 
 =end pod
 
-my Str $string = 'This is $string: a scalar holding a String';
-say $string;
-say '$string is ', $string.^name;                 # Str
+{
+  my Str $string = 'This is $string: a scalar holding a String';
+  say $string;
+  say '$string is ', $string.^name;                 # Str
 
-my $scalar = 'This is $scalar holding a String';
-say $scalar;
-say '$scalar is ', $scalar.^name;                 # Str
+  my $scalar = 'This is $scalar holding a String';
+  say $scalar;
+  say '$scalar is ', $scalar.^name;                 # Str
+}
 
 =begin pod
 
@@ -173,9 +177,9 @@ the expression, so that it is evaluated as a string.
     say "1 + 1"; # literally: 1 + 1
 
 To force the interpretation of a string for any programmatic
-value it might contain, use the built-in eval() function:
+value it might contain, use the built-in EVAL() call:
 
-    say eval "1 + 1";    # 2
+    say EVAL "1 + 1";    # 2
 
 On the command-line, you may pass a string to the perl 6 interpretor,
 to have it evaluated as a program expression, by using the -e switch:
@@ -185,10 +189,12 @@ to have it evaluated as a program expression, by using the -e switch:
 
 =end pod
 
-my $string = "1" ~ "1" + 10; # 12, 21, or even... "111"?
-say $string;
-say "1 + 1"; # literally: 1 + 1
-say eval "1 + 1";    # 2
+{
+  my $string = "1" ~ "1" + 10; # 12, 21, or even... "111"?
+  say $string;
+  say "1 + 1"; # literally: 1 + 1
+  say EVAL "1 + 1";    # 2
+}
 
 =begin pod
 

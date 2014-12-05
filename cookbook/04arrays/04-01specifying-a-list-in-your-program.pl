@@ -12,8 +12,10 @@ my @a = ('alpha', 'beta', 'gamma');
 say @a[1];
 
 # angle brackes to autoquote items
-my @a = <alpha beta gamma>;
+{
+  my @a = <alpha beta gamma>;
 
-for @a -> $e {
+  for @a -> $e {
     say $e;
+  }
 }
