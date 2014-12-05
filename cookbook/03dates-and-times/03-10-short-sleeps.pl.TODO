@@ -1,0 +1,13 @@
+use v6;
+
+=begin pod
+
+=head1 Sleep for less than a second
+
+TODO 
+
+Placeholder for an example (using select?)
+
+=end pod
+
+# vim: ft=perl6

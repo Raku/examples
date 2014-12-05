@@ -1,0 +1,15 @@
+use v6;
+
+=begin pod
+
+=head1 DateTime Parsing from Strings
+
+You have a string and want a DateTime Object
+
+TODO 
+
+Placeholder for a simple grammar example
+
+=end pod
+
+# vim: ft=perl6
