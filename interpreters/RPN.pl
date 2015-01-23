@@ -5,17 +5,17 @@
 #
 # USAGE: perl6 RPN.pl  "5 4 + 3 / 5 3 - *"
 
-token Op { '+' || '-' || '*' || '/' };
-token Value { \d+[\.\d+]? };
-token  Item { <Value> || <Op> };
-token  Expr { [<Item> <ws>]+ };
+my token Op { '+' || '-' || '*' || '/' };
+my token Value { \d+[\.\d+]? };
+my token  Item { <Value> || <Op> };
+my token  Expr { [<Item> <ws>]+ };
 
-my $str = @*ARGS[0];
+my $str = @*ARGS[0] // die "No input string specified";
 
 if $str ~~ /^ <Expr> $/ {
 	my @stack;
 	
-	for $/<Expr><Item> -> $item {
+	for $/<Expr><Item>.list -> $item {
 		if $item<Value> {
 			@stack.push($item<Value>);
 		} else {
