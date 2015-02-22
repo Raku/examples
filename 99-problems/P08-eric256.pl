@@ -27,4 +27,4 @@ sub compress (@in) {
 
 compress(<a a a a b c c a a d e e e e>).perl.say;
 
-
+# vim: expandtab shiftwidth=4 ft=perl6
