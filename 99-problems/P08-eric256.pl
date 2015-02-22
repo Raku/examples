@@ -13,16 +13,16 @@ use v6;
 die "Example doesn't yet work in Niecza" if $*VM ~~ 'niecza';
 
 sub compress (@in) {
-	my @return;
-	my $last;
-	for @in -> $i {
+    my @return;
+    my $last;
+    for @in -> $i {
         FIRST { $last = '' }
-		if ($i ne $last) {
-			@return.push($i);
-			$last = $i;
-		}
-	}
-	return @return;
+        if ($i ne $last) {
+            @return.push($i);
+            $last = $i;
+        }
+    }
+    return @return;
 }
 
 compress(<a a a a b c c a a d e e e e>).perl.say;
