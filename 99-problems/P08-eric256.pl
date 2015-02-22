@@ -10,15 +10,13 @@ use v6;
 # > say ~compress(<a a a a b c c a a d e e e e>)
 # a b c a d e
 
+die "Example doesn't yet work in Niecza" if $*VM ~~ 'niecza';
 
 sub compress (@in) {
 	my @return;
 	my $last;
 	for @in -> $i {
-# The FIRST { } will remove the 'use of uninitialised value of type Any in
-# String context' warning in rakudo, but niecza hasn't implemented it as of
-# Aug 15 2012 so I'll leave it here, but commented out.
-#        FIRST { $last = '' }
+        FIRST { $last = '' }
 		if ($i ne $last) {
 			@return.push($i);
 			$last = $i;
