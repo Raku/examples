@@ -8,7 +8,7 @@ run-all-examples.pl - run all current Perl 6 examples
 
 =head1 SYNOPSIS
 
-    $ perl6 run-all-examples.pl
+    $ perl6 run-all-examples.pl [--example-dir=<dir-name>]
 
 =head1 DESCRIPTION
 
@@ -34,11 +34,14 @@ my @example-dirs = qw{
     wsg
 };
 
-for @example-dirs -> $dir {
-    my @example-files = dir($dir).sort.grep: /\.pl$/;
-    for @example-files -> $example {
-        say $dir ~ "/" ~ $example.basename;
-        qqx{perl6 $example}.say;
+sub MAIN (:$example-dir) {
+    @example-dirs = [$example-dir] if $example-dir;
+    for @example-dirs -> $dir {
+        my @example-files = dir($dir).sort.grep: /\.pl$/;
+        for @example-files -> $example {
+            say $dir ~ "/" ~ $example.basename;
+            qqx{perl6 $example}.say;
+        }
     }
 }
 
