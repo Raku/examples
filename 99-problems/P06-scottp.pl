@@ -33,3 +33,4 @@ P06 - Find out whether a list is a palindrome.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

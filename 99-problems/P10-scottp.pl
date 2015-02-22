@@ -32,3 +32,4 @@ sub packit (@in) {
 say ~@l;
 say packit(@l).perl;
 
+# vim: expandtab shiftwidth=4 ft=perl6

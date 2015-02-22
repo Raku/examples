@@ -18,4 +18,4 @@ P21 - Insert an element at a given position into a list.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -47,3 +47,4 @@ P02 - Find the last but one box of a list.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

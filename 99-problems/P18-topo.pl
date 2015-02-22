@@ -16,4 +16,4 @@ P18 - Extract a slice from a list. Indices start at 1.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

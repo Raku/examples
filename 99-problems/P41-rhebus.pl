@@ -59,4 +59,4 @@ sub goldbach-list (Int $low, Int $high, Int $limit = 1) {
 goldbach-list 9,20;
 goldbach-list 2,1000,10;
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

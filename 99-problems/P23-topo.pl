@@ -16,4 +16,4 @@ P23 - Extract a given number of randomly selected elements from a list.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -22,3 +22,4 @@ P05 - Reverse a list
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -25,4 +25,4 @@ P17 - Split a list into two parts; the length of the first part is given.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

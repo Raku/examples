@@ -18,4 +18,4 @@ P02 - Find the last two elements of a list.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

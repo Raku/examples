@@ -46,3 +46,4 @@ P03 - Find the K'th element of a list.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

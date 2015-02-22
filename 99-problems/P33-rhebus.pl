@@ -33,5 +33,4 @@ say $_ for @fib[0..^+@fib-1] »coprime« @fib[1..^+@fib];
 my @pow = (1,2,4,{$_*2} ... 4096);
 say $_ for @pow[0..^+@pow-1] »coprime« @pow[1..^+@pow];
 
-
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -57,3 +57,4 @@ P01 - Find the last box of a list.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -23,4 +23,4 @@ P19 - Rotate a list C<n> places to the left.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

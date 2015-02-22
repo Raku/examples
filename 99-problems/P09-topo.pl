@@ -27,4 +27,4 @@ P09 - Pack consecutive duplicate elements of a list into sublists.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

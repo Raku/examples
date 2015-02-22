@@ -19,4 +19,4 @@ P24 - Draw C<N> different random numbers from the set C<1..M>.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

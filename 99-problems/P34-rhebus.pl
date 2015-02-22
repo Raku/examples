@@ -46,4 +46,4 @@ multi totient_phi (Int $n --> Int) {
 
 say "phi($_): ",totient_phi $_ for (1..20);
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

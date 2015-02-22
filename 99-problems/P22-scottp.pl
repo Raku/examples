@@ -22,3 +22,5 @@ sub range($a, $b) {
 }
 say ~range(4, 9);
 say ~range(7, 2);
+
+# vim: expandtab shiftwidth=4 ft=perl6

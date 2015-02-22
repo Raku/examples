@@ -12,3 +12,5 @@ sub drop(@ary, $n) {
 }
 
 drop(<A B C D E F G H I K>, 3).perl.say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

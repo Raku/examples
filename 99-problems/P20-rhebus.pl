@@ -61,3 +61,5 @@ say ~remove-at-copy(<a b c d>, 2);
 # and again pseudomethod syntax
 
 say ~<a b c d>.&remove-at-copy(2);
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -12,3 +12,5 @@ sub repli(@l,$n) {
 }
 
 say ~repli <a b c>,3;
+
+# vim: expandtab shiftwidth=4 ft=perl6

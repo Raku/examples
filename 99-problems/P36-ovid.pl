@@ -111,5 +111,4 @@ for 17, 53, 90, 94, 200, 289, 62710561 -> $number {
     say "Prime factors of $number are: ", prime-factors($number).perl;
 }
 
-
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

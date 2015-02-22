@@ -53,4 +53,4 @@ gcds(8,12).say;
 gcds(36,63).say;
 gcds(63,36).say;
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

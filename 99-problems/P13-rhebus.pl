@@ -30,5 +30,4 @@ my @l = <a a a a b c c a a d e e e e>;
 say ~@l;
 runlength(@l).perl.say;
 
-
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

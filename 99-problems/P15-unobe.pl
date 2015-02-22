@@ -13,3 +13,5 @@ sub prob15(@in, $n) {
 }
 say @l.perl;
 say prob15(@l, 3).perl;
+
+# vim: expandtab shiftwidth=4 ft=perl6

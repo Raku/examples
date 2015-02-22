@@ -55,4 +55,4 @@ sub totient (Int $n) {
 # say "phi2($_): ",  totient($_) for 1..20;
 say "phi2(315): ", totient(315);
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

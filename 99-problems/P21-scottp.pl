@@ -52,3 +52,5 @@ sub insert_at_copy($in, @list is copy, $pos) {
 }
 
 say ~insert_at_copy('alfa', <a b c d>, 2);
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -16,4 +16,4 @@ P04 - Find the number of elements in a list.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

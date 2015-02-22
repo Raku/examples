@@ -17,4 +17,4 @@ P22 - Create a list containing all integers within a given range.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

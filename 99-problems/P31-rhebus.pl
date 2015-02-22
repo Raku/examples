@@ -17,4 +17,4 @@ sub is_prime (Int $n) {
 say "Is $_ prime? ", is_prime($_) ?? 'yes' !! 'no'
     for (list(2 .. 10), 49,137,219,1723);
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

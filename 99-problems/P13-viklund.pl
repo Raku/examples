@@ -23,4 +23,4 @@ multi infix:<compress> ( @a, $b ) {
 
 say ([compress] <a a a a b c c a a d e e e e>).perl;
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

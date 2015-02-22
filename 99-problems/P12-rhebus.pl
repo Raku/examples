@@ -33,4 +33,4 @@ my @l = ([4,'a'],'b',[2,'c'],[2,'a'],'d',[4,'e']);
 say ~@l;
 prob12(@l).perl.say;
 
-# vim:filetype=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

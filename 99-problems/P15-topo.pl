@@ -16,4 +16,4 @@ P15 - Replicate the elements of a list a given number of times.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

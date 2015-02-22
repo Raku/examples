@@ -36,4 +36,4 @@ sub goldbach (Int $n where {$^a > 2 && $^a %% 2}) {
 
 say ~goldbach $_ for 28, 36, 52, 110;
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

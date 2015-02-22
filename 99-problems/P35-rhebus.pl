@@ -32,4 +32,4 @@ say ~prime_factors(315);
 say ~prime_factors(1723);
     
 
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

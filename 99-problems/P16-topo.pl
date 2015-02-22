@@ -21,4 +21,4 @@ P16 - Drop every C<n>th element from a list.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -19,4 +19,4 @@ P26 - Generate the combinations of C<k> distinct objects chosen from the C<n> el
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

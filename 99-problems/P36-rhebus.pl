@@ -34,5 +34,4 @@ say prime_factors_mult($_).perl for 1..20;
 prime_factors_mult(315).perl.say;
 prime_factors_mult(1723).perl.say;
     
-
-# vim:ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

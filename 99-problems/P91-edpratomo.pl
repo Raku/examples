@@ -52,3 +52,4 @@ if knight(0 => 0) {
   say "NOT FOUND";
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6

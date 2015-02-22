@@ -11,3 +11,4 @@ sub dupli(@l) {
 }
 say ~dupli(<a b c c d>);
 
+# vim: expandtab shiftwidth=4 ft=perl6

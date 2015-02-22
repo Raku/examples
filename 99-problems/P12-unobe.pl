@@ -24,3 +24,5 @@ sub prob12 (@in) {
 
 say @l.perl;
 say prob12(@l).perl;
+
+# vim: expandtab shiftwidth=4 ft=perl6

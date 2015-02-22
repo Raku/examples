@@ -23,5 +23,4 @@ sub splat (@t) {
 
 splat(['a', ['b',['c','d'], 'e']]).perl.say;
 
-
-
+# vim: expandtab shiftwidth=4 ft=perl6

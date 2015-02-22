@@ -19,4 +19,4 @@ P12 - Decode modified run-length encoding.
 
 =end pod
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6
