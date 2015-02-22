@@ -9,7 +9,7 @@ use v6;
 # (1, 2, 3, 4, 5)
 
 
-sub splat (@t) { 
+sub splat (@t) {
 	my @return = [];
 	for @t -> $i {
 		if ($i.isa(Array)) {

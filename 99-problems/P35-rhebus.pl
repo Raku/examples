@@ -30,6 +30,6 @@ sub prime_factors (Int $n) {
 say ~prime_factors($_) for 2..20;
 say ~prime_factors(315);
 say ~prime_factors(1723);
-    
+
 
 # vim: expandtab shiftwidth=4 ft=perl6

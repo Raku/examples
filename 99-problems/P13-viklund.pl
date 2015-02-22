@@ -12,7 +12,7 @@ use v6;
 
 
 multi infix:<compress> ( $a, $b ) { $a ~~ $b ?? [[2, $a]] !! [ [1, $a], [1, $b] ] }
-multi infix:<compress> ( @a, $b ) { 
+multi infix:<compress> ( @a, $b ) {
     if @a[*-1][1] ~~ $b {
         @a[*-1][0]++;
         return @a;

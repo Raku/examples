@@ -4,7 +4,7 @@ use v6;
 sub split-list(@list, $length)
 {
     my $i = 0;
-    
+
     gather while $i <= $length
     {
         take [ gather while $i <= $length {

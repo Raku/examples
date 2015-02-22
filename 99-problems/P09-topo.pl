@@ -6,7 +6,7 @@ sub pack-consecutive-dups(@list)
     gather while @list.elems
     {
         my $last = @list[0];
-        
+
         take [
             gather while @list.elems
                    and @list[0] ~~ $last

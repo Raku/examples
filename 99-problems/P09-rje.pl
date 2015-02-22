@@ -31,10 +31,10 @@ sub p09
 
    for @in -> $elem
    {
-      push @out, [] if $elem ne @out[*-1][0]; 
+      push @out, [] if $elem ne @out[*-1][0];
       push @out[*-1], $elem;
    }
    return @out;
 }
-   
+
 # vim: expandtab shiftwidth=4 ft=perl6

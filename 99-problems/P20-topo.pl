@@ -4,7 +4,7 @@ use v6;
 sub remove-at(@list is copy, $place)
 {
     @list.splice($place - 1, 1);
-    
+
     @list
 }
 

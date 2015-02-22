@@ -11,9 +11,9 @@ sub eliminate-consecutive-duplicates(@list)
         # It's the closest thing I can think of to a comparison function
         # which doesn't enforce a particular context... should be alright. :-)
         next if $e ~~ $last;
-        
+
         $last = $e;
-        
+
         take $e;
     }
 }

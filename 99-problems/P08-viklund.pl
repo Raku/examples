@@ -25,7 +25,7 @@ multi infix:<compress> ( @a, $b ) { @a[*-1] ~~ $b ?? @a !! [ @a, $b ] }
 #   'a' compress 'a' compress 'b' compress 'c' compress 'c' compress 'd'
 # The reduce metaoperator does exactly this. Example:
 #   [+] (1,2,3,4,5) == 1 + 2 + 3 + 4 + 5 == 15
-#   [~] <a b c d e> eq 'a' ~ 'b' ~ 'c' ~ 'd' ~ 'e' eq 'abcde' 
+#   [~] <a b c d e> eq 'a' ~ 'b' ~ 'c' ~ 'd' ~ 'e' eq 'abcde'
 
 say ([compress] <a a a a b c c a a d e e e e>).perl;
 

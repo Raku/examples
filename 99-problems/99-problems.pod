@@ -928,7 +928,7 @@ Adjacency-list form
     Note that the adjacency-list does not have the information on whether it is a graph or a digraph.
 
 Human-friendly form
-    [s > r, t, u > r, s > u, u > s, v > u] 
+    [s > r, t, u > r, s > u, u > s, v > u]
 
 Finally, graphs and digraphs may have additional information attached to
 nodes and edges (arcs). For the nodes, this is no problem, as we can easily
@@ -1002,7 +1002,7 @@ N1 -> N2 such that for any nodes X,Y of N1, X and Y are adjacent if and only
 if f(X) and f(Y) are adjacent.
 
 Write a predicate that determines whether two graphs are isomorphic. Hint:
-Use an open-ended list to represent the function f. 
+Use an open-ended list to represent the function f.
 
 =head2 P86 (**) Node degree and graph coloration
 
@@ -1132,14 +1132,14 @@ Sudoku puzzles go like this:
         .  .  . | .  .  6 | .  9  1      8  5  3 | 4  7  6 | 2  9  1
                 |         |                      |         |
         2  4  . | .  .  1 | 5  .  .      2  4  6 | 3  9  1 | 5  7  8
-       
+
 
 Every spot in the puzzle belongs to a (horizontal) row and a (vertical)
 column, as well as to one single 3x3 square (which we call "square" for
 short). At the beginning, some of the spots carry a single-digit number
 between 1 and 9. The problem is to fill the missing spots with digits in
 such a way that every number between 1 and 9 appears exactly once in each
-row, in each column, and in each square. 
+row, in each column, and in each square.
 
 =head2 P98 (***) Nonograms
 
@@ -1157,18 +1157,18 @@ given only these lengths.
 
               Problem statement:          Solution:
 
-              |_|_|_|_|_|_|_|_| 3         |_|X|X|X|_|_|_|_| 3           
-              |_|_|_|_|_|_|_|_| 2 1       |X|X|_|X|_|_|_|_| 2 1         
-              |_|_|_|_|_|_|_|_| 3 2       |_|X|X|X|_|_|X|X| 3 2         
-              |_|_|_|_|_|_|_|_| 2 2       |_|_|X|X|_|_|X|X| 2 2         
-              |_|_|_|_|_|_|_|_| 6         |_|_|X|X|X|X|X|X| 6           
-              |_|_|_|_|_|_|_|_| 1 5       |X|_|X|X|X|X|X|_| 1 5         
-              |_|_|_|_|_|_|_|_| 6         |X|X|X|X|X|X|_|_| 6           
-              |_|_|_|_|_|_|_|_| 1         |_|_|_|_|X|_|_|_| 1           
-              |_|_|_|_|_|_|_|_| 2         |_|_|_|X|X|_|_|_| 2           
-               1 3 1 7 5 3 4 3             1 3 1 7 5 3 4 3              
-               2 1 5 1                     2 1 5 1                      
-       
+              |_|_|_|_|_|_|_|_| 3         |_|X|X|X|_|_|_|_| 3
+              |_|_|_|_|_|_|_|_| 2 1       |X|X|_|X|_|_|_|_| 2 1
+              |_|_|_|_|_|_|_|_| 3 2       |_|X|X|X|_|_|X|X| 3 2
+              |_|_|_|_|_|_|_|_| 2 2       |_|_|X|X|_|_|X|X| 2 2
+              |_|_|_|_|_|_|_|_| 6         |_|_|X|X|X|X|X|X| 6
+              |_|_|_|_|_|_|_|_| 1 5       |X|_|X|X|X|X|X|_| 1 5
+              |_|_|_|_|_|_|_|_| 6         |X|X|X|X|X|X|_|_| 6
+              |_|_|_|_|_|_|_|_| 1         |_|_|_|_|X|_|_|_| 1
+              |_|_|_|_|_|_|_|_| 2         |_|_|_|X|X|_|_|_| 2
+               1 3 1 7 5 3 4 3             1 3 1 7 5 3 4 3
+               2 1 5 1                     2 1 5 1
+
 
 For the example above, the problem can be stated as the two lists
 [[3],[2,1],[3,2],[2,2],[6],[1,5],[6],[1],[2]] and
@@ -1205,4 +1205,4 @@ provided in the file p99-readfile.lisp. Use the predicate read_lines/2.
 
 (3) For efficiency reasons it is important, at least for larger puzzles, to
 sort the words and the sites in a particular order. For this part of the
-problem, the solution of P28 may be very helpful. 
+problem, the solution of P28 may be very helpful.

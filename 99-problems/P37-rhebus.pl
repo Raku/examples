@@ -38,7 +38,7 @@ say "phi($_): ", [*] prime_factors_mult($_).map({ (.key-1) * .key ** (.value-1) 
     for 1..20;
 
 say [*] prime_factors_mult(315).map: { (.key-1) * .key ** (.value-1) };
-    
+
 
 # 2. sub version
 # note that when prime_factors_mult returns an empty list, [*] returns the

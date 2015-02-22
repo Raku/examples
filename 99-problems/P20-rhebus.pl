@@ -11,7 +11,7 @@ use v6;
 # > remove-at(@l,2);
 # > say ~@l;
 # a c d
-# 
+#
 # Example 2 (returning a copy):
 # > say ~remove-at-copy(<a b c d>, 2);
 # a c d

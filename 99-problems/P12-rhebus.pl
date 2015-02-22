@@ -7,14 +7,14 @@ use v6;
 
 
 # We use the following constructs:
-#   .map  
+#   .map
 #         creates a modified sequence by applying the block to each element in
 #         turn. Within the block the element is represented by $_
 #   when expr { block }
 #         roughly equivalent to: if $_ ~~ expr { block; next }
-#   xx    
+#   xx
 #         list repetition operator. (<1 2> xx 3) is the same as <1 2 1 2 1 2>
-#   .flat 
+#   .flat
 #         flattens a sequence. The map has constructed a sequence of Parcels:
 #         (('a','a','a','a'),'b',('c','c'))
 #         This sequence may be presented flat or hierarchical depending on

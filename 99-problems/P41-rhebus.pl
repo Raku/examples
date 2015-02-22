@@ -13,11 +13,11 @@ use v6;
 # 16 = 3 + 13
 # 18 = 5 + 13
 # 20 = 3 + 17
-# 
+#
 # In most cases, if an even number is written as the sum of two prime numbers,
 # one of them is very small. Very rarely, the primes are both bigger than say
 # 50. Try to find out how many such cases there are in the range 2..3000.
-# 
+#
 # Example (for a print limit of 50):
 # > goldbach-list 1,2000,50
 # 992 = 73 + 919

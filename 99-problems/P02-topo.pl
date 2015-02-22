@@ -1,7 +1,7 @@
 #!/usr/bin/env perl6
 use v6;
 
-# Further use of the Whatever type to grab the last elements of a list. 
+# Further use of the Whatever type to grab the last elements of a list.
 
 sub last-two(@list)
 {
