@@ -5,8 +5,7 @@ sub split-list(@list, $length)
 {
     my $i = 0;
 
-    gather while $i <= $length
-    {
+    gather while $i <= $length {
         take [ gather while $i <= $length {
             $i++ and take @list.shift;
         } ];
@@ -15,7 +14,7 @@ sub split-list(@list, $length)
     }
 }
 
-say split-list('a' xx 20, 8).perl;
+say split-list(('a' xx 20).list, 8).perl;
 
 =begin pod
 
