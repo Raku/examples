@@ -1,8 +1,13 @@
 99  Problems In Perl
 ====================
-Based on the problems from http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html (which is stored here for future use)
 
-Save solutions as PXX-author.pl as in other directorys where XX is the problem number and author is the....author!
+Based on the problems from
+http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html
+(which is stored here for future use).
+
+Save solutions as PXX-author.pl as in other directorys where XX is the problem
+number and author is the....author!
+
 Please include a specification describing the problem and, ideally, a
 description of your solution and the perl6 features that it uses.
 
@@ -16,7 +21,7 @@ use v6;
 #       For example, P21 originally implied returning a copy of the list,
 #       since LISP does not have mutable lists; you may change the wording to
 #       reflect this, or change the spec to allow modification in-place.
-# 
+#
 # Example: (preferably in the form of a REPL session)
 # > say 'Hello, world!'
 # Hello, world!
