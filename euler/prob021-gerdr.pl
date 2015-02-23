@@ -14,7 +14,7 @@ sub d(Int $n) {
 
 my $sum = 0;
 
-for 1..10_000 -> $a {
+for 1..100_000 -> $a {
 	my $b = d($a);
 	$sum += $a + $b if $a < $b and d($b) == $a;
 }
