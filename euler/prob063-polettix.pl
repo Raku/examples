@@ -25,11 +25,11 @@ for 1 .. 9 -> $x {
    for 1 .. 100 -> $y {
       @x = multby(@x, $x);
       my $px = printable(@x);
-      if ($px.bytes == $y) {
-         say "$x ** $y = $px (", $px.bytes, ')';
+      if ($px.encode('utf-8').bytes == $y) {
+         say "$x ** $y = $px (", $px.encode('utf-8').bytes, ')';
          $count++;
       }
-      elsif ($px.bytes < $y) {
+      elsif ($px.encode('utf-8').bytes < $y) {
          last;
       }
    }
@@ -58,7 +58,7 @@ sub add (@x is copy, @y) {
 
 sub multby (@x is copy, $y) {
    my $rest = 0;
-   for @x -> $x is rw{
+   for @x -> $x is rw {
       $x = $x * $y + $rest;
       $rest = $x div $limit;
       $x %= $limit;
