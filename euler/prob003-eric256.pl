@@ -1,7 +1,7 @@
 use v6;
 
 sub is_prime ($num) {
-   for (2..^$num) { 
+   for (2..^$num) {
       return 0 unless $num % $_;
    }
    return 1;
@@ -9,7 +9,7 @@ sub is_prime ($num) {
 
 class Primes {
    has $.current = 0;
-   
+
    method next {
      $!current++;
      $!current++ until is_prime($.current);

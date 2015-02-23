@@ -1,6 +1,6 @@
 #
 # it's very slow, it took several hours to complete on Intel Core i7 920
-# DON'T TRY  EXECUTING THIS SCRIPT WITH RAKUDO 2010.08 OR OLDER! 
+# DON'T TRY  EXECUTING THIS SCRIPT WITH RAKUDO 2010.08 OR OLDER!
 # Because of memory leak in these versions, this code eats tens of gigabytes of RAM
 #
 use v6;

@@ -4,36 +4,36 @@ use v6;
 
 # playing with multiple dispatch
 
-multi sub num-to-word(0) { 'zero' } 
-multi sub num-to-word(1) { 'one' } 
-multi sub num-to-word(2) { 'two' } 
-multi sub num-to-word(3) { 'three' } 
-multi sub num-to-word(4) { 'four' } 
-multi sub num-to-word(5) { 'five' } 
-multi sub num-to-word(6) { 'six' } 
-multi sub num-to-word(7) { 'seven' } 
-multi sub num-to-word(8) { 'eight' } 
-multi sub num-to-word(9) { 'nine' } 
-multi sub num-to-word(10) { 'ten' } 
-multi sub num-to-word(11) { 'eleven' } 
-multi sub num-to-word(12) { 'twelve' } 
-multi sub num-to-word(13) { 'thirteen' } 
-multi sub num-to-word(14) { 'fourteen' } 
-multi sub num-to-word(15) { 'fifteen' } 
-multi sub num-to-word(16) { 'sixteen' } 
-multi sub num-to-word(17) { 'seventeen' } 
-multi sub num-to-word(18) { 'eighteen' } 
-multi sub num-to-word(19) { 'nineteen' } 
-multi sub num-to-word(20) { 'twenty' } 
-multi sub num-to-word(30) { 'thirty' } 
-multi sub num-to-word(40) { 'forty' } 
-multi sub num-to-word(50) { 'fifty' } 
-multi sub num-to-word(60) { 'sixty' } 
-multi sub num-to-word(70) { 'seventy' } 
-multi sub num-to-word(80) { 'eighty' } 
-multi sub num-to-word(90) { 'ninety' } 
+multi sub num-to-word(0) { 'zero' }
+multi sub num-to-word(1) { 'one' }
+multi sub num-to-word(2) { 'two' }
+multi sub num-to-word(3) { 'three' }
+multi sub num-to-word(4) { 'four' }
+multi sub num-to-word(5) { 'five' }
+multi sub num-to-word(6) { 'six' }
+multi sub num-to-word(7) { 'seven' }
+multi sub num-to-word(8) { 'eight' }
+multi sub num-to-word(9) { 'nine' }
+multi sub num-to-word(10) { 'ten' }
+multi sub num-to-word(11) { 'eleven' }
+multi sub num-to-word(12) { 'twelve' }
+multi sub num-to-word(13) { 'thirteen' }
+multi sub num-to-word(14) { 'fourteen' }
+multi sub num-to-word(15) { 'fifteen' }
+multi sub num-to-word(16) { 'sixteen' }
+multi sub num-to-word(17) { 'seventeen' }
+multi sub num-to-word(18) { 'eighteen' }
+multi sub num-to-word(19) { 'nineteen' }
+multi sub num-to-word(20) { 'twenty' }
+multi sub num-to-word(30) { 'thirty' }
+multi sub num-to-word(40) { 'forty' }
+multi sub num-to-word(50) { 'fifty' }
+multi sub num-to-word(60) { 'sixty' }
+multi sub num-to-word(70) { 'seventy' }
+multi sub num-to-word(80) { 'eighty' }
+multi sub num-to-word(90) { 'ninety' }
 
-multi sub num-to-word($n is copy) { 
+multi sub num-to-word($n is copy) {
     my (@words,$m);
 
     # The next three lines should be in a loop, but it's not really
