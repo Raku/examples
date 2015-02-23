@@ -1,11 +1,11 @@
 # By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13,
 # we can see that the 6th prime is 13.
-# 
+#
 # What is the 10001st prime number?
 
 use v6;
 
-# The number of prime we want, defaults to challenge's request
+# The number of primes we want, defaults to challenge's request
 my $nth = shift(@*ARGS) || 10001;
 
 # A simple implementation of Eratosthenes' sieve
