@@ -31,5 +31,4 @@ while 1 {
     say $n unless $n % 1e4;
 }
 
-
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

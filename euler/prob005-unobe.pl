@@ -14,3 +14,5 @@ for @numbers -> $num is rw {
     }
 }
 say [*] %factor.map({ .key**.value });
+
+# vim: expandtab shiftwidth=4 ft=perl6

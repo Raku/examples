@@ -20,3 +20,5 @@ for 1..10_000 -> \a {
 }
 
 say $sum;
+
+# vim: expandtab shiftwidth=4 ft=perl6

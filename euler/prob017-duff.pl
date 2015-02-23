@@ -62,3 +62,5 @@ my $max = @*ARGS[0] // 1000;
 my $count = 0;
 $count += num-to-word($_).chars for 1..$max;
 say $count;
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -25,3 +25,5 @@ while ($number > 1) {
      say "Found: ", $prime.current;
    }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

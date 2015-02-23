@@ -10,3 +10,5 @@ sub largest-prime-factor($n is copy) {
 }
 
 say largest-prime-factor(600_851_475_143);
+
+# vim: expandtab shiftwidth=4 ft=perl6

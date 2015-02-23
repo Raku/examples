@@ -13,3 +13,5 @@ my $num = "731671765313306249192251196744265747423553491949349698352031277450632
 #
 #1                  2                        3                    4                     5       6   7
 (0..$num.chars - 5).map({substr($num,$_,5)}).map({ [*] $_.comb }).sort({ $^a <=> $^b }).reverse.[0].say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

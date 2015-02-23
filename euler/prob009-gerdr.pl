@@ -33,3 +33,5 @@ sub triples(\N) {
 }
 
 say [*] .list for gather triples(1000);
+
+# vim: expandtab shiftwidth=4 ft=perl6

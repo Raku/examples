@@ -36,3 +36,5 @@ for 1 .. $nth - 1 -> $i {
    say "found $i primes so far" unless $i % 100;
 }
 say 'result: ', $it();
+
+# vim: expandtab shiftwidth=4 ft=perl6

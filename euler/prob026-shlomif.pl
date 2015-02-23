@@ -53,3 +53,5 @@ for (2 .. 999) -> $n
 }
 
 say "Value == $max_n with a cycle of $max_cycle_len"
+
+# vim: expandtab shiftwidth=4 ft=perl6

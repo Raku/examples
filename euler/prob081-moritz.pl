@@ -23,4 +23,4 @@ for 1..$max-y-1 -> $y {
 
 say @m[*-1][*-1];
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

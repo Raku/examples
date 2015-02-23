@@ -14,3 +14,5 @@ sub MAIN(Int $N = 4) {
 
 	say $n - $N;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

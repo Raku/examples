@@ -13,3 +13,5 @@ sub diagonal_x ($array) {
 }
 
 diagonal_x(100..999).grep({ $_ eq .flip }).sort.reverse.[0].say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

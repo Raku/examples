@@ -13,3 +13,5 @@ my Int sub postfix:<!>(Int $n) { [*] 1 .. $n }
 
 my \N = 20;
 say (2 * N)!/(N! * N!);
+
+# vim: expandtab shiftwidth=4 ft=perl6

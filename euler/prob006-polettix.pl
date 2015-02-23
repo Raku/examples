@@ -25,3 +25,5 @@ my $upper = shift(@*ARGS) || 100;
 my $result = (($upper + 1) * $upper / 2) ** 2;
 $result -= $_ ** 2 for 1 .. $upper;
 say $result;
+
+# vim: expandtab shiftwidth=4 ft=perl6

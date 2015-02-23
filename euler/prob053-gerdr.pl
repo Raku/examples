@@ -6,3 +6,5 @@ use v6;
 ==> grep * > 1_000_000
 ==> elems()
 ==> say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

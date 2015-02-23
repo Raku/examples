@@ -15,3 +15,5 @@ loop (my $i = 1; $i <= 999999; $i+=2) {
 	#}
 }
 say $palindromNumbersSum;
+
+# vim: expandtab shiftwidth=4 ft=perl6

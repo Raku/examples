@@ -9,3 +9,5 @@ while ($term < 4000000) {
    $sum += $term unless $term % 2;
 }
 say "Total $sum";
+
+# vim: expandtab shiftwidth=4 ft=perl6

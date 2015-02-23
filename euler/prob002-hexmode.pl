@@ -26,3 +26,5 @@ my @r = gather {
 }
 say @r.join(",");
 say [+] @r;
+
+# vim: expandtab shiftwidth=4 ft=perl6

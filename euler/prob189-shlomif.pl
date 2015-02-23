@@ -84,3 +84,5 @@ sub my_find(Int $wanted_h) returns Int
     say my_find(2), " should be 3*2*2*2 == 24";
 }
 say "Result[8] = ", my_find(8);
+
+# vim: expandtab shiftwidth=4 ft=perl6

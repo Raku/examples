@@ -44,3 +44,5 @@ while $prime < $upper_bound {
    $prime = $it();
 }
 say 'result: ', $sum;
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -26,3 +26,5 @@ for 1 ..^ 1_000_000 -> $n {
 
 say $max;
 say $start;
+
+# vim: expandtab shiftwidth=4 ft=perl6

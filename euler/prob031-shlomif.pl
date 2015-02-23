@@ -33,3 +33,5 @@ sub calc(Int $max_idx, Int $sum)
 }
 
 print calc(0, 200), "\n";
+
+# vim: expandtab shiftwidth=4 ft=perl6

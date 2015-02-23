@@ -77,3 +77,5 @@ sub mult (@x is copy, @y) {
    }
    return @result;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

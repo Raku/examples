@@ -19,3 +19,5 @@ constant N = 1000;
 
 # print result
 ==> say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

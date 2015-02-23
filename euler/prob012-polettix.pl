@@ -104,3 +104,5 @@ sub factors_progressively_asked ($x is copy) {
    %factors{$_}++ for $result.list;
    return %factors;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

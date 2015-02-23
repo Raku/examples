@@ -35,5 +35,4 @@ for 1..($target-1) {
 }
 say "Result: $c";
 
-# vim: ft=perl6
-
+# vim: expandtab shiftwidth=4 ft=perl6

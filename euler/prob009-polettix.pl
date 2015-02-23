@@ -29,3 +29,5 @@ for 1 .. ($sum / 3) -> $x {
       }
    }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

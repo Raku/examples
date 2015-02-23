@@ -14,3 +14,5 @@ for 1..100 -> $n {
     }
 }
 say $count;
+
+# vim: expandtab shiftwidth=4 ft=perl6

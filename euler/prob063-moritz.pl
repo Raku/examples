@@ -11,3 +11,5 @@ for 1..9 -> $x {
 }
 say $count;
 say "missing bigint support: answer should be 49";
+
+# vim: expandtab shiftwidth=4 ft=perl6

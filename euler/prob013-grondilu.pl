@@ -101,4 +101,4 @@ say .comb[^10].join given [+] <
     53503534226472524250874054075591789781264330331690
 >;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

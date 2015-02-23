@@ -11,3 +11,5 @@ for 0..$num.chars-5 -> $i {
     $max = $product if $product > $max;
 }
 say $max;
+
+# vim: expandtab shiftwidth=4 ft=perl6

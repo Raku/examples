@@ -150,4 +150,4 @@ print "Result = ", max(
     )
 ), "\n";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

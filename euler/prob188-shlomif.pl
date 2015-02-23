@@ -28,3 +28,5 @@ sub hyperexp_modulo(int $base, int $exp, int $mod) returns int
 # print hyperexp_modulo(3, 3, 1000), "\n";
 
 printf "Result == %08d\n", hyperexp_modulo(1777, 1855, 100_000_000);
+
+# vim: expandtab shiftwidth=4 ft=perl6

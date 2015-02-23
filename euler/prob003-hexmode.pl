@@ -26,3 +26,5 @@ for (0..10) {
 }
 say @q.join(",");
 say @r.join(",");
+
+# vim: expandtab shiftwidth=4 ft=perl6

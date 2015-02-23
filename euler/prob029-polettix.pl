@@ -61,3 +61,5 @@ for %mark_for.values -> $v {
 }
 
 $count.say;
+
+# vim: expandtab shiftwidth=4 ft=perl6

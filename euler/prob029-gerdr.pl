@@ -66,3 +66,5 @@ multi MAIN(Int $A = 100, Int $B = 100, Bool :$verify, Bool :$feeds) {
 	printf "expected %u [%ums]\n",
 		count-naively $A, $B if $verify;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

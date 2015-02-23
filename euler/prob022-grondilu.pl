@@ -5,3 +5,5 @@ say [+] gather
 for sort eval slurp 'names.txt' {
     take $i++ * [+] .comb».ord »-» A;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

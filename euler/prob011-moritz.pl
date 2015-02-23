@@ -58,4 +58,4 @@ for 0..19 -> $x {
 
 say $max;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

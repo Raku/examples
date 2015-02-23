@@ -40,3 +40,4 @@ for (0 .. 999) -> $b_coeff
 }
 say "a = $max_a ; b = $max_b ; a*b = {$max_a*$max_b} ; n = $max_iter\n"
 
+# vim: expandtab shiftwidth=4 ft=perl6

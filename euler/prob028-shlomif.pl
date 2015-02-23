@@ -38,3 +38,5 @@ for 2, 4 ... 1000 -> $step
     }
 }
 print "Sum = $sum\n";
+
+# vim: expandtab shiftwidth=4 ft=perl6

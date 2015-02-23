@@ -75,3 +75,5 @@ sub addto (@x is rw, @y) {
    push @x, $rest if $rest;
    return;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

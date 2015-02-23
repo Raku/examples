@@ -20,3 +20,5 @@ sub string-to-array($string) {
 	my @lines = $string.lines;
 	@lines .= map(-> $line { $line.comb(/\d+/).item });
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
