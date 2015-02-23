@@ -50,13 +50,21 @@ my @memory-hogs = qw{
     prob027-shlomif.pl
 };
 
+# skip long-running examples
+my @long-runners = qw{
+    prob104-moritz.pl
+    prob149-shlomif.pl
+    prob189-shlomif.pl
+};
+
+my @examples-to-skip = @interactive-examples, @memory-hogs, @long-runners;
+
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     for @example-dirs -> $dir {
         my @example-files = find(dir => $dir).grep(/.pl$/).sort;
         for @example-files -> $example {
-            next if grep $example.basename, @interactive-examples;
-            next if grep $example.basename, @memory-hogs;
+            next if grep $example.basename, @examples-to-skip;
             say $dir ~ "/" ~ $example.basename;
             qqx{perl6 $example}.say;
         }
