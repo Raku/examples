@@ -54,6 +54,7 @@ my @memory-hogs = qw{
 # skip long-running examples
 my @long-runners = qw{
     prob010-polettix.pl
+    prob092-moritz.pl
     prob104-moritz.pl
     prob149-shlomif.pl
     prob189-shlomif.pl
