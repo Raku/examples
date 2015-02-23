@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
 
 class Prime {
-  has @!primes is rw;
-  has Int $!number is rw = 1;
+  has @!primes;
+  has Int $!number = 1;
 
   method next() {
     my $not_prime = 1;

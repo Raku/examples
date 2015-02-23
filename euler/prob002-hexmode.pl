@@ -1,9 +1,11 @@
 #!perl6
 
+use v6;
+
 # code exposes a bug in r34733 rakudo, but works in pugs
 
 class Fibonacci {
-  has @!list is rw = (0, 1);
+  has @!list = (0, 1);
 
   method next() {
     @!list[2] = [+] @!list;
