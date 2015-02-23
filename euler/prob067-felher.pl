@@ -11,15 +11,15 @@ say @lines.reduce: &add-maxima;
 # in an reversed triangle. It then adds each of the maxima of consecutive fields
 # of the longer array to their shared diagonal neighbour in the shorter array.
 sub add-maxima(@longer, @shorter is copy) {
-	for 0 .. @longer - 2 -> $i {
-		@shorter[$i] += max @longer[$i], @longer[$i + 1];
-	}
-        return @shorter;
+    for 0 .. @longer - 2 -> $i {
+        @shorter[$i] += max @longer[$i], @longer[$i + 1];
+    }
+    return @shorter;
 }
 
 sub string-to-array($string) {
-	my @lines = $string.lines;
-	@lines .= map(-> $line { $line.comb(/\d+/).item });
+    my @lines = $string.lines;
+    @lines .= map(-> $line { $line.comb(/\d+/).item });
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
