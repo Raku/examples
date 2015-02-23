@@ -22,7 +22,7 @@ Use the routine to show that the hailstone sequence for the number 27 has 112
 elements starting with 27, 82, 41, 124 and ending with 8, 4, 2, 1
 
 Show the number less than 100,000 which has the longest hailstone sequence
-together with that sequences length.
+together with that sequence's length.
 
 (But don't show the actual sequence)!
 
