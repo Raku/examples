@@ -8,8 +8,7 @@ Looking at the table below, it is easy to verify that the maximum possible sum
 of adjacent numbers in any direction (horizontal, vertical, diagonal or
 anti-diagonal) is 16 (= 8 + 7 + 1).  −253        2 9−651 3273 −18−4  8
 
-Now, let us repeat the search, b                                        ut on a
-much larger scale:
+Now, let us repeat the search, but on a much larger scale:
 
 First, generate four million pseudo-random numbers using a specific form of
 what is known as a "Lagged Fibonacci Generator":
