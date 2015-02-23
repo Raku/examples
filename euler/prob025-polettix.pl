@@ -50,7 +50,8 @@ while ($current_length < $length) {
    # The most significant part of the number is in the last element
    # of the array; every other element is $digits bytes long by
    # definition.
-   $current_length = @y[*-1].bytes + (@y - 1) * $digits;
+   my $msb = printable([@y[*-1]]);
+   $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
 
    # Print a feedback every 20 steps
    say "$c -> $current_length" unless $c % 20;
@@ -74,6 +75,11 @@ sub addto (@x is rw, @y) {
    }
    push @x, $rest if $rest;
    return;
+}
+
+sub printable (@x is copy) {
+    my $msb = pop @x;
+    return $msb ~ @x.reverse.map({sprintf '%0'~$digits~'d', $_ }).join('');
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
