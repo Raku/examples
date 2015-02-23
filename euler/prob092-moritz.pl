@@ -15,9 +15,9 @@ my %ser;
 my @squares = map { $_ * $_ }, 0..9;
 
 sub ser($i is copy) {
-    return %ser{$i} if %ser.exists($i);
+    return %ser{$i} if %ser{$i}:exists;
     my @to_update;
-    while !%ser.exists($i) {
+    while !(%ser{$i}:exists) {
         @to_update.push($i);
         $i = [+] $i.split('').map: { $_ * $_ };
     }
