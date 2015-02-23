@@ -37,7 +37,7 @@ my @example-dirs = qw{
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     for @example-dirs -> $dir {
-        my @example-files = dir($dir).sort.grep: /\.pl$/;
+        my @example-files = dir($dir, test => /.pl$/);
         for @example-files -> $example {
             say $dir ~ "/" ~ $example.basename;
             qqx{perl6 $example}.say;
