@@ -42,7 +42,7 @@ while my $exp = prompt "\n24-Exp? " {
         next;
     }
 
-    my $value = eval $exp;
+    my $value = EVAL $exp;
     say "$exp = $value";
     if $value == 24 {
         say "You win!";
