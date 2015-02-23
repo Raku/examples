@@ -13,15 +13,11 @@ sub primes_iterator {
    return sub {
       state %D;
       state $q //= 2;
-      while (%D.exists($q)) {
-         my $p = %D.delete($q);
-
-         # As of Aug. 13, 2009 rakudo insists on giving back an Array()
-         # from .delete, so we have to work it around
-         $p = $p.pop if $p.WHAT eq 'Array()';
+      while (%D{$q}:exists) {
+         my $p = %D{$q};
 
          my $x = $q + $p;
-         $x += $p while %D.exists($x);
+         $x += $p while %D{$x}:exists;
          %D{$x} = $p if $x <= $upper_bound;
          ++$q;
       }

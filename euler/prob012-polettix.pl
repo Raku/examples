@@ -80,7 +80,7 @@ sub factors_progressively_asked ($x is copy) {
    state %factors_for;
    my $result;
 
-   if (%factors_for.exists($x)) {
+   if (%factors_for{$x}:exists) {
       $result = %factors_for{$x};
    }
    else {
