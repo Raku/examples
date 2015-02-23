@@ -18,18 +18,18 @@ use v6;
 #
 
 sub triples($N) {
-	for 1..Int((1 - sqrt(0.5)) * $N) -> $a {
-		my $u = $N * ($N - 2 * $a);
-		my $v = 2 * ($N - $a);
+    for 1..Int((1 - sqrt(0.5)) * $N) -> $a {
+        my $u = $N * ($N - 2 * $a);
+        my $v = 2 * ($N - $a);
 
-		# check if b = u/v is an integer
-		# if so, we've found a triple
-		if $u %% $v {
-			my $b = $u div $v;
-			my $c = $N - $a - $b;
-			take $($a, $b, $c);
-		}
-	}
+        # check if b = u/v is an integer
+        # if so, we've found a triple
+        if $u %% $v {
+            my $b = $u div $v;
+            my $c = $N - $a - $b;
+            take $($a, $b, $c);
+        }
+    }
 }
 
 say [*] .list for gather triples(1000);
