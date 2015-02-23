@@ -15,7 +15,8 @@ L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6>
 =end pod
 
 
-my ($major,$minor) = prompt("Dimensions? ").comb(/\d+/);
+my ($major, $minor) = prompt("Dimensions? ").comb(/\d+/);
+die "Please enter two dimensions" unless $major && $minor;
 
 my @array := [ for ^$major { [ for ^$minor {'@'} ] } ];
 
