@@ -34,7 +34,7 @@ grammar Exp24 {
 }
 
 my @digits = roll 4, 1..9;  # to a gamer, that's a "4d9" roll
-say "Here's your digits: {@digits}";
+say "Here are your digits: {@digits}";
 
 while my $exp = prompt "\n24-Exp? " {
     unless is-valid($exp, @digits) {
