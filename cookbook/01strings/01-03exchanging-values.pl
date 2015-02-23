@@ -18,3 +18,4 @@ my ($x, $y) = (3,2);
 say $x;
 say $y;
 
+# vim: expandtab shiftwidth=4 ft=perl6

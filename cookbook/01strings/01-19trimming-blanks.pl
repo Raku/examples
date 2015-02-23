@@ -21,3 +21,5 @@ chop($string);
 $string.chop;
 say $string;
 # XXX Maybe note that this is just short for a substr call?
+
+# vim: expandtab shiftwidth=4 ft=perl6

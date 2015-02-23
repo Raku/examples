@@ -16,4 +16,4 @@ sleep 2;
 
 say  DateTime.now.Instant - $t0;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

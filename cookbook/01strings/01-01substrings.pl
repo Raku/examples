@@ -14,3 +14,4 @@ say $string.substr($offset);
 substr($string, $offset) = "gilism ain't for wimps";
 say $string;
 
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -18,4 +18,4 @@ say ($wall-28);
 my $dt = DateTime.new("1981-06-17T20:00:00Z");
 say $dt.later(:week(2));
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -15,3 +15,5 @@ for @a -> $e {
 }
 
 say $_ for @a;
+
+# vim: expandtab shiftwidth=4 ft=perl6

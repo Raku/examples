@@ -19,3 +19,5 @@ say $char2;
 
 $char = 'foo';
 say $char.ord; # XXX is this correct behavior?
+
+# vim: expandtab shiftwidth=4 ft=perl6

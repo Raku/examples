@@ -38,3 +38,4 @@ You want to check if a string is a valid number.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

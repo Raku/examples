@@ -16,4 +16,4 @@ my $off-work = Date.new("2014-12-05");
 
 say $off-work - $past-day ;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

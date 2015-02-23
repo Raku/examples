@@ -491,3 +491,4 @@ that q:s:to/EO$thing/ doesn't do what you mean.
 
 =end pod
 
+# vim: expandtab shiftwidth=4 ft=perl6

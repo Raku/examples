@@ -23,3 +23,5 @@ sub commify_series(@list) {
         default { return join(", ", @list[0 .. $_ -2]) ~ " and @list[*-1]" };
     };
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

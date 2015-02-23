@@ -12,4 +12,4 @@ my $dt = DateTime.new("1981-06-17T00:00:00Z");
 
 say $dt.posix;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

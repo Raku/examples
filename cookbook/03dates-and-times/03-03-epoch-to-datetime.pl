@@ -13,4 +13,4 @@ my $dt = DateTime.new($now);
 
 say $dt;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

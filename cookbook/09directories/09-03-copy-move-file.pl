@@ -26,4 +26,4 @@ $io.rename("foo2");
 # clean up
 unlink ("foo2");
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

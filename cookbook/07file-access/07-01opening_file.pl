@@ -36,3 +36,5 @@ $input.close or die $!;
 close($output);
 
 say "ok last";
+
+# vim: expandtab shiftwidth=4 ft=perl6

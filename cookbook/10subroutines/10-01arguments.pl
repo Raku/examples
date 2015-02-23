@@ -67,3 +67,5 @@ sub typed (Int $val) {
                  # XXX Besides, preinc is more interesting here
 }
 typed(3);
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -17,3 +17,5 @@ class Foo {}
 
 my $foo = Foo.new;
 say $foo.isa('Foo') ?? "Yes" !! "No";
+
+# vim: expandtab shiftwidth=4 ft=perl6

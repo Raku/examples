@@ -19,3 +19,5 @@ say @a[1];
     say $e;
   }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

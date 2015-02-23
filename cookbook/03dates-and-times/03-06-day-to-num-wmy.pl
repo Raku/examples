@@ -12,4 +12,4 @@ my $d = Date.new("1966-08-04");
 
 say "{$d.week-number} {$d.month} {$d.day-of-year}";
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6
