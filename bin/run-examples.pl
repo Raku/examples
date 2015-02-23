@@ -44,12 +44,19 @@ my @interactive-examples = qw{
     create-a-two-dimensional-array-at-runtime.pl
 };
 
+# skip memory hogs
+my @memory-hogs = qw{
+    prob014-felher.pl
+    prob027-shlomif.pl
+};
+
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     for @example-dirs -> $dir {
         my @example-files = find(dir => $dir).grep(/.pl$/).sort;
         for @example-files -> $example {
             next if grep $example.basename, @interactive-examples;
+            next if grep $example.basename, @memory-hogs;
             say $dir ~ "/" ~ $example.basename;
             qqx{perl6 $example}.say;
         }
