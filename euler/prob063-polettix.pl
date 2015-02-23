@@ -19,63 +19,63 @@ my $count = 0;
 
 # 9 is the maximum possible base for this problem. 9**22 has 21 digits
 for 1 .. 9 -> $x {
-   my @x = (1);
-   # rakudo still does not support this...
-   # for 1 .. * -> $y {
-   for 1 .. 100 -> $y {
-      @x = multby(@x, $x);
-      my $px = printable(@x);
-      if ($px.encode('utf-8').bytes == $y) {
-         say "$x ** $y = $px (", $px.encode('utf-8').bytes, ')';
-         $count++;
-      }
-      elsif ($px.encode('utf-8').bytes < $y) {
-         last;
-      }
-   }
+    my @x = (1);
+    # rakudo still does not support this...
+    # for 1 .. * -> $y {
+    for 1 .. 100 -> $y {
+        @x = multby(@x, $x);
+        my $px = printable(@x);
+        if ($px.encode('utf-8').bytes == $y) {
+            say "$x ** $y = $px (", $px.encode('utf-8').bytes, ')';
+            $count++;
+        }
+        elsif ($px.encode('utf-8').bytes < $y) {
+            last;
+        }
+    }
 }
 say $count;
 
 sub printable (@x is copy) {
-   my $msb = pop @x;
-   return $msb ~ @x.reverse.map({sprintf '%0'~$digits~'d', $_ }).join('');
+    my $msb = pop @x;
+    return $msb ~ @x.reverse.map({sprintf '%0'~$digits~'d', $_ }).join('');
 }
 
 # Add a "number" to another, modifies first parameter in place.
 # This assumes that length(@y) <= length(@x), which will be true in
 # our program because @y is lower than @x
 sub add (@x is copy, @y) {
-   my $rest = 0;
-   return add(@y, @x) if +@x < +@y;
-   for @x Z (@y, 0, *) -> $x is rw, $y {
-      $x += $y + $rest;
-      $rest = int($x / $limit);
-      $x %= $limit;
-   }
-   push @x, $rest if $rest;
-   return @x;
+    my $rest = 0;
+    return add(@y, @x) if +@x < +@y;
+    for @x Z (@y, 0, *) -> $x is rw, $y {
+        $x += $y + $rest;
+        $rest = int($x / $limit);
+        $x %= $limit;
+    }
+    push @x, $rest if $rest;
+    return @x;
 }
 
 sub multby (@x is copy, $y) {
-   my $rest = 0;
-   for @x -> $x is rw {
-      $x = $x * $y + $rest;
-      $rest = $x div $limit;
-      $x %= $limit;
-   }
-   push @x, $rest if $rest;
-   return @x;
+    my $rest = 0;
+    for @x -> $x is rw {
+        $x = $x * $y + $rest;
+        $rest = $x div $limit;
+        $x %= $limit;
+    }
+    push @x, $rest if $rest;
+    return @x;
 }
 
 # Not really needed...
 sub mult (@x is copy, @y) {
-   my @result = (0);
-   for @y -> $y {
-      my @addend = multby(@x, $y);
-      @result = add(@result, @addend);
-      @x.unshift(0);
-   }
-   return @result;
+    my @result = (0);
+    for @y -> $y {
+        my @addend = multby(@x, $y);
+        @result = add(@result, @addend);
+        @x.unshift(0);
+    }
+    return @result;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
