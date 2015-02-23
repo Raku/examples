@@ -17,17 +17,17 @@ use v6;
 #	a < (1 - 1/√2)·N
 #
 
-sub triples(\N) {
-	for 1..Int((1 - sqrt(0.5)) * N) -> \a {
-		my \u = N * (N - 2 * a);
-		my \v = 2 * (N - a);
+sub triples($N) {
+	for 1..Int((1 - sqrt(0.5)) * $N) -> $a {
+		my $u = $N * ($N - 2 * $a);
+		my $v = 2 * ($N - $a);
 
 		# check if b = u/v is an integer
 		# if so, we've found a triple
-		if u %% v {
-			my \b = u div v;
-			my \c = N - a - b;
-			take $(a, b, c);
+		if $u %% $v {
+			my $b = $u div $v;
+			my $c = $N - $a - $b;
+			take $($a, $b, $c);
 		}
 	}
 }
