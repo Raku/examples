@@ -63,12 +63,17 @@ my @examples-to-skip = @interactive-examples, @memory-hogs, @long-runners;
 
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
+    my $base-dir = $*CWD;
     for @example-dirs -> $dir {
         my @example-files = find(dir => $dir).grep(/.pl$/).sort;
         for @example-files -> $example {
-            next if grep $example.basename, @examples-to-skip;
-            say $dir ~ "/" ~ $example.basename;
-            qqx{perl6 $example}.say;
+            my $example-dir = $example.dirname;
+            my $example-name = $example.basename;
+            next if grep $example-name, @examples-to-skip;
+            say $example-dir ~ "/" ~ $example-name;
+            chdir $example-dir;
+            qqx{perl6 $example-name}.say;
+            chdir $base-dir;
         }
     }
 }
