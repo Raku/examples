@@ -35,4 +35,4 @@ L<http://rosettacode.org/wiki/Copy_a_string#Perl_6>
   say $original;        # prints "Goodbye."
 }
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

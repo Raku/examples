@@ -72,3 +72,5 @@ sub is-valid($exp, @digits) {
 =item C<type casting> - L<http://perlcabal.org/syn/S13.html#Type_Casting>
 
 =end pod
+
+# vim: expandtab shiftwidth=4 ft=perl6

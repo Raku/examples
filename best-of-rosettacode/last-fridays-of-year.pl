@@ -34,4 +34,4 @@ Date objects - L<http://perlcabal.org/syn/S32/Temporal.html#Date>
 
 =end pod
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

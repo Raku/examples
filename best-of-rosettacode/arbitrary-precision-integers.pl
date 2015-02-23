@@ -37,4 +37,4 @@ say "5**4**3**2 = {substr($x,0,20)}...{substr($x,$x.chars-20)} and has {$x.chars
 
 =end pod
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -43,4 +43,4 @@ my $m max= +hailstone($_) => $_ for 1..99_999;
 say "Max length $m.key() was found for hailstone($m.value()) for numbers < 100_000";
 
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

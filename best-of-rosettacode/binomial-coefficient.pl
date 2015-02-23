@@ -29,3 +29,5 @@ L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Perl_6>
 sub infix:<choose> { [*] $^n - $^p ^.. $n Z/ 1 .. * }
 
 say 5 choose 3;
+
+# vim: expandtab shiftwidth=4 ft=perl6

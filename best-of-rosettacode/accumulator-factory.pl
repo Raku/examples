@@ -69,4 +69,4 @@ say $a(.5);   # Prints "10".
 
 =end pod
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

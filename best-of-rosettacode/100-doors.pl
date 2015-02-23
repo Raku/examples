@@ -34,4 +34,4 @@ C<X**> - L<http://perlcabal.org/syn/S03.html#Cross_operators>
 
 =end pod
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

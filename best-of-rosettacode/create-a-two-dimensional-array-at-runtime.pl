@@ -24,4 +24,4 @@ my @array := [ for ^$major { [ for ^$minor {'@'} ] } ];
 .say for @array;
 
 
-# vim: expandtab shiftwidth=2 ft=perl6:
+# vim: expandtab shiftwidth=4 ft=perl6

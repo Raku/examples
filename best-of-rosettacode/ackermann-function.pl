@@ -32,3 +32,5 @@ A(1, 2).say;
 =item C<multi subs> - L<http://perlcabal.org/syn/S12.html#Multisubs_and_Multimethods>
 
 =end pod
+
+# vim: expandtab shiftwidth=4 ft=perl6
