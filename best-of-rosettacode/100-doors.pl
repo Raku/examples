@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 100 Doors 
+=head1 100 Doors
 
 You have 100 doors in a row that are all initially closed. You make 100 passes
 by the doors. The first time through, you visit every door and toggle the door

@@ -16,11 +16,11 @@ L<http://rosettacode.org/wiki/Ackermann_function#Perl_6>
 =end pod
 
 sub A(Int $m, Int $n) {
- 
-    $m == 0  ??    $n + 1                   !! 
+
+    $m == 0  ??    $n + 1                   !!
     $n == 0  ??  A($m - 1, 1            )   !!
                  A($m - 1, A($m, $n - 1));
- 
+
 }
 A(1, 2).say;
 

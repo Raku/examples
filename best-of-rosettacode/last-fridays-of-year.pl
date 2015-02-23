@@ -6,7 +6,7 @@ use v6;
 
 Write a program or a script that returns the last Fridays of each month
 of a given year. The year may be given through any simple input method
-in your language (command line, std in, etc.). 
+in your language (command line, std in, etc.).
 
 =head1 More
 
@@ -33,5 +33,5 @@ The MAIN sub - L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
 Date objects - L<http://perlcabal.org/syn/S32/Temporal.html#Date>
 
 =end pod
- 
+
 # vim: expandtab shiftwidth=2 ft=perl6:

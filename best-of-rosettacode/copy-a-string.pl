@@ -25,7 +25,7 @@ L<http://rosettacode.org/wiki/Copy_a_string#Perl_6>
 }
 
 # You can also bind a new variable to an existing one so that each refers
-# to, and can modify the same string. 
+# to, and can modify the same string.
 {
   my $original = 'Hello.';
   my $bound := $original;

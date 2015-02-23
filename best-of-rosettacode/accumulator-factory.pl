@@ -11,7 +11,7 @@ The detailed rules are at L<http://paulgraham.com/accgensub.html> and are reprod
 
 =head1 Task
 
-Make sure the function 
+Make sure the function
 
 =item Takes a number n and returns a function (lets call it g), that takes a number i, and returns n incremented by the accumulation of i from every call of function g(i). (Although these exact function and parameter names need not be used).
 
@@ -21,18 +21,18 @@ Make sure the function
 
 =item Returns a real function, meaning something that you can use wherever you could use a function you had defined in the ordinary way in the text of your program. (Follow your language's conventions here.)
 
-=item Doesn't store the accumulated value or the returned functions in a way that could cause them to be inadvertently modified by other code. (No global variables or other such things.) 
+=item Doesn't store the accumulated value or the returned functions in a way that could cause them to be inadvertently modified by other code. (No global variables or other such things.)
 
 =head1 Example
 
 If after the example, you added the following code (in a made-up language) where the factory function is called foo:
 
-    x = foo(1); 
-    x(5); 
+    x = foo(1);
+    x(5);
     foo(3);
     print x(2.3);
 
-It should print 8.3. (There is no need to print the form of the accumulator function returned by foo(3); it's not part of the task at all.) 
+It should print 8.3. (There is no need to print the form of the accumulator function returned by foo(3); it's not part of the task at all.)
 
 =head1 Purpose
 

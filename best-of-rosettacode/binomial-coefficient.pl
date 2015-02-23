@@ -27,5 +27,5 @@ L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Perl_6>
 =end pod
 
 sub infix:<choose> { [*] $^n - $^p ^.. $n Z/ 1 .. * }
- 
+
 say 5 choose 3;

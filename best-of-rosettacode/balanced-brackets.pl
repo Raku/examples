@@ -37,7 +37,7 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
     }
     return $l == 0;
   }
- 
+
   my $n = prompt "Number of brackets >";
   my $s = (<[ ]> xx $n).pick(*).join;
   say "$s {balanced($s) ?? "is" !! "is not"} well-balanced";
@@ -54,7 +54,7 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
     .none < 0 and .[*-1] == 0
       given [\+] '\\' «leg« $s.comb;
   }
- 
+
   my $n = prompt "Number of bracket pairs: ";
   my $s = <[ ]>.roll($n*2).join;
   say "$s { balanced($s) ?? "is" !! "is not" } well-balanced";
@@ -71,7 +71,7 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
     s:g/'[]'// while m/'[]'/;
     $_ eq '';
   }
- 
+
   my $n = prompt "Number of bracket pairs: ";
   my $s = <[ ]>.roll($n*2).join;
   say "$s is", ' not' xx not balanced($s), " well-balanced";
