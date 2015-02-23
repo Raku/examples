@@ -30,6 +30,7 @@ sub add-maxima(@longer, @shorter is copy) {
 	for 0 .. @longer - 2 -> $i {
 		@shorter[$i] += max @longer[$i], @longer[$i + 1];
 	}
+        return @shorter;
 }
 
 sub string-to-array($string) {
