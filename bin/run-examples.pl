@@ -36,11 +36,20 @@ my @example-dirs = qw{
     wsg
 };
 
+# skip interactive examples; need to work out how to pass input data to
+# interactive examples
+my @interactive-examples = qw{
+    24-game.pl
+    balanced-brackets.pl
+    create-a-two-dimensional-array-at-runtime.pl
+};
+
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     for @example-dirs -> $dir {
         my @example-files = find(dir => $dir).grep(/.pl$/).sort;
         for @example-files -> $example {
+            next if grep $example.basename, @interactive-examples;
             say $dir ~ "/" ~ $example.basename;
             qqx{perl6 $example}.say;
         }
