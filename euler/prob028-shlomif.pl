@@ -1,6 +1,8 @@
 # Solution to Project Euler’s http://projecteuler.net/problem=28
 # by Shlomi Fish
 
+use v6;
+
 =begin pod
 
 =head1 DESCRIPTION

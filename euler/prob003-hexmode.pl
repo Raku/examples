@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+use v6;
 
 class Prime {
   has @!primes;
