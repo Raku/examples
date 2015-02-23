@@ -46,12 +46,14 @@ my @interactive-examples = qw{
 
 # skip memory hogs
 my @memory-hogs = qw{
+    prob012-polettix.pl
     prob014-felher.pl
     prob027-shlomif.pl
 };
 
 # skip long-running examples
 my @long-runners = qw{
+    prob010-polettix.pl
     prob104-moritz.pl
     prob149-shlomif.pl
     prob189-shlomif.pl
