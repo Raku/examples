@@ -18,6 +18,8 @@ compile and/or work as expected.
 
 =end pod
 
+use File::Find;
+
 my @example-dirs = qw{
     99-problems
     best-of-rosettacode
@@ -37,7 +39,7 @@ my @example-dirs = qw{
 sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     for @example-dirs -> $dir {
-        my @example-files = dir($dir, test => /.pl$/);
+        my @example-files = find(dir => $dir).grep(/.pl$/).sort;
         for @example-files -> $example {
             say $dir ~ "/" ~ $example.basename;
             qqx{perl6 $example}.say;
