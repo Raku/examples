@@ -4,11 +4,14 @@ use v6;
 
 =head1 Arbitrary-precision integers (included)
 
-Using the in-built capabilities of your language, calculate the integer value of:
+Using the in-built capabilities of your language, calculate the integer
+value of:
 
     5^{4^{3^2}}
 
-Confirm that the first and last twenty digits of the answer are: 62060698786608744707...92256259918212890625
+Confirm that the first and last twenty digits of the answer are:
+62060698786608744707...92256259918212890625
+
 Find and show the number of decimal digits in the answer.
 
 =head1 More
