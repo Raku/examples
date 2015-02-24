@@ -20,15 +20,15 @@ After which, the example can be run as expected:
 sub factors(int $n) returns int is native('./prob047-gerdr') { * }
 
 sub MAIN(Int $N = 4) {
-	my int $n = 2;
-	my int $i = 0;
+    my int $n = 2;
+    my int $i = 0;
 
-	while $i != $N {
-		$i = factors($n) == $N ?? $i + 1 !! 0;
-		$n = $n + 1;
-	}
+    while $i != $N {
+        $i = factors($n) == $N ?? $i + 1 !! 0;
+        $n = $n + 1;
+    }
 
-	say $n - $N;
+    say $n - $N;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
