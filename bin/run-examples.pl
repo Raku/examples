@@ -66,7 +66,7 @@ sub MAIN (:$example-dir) {
     @example-dirs = [$example-dir] if $example-dir;
     my $base-dir = $*CWD;
     for @example-dirs -> $dir {
-        my @example-files = find(dir => $dir).grep(/.pl$/).sort;
+        my @example-files = find(dir => $dir).grep(/.pl|6$/).sort;
         for @example-files -> $example {
             my $example-dir = $example.dirname;
             my $example-name = $example.basename;
