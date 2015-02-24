@@ -25,7 +25,6 @@ my @example-dirs = qw{
     best-of-rosettacode
     cookbook
     euler
-    games
     interpreters
     module-management
     parsers
