@@ -1,13 +1,14 @@
 # pre-declare types
-# XXX should actually be 'class Game { ... }' with the three periods
-class Game { };
-class Move { };
+class Game { ... };
+class Move { ... };
 
 class Player {
-    method token { ... }
-    method highlighter_token { ... }
+    has Str $.token;
+    has Str $.highlighter_token;
+    #method token { ... }
+    #method highlighter_token { ... }
 
-    method get_move( Game $game ) { ... }
+    method get_move( Game $game ) { ... };
 }
 
 class HumanPlayer is Player {
@@ -67,7 +68,7 @@ class ComputerPlayer is Player {
     }
 }
 
-class Game is also {
+class Game {
     has @board;
     has Int @current_levels;
 
@@ -176,7 +177,7 @@ class Game is also {
     method legal_moves (Player $who) {
         my @moves;
         for ^7 -> $column {
-            push @moves, Move.new( game => self, who => $who, column => int $column) unless @board[6][int $column];
+            push @moves, Move.new( game => self, who => $who, column => $column) unless @board[6][$column];
         }
         return @moves;
     }
@@ -186,14 +187,14 @@ class Game is also {
         self.display;
 
         for ^49 -> $move_num {
-            my $who = @players[ int( $move_num % 2 ) ];
+            my $who = @players[ Int($move_num % 2) ];
             my Move $where = $who.get_move( self );
             my $win = $where.is_winning_move;
             say "";
             $where.play;
             self.display;
             if $win {
-                say "{$who.token} WINS on move { int($move_num/2) + 1 }!";
+                say "{$who.token} WINS on move { Int($move_num/2) + 1 }!";
                 return;
             }
         }
@@ -201,9 +202,7 @@ class Game is also {
     }
 }
 
-# the 'is also' is a hack because rakudo doesn't allow
-# redeclaration of stubbed classes without it
-class Move is also {
+class Move {
     has Game $.game;
 
     has Player $.who;
