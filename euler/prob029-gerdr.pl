@@ -33,15 +33,15 @@ sub count-smartly(Int $A, Int $B) {
 sub cross(@a, @b) { @a X @b }
 sub dups(@a) { @a - @a.uniq }
 sub count-feedly(Int $A, Int $B) {
-    2..Int(sqrt $A);
-    map -> $a { ($a, $a**2, $a**3 ...^ * > $A) Z=> ($a X 1..*).tree };
-    reverse();
-    hash();
-    .values();
-    cross(2..$B);
-    map -> $n, [$r, $e] { ($r) => $e * $n };
-    .dups();
-    (($A - 1) * ($B - 1) - *)();
+    2..Int(sqrt $A) \
+    ==> map -> $a { ($a, $a**2, $a**3 ...^ * > $A) Z=> ($a X 1..*).tree } \
+    ==> reverse() \
+    ==> hash() \
+    ==> values() \
+    ==> cross(2..$B) \
+    ==> map -> $n, [$r, $e] { ($r) => $e * $n } \
+    ==> dups() \
+    ==> (($A - 1) * ($B - 1) - *)();
 }
 
 sub bench(|) {
