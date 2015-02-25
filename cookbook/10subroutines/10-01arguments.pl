@@ -52,8 +52,7 @@ sub named_params ($first, :$second, :$third) {
 }
 
 named_params(1, second => 2, third => 3);
-
-# XXX Also, :first :second(2) :third(3)
+named_params(1, :second(2), :third(3));
 
 sub transport ($planet, *@names) {
     say "Transporting to $planet:";
