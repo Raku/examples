@@ -1,3 +1,5 @@
+use v6;
+
 # pre-declare types
 class Game { ... };
 class Move { ... };
@@ -5,8 +7,6 @@ class Move { ... };
 class Player {
     has Str $.token;
     has Str $.highlighter_token;
-    #method token { ... }
-    #method highlighter_token { ... }
 
     method get_move( Game $game ) { ... };
 }
@@ -26,7 +26,7 @@ class HumanPlayer is Player {
                 return $move;
             }
             else {
-                say "move must be a legal (not full) column number"
+                say "move must be a legal (not full) column number";
             }
         }
 
@@ -276,3 +276,5 @@ class Move {
 
 my Game $game.=new( player_types => ( "H", 2 ) );
 $game.play_game;
+
+# vim: expandtab shiftwidth=4 ft=perl6
