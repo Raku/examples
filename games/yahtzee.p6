@@ -1,5 +1,7 @@
 #!/usr/bin/env perl6
 
+use v6;
+
 sub roll-dice { map { (1..6).pick }, 1..$^rolls };
 
 sub round {
@@ -7,9 +9,10 @@ sub round {
     my $rolls = 1;
     repeat {
         say "Dice: { @roll }";
-        print q{Which dice do you want to roll again (1-5)? };
-        my @dice = split(/\s+/, =$*IN);
-        if "{@dice}" eq "" { $rolls = 3 } # XXX: why doesn't ! @dice.elems work?
+        my @dice = prompt("Which dice do you want to roll again (1-5)? ").split(/\s+/);
+        if @dice[0] eq "" {
+	    $rolls = 3;
+	}
         else {
             @roll[map { $^index - 1 }, @dice] = roll-dice(@dice.elems);
             $rolls++;
@@ -22,4 +25,5 @@ sub round {
 }
 
 my @round = round;
-# vim: ft=perl6
+
+# vim: expandtab shiftwidth=4 ft=perl6
