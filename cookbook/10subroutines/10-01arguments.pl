@@ -15,7 +15,9 @@ sub perl5 {
 
 perl5('old-fashioned');
 
-sub parameters ($foo) { say $foo }
+multi sub parameters ($foo) { say $foo }
+multi sub parameters (:$foo) { say $foo }
+
 parameters('some parameter');
 parameters 'some parameter';
 parameters foo => 'some parameter';
