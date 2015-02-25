@@ -20,14 +20,16 @@ if $str ~~ /^ <Expr> $/ {
     for $/<Expr><Item>.list -> $item {
         if $item<Value> {
             @stack.push($item<Value>);
-        } else {
+        }
+        else {
             my $v1 = @stack.pop;
             my $v0 = @stack.pop;
             @stack.push(do_op($v0,$v1,$item<Op>));
         }
     }
     say @stack[0];
-} else {
+}
+else {
     say "This is not an RPN expression.";
 }
 
