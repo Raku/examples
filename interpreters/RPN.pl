@@ -14,7 +14,7 @@ my $str = @*ARGS[0] // die "No input string specified";
 
 if $str ~~ /^ <Expr> $/ {
 	my @stack;
-	
+
 	for $/<Expr><Item>.list -> $item {
 		if $item<Value> {
 			@stack.push($item<Value>);

@@ -1,9 +1,9 @@
-# 
+#
 # Interpreter for the Brainfuck programming language.
 # USAGE: perl6 brainfuck.p6.pl < myprog.bf
-# 
+#
 # Contributed by Daniel Carrera, inspired by Acme::Brainfuck
-# 
+#
 
 # Read the program.
 my $program = $*IN.slurp;
@@ -35,7 +35,7 @@ Below is "Hello world" in Brainfuck:
 ++++++++++    initializes cell zero to 10
 [
    >+++++++>++++++++++>+++>+<<<<-
-]             loop sets the next four cells to 70/100/30/10 
+]             loop sets the next four cells to 70/100/30/10
 >++.          print   'H'
 >+.           print   'e'
 +++++++.              'l'
