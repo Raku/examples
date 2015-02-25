@@ -24,7 +24,7 @@ parameters foo => 'some parameter';
 parameters :foo('some parameter');
 
 sub whole (@names, %flags) {
-    for @names -> $name{  # XXX Is whitespace before { not needed?!
+    for @names -> $name {
         say $name;
     }
     # arg!  Shouldn't need parens!
