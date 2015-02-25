@@ -27,8 +27,7 @@ sub whole (@names, %flags) {
     for @names -> $name {
         say $name;
     }
-    # arg!  Shouldn't need parens!
-    for (%flags.kv) -> $key, $value {
+    for %flags.kv -> $key, $value {
         say "$key => $value";
     }
 }
