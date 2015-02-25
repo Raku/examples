@@ -1,6 +1,8 @@
 #!/usr/bin/env perl6
 
-my %table = (:context<>, :text<>, :link<>, :item<>, :group<>);
+use v6;
+
+my %table = (:context => (), :text => (), :link => (), :item => (), :group => ());
 # item => ({ text => @text[0], context => %table{'context'}[0], score => 0 # },...)
 # group = ({ 'link' => 1, itemA =>  item[0], itemB => item[1] } );
 
@@ -30,7 +32,7 @@ sub add-item () {
 
 # add-group item_id-item_id link_id
 sub add-group () {
-    
+
 }
 
 # question: can there be multiple links between the same two items? multiple
@@ -41,4 +43,4 @@ sub add-group () {
 # really just the same? No, that's a good separation. Well, for now I can keep
 # them as scalars and make them lists if I want to later.
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6
