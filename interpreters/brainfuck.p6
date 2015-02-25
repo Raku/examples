@@ -24,7 +24,7 @@ $program .= subst(/P/, '@P[$ptr]', :g);
 $program  = 'my @P = (); my $ptr = 0;' ~ $program;
 
 # Run
-eval $program;
+EVAL $program;
 
 =begin END
 =head1 Brainfuck Interpreter
