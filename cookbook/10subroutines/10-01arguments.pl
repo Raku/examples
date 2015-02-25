@@ -41,9 +41,6 @@ sub optional ($required, $optional?) {
     say $second_arg;
 }
 
-# XXX sub optional ($required, $optional = "Default value"), fyi
-# XXX allows for undef to be passed.
-
 optional('this');
 optional('this', 'that');
 
@@ -63,8 +60,7 @@ sub transport ($planet, *@names) {
 transport('Magrathea', 'Arthur', 'Ford', 'Ovid');
 
 sub typed (Int $val) {
-    say $val++;  # XXX $val is ro by default, so can't be ++'ed.
-                 # XXX Besides, preinc is more interesting here
+    say "You gave me the integer: " ~ $val;
 }
 typed(3);
 
