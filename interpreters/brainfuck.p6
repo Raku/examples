@@ -8,7 +8,7 @@
 use v6;
 
 # Read the program.
-my $program = $*IN.slurp;
+my $program = $*IN.slurp-rest;
 
 # Compile to Perl 6.
 $program .= subst(/ <-[+\-<>,.\[\]]> /, '', :g);
