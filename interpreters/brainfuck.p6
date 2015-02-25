@@ -26,7 +26,7 @@ $program  = 'my @P = (); my $ptr = 0;' ~ $program;
 # Run
 EVAL $program;
 
-=begin END
+=begin pod
 =head1 Brainfuck Interpreter
 
 USAGE: perl6 brainfuck.p6.pl < myprog.bf
@@ -52,5 +52,7 @@ Below is "Hello world" in Brainfuck:
 >+.                   '!'
 >.                    newline
 =end code
+
+=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
