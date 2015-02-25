@@ -5,6 +5,8 @@
 #
 # USAGE: perl6 RPN.pl  "5 4 + 3 / 5 3 - *"
 
+use v6;
+
 my token Op { '+' || '-' || '*' || '/' };
 my token Value { \d+[\.\d+]? };
 my token  Item { <Value> || <Op> };
@@ -38,3 +40,5 @@ sub do_op($lhs, $rhs, $op) {
 		when '/' { $lhs / $rhs }
 	}
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

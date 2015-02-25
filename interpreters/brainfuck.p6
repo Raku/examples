@@ -5,6 +5,8 @@
 # Contributed by Daniel Carrera, inspired by Acme::Brainfuck
 #
 
+use v6;
+
 # Read the program.
 my $program = $*IN.slurp;
 
@@ -50,3 +52,5 @@ Below is "Hello world" in Brainfuck:
 >+.                   '!'
 >.                    newline
 =end code
+
+# vim: expandtab shiftwidth=4 ft=perl6
