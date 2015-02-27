@@ -5,12 +5,10 @@ use v6;
 #    Given a list of URL prefixes, and a list of product IDs, make a list
 #    consisting of each URL prefix concatenated with each product ID.
 
-
 my @urls = ('http://www.something.com/blah.aspx?code=',
             'http://www.somethingelse.com/stuff.aspx?thing=');
 
 my @ids = <375035304 564564774 346464646>;
-
 
 # 1. Cross then map
 # We use the cross operator X to make every combination of pairs from @urls
@@ -27,5 +25,6 @@ my @combined = (@urls X @ids).map: { ~$^a };
 #    You can use any infix operator.
 #    Try (1,2,3) X* (1,2,3) to generate a multiplication table.
 
-
 .say for @urls X~ @ids;
+
+# vim: expandtab shiftwidth=4 ft=perl6

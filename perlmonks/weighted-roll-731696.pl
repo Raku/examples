@@ -37,7 +37,7 @@ for @weights.kv -> $k, $v { say "$k: $v" }
 my $total = [+] @weights;
 say "Total Weights $total";
 
-sub pick (@weights, $total) {
+sub pick(@weights, $total) {
    my $rand = (0..^$total).pick;
    for @weights.kv -> $i, $w {
        $rand -= $w;
@@ -45,7 +45,7 @@ sub pick (@weights, $total) {
    }
 }
 
-sub pickAll (@weights is copy, $total is copy) {
+sub pickAll(@weights is copy, $total is copy) {
    my @order;
    for @weights {
         my $pick = pick(@weights, $total);
@@ -58,5 +58,4 @@ sub pickAll (@weights is copy, $total is copy) {
 
 say ~pickAll(@weights,$total) for 1 .. $REPS;
 
-
-
+# vim: expandtab shiftwidth=4 ft=perl6
