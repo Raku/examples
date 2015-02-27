@@ -16,7 +16,7 @@ use v6;
 
 multi combs(@, 0) { "" };
 multi combs { combs(@^dict, $^n - 1) X~ @dict };
- 
+
 (.say for combs(<a b c>, $_)) for 1..4;
 
 =begin pod
@@ -26,3 +26,5 @@ multi combs { combs(@^dict, $^n - 1) X~ @dict };
 =item C<Placeholder variables> - L<http://perlcabal.org/syn/S06.html#Placeholder_variables>
 
 =end pod
+
+# vim: expandtab shiftwidth=4 ft=perl6

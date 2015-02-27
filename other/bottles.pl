@@ -12,3 +12,5 @@ for @bottles Z @actions Z @bottles[1..*] {
     say "$^a of beer on the wall, $^a of beer.
 $^b, $^c of beer on the wall.\n".ucfirst;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
