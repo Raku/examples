@@ -10,7 +10,7 @@ my @actions = 'Take one down and pass it around' xx 99,
 
 for @bottles Z @actions Z @bottles[1..*] {
     say "$^a of beer on the wall, $^a of beer.
-$^b, $^c of beer on the wall.\n".tclc;
+$^b, $^c of beer on the wall.\n".tc;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
