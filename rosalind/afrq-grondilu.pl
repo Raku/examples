@@ -1,10 +1,12 @@
 use v6;
 
-my @A = get.split(' ')».Num;
+sub MAIN($data-string = "0.1 0.25 0.5") {
+    my @A = $data-string.split(' ')».Num;
+
+    say @A».&afrq.fmt('%.3g');
+}
 
 sub afrq($r) { 1 - (1 - sqrt $r)**2 }
-
-say @A».&afrq;
 
 # 0.532 0.75 0.914
 
