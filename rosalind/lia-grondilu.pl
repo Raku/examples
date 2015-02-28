@@ -22,4 +22,4 @@ sub binomialcoefficient($n, $k) {
 my $total = 2**$k;
 say [+] map -> $i { (1-$p)**($total - $i)*$p**$i * binomialcoefficient( $total, $i ) }, $N .. $total;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -11,4 +11,4 @@ for %dna X %dna -> $a, $b {
     if $a.value.substr(*-3) eq $b.value.substr(0, 3);
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

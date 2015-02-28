@@ -12,4 +12,5 @@ given $*IN.get.split: " " {
 	1/2 * .[1] * .[2]    ,   # one heterozygous and one homozygous recessive
     )
 }
-# vim: ft=perl6
+
+# vim: expandtab shiftwidth=4 ft=perl6

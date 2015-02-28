@@ -31,4 +31,4 @@ sub find-protein($initial-mass) {
 
 say max :by(*.chars), map &find-protein, @L;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

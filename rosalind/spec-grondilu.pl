@@ -33,4 +33,4 @@ sub spec(@weight, :$accuracy = .01) {
 }
 print spec $*IN.lines;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -10,5 +10,4 @@ sub prob(:$dna, :$gc-content) {
 
 printf "%.3f",  1 - exp ($N * log(1-prob :$dna, :$gc-content));
 
-# vim: ft=perl6
-
+# vim: expandtab shiftwidth=4 ft=perl6

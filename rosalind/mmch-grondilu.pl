@@ -18,4 +18,4 @@ given $rna.comb.bag {
     C(.<C G>.min, .<C G>.max) * .<C G>.min!;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

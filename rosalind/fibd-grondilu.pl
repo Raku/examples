@@ -8,5 +8,4 @@ for 1 .. $n-1 -> \n {
 
 say [+] @population;
 
-
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

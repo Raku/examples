@@ -32,4 +32,4 @@ sub mrna($rna) {
 
 say mrna $*IN.get;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -14,5 +14,4 @@ my @B = map { log(prob :$dna, :gc-content($_))/log(10) }, @A;
 
 say @B».fmt: "%.3f";
 
-# vim: ft=perl6
-
+# vim: expandtab shiftwidth=4 ft=perl6

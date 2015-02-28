@@ -6,4 +6,4 @@ say lcsq |gather for slurp.match:
     take ~.[0].subst(/\n/,'', :g);
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

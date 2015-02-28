@@ -33,4 +33,4 @@ my @data = get.words; #<dog cat mouse elephant>;
 my $first = @data.shift;
 printf "(%s)%s\n", $_, $first for eubt @data;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

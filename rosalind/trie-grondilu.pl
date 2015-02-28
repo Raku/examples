@@ -51,4 +51,4 @@ trie [ qw(ATAGA ATC GAT) ];
 
 __END__
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

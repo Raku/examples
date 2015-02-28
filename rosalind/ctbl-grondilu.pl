@@ -21,4 +21,4 @@ while $line ~~ / \( 0 ** 2..* \) / {
     $line ~~ s/\( (0+) \)/$0/;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -7,4 +7,4 @@ for ^@c -> $c {
     say @line.join if 1 < ([+] @line) < @dna-1;
 }
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

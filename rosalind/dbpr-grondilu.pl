@@ -6,3 +6,5 @@ for split "\n", LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt}) {
         say $/[0].Str
     }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

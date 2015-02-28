@@ -18,3 +18,5 @@ my $actions = class {
 
 FASTA.parse($_, :$actions).ast.sort(*.[1]).[*-1] ~ '%' ==> say()
 	given slurp;
+
+# vim: expandtab shiftwidth=4 ft=perl6

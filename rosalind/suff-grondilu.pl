@@ -25,5 +25,4 @@ sub show-edges($tree) {
 
 show-edges suffix-tree suffixes get;
 
-
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6

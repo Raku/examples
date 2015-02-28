@@ -21,4 +21,4 @@ for ^N -> \c {
 
 say .key, ': ', @profile[.value] for enum <A C G T>;
 
-# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6
