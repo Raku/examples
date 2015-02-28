@@ -1,3 +1,4 @@
+use v6;
 
 my ($n, $k) = get.words;
 my @fib := 1, 1, * * $k + * ... *;

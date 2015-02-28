@@ -1,3 +1,5 @@
+use v6;
+
 my @dna = map { [.comb] }, lines;
 
 my @c = @dna[0][];

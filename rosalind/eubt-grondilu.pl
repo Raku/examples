@@ -1,3 +1,5 @@
+use v6;
+
 proto combine (Int, @) {*}
 multi combine (0,  @)  { [] }
 multi combine ($,  []) { () }

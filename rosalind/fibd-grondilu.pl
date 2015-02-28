@@ -1,3 +1,5 @@
+use v6;
+
 my ($n, $m) = get.words;
 
 my @population = 1, 0 xx ($m-1);

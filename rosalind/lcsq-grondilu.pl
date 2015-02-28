@@ -1,3 +1,5 @@
+use v6;
+
 use NativeCall;
 sub lcsq(Str $, Str $ --> Str) is native('./lcsq') {*}
 
