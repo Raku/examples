@@ -1,5 +1,17 @@
 use v6;
 
+=begin pod
+
+Counting Disease Carriers
+
+http://rosalind.info/problems/afrq/
+
+Expected output from default input data:
+
+    0.532 0.75 0.914
+
+=end pod
+
 sub MAIN($data-string = "0.1 0.25 0.5") {
     my @A = $data-string.split(' ')».Num;
 
@@ -7,7 +19,5 @@ sub MAIN($data-string = "0.1 0.25 0.5") {
 }
 
 sub afrq($r) { 1 - (1 - sqrt $r)**2 }
-
-# 0.532 0.75 0.914
 
 # vim: expandtab shiftwidth=4 ft=perl6
