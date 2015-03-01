@@ -8,7 +8,20 @@ use Pod::Convenience;
 
 my $head = slurp 'template/head.html';
 my $footer = footer-html;
-my $header = slurp 'template/header.html';
+sub header-html(%categories) {
+    my $header = slurp 'template/header.html';
+    my $menu-items = [~]
+        q[<div class="menu-items dark-green">],
+        %categories.keys.map( -> $category {qq[
+            <a class="menu-item selected darker-green"
+                href="/$category.html">
+                { $category.wordcase }
+            </a>
+        ]}),
+        q[</div>];
+    my $menu-pos = ($header ~~ /MENU/).from;
+    $header.subst('MENU', :p($menu-pos), $menu-items);
+}
 
 my %categories =
     "best-of-rosettacode" => "Best of Rosettacode",
@@ -72,7 +85,7 @@ sub p2h($pod) {
     pod2html $pod,
         :url(&url),
         :$head,
-        :header($header),
+        :header(header-html %categories),
         :$footer,
         :default-title("Perl 6 Examples");
 }
