@@ -18,14 +18,14 @@ multi wiz-prompt (Str $prompt, @options = ()) {
 
     my %options_by_key = @options.kv;
     $choice = %options_by_key.{$choice};
-    
+
     return $choice.param // $choice.key;
 }
 
 
 
-sub cls { 
-   #system(($*OS eq any <MSWin32 mingw>) ?? 'cls' !! 'clear'); 
+sub cls {
+   #system(($*OS eq any <MSWin32 mingw>) ?? 'cls' !! 'clear');
  }
 
 sub random ($low,$high) {int( ($high - $low).rand + $low ) + 1; };
@@ -109,14 +109,14 @@ class Person is Mortal {
         until ($choice eq 'f' or $enemy.dead) {
             my @options;
             for @.weapons -> $wep {
-                @options.push( 
+                @options.push(
                      Option.new(
                          :text("attack with " ~ $wep.name),
                          :param($wep)
                      )
                 );
             }
-            
+
             @options.push( Option.new( :key<f>, :text("flee for your life")));
             $choice = wiz-prompt("Your choice? ", @options);
             cls;
@@ -162,15 +162,15 @@ my $person = Person.new(:life(100),:max_life(100),
 
 my $frogs  = sub {
   my $life = (10..20).pick;
-  my $m =  Monster.new(:name("Army of frogs"), 
+  my $m =  Monster.new(:name("Army of frogs"),
                 :gold( (0..100).pick),
-                    :life($life), 
+                    :life($life),
                     :max_life($life) ,
-                    :weapon( Weapon.new( 
-                                   :name<froggers>, 
+                    :weapon( Weapon.new(
+                                   :name<froggers>,
                                    :power(5), :powerRange(2)
                                     )
-                           ) 
+                           )
               );
    $m.life = $life;
    return $m;
@@ -180,12 +180,12 @@ my $bat    = sub {
     my $life = (20..30).pick;
     Monster.new(:name("Bat"), :gold( (0..100).pick ),
                 :life($life), :max_life($life) ,
-                        :weapon( Weapon.new(:name<claws>, :power(5), :powerRange(3))) 
+                        :weapon( Weapon.new(:name<claws>, :power(5), :powerRange(3)))
                 );
 };
 my $skeleton  = sub {
     my $life = (30..50).pick;
-    Monster.new(:name("Skeleton"), :gold( (0..100).pick ), 
+    Monster.new(:name("Skeleton"), :gold( (0..100).pick ),
                 :life($life),:max_life($life) ,
                         :weapon( Weapon.new(:name<Fists>, :power(5), :powerRange(10))) );
 };
