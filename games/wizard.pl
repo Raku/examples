@@ -2,7 +2,7 @@ use v6;
 
 my $DEBUG = 0;
 
-multi prompt ($prompt, @options is rw) {
+multi wiz-prompt (Str $prompt, @options = ()) {
     my $choice;
     for (@options.kv) -> $key, $item {
 	   $item.key //= $key;
@@ -13,7 +13,7 @@ multi prompt ($prompt, @options is rw) {
         for @options -> $value {
 		say "\t", $value.key, "\t", $value.text;
         }
-        $choice = prompt;
+        $choice = .prompt;
     }
 
     my %options_by_key = @options.kv;
@@ -28,7 +28,7 @@ sub cls {
    #system(($*OS eq any <MSWin32 mingw>) ?? 'cls' !! 'clear'); 
  }
 
-sub random ($low,$high) {int( rand($high - $low) + $low ) + 1; };
+sub random ($low,$high) {int( ($high - $low).rand + $low ) + 1; };
 #multi sub infix:<.?.> ($low,$high) {int( rand($high - $low) + $low ) + 1; };
 
 class Option {
@@ -118,7 +118,7 @@ class Person is Mortal {
             }
             
             @options.push( Option.new( :key<f>, :text("flee for your life")));
-            $choice = prompt("Your choice? ", @options);
+            $choice = wiz-prompt("Your choice? ", @options);
             cls;
             given $choice {
                 when 'f' {
@@ -154,25 +154,23 @@ class Person is Mortal {
 
 }
 
-my $person = Person.new( Mortal{ :life(100),:max_life(100) },
-    :weapons((Weapon.new(WObject{ :name<sword> }, :power(4), :powerRange(2)),
-              Weapon.new(WObject{ :name<spell> }, :power(0), :powerRange(7)))),
+my $person = Person.new(:life(100),:max_life(100),
+    :weapons((Weapon.new(:name<sword>, :power(4), :powerRange(2)),
+              Weapon.new(:name<spell>, :power(0), :powerRange(7)))),
 );
 
 
 my $frogs  = sub {
   my $life = (10..20).pick;
-  my $m =  Monster.new( WObject{ :name("Army of frogs") }, 
+  my $m =  Monster.new(:name("Army of frogs"), 
                 :gold( (0..100).pick),
-                Mortal{ 
                     :life($life), 
                     :max_life($life) ,
                     :weapon( Weapon.new( 
-                                   WObject{ :name<froggers> }, 
+                                   :name<froggers>, 
                                    :power(5), :powerRange(2)
                                     )
                            ) 
-		   }
               );
    $m.life = $life;
    return $m;
@@ -180,25 +178,28 @@ my $frogs  = sub {
 
 my $bat    = sub {
     my $life = (20..30).pick;
-    Monster.new(WObject{ :name("Bat")}, :gold( (0..100).pick ),
-                Mortal{ :life($life), :max_life($life) ,
-                        :weapon( Weapon.new(WObject{ :name<claws>}, :power(5), :powerRange(3))) 
-                });
+    Monster.new(:name("Bat"), :gold( (0..100).pick ),
+                :life($life), :max_life($life) ,
+                        :weapon( Weapon.new(:name<claws>, :power(5), :powerRange(3))) 
+                );
 };
 my $skeleton  = sub {
     my $life = (30..50).pick;
-    Monster.new(WObject{ :name("Skeleton")}, :gold( (0..100).pick ), 
-                Mortal{ :life($life),:max_life($life) ,
-                        :weapon( Weapon.new(WObject{ :name<Fists> }, :power(5), :powerRange(10)))} );
+    Monster.new(:name("Skeleton"), :gold( (0..100).pick ), 
+                :life($life),:max_life($life) ,
+                        :weapon( Weapon.new(:name<Fists>, :power(5), :powerRange(10))) );
 };
 
 my %world;
-%world<Lobby>   = Room.new( WObject{ :name("Lobby")  }, :exits("Forest","Dungeon"), :monsters($frogs()));
-%world<Forest>  = Room.new( WObject{ :name("Forest") }, :exits("Lobby"), :monsters($bat()));
-%world<Dungeon> = Room.new( WObject{ :name("Dungeon")}, :exits("Lobby"), :monsters($skeleton()));
+%world<Lobby>   = Room.new(:name("Lobby"), :exits("Forest","Dungeon"), :monsters($frogs()));
+%world<Forest>  = Room.new(:name("Forest"), :exits("Lobby"), :monsters($bat()));
+%world<Dungeon> = Room.new(:name("Dungeon"), :exits("Lobby"), :monsters($skeleton()));
 $person.last_location = $person.location = "Lobby";
 
-$person.name = capitalize(prompt("What is your name: "));
+#$person.name = capitalize(prompt("What is your name: "));
+
+my @options;
+$person.name = prompt("What is your name: ");
 say "Greetings, ", $person.name();
 say $person.where;
 until ($person.dead) {
@@ -212,7 +213,7 @@ until ($person.dead) {
   } else {
      my @choices = %world.{$person.location}.exits.map: { Option.new( :text($_), :param($_)) };
      $person.last_location = $person.location;
-     $person.location = prompt("Go to:" ,@choices);
+     $person.location = wiz-prompt("Go to:" ,@choices);
      cls;
   }
 }
