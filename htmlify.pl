@@ -75,6 +75,12 @@ sub write-example-files(%categories) {
             next unless $file.IO.e;
             my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
             my $pod = EVAL $perl-pod;
+            if !$pod {
+                my @contents = $file.lines.join("\n");
+                $pod = pod-with-title($file.basename,
+                    pod-code(@contents),
+                );
+            }
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
         }
