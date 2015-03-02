@@ -49,7 +49,7 @@ sub write-index {
 
 sub write-index-files(%categories) {
     for %categories.kv -> $category, $title {
-        my @files = dir("categories/$category", test => /\.p(l|6)$/);
+        my @files = dir("categories/$category", test => /\.p(l|6)$/).sort;
         my @filenames = @files.map: {.basename};
         my @pod-links = @filenames.map: {pod-link($_, "categories/$category/$_")};
         spurt "html/$category.html", p2h(
@@ -69,7 +69,7 @@ sub create-category-dirs(%categories) {
 
 sub write-example-files(%categories) {
     for %categories.keys -> $category {
-        my @files = dir("categories/$category", test => /\.p(l|6)$/);
+        my @files = dir("categories/$category", test => /\.p(l|6)$/).sort;
         my @filenames = @files.map: {.basename};
         for @files -> $file {
             next unless $file.IO.e;
