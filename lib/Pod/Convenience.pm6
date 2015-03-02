@@ -110,4 +110,8 @@ sub pod-lower-headings(@content, :$to = 1) is export {
     @new-content;
 }
 
+sub pod-code(@contents) is export {
+    return Pod::Block::Code.new(contents => @contents);
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6
