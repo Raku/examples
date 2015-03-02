@@ -77,10 +77,13 @@ sub write-example-files(%categories) {
             my $pod = EVAL $perl-pod;
             if !$pod {
                 my @contents = $file.lines.join("\n");
-                $pod = pod-with-title($file.basename,
+                $pod = Array.new(pod-with-title($file.basename,
                     pod-code(@contents),
-                );
+                ));
             }
+            $pod.push: pod-block("Source code: ",
+                        pod-link($file.basename, "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
+                    );
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
         }
