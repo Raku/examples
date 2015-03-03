@@ -21,7 +21,7 @@ say $_ ~ ' ' ~ +$data.comb($_) for
     /agggta<[cgt]>a|t<[acg]>taccct/ but 'agggta[cgt]a|t[acg]taccct',
     /agggtaa<[cgt]>|<[acg]>ttaccct/ but 'agggtaa[cgt]|[acg]ttaccct';
 
-say;
+.say;
 
 my %iub = 'b' => '(c|g|t)', 'd' => '(a|g|t)', 'h' => '(a|c|t)',
           'k' => '(g|t)',   'm' => '(a|c)',   'n' => '(a|c|g|t)',
