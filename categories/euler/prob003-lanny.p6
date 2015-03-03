@@ -61,7 +61,7 @@ class Primes {
 	my Int @value;
 	my Int $psqr = 4;
 
-	loop( my Int $ix = 0; $psqr <= $n; ++$ix ) {
+	loop ( my Int $ix = 0; $psqr <= $n; ++$ix ) {
 	    my $p = $.ix($ix);
 	    $psqr = $p * $p;
 
@@ -81,7 +81,7 @@ class Primes {
 
 	my Int $psqr = 4;
 
-	loop( my Int $ix = 0; $psqr <= $n; ++$ix ) {
+	loop ( my Int $ix = 0; $psqr <= $n; ++$ix ) {
 	    my $p = $.ix($ix);
 	    $psqr = $p * $p;
 
