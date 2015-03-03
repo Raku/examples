@@ -61,7 +61,7 @@ sub write-index-files(%categories) {
 }
 
 sub files-in-category($category) {
-    dir("categories/$category", test => rx{ \.p(l|6)$ }).sort;
+    dir("categories/$category", test => rx{ \.p[l||6]$ }).sort;
 }
 
 sub create-category-dirs(%categories) {
