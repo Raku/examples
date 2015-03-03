@@ -33,6 +33,7 @@ games               - Games should go in here :)
 interpreters        - Language or DSL interpreters
 parsers             - Example grammars
 perlmonks           - Answers to perlmonks.org questions
+rosalind            - Bioinformatics programming problems
 shootout            - Implementations for The Computer Language Benchmark Game
                       <http://shootout.alioth.debian.org/>
 wsg                 - Answers for Winter Scripting Games, by difficulty and year
