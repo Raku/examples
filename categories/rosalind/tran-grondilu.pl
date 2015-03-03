@@ -1,6 +1,6 @@
 use v6;
 
-given slurp {
+given slurp() {
     my @dna;
     for m:g/ '>Rosalind_' <.digit>**4 \n ( <[ACGT\n]>+ ) / {
         push @dna, $_[0].subst: "\n", '', :g;
