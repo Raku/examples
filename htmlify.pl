@@ -25,17 +25,17 @@ sub header-html(%categories) {
 
 my %categories =
     "best-of-rosettacode" => "Best of Rosettacode",
-    "99-problems" => "99 problems",
-    "cookbook" => "Cookbook examples",
-    "euler" => "Answers for Project Euler",
-    "games" => "Games written in Perl 6",
-    "interpreters" => "Language or DSL interpreters",
-    "parsers" => "Example grammars",
-    "perlmonks" => "Answers to perlmonks.org questions",
-    "rosalind" => "Bioinformatics programming problems",
-    "shootout" => "Implementations for the Computer Language Benchmark Game",
-    "wsg" => "Answers for the Winter Scripting Games",
-    "other" => "Other examples which aren't yet categorized",
+    "99-problems"         => "99 problems",
+    "cookbook"            => "Cookbook examples",
+    "euler"               => "Answers for Project Euler",
+    "games"               => "Games written in Perl 6",
+    "interpreters"        => "Language or DSL interpreters",
+    "parsers"             => "Example grammars",
+    "perlmonks"           => "Answers to perlmonks.org questions",
+    "rosalind"            => "Bioinformatics programming problems",
+    "shootout"            => "The Computer Language Benchmark Game",
+    "wsg"                 => "The Winter Scripting Games",
+    "other"               => "Uncategorized examples",
 ;
 
 write-index;
