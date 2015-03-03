@@ -26,6 +26,8 @@ adding a new example.
 ## What you can find here
 
 
+| Directory          | Description                              |
+|--------------------|------------------------------------------|
 |best-of-rosettacode | The best of the rosettacode.org examples |
 |99-problems         | Based on lisp 99 problems |
 |cookbook            | Cookbook examples |
