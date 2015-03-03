@@ -12,8 +12,8 @@ If you want to contribute, just ask! The quicker choice is to use IRC: join
 #perl6 in Freenode and you'll be welcome.
 
 
-Please use POD ( mostly this template
-<https://github.com/perl6/perl6-examples/blob/master/template_pod> ) when
+Please use POD (mostly this template
+https://github.com/perl6/perl6-examples/blob/master/template_pod) when
 adding a new example.
 
 ## Goals
@@ -28,7 +28,7 @@ adding a new example.
 best-of-rosettacode - The best of the rosettacode.org examples
 99-problems         - Based on lisp 99 problems
 cookbook            - Cookbook examples
-euler               - Answers for Project Euler <http://projecteuler.net>
+euler               - Answers for Project Euler http://projecteuler.net
 games               - Games should go in here :)
 interpreters        - Language or DSL interpreters
 parsers             - Example grammars
