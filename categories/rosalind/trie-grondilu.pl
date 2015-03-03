@@ -1,5 +1,31 @@
 use v6;
 
+=begin pod
+
+=head1 Introduction to Pattern Matching
+
+L<http://rosalind.info/problems/trie/>
+
+Sample dataset:
+
+    ATAGA
+    ATC
+    GAT
+
+Sample output:
+
+    1 2 A
+    2 3 T
+    3 4 A
+    4 5 G
+    5 6 A
+    3 7 C
+    1 8 G
+    8 9 A
+    9 10 T
+
+=end pod
+
 my Int $node = 1;
 
 sub trie(@string is copy, $root = $node) {
