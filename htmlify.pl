@@ -44,10 +44,12 @@ create-category-dirs(%categories);
 write-example-files(%categories);
 
 sub write-index {
+    say "Creating main index file";
     spurt 'html/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
 }
 
 sub write-index-files(%categories) {
+    say "Creating category index files";
     for %categories.kv -> $category, $title {
         my @files = files-in-category($category);
         my @filenames = @files.map: {.basename};
@@ -73,6 +75,7 @@ sub create-category-dirs(%categories) {
 
 sub write-example-files(%categories) {
     for %categories.keys -> $category {
+        say "Creating example files for category: $category";
         my @files = files-in-category($category);
         my @filenames = @files.map: {.basename};
         for @files -> $file {
