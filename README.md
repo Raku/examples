@@ -48,6 +48,21 @@ Since you have a commit-bit (if not then talk to the folks at #perl6 on
 irc.freenode.net) feel free to commit your changes to the main repository.
 No need to submit a pull request!
 
+## Building the examples documentation
+
+To build the examples documentation web pages, simply run the `htmlify.p6`
+script in the base directory:
+
+    $ perl6 htmlify.p6
+
+After the pages have been generated, you can view them on your local
+computer by starting the included `app.pl` program:
+
+    $ perl app.pl daemon
+
+You can then view the examples documentation by pointing your web browser at
+http://localhost:3000.
+
 ## License Information
 
 "Perl 6 Examples" is free software; you can redistribute it and/or modify it
