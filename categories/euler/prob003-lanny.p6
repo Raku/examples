@@ -1,6 +1,6 @@
 class PrimeSieve {
     has Int $.p;
-    has Int $.value is rw = $.p * $.p;
+    has Int $.value is rw = $!p * $!p;
 
     method next {
 	return $.value += $.p;
