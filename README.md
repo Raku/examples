@@ -1,20 +1,21 @@
 Perl 6 Examples
 ===============
 
-This is intended to be a repository for all kinds of Perl
-6 examples.
+This is intended to be a repository for all kinds of Perl 6 examples.
 
 All examples should work for any full implementation of Perl 6.
 
-If an example needs an implementation specific version then it
-should end in .implementation.  For example, if you are making
-an example that only works on Rakudo, it should end in .rakudo.
+If an example needs an implementation specific version then it should end in
+.implementation.  For example, if you are making an example that only works
+on Rakudo, it should end in .rakudo.
 
-If you want to contribute, just ask! The quicker choice is to
-use IRC: join #perl6 in Freenode and you'll be welcome.
+If you want to contribute, just ask! The quicker choice is to use IRC: join
+#perl6 in Freenode and you'll be welcome.
 
 
-Please use POD ( mostly this template <https://github.com/perl6/perl6-examples/blob/master/template_pod> ) when adding a new example.
+Please use POD ( mostly this template
+<https://github.com/perl6/perl6-examples/blob/master/template_pod> ) when
+adding a new example.
 
 Goals
 -----
@@ -43,17 +44,15 @@ lib                 - utility modules
 doc                 - out-of-script documentation
 other               - all other
 
-Since you have a commit-bit (if not then talk to the folks at #perl6
-on irc.freenode.net) feel free to commit your changes to the main
-repository.  No need to submit a pull request!
-
+Since you have a commit-bit (if not then talk to the folks at #perl6 on
+irc.freenode.net) feel free to commit your changes to the main repository.
+No need to submit a pull request!
 
 License Information
 -------------------
 
-"Perl 6 Examples" is free software; you can redistribute it
-and/or modify it under the terms of the Artistic License 2.0.
-(Note that, unlike the Artistic License 1.0, version 2.0 is
-GPL compatible by itself, hence there is no benefit to having
-an Artistic 2.0 / GPL disjunction.)  See the file LICENSE
-for details.
+"Perl 6 Examples" is free software; you can redistribute it and/or modify it
+under the terms of the Artistic License 2.0.  (Note that, unlike the
+Artistic License 1.0, version 2.0 is GPL compatible by itself, hence there
+is no benefit to having an Artistic 2.0 / GPL disjunction.)  See the file
+LICENSE for details.
