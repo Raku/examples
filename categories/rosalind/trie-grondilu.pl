@@ -16,42 +16,4 @@ sub MAIN(@input = qw{ATAGA ATC GAT}) {
     trie @input;
 }
 
-
-=END
-use strict;
-use warnings;
-no warnings qw(recursion);
-
-my $node = 1;
-
-sub classify {
-    my $f = shift;
-    my %classif;
-    for (@_) {
-        $classif{$f->($_)} //= [];
-        push $classif{$f->($_)}, $_;
-    }
-    \%classif;
-}
-
-sub trie {
-    my @string = @{shift()};
-    my $root = shift // $node;
-    return +{} if not @string;
-    my %trie;
-    my %classify = %{ classify sub { substr shift, 0, 1 }, @string };
-    for my $key (keys %classify) {
-        my @value = map { substr $_, 1 } grep { length > 1 } @{$classify{$key}};
-        printf "%i %i %s\n", $root, ++$node, $key;
-        $trie{$key} = trie( [ @value ], $node ) if @value;
-    }
-    return \%trie;
-}
-
-trie [ map { chomp; $_ } <> ];
-__END__
-trie [ qw(ATAGA ATC GAT) ];
-
-__END__
-
 # vim: expandtab shiftwidth=4 ft=perl6
