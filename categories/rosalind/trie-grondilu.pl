@@ -12,7 +12,10 @@ sub trie(@string is copy, $root = $node) {
     }
 }
 
-trie lines;
+sub MAIN(@input = qw{ATAGA ATC GAT}) {
+    trie @input;
+}
+
 
 =END
 use strict;
