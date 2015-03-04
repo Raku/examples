@@ -8,9 +8,8 @@ use v6;
 =end pod
 
 sub palindromic(@list) {
-    if @list < 2 {
-        return True;
-    }
+    return True if @list < 2;
+
     my $start = 0;
     my $end = @list.end;
     my $mid_start = floor(@list / 2 - 1);
