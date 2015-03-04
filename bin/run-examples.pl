@@ -8,7 +8,7 @@ run-all-examples.pl - run all current Perl 6 examples
 
 =head1 SYNOPSIS
 
-    $ perl6 run-all-examples.pl [--example-dir=<dir-name>]
+    $ perl6 run-all-examples.pl [--category=<category-name>]
 
 =head1 DESCRIPTION
 
