@@ -34,6 +34,7 @@ my %categories =
     "perlmonks"           => "Answers to perlmonks.org questions",
     "rosalind"            => "Bioinformatics programming problems",
     "shootout"            => "The Computer Language Benchmark Game",
+    "tutorial"            => "Tutorial examples",
     "wsg"                 => "The Winter Scripting Games",
     "other"               => "Uncategorized examples",
 ;

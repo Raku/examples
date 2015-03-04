@@ -38,6 +38,7 @@ adding a new example.
 |perlmonks           | Answers to perlmonks.org questions |
 |rosalind            | Bioinformatics programming problems |
 |shootout            | [The Computer Language Benchmark Game](http://shootout.alioth.debian.org/) |
+|tutorial            | Tutorial examples |
 |wsg                 | Answers for Winter Scripting Games |
 |bin                 | utility scripts |
 |lib                 | utility modules |
