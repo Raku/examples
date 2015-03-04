@@ -20,7 +20,7 @@ compile and/or work as expected.
 
 use File::Find;
 
-my @example-dirs = qw{
+my @categories = qw{
     99-problems
     best-of-rosettacode
     cookbook
@@ -38,6 +38,7 @@ my @example-dirs = qw{
 # skip interactive examples; need to work out how to pass input data to
 # interactive examples
 my @interactive-examples = qw{
+    01-read-from-terminal.pl
     24-game.pl
     balanced-brackets.pl
     create-a-two-dimensional-array-at-runtime.pl
@@ -61,11 +62,11 @@ my @long-runners = qw{
 
 my @examples-to-skip = @interactive-examples, @memory-hogs, @long-runners;
 
-sub MAIN (:$example-dir) {
-    @example-dirs = [$example-dir] if $example-dir;
+sub MAIN (:$category) {
+    @categories = [$category] if $category;
     my $base-dir = $*CWD;
-    for @example-dirs -> $dir {
-        my @example-files = find(dir => $dir).grep(/.p(l|6)$/).sort;
+    for @categories -> $dir {
+        my @example-files = find(dir => "categories/" ~ $dir).grep(/.p(l|6)$/).sort;
         for @example-files -> $example {
             my $example-dir = $example.dirname;
             my $example-name = $example.basename;
