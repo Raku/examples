@@ -88,13 +88,18 @@ sub write-example-files(%categories) {
                     pod-code(@contents),
                 ));
             }
-            $pod.push: pod-block("Source code: ",
-                        pod-link($file.basename, "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
-                    );
+            $pod.push: source-reference($file, $category);
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
         }
     }
+}
+
+sub source-reference($file, $category) {
+    pod-block("Source code: ",
+        pod-link($file.basename,
+            "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
+    );
 }
 
 sub p2h($pod) {
