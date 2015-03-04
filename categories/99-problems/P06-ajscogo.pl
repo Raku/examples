@@ -8,13 +8,13 @@ use v6;
 =end pod
 
 sub palindromic(@list) {
-    if @list.elems < 2 {
+    if @list < 2 {
         return True;
     }
     my $start = 0;
-    my $end = @list.elems - 1;
-    my $mid_start = floor(@list.elems / 2 - 1);
-    my $mid_end = ceiling(@list.elems / 2);
+    my $end = @list - 1;
+    my $mid_start = floor(@list / 2 - 1);
+    my $mid_end = ceiling(@list / 2);
     @list[$start .. $mid_start] ~~ @list[$mid_end .. $end].reverse;
 }
 
