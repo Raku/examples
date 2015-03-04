@@ -49,6 +49,7 @@ my @memory-hogs = qw{
     prob012-polettix.pl
     prob014-felher.pl
     prob027-shlomif.pl
+    hailstone-sequence.pl
 };
 
 # skip long-running examples
