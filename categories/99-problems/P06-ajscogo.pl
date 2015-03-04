@@ -12,7 +12,7 @@ sub palindromic(@list) {
         return True;
     }
     my $start = 0;
-    my $end = @list - 1;
+    my $end = @list.end;
     my $mid_start = floor(@list / 2 - 1);
     my $mid_end = ceiling(@list / 2);
     @list[$start .. $mid_start] ~~ @list[$mid_end .. $end].reverse;
