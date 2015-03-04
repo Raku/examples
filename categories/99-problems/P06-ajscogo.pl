@@ -1,0 +1,40 @@
+#!/usr/bin/env perl6
+use v6;
+
+=begin pod
+
+=TITLE P06 - Find out whether a list is a palindrome.
+
+=end pod
+
+sub palindromic(@list) {
+    if @list.elems < 2 {
+        return True;
+    }
+    my $start = 0;
+    my $end = @list.elems - 1;
+    my $mid_start = floor(@list.elems / 2 - 1);
+    my $mid_end = ceiling(@list.elems / 2);
+    @list[$start .. $mid_start] ~~ @list[$mid_end .. $end].reverse;
+}
+
+my @examples = [
+    [[< a b c d E >], False],
+    [[< a b c b a >], True],
+    [[< a b b E >], False],
+    [[< E b b a>], False],
+    [[< a b b a >], True],
+    [[< a >], True],
+    [[< a a >], True],
+    [[< E a >], False] ].lol;
+
+for @examples -> ($list, $result) {
+    if palindromic($list) != $result {
+        die "{$list.perl} was expected to be a palindrome, but isn't";
+    }
+    else {
+        say $list ~ " is a palindrome";
+    }
+}
+
+# vim: expandtab shiftwidth=4 ft=perl6
