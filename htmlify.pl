@@ -88,6 +88,16 @@ sub write-example-files(%categories) {
                     pod-code(@contents),
                 ));
             }
+            else {
+                my $title-element = $pod[0].contents[0];
+                if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
+                    my $title = $title-element.contents[0].contents[0];
+                    say $title;
+                }
+                else {
+                    say "$file lacks a TITLE";
+                }
+            }
             $pod.push: source-reference($file, $category);
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
