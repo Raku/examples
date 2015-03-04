@@ -1,4 +1,6 @@
-#!/usr/local/bin/perl6
+#!/usr/bin/env perl6
+
+use v6;
 
 my $line_length = 50;
 
@@ -31,3 +33,5 @@ sub lines (@in) {
 	}
 	say '';
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
