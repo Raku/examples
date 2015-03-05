@@ -30,6 +30,7 @@ my %categories =
     "euler"               => "Answers for Project Euler",
     "games"               => "Games written in Perl 6",
     "interpreters"        => "Language or DSL interpreters",
+    "module-management"   => "Module management",
     "parsers"             => "Example grammars",
     "perlmonks"           => "Answers to perlmonks.org questions",
     "rosalind"            => "Bioinformatics programming problems",

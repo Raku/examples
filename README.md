@@ -34,6 +34,7 @@ adding a new example.
 |euler               | [Answers for Project Euler](http://projecteuler.net) |
 |games               | Games should go in here :) |
 |interpreters        | Language or DSL interpreters |
+|module-management   | Module management |
 |parsers             | Example grammars |
 |perlmonks           | Answers to perlmonks.org questions |
 |rosalind            | Bioinformatics programming problems |
