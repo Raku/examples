@@ -1,5 +1,25 @@
 use v6;
 
+=begin pod
+
+=TITLE Enumerating Unrooted Binary Trees
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/eubt/>
+
+Sample input
+
+    dog cat mouse elephant
+
+Sample output
+
+    (((mouse,cat),elephant))dog;
+    (((elephant,mouse),cat))dog;
+    (((elephant,cat),mouse))dog;
+
+=end pod
+
 proto combine (Int, @) {*}
 multi combine (0,  @)  { [] }
 multi combine ($,  []) { () }
