@@ -22,7 +22,7 @@ sub interwove($a, $b) {
 my %seen;
 for @motif -> $a {
     say gather for @motif -> $b {
-	my @interwove = interwove($a, $b).uniq;
+	my @interwove = interwove($a, $b).unique;
 	take %seen{sort($a, $b).join(':')} //=
 	+so grep rx/ <@interwove> /, $dna;
     }
