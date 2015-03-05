@@ -1,8 +1,30 @@
-# Solution for http://rosalind.info/problems/itwv/
-#
+use v6;
+
+=begin pod
+
+=TITLE Finding Disjoint Motifs in a Gene
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/itwv/>
+
+Sample input
+
+    GACCACGGTT
+    ACAG
+    GT
+    CCG
+
+Sample output
+
+    0 0 1
+    0 1 0
+    1 0 0
+
+=end pod
+
 # THIS IS WAY TOO SLOW!!
 #
-use v6;
 my $dna = 'GACCACGGTT';
 my @motif = <ACAG GT CCG>;
 
