@@ -64,6 +64,7 @@ my @long-runners = qw{
 # skip examples requiring internet access
 my @internet-required = qw{
     mprt-grondilu.pl
+    dbpr-grondilu.pl
 };
 
 my @examples-to-skip = @interactive-examples,
