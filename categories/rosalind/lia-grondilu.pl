@@ -1,5 +1,21 @@
 use v6;
 
+=begin pod
+
+=TITLE Independent Alleles
+
+L<http://rosalind.info/problems/lia/>
+
+Sample input
+
+    2 1
+
+Sample output
+
+    0.684
+
+=end pod
+
 my ($k, $N) = $*IN.get.split(" ")».Int;
 
 my %p = <AA Aa aa> Z=> <0 1 0>;
