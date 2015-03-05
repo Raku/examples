@@ -1,5 +1,32 @@
 use v6;
 
+=begin pod
+
+=TITLE Overlap Graphs
+
+L<http://rosalind.info/problems/grph/>
+
+Sample input
+
+    >Rosalind_0498
+    AAATAAA
+    >Rosalind_2391
+    AAATTTT
+    >Rosalind_2323
+    TTTTCCC
+    >Rosalind_0442
+    AAATCCC
+    >Rosalind_5013
+    GGGTGGG
+
+Sample output
+
+    Rosalind_0498 Rosalind_2391
+    Rosalind_0498 Rosalind_0442
+    Rosalind_2391 Rosalind_2323
+
+=end pod
+
 my %dna = gather for
 $*IN.slurp.match( / ^^ '>Rosalind_' (<digit> **4) \n (<[\nACGT]>*) /, :g) {
     take ~.[0], ~.[1].subst(/\n/,'', :g);
