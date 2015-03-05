@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Counting DNA Nucleotides
 
+=AUTHOR gerdr
+
 L<http://rosalind.info/problems/dna/>
 
 Sample input
