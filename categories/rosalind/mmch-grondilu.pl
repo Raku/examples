@@ -1,5 +1,24 @@
 use v6;
 
+=begin pod
+
+=TITLE Maximum Matchings and RNA Secondary Structures
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/mmch/>
+
+Sample input
+
+    >Rosalind_92
+    AUGCUUC
+
+Sample output
+
+    6
+
+=end pod
+
 sub C($k, $n) {
    if $k < 0 or $k > $n { return 0 }
    elsif $k < 2 { return $n }
