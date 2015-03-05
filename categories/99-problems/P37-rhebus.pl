@@ -16,7 +16,8 @@ use v6;
 # Straight from P36-rhebus.pl
 sub prime_factors_mult (Int $n) {
     my $residue = $n;
-    gather for (2,3,*+2 ... * > $n) -> $k {
+    my @values = (2,3,*+2 ... * > $n);
+    gather for @values -> $k {
         my $mult=0;
         while $residue %% $k {
             $mult++;
