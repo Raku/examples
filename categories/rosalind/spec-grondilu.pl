@@ -1,4 +1,25 @@
 use v6;
+
+=begin pod
+
+=TITLE Inferring Protein from Spectrum
+
+L<http://rosalind.info/problems/spec/>
+
+Sample input
+
+    3524.8542
+    3710.9335
+    3841.974
+    3970.0326
+    4057.0646
+
+Sample output
+
+    WMQS
+
+=end pod
+
 constant monoisotopic-mass-table = Hash.new: <
     A   71.03711
     C   103.00919
