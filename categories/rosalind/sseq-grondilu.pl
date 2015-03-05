@@ -13,7 +13,7 @@ Sample input
 
 Sample output
 
-    3 8 10
+    3 4 5
 
 =end pod
 
