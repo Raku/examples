@@ -47,6 +47,8 @@ sub mrna($rna) {
     return $count;
 }
 
-say mrna $*IN.get;
+sub MAIN(Str $input = "MA") {
+    say mrna $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
