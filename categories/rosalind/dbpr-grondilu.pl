@@ -19,10 +19,12 @@ Sample output
 =end pod
 
 use LWP::Simple;
-my $id = get;
-for split "\n", LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt}) {
-    if / GO\; .* \sP\: (.*?)\;/ {
-        say $/[0].Str
+
+sub MAIN(Str $id = "Q5SLP9") {
+    for split "\n", LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt}) {
+        if / GO\; .* \sP\: (.*?)\;/ {
+            say $/[0].Str
+        }
     }
 }
 
