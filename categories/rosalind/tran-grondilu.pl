@@ -1,5 +1,28 @@
 use v6;
 
+=begin pod
+
+=TITLE Transitions and Transversions
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/tran/>
+
+Sample input
+
+    >Rosalind_0209
+    GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGA
+    AGTACGGGCATCAACCCAGTT
+    >Rosalind_2200
+    TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGC
+    GGTACGAGTGTTCCTTTGGGT
+
+Sample output
+
+    1.21428571429
+
+=end pod
+
 given slurp() {
     my @dna;
     for m:g/ '>Rosalind_' <.digit>**4 \n ( <[ACGT\n]>+ ) / {
