@@ -30,11 +30,20 @@ sub C($k, $n) {
 
 sub postfix:<!>(Int $n) { [*] 1 .. $n }
 
-my $rna = lines[1..*-1].join;
-given $rna.comb.bag {
-    say
-    C(.<A U>.min, .<A U>.max) * .<A U>.min!  *
-    C(.<C G>.min, .<C G>.max) * .<C G>.min!;
+my $default-input = q:to/END/;
+    >Rosalind_92
+    AUGCUUC
+    END
+
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
+
+    my $rna = $default-input.lines[1..*-1].join;
+    given bag($rna.comb) {
+        say
+        C(.<A U>.min, .<A U>.max) * .<A U>.min!  *
+        C(.<C G>.min, .<C G>.max) * .<C G>.min!;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
