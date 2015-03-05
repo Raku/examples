@@ -18,9 +18,10 @@ Sample output
 
 =end pod
 
-my ($n, $k) = get.words;
-my @fib := 1, 1, * * $k + * ... *;
+sub MAIN(Int $n = 5, Int $k = 3) {
+    my @fib := 1, 1, * * $k + * ... *;
 
-say @fib[$n-1];
+    say @fib[$n-1];
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
