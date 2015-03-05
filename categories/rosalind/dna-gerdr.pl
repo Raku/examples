@@ -18,6 +18,7 @@ Sample output
 
 my $default-input = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
 
+# TODO: make this example calculate the right result
 sub MAIN($input = $default-input) {
     <A C G T>.map({ +.comb(/$^symbol/) }).say given $input;
 }
