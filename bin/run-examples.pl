@@ -67,10 +67,16 @@ my @internet-required = qw{
     dbpr-grondilu.pl
 };
 
+# skip examples requiring shared libraries
+my @shared-lib-required = qw{
+    lcsq-grondilu.pl
+};
+
 my @examples-to-skip = @interactive-examples,
                         @memory-hogs,
                         @long-runners,
                         @internet-required,
+                        @shared-lib-required,
                         ;
 
 sub MAIN (:$category) {
