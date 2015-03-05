@@ -1,5 +1,33 @@
 use v6;
 
+=begin pod
+
+=TITLE Consensus and Profile
+
+Finding a Most Likely Common Ancestor
+
+L<http://rosalind.info/problems/cons/>
+
+Sample input
+
+    ATCCAGCT
+    GGGCAACT
+    ATGGATCT
+    AAGCAACC
+    TTGGAACT
+    ATGCCATT
+    ATGGCACT
+
+Sample output
+
+    ATGCAACT
+    A: 5 1 0 0 5 5 0 0
+    C: 0 0 1 4 2 0 6 1
+    G: 1 1 6 3 0 1 0 0
+    T: 1 5 0 0 0 1 1 6
+
+=end pod
+
 my @default-data = qw{
     ATCCAGCT
     GGGCAACT
