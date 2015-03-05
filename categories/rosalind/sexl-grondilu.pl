@@ -18,6 +18,8 @@ Sample output
 
 =end pod
 
-say map { 2*$^x*(1-$x) }, get.split(' ')».Num;
+sub MAIN(Str $input = "0.1 0.5 0.8") {
+    say map { 2*$^x*(1-$x) }, $input.split(' ')».Num;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
