@@ -17,12 +17,16 @@ Sample output
 
 =end pod
 
-my ($dna, $search) = $*IN.lines;
+my @default-data = qw{ACGTACGTGACG GTA};
 
-my $pos = 0;
-say gather for $search.comb -> $c {
-    $dna ~~ m:c($pos)/$c/;
-    take $pos = $/.from + 1;
+sub MAIN($input-file = Nil) {
+    my ($dna, $search) = $input-file ?? $input-file.IO.lines !! @default-data;
+
+    my $pos = 0;
+    say gather for $search.comb -> $c {
+        $dna ~~ m:c($pos)/$c/;
+        take $pos = $/.from + 1;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
