@@ -43,7 +43,23 @@ my $actions = class {
 	}
 };
 
-FASTA.parse($_, :$actions).ast.sort(*.[1]).[*-1] ~ '%' ==> say()
-	given slurp;
+my $default-input = q:to/END/;
+    >Rosalind_6404
+    CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC
+    TCCCACTAATAATTCTGAGG
+    >Rosalind_5959
+    CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT
+    ATATCCATTTGTCAGCAGACACGC
+    >Rosalind_0808
+    CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+    TGGGAACCTGCGGGCAGTAGGTGGAAT
+    END
+
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
+
+    FASTA.parse($_, :$actions).ast.sort(*.[1]).[*-1] ~ '%' ==> say()
+	    given $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
