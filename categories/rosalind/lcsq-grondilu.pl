@@ -28,7 +28,8 @@ Linux system use the following commands:
 =end pod
 
 use NativeCall;
-sub lcsq(Str $, Str $ --> Str) is native('./lcsq') {*}
+
+sub lcsq(Str $, Str $ --> Str) is native($*PROGRAM_NAME.IO.dirname ~ '/lcsq') {*}
 
 my $default-input = q:to/END/;
     >Rosalind_23
