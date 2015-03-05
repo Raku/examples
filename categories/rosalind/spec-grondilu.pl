@@ -40,8 +40,16 @@ constant monoisotopic-mass-table = Hash.new: <
     T   101.04768
     V   99.06841
     W   186.07931
-    Y   163.06333 
+    Y   163.06333
 >;
+
+my @default-data = qw:to/END/;
+    3524.8542
+    3710.9335
+    3841.974
+    3970.0326
+    4057.0646
+    END
 
 sub spec(@weight, :$accuracy = .01) {
     my @a = my @b = sort *.Num, @weight;
@@ -52,6 +60,10 @@ sub spec(@weight, :$accuracy = .01) {
         monoisotopic-mass-table;
     }
 }
-print spec $*IN.lines;
+
+sub MAIN($input-file = Nil) {
+    my @weights = $input-file ?? $input-file.IO.lines !! @default-data;
+    say spec @weights;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
