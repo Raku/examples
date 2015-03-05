@@ -1,5 +1,22 @@
 use v6;
 
+=begin pod
+
+=TITLE Introduction to Random Strings
+
+L<http://rosalind.info/problems/prob/>
+
+Sample input
+
+    ACGATACAA
+    0.129 0.287 0.423 0.476 0.641 0.742 0.783
+
+Sample output
+
+    -5.737 -5.217 -5.263 -5.360 -5.958 -6.628 -7.009
+
+=end pod
+
 my @sample = "ACGATACAA
 0.129 0.287 0.423 0.476 0.641 0.742 0.783".split: "\n";
 
