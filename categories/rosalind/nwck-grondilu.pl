@@ -1,16 +1,4 @@
 use v6;
-say gather for lines[] -> $newick, $taxa, $ {
-    my ($a, $b) = $taxa.split: ' ';
-    my @token = $newick.comb: rx/ <.ident>+ | <[(),]> /;
-    Mu while @token.shift ne $a|$b;
-    my ($climbs, $descents) = 0 xx 2;
-    for @token {
-	last if $_ eq $a or $_ eq $b;
-	if /< , ) >/ {
-	    if $descents > 0 { $descents-- }
-	    else { $climbs++ }
-	}
-	if /< , ( >/ { $descents++ }
 
 =begin pod
 
@@ -38,8 +26,32 @@ Sample output
 
 =end pod
 
+my $default-data = q:to/END/;
+    (cat)dog;
+    dog cat
+
+    (dog,cat);
+    dog cat
+
+    END
+
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-data;
+    say gather for $input.lines -> $newick, $taxa, $ {
+        my ($a, $b) = $taxa.split: ' ';
+        my @token = $newick.comb: rx/ <.ident>+ | <[(),]> /;
+        Mu while @token.shift ne $a|$b;
+        my ($climbs, $descents) = 0 xx 2;
+        for @token {
+            last if $_ eq $a or $_ eq $b;
+            if /< , ) >/ {
+                if $descents > 0 { $descents-- }
+                else { $climbs++ }
+            }
+            if /< , ( >/ { $descents++ }
+        }
+        take $climbs + $descents;
     }
-    take $climbs + $descents;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
