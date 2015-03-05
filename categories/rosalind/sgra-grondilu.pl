@@ -1,4 +1,31 @@
 use v6;
+
+=begin pod
+
+=TITLE Using the Spectrum Graph to Infer Peptides
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/sgra/>
+
+Sample input
+
+    3524.8542
+    3623.5245
+    3710.9335
+    3841.974
+    3929.00603
+    3970.0326
+    4026.05879
+    4057.0646
+    4083.08025
+
+Sample output
+
+    WMSPG
+
+=end pod
+
 use List::Utils;
 
 my %mass-table = slurp('monoisotopic-mass-table.txt').words;
