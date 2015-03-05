@@ -1,11 +1,21 @@
 use v6;
-my @s = $*IN.lines;
-my \N = @s.pick.chars;
+
+my @default-data = qw{
+    ATCCAGCT
+    GGGCAACT
+    ATGGATCT
+    AAGCAACC
+    TTGGAACT
+    ATGCCATT
+    ATGGCACT
+};
+
+my \N = @default-data.pick.chars;
 
 my %profile;
 %profile{$_} = [0 xx N] for <A C G T>;
 
-for @s[] {
+for @default-data[] {
     my @dna = .comb;
     for kv classify { @dna[$_] }, ^@dna -> $k, $v {
         %profile{$k}[$v[]]»++;
