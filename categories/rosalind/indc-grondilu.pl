@@ -1,5 +1,21 @@
 use v6;
 
+=begin pod
+
+=TITLE Independent Segregation of Chromosomes
+
+L<http://rosalind.info/problems/indc/>
+
+Sample input
+
+    5
+
+Sample output
+
+    0.000 -0.004 -0.024 -0.082 -0.206 -0.424 -0.765 -1.262 -1.969 -3.010
+
+=end pod
+
 my $n = 5;  # $*IN.get.Int;
 
 sub C($n, $k) {
