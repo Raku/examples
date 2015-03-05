@@ -17,7 +17,11 @@ Sample output
 
 =end pod
 
-my ($S, $t) = $*IN.lines;
-say gather for $S.match(/$t/, :overlap) { take 1+.from }
+my @default-data = qw{GATATATGCATATACTT ATAT};
+
+sub MAIN($input-file = Nil) {
+    my ($S, $t) = $input-file ?? $input-file.IO.lines !! @default-data;
+    say gather for $S.match(/$t/, :overlap) { take 1+.from };
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
