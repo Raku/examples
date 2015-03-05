@@ -18,14 +18,14 @@ Sample outut
 
 =end pod
 
-my ($n, $m) = get.words;
+sub MAIN(Int $n = 6, Int $m = 3) {
+    my @population = 1, 0 xx ($m-1);
+    for 1 .. $n-1 -> \n {
+        @population.unshift: [+] @population[1..*-1];  # reproduction
+        @population.pop;                               # death
+    }
 
-my @population = 1, 0 xx ($m-1);
-for 1 .. $n-1 -> \n {
-    @population.unshift: [+] @population[1..*-1];  # reproduction
-    @population.pop;                               # death
+    say [+] @population;
 }
-
-say [+] @population;
 
 # vim: expandtab shiftwidth=4 ft=perl6
