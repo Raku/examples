@@ -52,6 +52,8 @@ sub show-edges($tree) {
     }
 }
 
-show-edges suffix-tree suffixes get;
+sub MAIN(Str $input = 'ATAAATG$') {
+    show-edges suffix-tree suffixes $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
