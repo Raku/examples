@@ -1,4 +1,21 @@
 use v6;
+
+=begin pod
+
+=TITLE Inferring mRNA from Protein
+
+L<http://rosalind.info/problems/mrna/>
+
+Sample input
+
+    MA
+
+Sample output
+
+    12
+
+=end pod
+
 constant RNA-codon = Hash.new: <
 UUU F      CUU L      AUU I      GUU V
 UUC F      CUC L      AUC I      GUC V
