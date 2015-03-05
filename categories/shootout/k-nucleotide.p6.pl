@@ -1,3 +1,5 @@
+use v6;
+
 # The Computer Language Benchmarks Game
 # 
 # Based on the submission for Perl 5.
@@ -45,5 +47,4 @@ sub update_hash($frame_size) {
 	}
 }
 
-
-
+# vim: expandtab shiftwidth=4 ft=perl6
