@@ -34,6 +34,6 @@ for @A -> $gc-content {
     push @B, ($n - $s.chars + 1) * prob :dna($s), :$gc-content;
 }
 
-say @B;
+say @B.fmt("%.3g");
 
 # vim: expandtab shiftwidth=4 ft=perl6
