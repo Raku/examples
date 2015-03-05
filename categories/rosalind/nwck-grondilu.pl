@@ -11,6 +11,33 @@ say gather for lines[] -> $newick, $taxa, $ {
 	    else { $climbs++ }
 	}
 	if /< , ( >/ { $descents++ }
+
+=begin pod
+
+=TITLE Distances in Trees
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/nwck/>
+
+Sample input
+
+    (cat)dog;
+    dog cat
+
+    (dog,cat);
+    dog cat
+
+Note: a trailing newline is necessary in the input data so that the input is
+divisible by three.
+
+Sample output
+
+    1 2
+
+
+=end pod
+
     }
     take $climbs + $descents;
 }
