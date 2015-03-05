@@ -83,7 +83,7 @@ sub MAIN (:$category) {
     @categories = [$category] if $category;
     my $base-dir = $*CWD;
     for @categories -> $dir {
-        my @example-files = find(dir => "categories/" ~ $dir).grep(/.p(l|6)$/).sort;
+        my @example-files = find(dir => "categories/" ~ $dir).grep(/<?!after 'p5'>.p(l|6)$/).sort;
         for @example-files -> $example {
             my $example-dir = $example.dirname;
             my $example-name = $example.basename;
