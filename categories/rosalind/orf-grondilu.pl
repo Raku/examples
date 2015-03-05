@@ -1,4 +1,25 @@
 use v6;
+
+=begin pod
+
+=TITLE Open Reading Frames
+
+L<http://rosalind.info/problems/orf/>
+
+Sample input
+
+    >Rosalind_99
+    AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG
+
+Sample output
+
+    MLLGSFRLIPKETLIQVAGSSPCNLS
+    M
+    MGMTPRLGLESLLE
+    MTPRLGLESLLE
+
+=end pod
+
 constant DNA-codon = Hash.new: <
     TTT F      CTT L      ATT I      GTT V
     TTC F      CTC L      ATC I      GTC V
