@@ -51,8 +51,10 @@ sub eubt(@species) {
     else { !!! 'unexpected number of species' }
 }
 
-my @data = get.words; #<dog cat mouse elephant>;
-my $first = @data.shift;
-printf "(%s)%s\n", $_, $first for eubt @data;
+sub MAIN($input = "dog cat mouse elephant") {
+    my @data = $input.words;
+    my $first = @data.shift;
+    printf "(%s)%s\n", $_, $first for eubt @data;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
