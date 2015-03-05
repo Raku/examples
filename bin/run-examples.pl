@@ -61,7 +61,16 @@ my @long-runners = qw{
     prob189-shlomif.pl
 };
 
-my @examples-to-skip = @interactive-examples, @memory-hogs, @long-runners;
+# skip examples requiring internet access
+my @internet-required = qw{
+    mprt-grondilu.pl
+};
+
+my @examples-to-skip = @interactive-examples,
+                        @memory-hogs,
+                        @long-runners,
+                        @internet-required,
+                        ;
 
 sub MAIN (:$category) {
     @categories = [$category] if $category;
