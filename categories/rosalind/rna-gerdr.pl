@@ -18,6 +18,8 @@ Sample output
 
 =end pod
 
-.trans('T' => 'U').say given slurp;
+sub MAIN(Str $input = "GATGGAACTTGACTACGTAAATT") {
+    .trans('T' => 'U').say given $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
