@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Introduction to Pattern Matching
+=TITLE Introduction to Pattern Matching
 
 L<http://rosalind.info/problems/trie/>
 
