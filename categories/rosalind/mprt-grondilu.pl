@@ -24,13 +24,23 @@ Sample output
 
 =end pod
 
-my $N-glycosylation = rx / N <-[P]> <[ST]> <-[P]> /;
-for $*IN.lines -> $id {
-    my $fasta = qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
-    given join '', grep /^ <.alpha>+ $/, $fasta.split: "\n" {
-        if $N-glycosylation {
-            say $id;
-            say gather for m:overlap/$N-glycosylation/ { take .from + 1}
+my @default-data = qw{
+    A2Z669
+    B5ZC00
+    P07204_TRBM_HUMAN
+    P20840_SAG1_YEAST
+};
+
+sub MAIN($input-file = Nil) {
+    my @input = $input-file ?? $input-file.IO.lines !! @default-data;
+    my $N-glycosylation = rx / N <-[P]> <[ST]> <-[P]> /;
+    for @input -> $id {
+        my $fasta = qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
+        given join '', grep /^ <.alpha>+ $/, $fasta.split: "\n" {
+            if $N-glycosylation {
+                say $id;
+                say gather for m:overlap/$N-glycosylation/ { take .from + 1}
+            }
         }
     }
 }
