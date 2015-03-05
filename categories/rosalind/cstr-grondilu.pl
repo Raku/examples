@@ -1,5 +1,26 @@
 use v6;
 
+=begin pod
+
+=TITLE Creating a Character Table from Genetic Strings
+
+L<http://rosalind.info/problems/cstr/>
+
+Sample input
+
+    ATGCTACC
+    CGTTTACC
+    ATTCGACC
+    AGTCTCCC
+    CGTCTATC
+
+Sample output
+
+    10110
+    10100
+
+=end pod
+
 my @dna = map { [.comb] }, lines;
 
 my @c = @dna[0][];
