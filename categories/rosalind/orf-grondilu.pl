@@ -38,6 +38,9 @@ constant DNA-codon = Hash.new: <
     TGA Stop   CGA R      AGA R      GGA G
     TGG W      CGG R      AGG R      GGG G
 >;
+
+my $default-input = "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG";
+
 sub revc($dna) {
     $dna.comb.reverse.join.trans:
     [<A C T G>] => [<T G A C>]
@@ -46,14 +49,18 @@ sub revc($dna) {
 sub orf($dna) {
     my %match;
     my @match = gather for $dna, revc $dna {
-    take .match: rx/ ATG [ <[ACGT]>**3 ]*? <before TAA|TAG|TGA> /, :overlap;
+        take .match: rx/ ATG [ <[ACGT]>**3 ]*? <before TAA|TAG|TGA> /, :overlap;
     };
+
     %match{
-    [~] map { DNA-codon{$_} }, .match: rx/ <[ACGT]>**3 /, :g
+        [~] map { DNA-codon{$_} }, .match: rx/ <[ACGT]>**3 /, :g
     }++ for @match;
+
     return %match.keys;
 }
 
-.say for orf $*IN.get;
+sub MAIN(Str $input = $default-input) {
+    .say for orf $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
