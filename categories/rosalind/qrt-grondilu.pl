@@ -1,4 +1,29 @@
 use v6;
+
+=begin pod
+
+=TITLE Quartets
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/qrt/>
+
+Sample input
+
+    cat dog elephant ostrich mouse rabbit robot
+    01xxx00
+    x11xx00
+    111x00x
+
+Sample output
+
+    {elephant, dog} {rabbit, robot}
+    {cat, dog} {mouse, rabbit}
+    {mouse, rabbit} {cat, elephant}
+    {dog, elephant} {mouse, rabbit}
+
+=end pod
+
 proto combine (Int, @) {*}
 multi combine (0,  @)  { [] }
 multi combine ($,  []) { () }
