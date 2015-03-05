@@ -12,27 +12,30 @@ my token Value { \d+[\.\d+]? };
 my token  Item { <Value> || <Op> };
 my token  Expr { [<Item> <ws>]+ };
 
-my $str = @*ARGS[0] // die "No input string specified";
+sub MAIN(Str $expression = "5 4 + 3 / 5 3 - *") {
+    calculate($expression);
+}
 
-if $str ~~ /^ <Expr> $/ {
-    my @stack;
+sub calculate(Str $str) {
+    if $str ~~ /^ <Expr> $/ {
+        my @stack;
 
-    for $/<Expr><Item>.list -> $item {
-        if $item<Value> {
-            @stack.push($item<Value>);
+        for $/<Expr><Item>.list -> $item {
+            if $item<Value> {
+                @stack.push($item<Value>);
+            }
+            else {
+                my $v1 = @stack.pop;
+                my $v0 = @stack.pop;
+                @stack.push(do_op($v0,$v1,$item<Op>));
+            }
         }
-        else {
-            my $v1 = @stack.pop;
-            my $v0 = @stack.pop;
-            @stack.push(do_op($v0,$v1,$item<Op>));
-        }
+        say @stack[0];
     }
-    say @stack[0];
+    else {
+        say "This is not an RPN expression.";
+    }
 }
-else {
-    say "This is not an RPN expression.";
-}
-
 
 sub do_op($lhs, $rhs, $op) {
     given $op {
