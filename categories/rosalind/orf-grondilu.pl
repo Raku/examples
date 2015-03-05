@@ -36,7 +36,7 @@ constant DNA-codon = Hash.new: <
     TGT C      CGT R      AGT S      GGT G
     TGC C      CGC R      AGC S      GGC G
     TGA Stop   CGA R      AGA R      GGA G
-    TGG W      CGG R      AGG R      GGG G 
+    TGG W      CGG R      AGG R      GGG G
 >;
 sub revc($dna) {
     $dna.comb.reverse.join.trans:
