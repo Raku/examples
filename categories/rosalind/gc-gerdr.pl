@@ -1,5 +1,32 @@
 use v6;
 
+=begin pod
+
+=TITLE Computing GC Content
+
+=AUTHOR gerdr
+
+L<http://rosalind.info/problems/gc/>
+
+Sample input
+
+    >Rosalind_6404
+    CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC
+    TCCCACTAATAATTCTGAGG
+    >Rosalind_5959
+    CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT
+    ATATCCATTTGTCAGCAGACACGC
+    >Rosalind_0808
+    CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC
+    TGGGAACCTGCGGGCAGTAGGTGGAAT
+
+Sample output
+
+    Rosalind_0808
+    60.919540
+
+=end pod
+
 grammar FASTA {
 	token TOP { ^ \n* <DNA-string>+ }
 	token DNA-string { '>' (\N+) \n (<[ACGT\n]>+) }
