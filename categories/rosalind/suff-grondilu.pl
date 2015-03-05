@@ -1,5 +1,34 @@
 use v6;
 
+=begin pod
+
+=TITLE Encoding Suffix Trees
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/suff/>
+
+Sample input
+
+    ATAAATG$
+
+Sample output
+
+    AAATG$
+    G$
+    T
+    ATG$
+    TG$
+    A
+    A
+    AAATG$
+    G$
+    T
+    G$
+    $
+
+=end pod
+
 sub suffixes(Str $str) { map *.flip, [\~] $str.flip.comb }
 sub suffix-tree(@a) {
     @a == 0 ?? [] !!
