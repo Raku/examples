@@ -1,6 +1,5 @@
 use v6;
 
-<A C G T>.map({ +.comb(/$^symbol/) }).say given slurp;
 =begin pod
 
 =TITLE Counting DNA Nucleotides
@@ -17,5 +16,10 @@ Sample output
 
 =end pod
 
+my $default-input = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
+
+sub MAIN($input = $default-input) {
+    <A C G T>.map({ +.comb(/$^symbol/) }).say given $input;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
