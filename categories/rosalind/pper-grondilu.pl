@@ -17,6 +17,9 @@ Sample output
 =end pod
 
 sub pper($n, $k) { [*] $n-$k+1 .. $n }
-say pper(| $*IN.get.split: " ") % 1_000_000;
+
+sub MAIN(Str $input = "21 7") {
+    say pper(| $input.split: " ") % 1_000_000;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
