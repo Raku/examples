@@ -17,6 +17,23 @@ while $line ~~ / \( 0 ** 2..* \) / {
     ).subst(/<[()]>/, '', :g) given $/;
     unless $array ~~ /^[ 0+ | 1+ ]$/ {
 	say $array.comb[@sorting].join: '';
+=begin pod
+
+=TITLE Creating a Character Table
+
+L<http://rosalind.info/problems/ctbl/>
+
+Sample input
+
+    (dog,((elephant,mouse),robot),cat);
+
+Sample output
+
+    00110
+    00111
+
+=end pod
+
     }
     $line ~~ s/\( (0+) \)/$0/;
 }
