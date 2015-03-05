@@ -16,7 +16,7 @@ Sample output
 
 =end pod
 
-my $n = 5;  # $*IN.get.Int;
+my $n = 5;
 
 sub C($n, $k) {
     state %cache;
