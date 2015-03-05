@@ -24,8 +24,10 @@ sub C($n, $k) {
         $k == 1 ?? $n !! C($n, $k-1)*($n-$k+1) div $k;
 }
 
-say gather for 1 .. 2*$n -> $k {
+my @results = gather for 1 .. 2*$n -> $k {
     take .log / log 10 given 1/2**(2*$n) * [+] map { C 2*$n, $_ }, $k .. 2*$n;
 }
+
+say @results.fmt("%.3f");
 
 # vim: expandtab shiftwidth=4 ft=perl6
