@@ -23,18 +23,30 @@ Sample output
 
 =end pod
 
-given slurp() {
-    my @dna;
-    for m:g/ '>Rosalind_' <.digit>**4 \n ( <[ACGT\n]>+ ) / {
-        push @dna, $_[0].subst: "\n", '', :g;
+my $default-input = q:to/END/;
+    >Rosalind_0209
+    GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGA
+    AGTACGGGCATCAACCCAGTT
+    >Rosalind_2200
+    TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGC
+    GGTACGAGTGTTCCTTTGGGT
+    END
+
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
+    given $input {
+        my @dna;
+        for m:g/ '>Rosalind_' <.digit>**4 \n ( <[ACGT\n]>+ ) / {
+            push @dna, $_[0].subst: "\n", '', :g;
+        }
+        my ($transitions, $transversions);
+        for @dna[0].comb Z @dna[1].comb -> $a, $b {
+            next unless $a ne $b;
+            if "$a$b" eq any <AG GA CT TC> { $transitions++ }
+            else { $transversions++ }
+        }
+        say $transitions/$transversions;
     }
-    my ($transitions, $transversions);
-    for @dna[0].comb Z @dna[1].comb -> $a, $b {
-        next unless $a ne $b;
-        if "$a$b" eq any <AG GA CT TC> { $transitions++ }
-	else { $transversions++ }
-    }
-    say $transitions/$transversions;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
