@@ -30,9 +30,20 @@ Linux system use the following commands:
 use NativeCall;
 sub lcsq(Str $, Str $ --> Str) is native('./lcsq') {*}
 
-say lcsq |gather for slurp.match:
-/ ^^ '>Rosalind_' <digit>+ \n (<[\nACGT]>*) /, :g {
-    take ~.[0].subst(/\n/,'', :g);
+my $default-input = q:to/END/;
+    >Rosalind_23
+    AACCTTGG
+    >Rosalind_64
+    ACACTGTGA
+    END
+
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
+
+    say lcsq |gather for $input.match:
+    / ^^ '>Rosalind_' <digit>+ \n (<[\nACGT]>*) /, :g {
+        take ~.[0].subst(/\n/,'', :g);
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
