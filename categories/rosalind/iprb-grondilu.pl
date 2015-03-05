@@ -1,5 +1,21 @@
 use v6;
 
+=begin pod
+
+=TITLE Mendel's First Law
+
+L<http://rosalind.info/problems/iprb/>
+
+Sample input
+
+    2 2 2
+
+Sample output
+
+    0.78333
+
+=end pod
+
 sub take-two($n) { $n*($n-1)/2 }
 given $*IN.get.split: " " {
     say
