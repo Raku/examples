@@ -21,7 +21,7 @@ my $n = 5;
 sub C($n, $k) {
     state %cache;
     %cache{$n}{$k} //=
-    $k == 1 ?? $n !! C($n, $k-1)*($n-$k+1) div $k 
+        $k == 1 ?? $n !! C($n, $k-1)*($n-$k+1) div $k;
 }
 
 say gather for 1 .. 2*$n -> $k {
