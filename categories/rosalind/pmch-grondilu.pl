@@ -19,8 +19,16 @@ Sample output
 
 =end pod
 
-my $rna = join '', grep /^ <[ACGU]>+ $/, lines;
+my $default-input = q:to/END/;
+    >Rosalind_23
+    AGCUAGUCAU
+    END
 
-say [*] map { [*] 1 .. $rna.comb(/$_/).elems }, <U C>;
+sub MAIN($input-file = Nil) {
+    my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
+    my $rna = join '', grep /^ <[ACGU]>+ $/, $input.lines;
+
+    say [*] map { [*] 1 .. $rna.comb(/$_/).elems }, <U C>;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
