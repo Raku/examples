@@ -17,14 +17,22 @@ Sample output
 
 =end pod
 
-my @data = $*IN.lines;
-my ($N, $gc-content) = @data.shift.split: " ";
-my $dna = @data.shift;
+my @default-input = ("90000 0.6", "ATAGCCGA");
 
-sub prob(:$dna, :$gc-content) {
-    1/2**$dna.chars * [*] map { $_ eq 'G'|'C' ?? $gc-content !! (1 - $gc-content) }, $dna.comb
+sub MAIN($input-file = Nil) {
+    my @data = $input-file ?? $input-file.IO.lines !! @default-input;
+    my ($N, $gc-content) = @data.shift.split: " ";
+    my $dna = @data.shift;
+
+    my $result = 1 - exp ($N * log(1-prob :$dna, :$gc-content));
+    say $result.fmt("%.3f");
 }
 
-printf "%.3f",  1 - exp ($N * log(1-prob :$dna, :$gc-content));
+sub prob(:$dna, :$gc-content) {
+    1/2**$dna.chars * [*] map {
+        $_ eq 'G'|'C' ?? $gc-content !! (1 - $gc-content)
+    }, $dna.comb
+}
+
 
 # vim: expandtab shiftwidth=4 ft=perl6
