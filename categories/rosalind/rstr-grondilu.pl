@@ -1,5 +1,22 @@
 use v6;
 
+=begin pod
+
+=TITLE Matching Random Motifs
+
+L<http://rosalind.info/problems/rstr/>
+
+Sample input
+
+    90000 0.6
+    ATAGCCGA
+
+Sample output
+
+    0.689
+
+=end pod
+
 my @data = $*IN.lines;
 my ($N, $gc-content) = @data.shift.split: " ";
 my $dna = @data.shift;
