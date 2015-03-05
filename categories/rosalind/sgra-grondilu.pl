@@ -28,7 +28,8 @@ Sample output
 
 use List::Utils;
 
-my %mass-table = slurp('monoisotopic-mass-table.txt').words;
+my $mass-table-path = $*PROGRAM_NAME.IO.dirname;
+my %mass-table = slurp($mass-table-path ~ "/monoisotopic-mass-table.txt").words;
 my @L = sort lines;
 my %invert-mass-table = %mass-table.invert.hash;
 
