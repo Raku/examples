@@ -1,5 +1,23 @@
 use v6;
 
+=begin pod
+
+=TITLE Mortal Fibonacci Rabbits
+
+=AUTHOR grondilu
+
+L<http://rosalind.info/problems/fibd/>
+
+Sample input
+
+    6 3
+
+Sample outut
+
+    4
+
+=end pod
+
 my ($n, $m) = get.words;
 
 my @population = 1, 0 xx ($m-1);
