@@ -54,15 +54,15 @@ sub MAIN(Str $orders = $*PROGRAM_NAME.IO.dirname ~ '/coffee.txt') {
 
     # count the orders
     for @contents -> $line {
-	unless $line ~~ /^ (Office \s+ \d+) $/ {
-	    my ($drink, $count) = $line.split(/\s+/);
-	    %count_for{$drink} += $count;
-	}
+        unless $line ~~ /^ (Office \s+ \d+) $/ {
+            my ($drink, $count) = $line.split(/\s+/);
+            %count_for{$drink} += $count;
+        }
     }
 
     # print to screen
     for %count_for.kv -> $drink, $total {
-	say $drink ~ ": " ~ $total;
+        say $drink ~ ": " ~ $total;
     }
 }
 
