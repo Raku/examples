@@ -48,7 +48,7 @@ L<http://web.archive.org/web/20081210123558/http://www.microsoft.com/technet/scr
 
 our %count_for;
 
-sub MAIN(Str $orders = 'coffee.txt') {
+sub MAIN(Str $orders = $*PROGRAM_NAME.IO.dirname ~ '/coffee.txt') {
     # get the data
     my $handle   = open $orders;
     my @contents = =$handle;
