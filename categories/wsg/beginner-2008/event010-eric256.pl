@@ -62,6 +62,10 @@ for spares or strikes in the last frame.  Top of page
 
 L<http://web.archive.org/web/20081208155503/http://www.microsoft.com/technet/scriptcenter/funzone/games/games08/bevent10.mspx>
 
+=head1 Solution
+
+L<http://web.archive.org/web/20081210124632/http://www.microsoft.com/technet/scriptcenter/funzone/games/solutions08/bpssol10.mspx>
+
 =end pod
 
 my @frames = <2 5 7 / 8 1 X 9 / 5 3 7 0 4 5 X 2 0>;
