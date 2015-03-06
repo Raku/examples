@@ -67,10 +67,6 @@ L<http://web.archive.org/web/20081208155503/http://www.microsoft.com/technet/scr
 my @frames = <2 5 7 / 8 1 X 9 / 5 3 7 0 4 5 X 2 0>;
 my @pins;
 
-for @frames {
-        if $_ eq '/' {
-
-
 my $score = 0;
 
 sub score ($ball) {
