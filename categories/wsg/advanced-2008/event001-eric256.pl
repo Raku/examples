@@ -27,7 +27,7 @@ for $phone_number.split('') {
         @test_words = %digits{$_}.values;
     }
 }
-say "Comparing {@test_words.elems} agiants a dictionary of {%dict.elems}";
+say "Comparing {@test_words.elems} against a dictionary of {%dict.elems}";
 for @test_words -> $word {
     $word.say if defined %dict{$word};
 }
