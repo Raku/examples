@@ -4,8 +4,7 @@ my $input-file = $*PROGRAM_NAME.IO.dirname ~ "/wordlist.txt";
 my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars > 6}) X 1);
 
 loop {
-    print "Enter password to test:";
-    my $password = =$*IN;
+    my $password = prompt("Enter password to test: ");
 
     say "Testing strength of password '$password'";
 
