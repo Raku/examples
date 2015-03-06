@@ -17,6 +17,20 @@ while $*IN.get -> $line {
     last if ($line.substr(0,1) eq '>');
     $sequence = $sequence ~ lc $line.subst(/\n/,'');
 }
+=begin pod
+
+=TITLE Repeatedly update hashtables and k-nucleotide strings
+
+=AUTHOR Daniel Carrera
+
+L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=knucleotide>
+
+Based on the submission for Perl 5.
+
+USAGE: perl6 k-nucleotide.p6.pl k-nucleotide.input
+
+=end pod
+
 
 # Count nucleotide sequences
 my $len = $sequence.chars;
