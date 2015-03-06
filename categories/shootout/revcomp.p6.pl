@@ -14,25 +14,29 @@ USAGE: perl6 revcomp.p6.pl revcomp.input
 
 =end pod
 
-my ($desc,$seq) = ('','');
-while $*IN.get -> $line {
-    if $line.match(/^ \>/) {
-        print_revcomp();
-        $desc = $line;
-        $seq = '';
-    } else {
-        $seq ~= $line;
+sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/revcomp.input") {
+    my ($desc,$seq) = ('','');
+    my $input = open $input-file;
+    while $input.get -> $line {
+        if $line.match(/^ \>/) {
+            print_revcomp();
+            $desc = $line;
+            $seq = '';
+        }
+        else {
+            $seq ~= $line;
+        }
     }
-}
-print_revcomp();
+    print_revcomp();
 
-sub print_revcomp() {
-    return if not $desc;
-    say $desc;
-    $seq = $seq.flip.trans('wsatugcyrkmbdhvnATUGCYRKMBDHVN' => 'WSTAACGRYMKVHDBNTAACGRYMKVHDBN');
+    sub print_revcomp() {
+        return if not $desc;
+        say $desc;
+        $seq = $seq.flip.trans('wsatugcyrkmbdhvnATUGCYRKMBDHVN' => 'WSTAACGRYMKVHDBNTAACGRYMKVHDBN');
 
-    for ^($seq.chars/60) -> $i {
-        say $seq.substr($i*60,60);
+        for ^($seq.chars/60) -> $i {
+            say $seq.substr($i*60,60);
+        }
     }
 }
 
