@@ -66,6 +66,4 @@ sub MAIN(Str $orders = $*PROGRAM_NAME.IO.dirname ~ '/coffee.txt') {
     }
 }
 
-#  my @contents = slurp($orders); xxx: does not work with chomp
-
 # vim: expandtab shiftwidth=4 ft=perl6
