@@ -1,5 +1,17 @@
 use v6;
 
+=begin pod
+
+=TITLE Perform an N-body simulation of the Jovian planets
+
+=AUTHOR
+
+L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=nbody>
+
+USAGE: perl6 n-body.p6-v2.pl [N=1000] [dt=1e-2]
+
+=end pod
+
 constant SOLAR_MASS = 4 * pi * pi;
 constant DAYS_PER_YEAR = 365.24e0;
 
