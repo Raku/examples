@@ -10,31 +10,31 @@ loop {
 
     my $score = 13;
 
-    if %dict.exists($password) {
+    if %dict{$password} :exists {
         $score--;
         say "Password matched dictionary";
     }
 
-    if %dict.exists($password.substr(0, $password.chars -1 ) ) {
+    if %dict{$password.substr(0, $password.chars -1 )} :exists {
         $score--;
         say "Password minus last char is in dictionary";
     }
 
-    if %dict.exists($password.substr(1,$password.chars-1)) {
+    if %dict{$password.substr(1,$password.chars-1)} :exists {
         $score--;
         say "Password minus first char is in dictionary";
     }
 
     my $test = $password;
     $test.replace("0","o");
-    if %dict.exists($test) {
+    if %dict{$test} :exists {
         $score--;
         say "Password replaces 'o' with '0'";
     }
 
     $test = $password;
     $test.replace("1","i");
-    if %dict.exists($test) {
+    if %dict{$test} :exists {
         $score--;
         say "Password replaces 'i' with '1'";
     }
@@ -44,11 +44,7 @@ loop {
         say "Password is too short (less than 10) or too long (more than 20)"
     }
 
-
-
     say "'$password' scored $score";
-    say;
-    say;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
