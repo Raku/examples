@@ -1,10 +1,18 @@
 use v6;
 
-# The Computer Language Benchmarks Game
-#       # Based on the submission for Perl 5.
-# contributed by Daniel carrera
-#
-# USAGE: perl6 revcomp.p6.pl < revcomp.input
+=begin pod
+
+=TITLE Read DNA sequences and write their reverse-complement
+
+=AUTHOR Daniel Carrera
+
+Based on the submission for Perl 5.
+
+L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=revcomp>
+
+USAGE: perl6 revcomp.p6.pl revcomp.input
+
+=end pod
 
 my ($desc,$seq) = ('','');
 while $*IN.get -> $line {
