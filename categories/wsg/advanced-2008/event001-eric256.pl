@@ -20,7 +20,8 @@ my @test_words;
 for $phone_number.split('') {
     say $_, "->", %digits{$_}.join('-');
     if (@test_words.elems) {
-        @test_words = @test_words X~X %digits{$_}.values;
+        my @values = %digits{$_}.values;
+        @test_words = @test_words X~ '.' X~ @values;
     }
     else {
         @test_words = %digits{$_}.values;
