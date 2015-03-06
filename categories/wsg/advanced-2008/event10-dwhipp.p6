@@ -1,3 +1,5 @@
+use v6;
+
 my $player_is_human = 1;
 
 my @values = (
@@ -103,3 +105,4 @@ loop {
     }
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6
