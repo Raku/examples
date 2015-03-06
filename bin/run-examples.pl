@@ -42,6 +42,7 @@ my @interactive-examples = qw{
     24-game.pl
     balanced-brackets.pl
     create-a-two-dimensional-array-at-runtime.pl
+    event10-dwhipp.p6
 };
 
 # skip memory hogs
