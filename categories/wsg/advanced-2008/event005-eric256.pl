@@ -1,6 +1,7 @@
 use v6;
 
-my %dict = ( (slurp("wordlist.txt").split("\r\n").grep: {.chars > 6}) X 1);
+my $input-file = $*PROGRAM_NAME.IO.dirname ~ "/wordlist.txt";
+my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars > 6}) X 1);
 
 loop {
     print "Enter password to test:";
