@@ -118,8 +118,10 @@ sub step(Num $dt) {
 .v.addmul(total-momentum, -1e0 / .m)
     given @bodies[Sun];
 
-sub MAIN(Int $n, Num $dt = 1e-2) {
+sub MAIN(Int $n = 1000, Num $dt = 1e-2) {
     printf "%.9f\n", total-energy;
     step $dt for ^$n;
     printf "%.9f\n", total-energy;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
