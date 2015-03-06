@@ -50,10 +50,7 @@ our %count_for;
 
 sub MAIN(Str $orders = $*PROGRAM_NAME.IO.dirname ~ '/coffee.txt') {
     # get the data
-    my $handle   = open $orders;
-    my @contents = =$handle;
-
-    $handle.close;
+    my @contents = $orders.IO.lines;
 
     # count the orders
     for @contents -> $line {
