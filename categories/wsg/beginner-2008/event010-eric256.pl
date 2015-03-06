@@ -19,19 +19,19 @@ while (@frames) {
     last unless defined $frame;
     say "checking $frame";
     given $frame {
-        when '/' { 
+        when '/' {
             $score += 10 + score(@frames[1]);
         }
-        when 'X' {      
+        when 'X' {
             if (@frames[1,2] ~~ (*, '/')) {
                 $score += 20;
             } else {
                 $score += 10 + score(@frames[1]) + score(@frames[2]);
             }
         }
-        when '0'..'9' { 
+        when '0'..'9' {
             if (@frames.elems > 0) {
-                $score += $frame unless defined @frames[1] eq '/' 
+                $score += $frame unless defined @frames[1] eq '/'
             } else {
                 $score += $frame;
             }

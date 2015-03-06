@@ -13,7 +13,7 @@ my %digits = (
 	9 => (<w x y>),
 );
 
-my $phone_number = 7323464;	
+my $phone_number = 7323464;
 my @test_words;
 
 for $phone_number.split('') {

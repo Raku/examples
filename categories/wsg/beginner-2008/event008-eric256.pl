@@ -10,13 +10,13 @@ loop {
     $guesses++;
     $guess = =$*IN;
     given $guess {
-        when $num { 
+        when $num {
             say "You guessed correctly in {$guesses} guesses!";
-            last; 
+            last;
         };
         when $_ < $num {say "You guessed too low."};
         when $_ > $num {say "You guessed too high."};
     }
-}       
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
