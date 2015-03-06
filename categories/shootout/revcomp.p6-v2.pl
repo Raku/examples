@@ -1,5 +1,15 @@
 use v6;
 
+=begin pod
+
+=TITLE Read DNA sequences and write their reverse-complement
+
+=AUTHOR
+
+L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=revcomp>
+
+=end pod
+
 my %trans = 'wsatugcyrkmbdhvnATUGCYRKMBDHVN'.comb Z=>
     'WSTAACGRYMKVHDBNTAACGRYMKVHDBN'.comb;
 
@@ -20,3 +30,5 @@ sub dump {
 
     say $desc, "\n", @seq.join;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
