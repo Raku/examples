@@ -4,10 +4,6 @@ our $number  = (1..50).pick(1).shift;
 our $guesses = 0;
 =begin pod
 
-sub prompt(Str $text) {
-    print $text;
-    return =$*IN; # it would be nice to do something like Int $input = =$*IN;
-}
 =TITLE Random Guess
 
 =AUTHOR
