@@ -12,17 +12,19 @@ sub MAIN(*@cards) {
 
 =begin pod
 
-=head1 NAME
+=TITLE Pairing off
 
-event001-j1n3l0.pl
+=AUTHOR Nelo Onyiah
 
 =head1 USAGE
 
-perl6 event001-j1n3l0.pl <cards>
+    $ perl6 event001-j1n3l0.pl <cards>
 
 =head1 NOTE
 
 <cards> should be one of 2 .. 10, J, Q, K, A (though I don't check).
+
+L<http://web.archive.org/web/20080324231941/http://www.microsoft.com/technet/scriptcenter/funzone/games/games08/bevent1.mspx>
 
 =end pod
 
