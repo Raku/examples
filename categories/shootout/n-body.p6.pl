@@ -30,17 +30,18 @@ my Num @VZS = map {$^a * DAYS_PER_YEAR},
 my Num @MASS = map {$^a * SOLAR_MASS},
                 (1, 9.54791938424326609e-04, 2.85885980666130812e-04, 4.36624404335156298e-05, 5.15138902046611451e-05);
 
-offset_momentum();
-printf "%.9f\n", energy();
+sub MAIN($num-bodies = 1000) {
+    offset_momentum();
+    printf "%.9f\n", energy();
 
-my $N = @*ARGS[0];
+    my $N = $num-bodies;
 
-# This does not, in fact, consume N*4 bytes of memory
-for (1..$N) {
-    advance(0.01);
+    # This does not, in fact, consume N*4 bytes of memory
+    for (1..$N) {
+        advance(0.01);
+    }
+    printf "%.9f\n", energy();
 }
-printf "%.9f\n", energy();
-
 
 sub advance($dt) {
     my Num ($dx, $dy, $dz, $distance, $mag);
