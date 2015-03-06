@@ -15,3 +15,4 @@ say "Gold: {$gold.key}: {$gold.value}";
 say "Silver: {$silver.key}: {$silver.value}";
 say "Bronze: {$bronze.key}: {$bronze.value}";
 
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -24,3 +24,5 @@ sub MAIN(Str $orders = 'coffee.txt') {
 }
 
 #  my @contents = slurp($orders); xxx: does not work with chomp
+
+# vim: expandtab shiftwidth=4 ft=perl6

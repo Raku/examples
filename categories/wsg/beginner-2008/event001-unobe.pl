@@ -5,3 +5,5 @@ use v6;
 my @x = 6,5,6,6,"K";
 
 say 'Total: ' ~ (([+] @x XeqX @x) - @x.elems)/2; 
+
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -1,3 +1,4 @@
+use v6;
 
 # There is no IO::Dir::open implemented in Rakudo yet, and I don't know how
 # to make this output become an IO stream to implement it according to
@@ -17,3 +18,4 @@ for @files.grep: { .match(/\.txt $$/) } {
     .close for $inputfh, $outputfh;
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6

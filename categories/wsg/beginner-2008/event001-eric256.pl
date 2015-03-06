@@ -7,3 +7,4 @@ for @cards[0..@cards-2].kv -> $k, $v {
 }; 
 say $p;
 
+# vim: expandtab shiftwidth=4 ft=perl6

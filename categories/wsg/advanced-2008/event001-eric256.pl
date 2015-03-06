@@ -1,3 +1,4 @@
+use v6;
 
 my %dict = ( (slurp("wordlist.txt").split("\r\n").grep: {.chars == 7}) X 1);
 
@@ -28,3 +29,4 @@ for @test_words -> $word {
   	 $word.say if defined %dict{$word};
  }
 
+# vim: expandtab shiftwidth=4 ft=perl6

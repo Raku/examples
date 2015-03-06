@@ -1,4 +1,3 @@
-
 use v6;
 
 my %dict = ( (slurp("wordlist.txt").split("\r\n").grep: {.chars > 6}) X 1);
@@ -52,5 +51,4 @@ loop {
 	say;
 }
 
-
-
+# vim: expandtab shiftwidth=4 ft=perl6

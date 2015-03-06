@@ -18,3 +18,5 @@ loop {
 	 when $_ > $num {say "You guessed too high."};
 	}
 }	
+
+# vim: expandtab shiftwidth=4 ft=perl6

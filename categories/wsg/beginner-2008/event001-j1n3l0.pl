@@ -25,3 +25,5 @@ perl6 event001-j1n3l0.pl <cards>
 <cards> should be one of 2 .. 10, J, Q, K, A (though I don't check).
 
 =end pod
+
+# vim: expandtab shiftwidth=4 ft=perl6

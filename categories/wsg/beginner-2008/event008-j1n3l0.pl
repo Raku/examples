@@ -32,3 +32,5 @@ sub MAIN() {
     elsif $guess  < $number { say 'Too low'  }
   }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

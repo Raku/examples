@@ -18,3 +18,5 @@ find_unique(@a2).key.say;
 find_unique(@a3).key.say;
 find_unique(@a4).key.say;
 find_unique(@a5).key.say;
+
+# vim: expandtab shiftwidth=4 ft=perl6
