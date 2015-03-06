@@ -26,14 +26,14 @@ loop {
     }
 
     my $test = $password;
-    $test.replace("0","o");
+    $test.subst(/0/, "o");
     if %dict{$test} :exists {
         $score--;
         say "Password replaces 'o' with '0'";
     }
 
     $test = $password;
-    $test.replace("1","i");
+    $test.subst(/1/, "i");
     if %dict{$test} :exists {
         $score--;
         say "Password replaces 'i' with '1'";
