@@ -83,9 +83,10 @@ while (@frames) {
             $score += 10 + score(@frames[1]);
         }
         when 'X' {
-            if (@frames[1,2] ~~ (*, '/')) {
+            if @frames[1,2] ~~ *, '/' {
                 $score += 20;
-            } else {
+            }
+            else {
                 $score += 10 + score(@frames[1]) + score(@frames[2]);
             }
         }
