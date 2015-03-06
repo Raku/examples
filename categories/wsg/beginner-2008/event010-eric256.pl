@@ -91,9 +91,10 @@ while (@frames) {
             }
         }
         when '0'..'9' {
-            if (@frames.elems > 0) {
-                $score += $frame unless defined @frames[1] eq '/'
-            } else {
+            if @frames.elems > 1 {
+                $score += $frame unless defined @frames[1] eq '/';
+            }
+            else {
                 $score += $frame;
             }
         }
