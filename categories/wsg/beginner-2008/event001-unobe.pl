@@ -1,6 +1,14 @@
-# Event 1: Pairing Off
-# Given a series of five playing cards, determine the number of pairs.
 use v6;
+
+=begin pod
+
+=TITLE Pairing Off
+
+=AUTHOR David Romano
+
+Given a series of five playing cards, determine the number of pairs.
+
+=end pod
 
 my @x = 6,5,6,6,"K";
 
