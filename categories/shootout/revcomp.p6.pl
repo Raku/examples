@@ -1,3 +1,5 @@
+use v6;
+
 # The Computer Language Benchmarks Game
 #	# Based on the submission for Perl 5.
 # contributed by Daniel carrera
@@ -25,3 +27,5 @@ sub print_revcomp() {
 		say $seq.substr($i*60,60);
 	}
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
