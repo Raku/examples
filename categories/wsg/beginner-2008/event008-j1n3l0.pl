@@ -1,7 +1,5 @@
 use v6;
 
-our $number  = (1..50).pick(1).shift;
-our $guesses = 0;
 =begin pod
 
 =TITLE Random Guess
@@ -29,6 +27,8 @@ L<http://web.archive.org/web/20081210124629/http://www.microsoft.com/technet/scr
 
 =end pod
 
+our $number  = (1..50).pick(1);
+our $guesses = 0;
 
 sub is_valid($guess) {
     unless $guess ~~ /^ \d+ $/ && 1 <= $guess <= 50 {
