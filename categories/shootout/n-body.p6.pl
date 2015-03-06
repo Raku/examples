@@ -1,3 +1,5 @@
+use v6;
+
 # The Computer Language Benchmarks Game
 #	# Based on the submission for Perl 5.
 # contributed by Daniel carrera
@@ -89,3 +91,5 @@ sub offset_momentum {
 	@VYS[0] = - $py / SOLAR_MASS;
 	@VZS[0] = - $pz / SOLAR_MASS;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
