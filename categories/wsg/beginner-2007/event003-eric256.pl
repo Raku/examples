@@ -1,8 +1,8 @@
 use v6;
 
 sub find_unique (@x) {
-	my %test;
-	%test{$_}++ for @x;
+    my %test;
+    %test{$_}++ for @x;
     return %test.pairs.first( { .value == 1 });
 };
 
