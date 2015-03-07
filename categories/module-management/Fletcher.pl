@@ -1,3 +1,5 @@
+use v6;
+
 # A sketch program to compute unique file names for Perl modules based
 # on the Fletcher-16 hash.
 # 
@@ -56,3 +58,4 @@ sub fletcher16($str) {
 	return ($A*256 + $B).fmt("%04x");
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6
