@@ -94,7 +94,6 @@ sub write-example-files(%categories) {
                 my $title-element = $pod[0].contents[0];
                 if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
                     my $title = $title-element.contents[0].contents[0];
-                    say $title;
                 }
                 else {
                     say "$file lacks a TITLE";
