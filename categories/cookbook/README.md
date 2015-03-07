@@ -1,3 +1,5 @@
+# PLEAC: Programming Language Examples Alike Cookbook
+
 This is PLEAC, from https://github.com/pleac/pleac
 
 PLEAC stands for "Programming Language Examples Alike Cookbook."  Think "Perl6
@@ -9,7 +11,7 @@ mirror the Cookbook (2nd Edition) and to ease sorting.  Please do not use the
 1st edition section names.
 
 NOTE:
-  - This was a port from the now defunct pugs/examples/cookbook which then
-    became mu/examples/cookbook supporting Rakudo.
 
+  - This was a port from the now defunct `pugs/examples/cookbook` which then
+    became `mu/examples/cookbook` supporting Rakudo.
   - PLEAC itself doesn't seem very active
