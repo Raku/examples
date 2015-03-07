@@ -2,17 +2,17 @@ use v6;
 
 # A sketch program to compute unique file names for Perl modules based
 # on the Fletcher-16 hash.
-# 
+#
 # Author: Daniel Carrera
 # License: Public Domain
-# 
+#
 # Example: Foo::Bar-auth:92de-ver:1.2.0--0
-# 
+#
 # Explanation:
 # 		The module name (Foo::Bar) is URL-encoded. After that, we add all
 #		metadata sorted by key. Version numbers are left intact. Other
 #		metadata is hashed with Fletcher-16.
-# 
+#
 # 		Lastly, a counter is added at the end. If two different modules
 # 		get the exact same name (extremely unlikely) we use a counter to
 #		distinguish them.
