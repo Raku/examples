@@ -1,6 +1,6 @@
 =begin pod
 
-=head1 Ackermann function
+=TITLE Ackermann function
 
  The Ackermann function is a classic recursive example in computer science.
 

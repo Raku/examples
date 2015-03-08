@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Balanced brackets
+=TITLE Balanced brackets
 
 Generate a string with N opening brackets (“[”) and N closing brackets
 (“]”), in some arbitrary order.

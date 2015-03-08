@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Last fridays of the year
+=TITLE Last fridays of the year
 
 Write a program or a script that returns the last Fridays of each month
 of a given year. The year may be given through any simple input method

@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Hailstone sequence
+=TITLE Hailstone sequence
 
 The Hailstone sequence of numbers can be generated from a starting positive
 integer, n by:

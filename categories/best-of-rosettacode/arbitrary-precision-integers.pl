@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Arbitrary-precision integers (included)
+=TITLE Arbitrary-precision integers (included)
 
 Using the in-built capabilities of your language, calculate the integer
 value of:

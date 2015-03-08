@@ -1,6 +1,6 @@
 =begin pod
 
-=head1 Binomial Coefficient
+=TITLE Binomial Coefficient
 
 Number of ways to choose P objects among N.  It's also the coefficient of the
 monome of degree P in the expansion of (1 + X)^N, thus the name.

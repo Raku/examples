@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Accumulator factory
+=TITLE Accumulator factory
 
 A problem posed by Paul Graham is that of creating a function that takes a
 single (numeric) argument and which returns another function that is an

@@ -1,6 +1,6 @@
 =begin pod
 
-=head1 Create a two-dimensional array at runtime
+=TITLE Create a two-dimensional array at runtime
 
 Get two integers from the user, then create a two-dimensional array where the
 two dimensions have the sizes given by those numbers, and which can be accessed

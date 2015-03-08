@@ -1,6 +1,6 @@
 =begin pod
 
-=head1 24 game
+=TITLE 24 game
 
 The 24 Game tests one's mental arithmetic.
 

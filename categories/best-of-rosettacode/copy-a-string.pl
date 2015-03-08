@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=head1 Copy a string
+=TITLE Copy a string
 
 This task is about copying a string. Where it is relevant, distinguish
 between copying the contents of a string versus making an additional
