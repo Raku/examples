@@ -1,0 +1,3 @@
+17:35 < moritz> [ptc]: bonus points for adding some sort of test suite (can
+be just storing results from one run, and then comparing on the next run),
+and only HTML-rendering those that pass the tests

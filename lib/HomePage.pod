@@ -1,0 +1,65 @@
+=begin Html
+<img style="float: right; margin: 0 0 1em 1em" src="/images/camelia.png" alt =""/>
+Welcome to the examples collection of the <a href="http://perl6.org">Perl 6</a>
+programming language!
+
+<hr>
+
+<h2>Categories</h2>
+<dl>
+<dt><a href="/best-of-rosettacode.html">Best of Rosettacode</a></dt>
+<dd>
+    The best of the rosettacode.org examples
+</dd>
+<dt><a href="/99-problems.html">99 Problems</a></dt>
+<dd>
+    Based on lisp 99 problems
+</dd>
+<dt><a href="/cookbook.html">Cookbook</a></dt>
+<dd>
+    Cookbook examples
+</dd>
+<dt><a href="/euler.html">Project Euler</a></dt>
+<dd>
+    Answers for Project Euler
+</dd>
+<dt><a href="/games.html">Games</a></dt>
+<dd>
+    Games written in Perl 6
+</dd>
+<dt><a href="/interpreters.html">Interpreters</a></dt>
+<dd>
+    Language or DSL interpreters
+</dd>
+<dt><a href="/parsers.html">Parsers</a></dt>
+<dd>
+    Example grammars
+</dd>
+<dt><a href="/perlmonks.html">Perlmonks</a></dt>
+<dd>
+    Answers to perlmonks.org questions
+</dd>
+<dt><a href="/rosalind.html">Project Rosalind</a></dt>
+<dd>
+    Bioinformatics-related programming problems
+</dd>
+<dt><a href="/shootout.html">Shootout</a></dt>
+<dd>
+    Implementations for the Computer Language Benchmark Game
+</dd>
+<dt><a href="/wsg.html">Winter Scripting Games</a></dt>
+<dd>
+    Answers for the Winter Scripting Games
+</dd>
+<dt><a href="/other.html">Other examples</a></dt>
+<dd>
+    Other examples which aren't yet categorized
+</dd>
+</dl>
+
+<hr>
+
+<p>The Perl 6 homepage offers <a href="http://perl6.org/documentation/">a
+comprehensive list of Perl 6 documentation</a>, including tutorials, HowTos
+and <a href="http://faq.perl6.org/">FAQs (Frequently Asked Questions)</a>.</p>
+=end Html
