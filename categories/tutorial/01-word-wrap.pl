@@ -1,5 +1,13 @@
 #!/usr/bin/env perl6
 
+=begin pod
+
+=TITLE Word-wrap paragraphs to a given length
+
+=AUTHOR Scott Penrose
+
+=end pod
+
 use v6;
 
 my $line_length = 50;

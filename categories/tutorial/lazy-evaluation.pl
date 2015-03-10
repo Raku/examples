@@ -2,6 +2,14 @@
 
 use v6;
 
+=begin pod
+
+=TITLE Lazily evaluate items in a list
+
+=AUTHOR Scott Penrose
+
+=end pod
+
 my @fibonacci = 1, 1, { $^a + $^b } ... *;
 say @fibonacci[6];     # 13
 
