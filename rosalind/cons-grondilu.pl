@@ -1,5 +1,5 @@
 use v6;
-my @s = $*IN.lines;
+my @s = lines;
 my \N = @s.pick.chars;
 
 my %profile;
