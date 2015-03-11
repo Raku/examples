@@ -17,11 +17,13 @@ sub pod-gist(Pod::Block $pod, $level = 0) is export {
         }
         elsif $c ~~ Str {
             @chunks.push: $c.indent($level + 2), "\n";
-        } elsif $c ~~ Positional {
+        }
+        elsif $c ~~ Positional {
             @chunks.push: $c.map: {
                 if $_ ~~ Pod::Block {
                     *.&pod-gist
-                } elsif $_ ~~ Str {
+                }
+                elsif $_ ~~ Str {
                     $_
                 }
             }
