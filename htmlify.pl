@@ -91,19 +91,27 @@ sub write-example-files(%categories) {
                 ));
             }
             else {
-                my $title-element = $pod[0].contents[0];
-                if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
-                    my $title = $title-element.contents[0].contents[0];
-                }
-                else {
-                    say "$file lacks a TITLE";
-                }
+                # XXX: $file should be part of $pod metadata
+                pod-title-contents($pod, $file);
             }
             $pod.push: source-reference($file, $category);
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
         }
     }
+}
+
+sub pod-title-contents($pod, $file) {
+    my $title-element = $pod[0].contents[0];
+    my $title;
+    if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
+        $title = $title-element.contents[0].contents[0];
+    }
+    else {
+        say "$file lacks a TITLE";
+    }
+
+    return $title;
 }
 
 sub source-reference($file, $category) {
