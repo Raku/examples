@@ -56,9 +56,10 @@ sub write-index-files(%categories) {
         my @files = files-in-category($category);
         my @filenames = @files.map: {.basename};
         my @pod-links = @filenames.map: {pod-link($_, "categories/$category/$_")};
+        my @headers = qw{File Title Author};
         spurt "html/$category.html", p2h(
             pod-with-title($title,
-                pod-table(@pod-links),
+                pod-table(@pod-links, headers => @headers),
             ),
         );
     }
