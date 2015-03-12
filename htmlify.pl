@@ -79,14 +79,13 @@ sub write-index {
 
 sub write-index-files(%categories) {
     say "Creating category index files";
+    my @headers = qw{File Title Author};
     for %categories.kv -> $category, $title {
-        my @files = files-in-category($category);
-        my @filenames = @files.map: {.basename};
-        my @pod-links = @filenames.map: {pod-link($_, "categories/$category/$_")};
-        my @headers = qw{File Title Author};
+        my @examples = %examples{$category}{""}.values;
+        my @rows = @examples.map: {[.pod-link, .title, .author]};
         spurt "html/$category.html", p2h(
             pod-with-title($title,
-                pod-table(@pod-links, headers => @headers),
+                pod-table(@rows, headers => @headers),
             ),
         );
     }
