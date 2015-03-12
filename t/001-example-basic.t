@@ -20,12 +20,13 @@ subtest {
                     subcategory => "",
                     filename => "",
                     pod-link => "",
+                    pod-contents => "",
                 );
     ok($example, "Instantiation setting all attributes");
 }, "Object instantiation";
 
 subtest {
-    plan 6;
+    plan 7;
 
     my $example = Example.new;
     $example.title = "my title";
@@ -45,6 +46,9 @@ subtest {
 
     $example.pod-link = "/just/a/plain/link.html";
     is($example.pod-link, "/just/a/plain/link.html", "Can set pod-link attribute");
+
+    $example.pod-contents = Pod::Block.new;
+    ok($example.pod-contents ~~ Pod::Block, "pod-contents is a Pod::Block");
 
 }, "Attribute setting";
 

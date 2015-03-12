@@ -10,6 +10,7 @@ class Example is export {
     has $.subcategory is rw;
     has $.filename is rw;
     has $.pod-link is rw;
+    has $.pod-contents is rw;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
