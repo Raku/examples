@@ -16,13 +16,13 @@ multi sub timethis (Int $count, Str $code) is export {
     return time_it($count, $routine);
 }
 
-multi sub timethis (Int $count, Code $code) is export { 
+multi sub timethis (Int $count, Code $code) is export {
     return time_it($count, $code);
 }
 
 sub timethese (Int $count, %h) is export {
     my %results;
-    for %h.kv -> $k, $sub { 
+    for %h.kv -> $k, $sub {
         %results{$k} = timethis($count, $sub);
     }
     return %results;
