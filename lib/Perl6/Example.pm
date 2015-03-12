@@ -4,12 +4,12 @@ use v6;
 
 #| Encapsulates an example's metadata
 class Example is export {
-    has $.title;
-    has $.author;
-    has $.category;
-    has $.subcategory;
-    has $.filename;
-    has $.pod-link;
+    has $.title is rw;
+    has $.author is rw;
+    has $.category is rw;
+    has $.subcategory is rw;
+    has $.filename is rw;
+    has $.pod-link is rw;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
