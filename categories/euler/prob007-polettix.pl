@@ -10,26 +10,26 @@ my $nth = shift(@*ARGS) || 10001;
 
 # A simple implementation of Eratosthenes' sieve
 sub primes_iterator {
-   return sub {
-      state %D;
-      state $q //= 2;
-      while %D{$q}:exists {
-         my $p = %D{$q}:delete;
+    return sub {
+        state %D;
+        state $q //= 2;
+        while %D{$q}:exists {
+            my $p = %D{$q}:delete;
 
-         my $x = $q + $p;
-         $x += $p while %D{$x} :exists;
-         %D{$x} = $p;
-         ++$q;
-      }
-      %D{$q * $q} = $q;
-      return $q++;
-   }
+            my $x = $q + $p;
+            $x += $p while %D{$x} :exists;
+            %D{$x} = $p;
+            ++$q;
+        }
+        %D{$q * $q} = $q;
+        return $q++;
+    }
 }
 
 my $it = primes_iterator();
 for 1 .. $nth - 1 -> $i {
-   $it();
-   say "found $i primes so far" unless $i % 100;
+    $it();
+    say "found $i primes so far" unless $i % 100;
 }
 say 'result: ', $it();
 

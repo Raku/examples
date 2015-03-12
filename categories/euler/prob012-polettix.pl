@@ -48,26 +48,26 @@ my %previous_factors = factors_progressively_asked(2);
 # Due to lazyness, we'll talk about ($n - 1) and $n instead of $n and
 # ($n + 1).
 while ($max <= $t) {
-   $n++;
-   my %this_factors = factors_progressively_asked($n);
+    $n++;
+    my %this_factors = factors_progressively_asked($n);
 
-   # Now, %previous_factors has the factors for ($n - 1), and
-   # %this_factors has the factors for $n. We mix them all into
-   # %previous_factors and then eliminate one "2" to cope with the
-   # division.
-   %previous_factors{$_} += %this_factors{$_} for %this_factors.keys;
-   %previous_factors{2}--; # divide by 2
+    # Now, %previous_factors has the factors for ($n - 1), and
+    # %this_factors has the factors for $n. We mix them all into
+    # %previous_factors and then eliminate one "2" to cope with the
+    # division.
+    %previous_factors{$_} += %this_factors{$_} for %this_factors.keys;
+    %previous_factors{2}--; # divide by 2
 
-   # Now, we count the number of different factors
-   my $p = 1;
-   $p *= $_ for %previous_factors.values.map({ $_ + 1 });
+    # Now, we count the number of different factors
+    my $p = 1;
+    $p *= $_ for %previous_factors.values.map({ $_ + 1 });
 
-   # a little feedback
-   say "$n $p ($max)";
+    # a little feedback
+    say "$n $p ($max)";
 
-   # prepare for next iteration: update $max and save %this_factors
-   $max = $p if $max < $p;
-   %previous_factors = %this_factors;
+    # prepare for next iteration: update $max and save %this_factors
+    $max = $p if $max < $p;
+    %previous_factors = %this_factors;
 }
 
 say 'result: ', ($n * ($n - 1)) / 2;
@@ -76,33 +76,33 @@ say 'result: ', ($n * ($n - 1)) / 2;
 # as of Aug 24th, 2009. Otherwise, the @primes.push($x) gets
 # "confused".
 sub factors_progressively_asked ($x is copy) {
-   state @primes;
-   state %factors_for;
-   my $result;
+    state @primes;
+    state %factors_for;
+    my $result;
 
-   if (%factors_for{$x}:exists) {
-      $result = %factors_for{$x};
-   }
-   else {
-      for @primes -> $p {
-         if ($x % $p) == 0 { # Bingo! A divisor!
-            # Now, $p is prime, and $x / $p is surely into %factors_for
-            # because we're calling this function progressively, so
-            # we're done.
-            $result = [ $p, %factors_for{$x / $p}.list ];
-         }
-      }
-      if (! $result) { # Ok, there's a new prime in town
-         @primes.push($x);
-         $result = [ $x ];
-      }
-      %factors_for{$x} = $result;
-   }
+    if (%factors_for{$x}:exists) {
+        $result = %factors_for{$x};
+    }
+    else {
+        for @primes -> $p {
+            if ($x % $p) == 0 { # Bingo! A divisor!
+                # Now, $p is prime, and $x / $p is surely into %factors_for
+                # because we're calling this function progressively, so
+                # we're done.
+                $result = [ $p, %factors_for{$x / $p}.list ];
+            }
+        }
+        if (! $result) { # Ok, there's a new prime in town
+            @primes.push($x);
+            $result = [ $x ];
+        }
+        %factors_for{$x} = $result;
+    }
 
-   # Return as a hash of (factor, occurrences) pairs
-   my %factors;
-   %factors{$_}++ for $result.list;
-   return %factors;
+    # Return as a hash of (factor, occurrences) pairs
+    my %factors;
+    %factors{$_}++ for $result.list;
+    return %factors;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -33,10 +33,8 @@ my @divisors_sums;
 @divisors_sums[1] = 0;
 
 my $MAX = 28_123;
-for (1 .. ($MAX +> 1)) -> $div
-{
-    loop (my $prod = ($div +< 1); $prod <= $MAX; $prod += $div)
-    {
+for (1 .. ($MAX +> 1)) -> $div {
+    loop (my $prod = ($div +< 1); $prod <= $MAX; $prod += $div) {
         @divisors_sums[$prod] += $div;
     }
 }
@@ -47,24 +45,18 @@ my @is_abundant_sum;
 
 my @abundants;
 my $total = 0;
-for (1 .. $MAX) -> $num
-{
-    if @divisors_sums[$num] > $num
-    {
+for (1 .. $MAX) -> $num {
+    if @divisors_sums[$num] > $num {
         @abundants.push($num);
         # The sub { ... } and return are a workaround for the fact that Rakudo
         # Perl 6 does not have last LABEL yet.
         my $c = sub {
-            for @abundants -> $i
-            {
-                if ((my $s = $i + $num) > $MAX)
-                {
+            for @abundants -> $i {
+                if ((my $s = $i + $num) > $MAX) {
                     return;
                 }
-                else
-                {
-                    if (! @is_abundant_sum[$s])
-                    {
+                else {
+                    if (! @is_abundant_sum[$s]) {
                         $total += $s;
                         @is_abundant_sum[$s] = True;
                     }

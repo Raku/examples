@@ -25,8 +25,7 @@ cycle in its decimal fraction part.
 
 =end pod
 
-sub find_cycle_len(Int $n) returns Int
-{
+sub find_cycle_len(Int $n) returns Int {
     my %states;
 
     my $r = 1;
@@ -45,10 +44,8 @@ sub find_cycle_len(Int $n) returns Int
 my $max_cycle_len = -1;
 my $max_n;
 
-for (2 .. 999) -> $n
-{
-    if ((my $cycle_len = find_cycle_len($n)) > $max_cycle_len)
-    {
+for (2 .. 999) -> $n {
+    if ((my $cycle_len = find_cycle_len($n)) > $max_cycle_len) {
         $max_n = $n;
         $max_cycle_len = $cycle_len;
     }

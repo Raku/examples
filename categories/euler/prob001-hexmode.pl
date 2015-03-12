@@ -18,9 +18,9 @@ Expected answer: 233168
 =end pod
 
 say [+] gather {
-  for (1..999) {
-    take $_ if $_ % 3 == 0 || $_ % 5 == 0;
-  }
+    for (1..999) {
+        take $_ if $_ % 3 == 0 || $_ % 5 == 0;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

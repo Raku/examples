@@ -40,21 +40,21 @@ my @y = (1);
 my $c = 1;
 my $current_length = 1;
 while ($current_length < $length) {
-   ++$c;
+    ++$c;
 
-   # (x, y) = (y, x + y)
-   my @z = @y;
-   addto(@y, @x); # modifies @y in-place
-   @x = @z;
+    # (x, y) = (y, x + y)
+    my @z = @y;
+    addto(@y, @x); # modifies @y in-place
+    @x = @z;
 
-   # The most significant part of the number is in the last element
-   # of the array; every other element is $digits bytes long by
-   # definition.
-   my $msb = printable([@y[*-1]]);
-   $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
+    # The most significant part of the number is in the last element
+    # of the array; every other element is $digits bytes long by
+    # definition.
+    my $msb = printable([@y[*-1]]);
+    $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
 
-   # Print a feedback every 20 steps
-   say "$c -> $current_length" unless $c % 20;
+    # Print a feedback every 20 steps
+    say "$c -> $current_length" unless $c % 20;
 }
 
 say "result: $c";
@@ -63,18 +63,18 @@ say "result: $c";
 # This assumes that length(@y) <= length(@x), which will be true in
 # our program because @y is lower than @x
 sub addto (@x is rw, @y) {
-   my $rest = 0;
-   # Assuming length(@y) <= length(@x) means that we have to
-   # put "0"s to iterate over the whole $x. This could be
-   # improved, but it's unlikely that two consecutive Fibonacci
-   # numbers differ by more than one digit
-   for @x Z (@y, 0, *) -> $x is rw, $y {
-      $x += $y + $rest;
-      $rest = ($x / $limit).Int;
-      $x %= $limit;
-   }
-   push @x, $rest if $rest;
-   return;
+    my $rest = 0;
+    # Assuming length(@y) <= length(@x) means that we have to
+    # put "0"s to iterate over the whole $x. This could be
+    # improved, but it's unlikely that two consecutive Fibonacci
+    # numbers differ by more than one digit
+    for @x Z (@y, 0, *) -> $x is rw, $y {
+        $x += $y + $rest;
+        $rest = ($x / $limit).Int;
+        $x %= $limit;
+    }
+    push @x, $rest if $rest;
+    return;
 }
 
 sub printable (@x is copy) {

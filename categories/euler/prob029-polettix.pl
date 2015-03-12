@@ -34,19 +34,19 @@ my $max = @*ARGS.shift || 100;
 # exponents.
 my (%mark_for, %already_done);
 for 2 .. sqrt($max).Int -> $i {
-   next if %already_done{$i};
+    next if %already_done{$i};
 
-   my $x = $i;
-   my $exp = 1;
-   while ($x <= $max) {
-      %already_done{$x} = 1;
-      for 2 .. $max -> $f {
-         %mark_for{$i} ||= {}; # avoid autovivification for now...
-         %mark_for{$i}{$f * $exp} = 1;
-      }
-      ++$exp;
-      $x *= $i;
-   }
+    my $x = $i;
+    my $exp = 1;
+    while ($x <= $max) {
+        %already_done{$x} = 1;
+        for 2 .. $max -> $f {
+            %mark_for{$i} ||= {}; # avoid autovivification for now...
+            %mark_for{$i}{$f * $exp} = 1;
+        }
+        ++$exp;
+        $x *= $i;
+    }
 }
 
 # Now, every element not already considered contributes only with
@@ -57,7 +57,7 @@ my $count = ($max - 1 - %already_done.keys) * ($max - 1);
 # Then, we add the unique elements from what we analysed before,
 # simply counting the number of elements that could potentially collide
 for %mark_for.values -> $v {
-   $count += $v.elems;
+    $count += $v.elems;
 }
 
 $count.say;

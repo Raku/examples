@@ -7,13 +7,13 @@ use v6;
 
 my $palindromNumbersSum = 0;
 loop (my $i = 1; $i <= 999999; $i+=2) {
-	if ( ($i.flip == $i) && (sprintf('%b',$i).flip == sprintf('%b',$i)) ) {
-		$palindromNumbersSum += $i;
-	}
-	# uncomment that if you want to see progress
-	#if ($i%999 == 0) {
-	#	say $i;
-	#}
+    if ( ($i.flip == $i) && (sprintf('%b',$i).flip == sprintf('%b',$i)) ) {
+        $palindromNumbersSum += $i;
+    }
+    # uncomment that if you want to see progress
+    #if ($i%999 == 0) {
+    #	say $i;
+    #}
 }
 say $palindromNumbersSum;
 
