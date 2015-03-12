@@ -1,3 +1,5 @@
+use v6;
+
 module Benchmark;
 
 my sub time_it (Int $count where { $_ > 0 }, Code $code) {
@@ -25,3 +27,5 @@ sub timethese (Int $count, %h) is export {
     }
     return %results;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
