@@ -5,6 +5,7 @@ use Pod::To::Perl;
 use Pod::To::HTML;
 use Pod::Htmlify;
 use Pod::Convenience;
+use Perl6::Example;
 
 my $head = slurp 'template/head.html';
 my $footer = footer-html;
@@ -40,10 +41,36 @@ my %categories =
     "other"               => "Uncategorized examples",
 ;
 
+my %examples = collect-example-metadata(%categories);
+
 write-index;
 write-index-files(%categories);
 create-category-dirs(%categories);
 write-example-files(%categories);
+
+sub collect-example-metadata(%categories) {
+    my %examples;
+    for %categories.kv -> $category, $category-title {
+        my $subcategory = "";
+        my @files = files-in-category($category);
+        my @filenames = @files.map: {.basename};
+        for @filenames -> $file {
+            my $example-title = "Unknown example title";
+            my $author = "As yet unknown";
+            my $example = Example.new(
+                            title => $example-title,
+                            author => $author,
+                            category => $category,
+                            subcategory => $subcategory,
+                            filename => $file,
+                            pod-link => pod-link($file, "categories/$category/$file"),
+                            );
+            %examples{$category}{$subcategory}{$file} = $example;
+        }
+    }
+
+    return %examples;
+}
 
 sub write-index {
     say "Creating main index file";
