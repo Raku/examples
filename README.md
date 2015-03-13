@@ -8,8 +8,8 @@ If an example needs an implementation specific version then it should end in
 .implementation.  For example, if you are making an example that only works
 on Rakudo, it should end in .rakudo.
 
-If you want to contribute, just ask! The quicker choice is to use IRC: join
-#perl6 in Freenode and you'll be welcome.
+If you want to contribute, just ask! The quicker choice is to use IRC:
+join `#perl6` on `irc.freenode.net` and you'll be welcome.
 
 Please use POD (mostly this template
 https://github.com/perl6/perl6-examples/blob/master/template_pod) when
