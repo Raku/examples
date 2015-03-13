@@ -11,7 +11,6 @@ on Rakudo, it should end in .rakudo.
 If you want to contribute, just ask! The quicker choice is to use IRC: join
 #perl6 in Freenode and you'll be welcome.
 
-
 Please use POD (mostly this template
 https://github.com/perl6/perl6-examples/blob/master/template_pod) when
 adding a new example.
@@ -22,9 +21,7 @@ adding a new example.
 2. Help different implementations of Perl 6 test out their code in a less
    testy and more fun manner `;)`
 
-
 ## What you can find here
-
 
 | Directory          | Description                              |
 |--------------------|------------------------------------------|
@@ -49,6 +46,21 @@ adding a new example.
 Since you have a commit-bit (if not then talk to the folks at #perl6 on
 irc.freenode.net) feel free to commit your changes to the main repository.
 No need to submit a pull request!
+
+## Running the examples
+
+To run most examples (all examples excluding those which take a very long
+time or are memory hogs) one can use the `run-examples.pl` script in the
+`bin` directory:
+
+    $ perl6 bin/run-examples.pl
+
+If one wishes to run the examples for a given category, then one can simply
+use the `--category=<category-dir>` option specifying the desired category's
+directory name.  For example, to run the examples for the `cookbook`
+category, use the following:
+
+    $ perl6 bin/run-examples.pl --category=cookbook
 
 ## Building the examples documentation
 
