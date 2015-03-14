@@ -1,7 +1,10 @@
-.PHONY: html test help
+.PHONY: html run-all test help
 
 html:
 	perl6 htmlify.pl
+
+run-all:
+	perl6 bin/run-examples.pl
 
 test:
 	prove --exec perl6 -r t
@@ -12,3 +15,4 @@ help:
 	@echo "Options:"
 	@echo "   html:             generate the HTML documentation"
 	@echo "   test:             run the test suite"
+	@echo "   run-all:   run all examples"
