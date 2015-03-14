@@ -13,6 +13,6 @@ help:
 	@echo "Usage: make [html|test]"
 	@echo ""
 	@echo "Options:"
-	@echo "   html:             generate the HTML documentation"
-	@echo "   test:             run the test suite"
+	@echo "   html:      generate the HTML documentation"
 	@echo "   run-all:   run all examples"
+	@echo "   test:      test the supporting software"
