@@ -55,6 +55,10 @@ time or are memory hogs) one can use the `run-examples.pl` script in the
 
     $ perl6 bin/run-examples.pl
 
+or simply via the `run-all` target of the Makefle:
+
+    $ make run-all
+
 If one wishes to run the examples for a given category, then one can simply
 use the `--category=<category-dir>` option specifying the desired category's
 directory name.  For example, to run the examples for the `cookbook`
