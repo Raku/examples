@@ -63,7 +63,7 @@ while ($max <= $t) {
     $p *= $_ for %previous_factors.values.map({ $_ + 1 });
 
     # a little feedback
-    say "$n $p ($max)";
+    say "$n $p ($max)" unless $n % 100;
 
     # prepare for next iteration: update $max and save %this_factors
     $max = $p if $max < $p;
