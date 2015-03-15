@@ -141,6 +141,23 @@ sub pod-title-contents($pod, $file) {
     return $title;
 }
 
+sub pod-author-contents($pod, $file) {
+    my $author-element = $pod[0].contents[1];
+    my $author;
+    if $author-element ~~ Pod::Block::Named && $author-element.name eq "AUTHOR" {
+        try {
+            $author = $author-element.contents[0].contents[0];
+            CATCH {
+                default { $author = "AUTHOR is empty" }
+            }
+        }
+    }
+    else {
+        say "$file lacks an AUTHOR";
+    }
+    return $author;
+}
+
 sub source-reference($file, $category) {
     pod-block("Source code: ",
         pod-link($file.basename,
