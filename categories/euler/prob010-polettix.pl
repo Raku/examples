@@ -1,8 +1,20 @@
-# The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
-#
-# Find the sum of all the primes below two million.
-
 use v6;
+
+=begin pod
+
+=TITLE Summation of primes
+
+=AUTHOR polettix
+
+L<https://projecteuler.net/problem=10>
+
+The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+Find the sum of all the primes below two million.
+
+Expected result: 142913828922
+
+=end pod
 
 # The upper bound, defaults to challenge's request
 my $upper_bound = shift(@*ARGS) || 2_000_000;
