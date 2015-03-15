@@ -132,7 +132,12 @@ sub pod-title-contents($pod, $file) {
     my $title-element = $pod[0].contents[0];
     my $title;
     if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
-        $title = $title-element.contents[0].contents[0];
+        try {
+            $title = $title-element.contents[0].contents[0];
+            CATCH {
+                default { $title = "TITLE is empty" }
+            }
+        }
     }
     else {
         say "$file lacks a TITLE";
