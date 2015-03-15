@@ -54,16 +54,28 @@ sub collect-example-metadata(%categories) {
         my $subcategory = "";
         my @files = files-in-category($category);
         my @filenames = @files.map: {.basename};
-        for @filenames -> $file {
-            my $example-title = "Unknown example title";
-            my $author = "As yet unknown";
+        for @files -> $file {
+            say "Collecting metadata from $file";
+            my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
+            my $pod = EVAL $perl-pod;
+            my $file-basename = $file.basename;
+            if !$pod {
+                my @contents = $file.lines.join("\n");
+                $pod = Array.new(pod-with-title($file-basename,
+                    pod-code(@contents),
+                ));
+            }
+            my $example-title = pod-title-contents($pod, $file-basename);
+            my $author = pod-author-contents($pod, $file-basename);
+            my $link = pod-link($file-basename, "categories/$category/$file-basename");
             my $example = Example.new(
                             title => $example-title,
                             author => $author,
                             category => $category,
                             subcategory => $subcategory,
                             filename => $file,
-                            pod-link => pod-link($file, "categories/$category/$file"),
+                            pod-link => $link,
+                            pod-contents => $pod,
                             );
             %examples{$category}{$subcategory}{$file} = $example;
         }
