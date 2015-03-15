@@ -15,7 +15,7 @@ my Int sub get-length(Int $n)  {
 my $max = 0;
 my $start = 0;
 for 1 ..^ 1_000_000 -> $n {
-    say $n; #just for progress
+    say "Starting number: $n" unless $n % 10000; #just for progress
     my $length = get-length $n;
 
     if $length > $max {
