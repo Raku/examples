@@ -1,3 +1,5 @@
+use v6;
+
 class PrimeSieve {
     has Int $.p;
     has Int $.value is rw = $!p * $!p;
@@ -105,3 +107,5 @@ sub MAIN($n?) {
         say $p.factor( 600_851_475_143 ).[*-1];
     }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
