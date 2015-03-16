@@ -1,5 +1,31 @@
 use v6;
 
+=begin pod
+
+=TITLE Pandigital Fibonacci ends
+
+=AUTHOR Moritz Lenz
+
+L<https://projecteuler.net/problem=104>
+
+The Fibonacci sequence is defined by the recurrence relation:
+
+    Fₙ = Fₙ₋₁ + Fₙ₋₂, where F₁ = 1 and F₂ = 1.
+
+It turns out that F₅₄₁, which contains 113 digits, is the first Fibonacci
+number for which the last nine digits are 1-9 pandigital (contain all the
+digits 1 to 9, but not necessarily in order). And F₂₇₄₉, which contains 575
+digits, is the first Fibonacci number for which the first nine digits are
+1-9 pandigital.
+
+Given that Fₖ is the first Fibonacci number for which the first nine digits
+AND the last nine digits are 1-9 pandigital, find k.
+
+
+Expected result: 329468
+
+=end pod
+
 say "please be patient, this is going to take a while";
 
 sub is-pandigital (Str $i) {

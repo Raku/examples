@@ -1,3 +1,27 @@
+use v6;
+
+=begin pod
+
+=TITLE Double-base palindromes
+
+=AUTHOR xenu
+
+L<https://projecteuler.net/problem=36>
+
+The decimal number, 585 = 1001001001_2 (binary), is palindromic in both
+bases.
+
+Find the sum of all numbers, less than one million, which are palindromic in
+base 10 and base 2.
+
+(Please note that the palindromic number, in either base, may not include
+leading zeros.)
+
+
+Expected result: 872187
+
+=end pod
+
 #
 # DON'T TRY  EXECUTING THIS SCRIPT WITH RAKUDO 2010.08 OR OLDER!
 # Because of memory leak in these versions, this code eats tens of gigabytes of RAM

@@ -2,11 +2,22 @@ use v6;
 
 =begin pod
 
-=head1 DESCRIPTION
+=TITLE Searching for a maximum-sum subsequence
+
+=AUTHOR Shlomi Fish
+
+L<https://projecteuler.net/problem=149>
 
 Looking at the table below, it is easy to verify that the maximum possible sum
 of adjacent numbers in any direction (horizontal, vertical, diagonal or
-anti-diagonal) is 16 (= 8 + 7 + 1).  −253        2 9−651 3273 −18−4  8
+anti-diagonal) is 16 (= 8 + 7 + 1).
+
+=begin table
+−2   5   3  2
+ 9  −6   5  1
+ 3   2   7  3
+−1   8  −4  8
+=end table
 
 Now, let us repeat the search, but on a much larger scale:
 
@@ -25,11 +36,9 @@ second row, and so on.
 Finally, find the greatest sum of (any number of) adjacent entries in any
 direction (horizontal, vertical, diagonal or anti-diagonal).
 
+Expected result: 52852124
+
 =end pod
-
-# use integer;
-
-# use Math::BigInt "lib" => "GMP";
 
 class FiboRand {
     has $.k is rw = 1;
