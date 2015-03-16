@@ -27,6 +27,6 @@ say gather {
         take @available[$n];
         @available.splice($n, 1);
     }
-}
+}.join('')
 
 # vim: expandtab shiftwidth=4 ft=perl6
