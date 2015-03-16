@@ -2,7 +2,11 @@ use v6;
 
 =begin pod
 
-=head1 PROBLEM
+=TITLE Reciprocal cycles
+
+=AUTHOR Shlomi Fish
+
+L<https://projecteuler.net/problem=26>
 
 A unit fraction contains 1 in the numerator. The decimal representation of
 the unit fractions with denominators 2 to 10 are given:
@@ -23,6 +27,8 @@ seen that 1/7 has a 6-digit recurring cycle.
 Find the value of d < 1000 for which 1/d contains the longest recurring
 cycle in its decimal fraction part.
 
+Expected result: the recurring cycle is 983, and the cycle is length is 982
+
 =end pod
 
 sub find_cycle_len(Int $n) returns Int {
@@ -31,8 +37,7 @@ sub find_cycle_len(Int $n) returns Int {
     my $r = 1;
     my $count = 0;
 
-    while ! ( %states{$r}:exists )
-    {
+    while ! ( %states{$r}:exists ) {
         # $*ERR.say( "Trace: N = $n ; R = $r" );
         %states{$r} = $count++;
         ($r *= 10) %= $n;
