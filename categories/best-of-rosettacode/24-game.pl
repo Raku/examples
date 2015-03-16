@@ -2,6 +2,8 @@
 
 =TITLE 24 game
 
+=AUTHOR Filip Sergot
+
 The 24 Game tests one's mental arithmetic.
 
 Write a program that randomly chooses and displays four digits, each from
@@ -29,7 +31,8 @@ The task is not for the program to generate the expression, or test whether
 an expression is even possible.
 
 =head1 More
- http://rosettacode.org/wiki/24_game#Perl_6
+
+L<http://rosettacode.org/wiki/24_game#Perl_6>
 
 =head1 What's interesting here?
 
