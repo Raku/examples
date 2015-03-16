@@ -17,7 +17,7 @@ After which, the example can be run as expected:
 
 =end pod
 
-sub factors(int $n) returns int is native('./prob047-gerdr') { * }
+sub factors(int $n) returns int is native($*PROGRAM_NAME.IO.dirname ~ '/prob047-gerdr') { * }
 
 sub MAIN(Int $N = 4) {
     my int $n = 2;
