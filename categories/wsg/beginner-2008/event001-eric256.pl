@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Pairing Off
 
-=AUTHOR
+=AUTHOR Eric Hodges
 
 L<http://web.archive.org/web/20080324231941/http://www.microsoft.com/technet/scriptcenter/funzone/games/games08/bevent1.mspx>
 

@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Random Guess
 
-=AUTHOR
+=AUTHOR Nelo Onyiah
 
 For this event you’ll be creating a game. Okay, maybe not the most
 interesting game you’ve even seen (hey, this is the Beginner’s Division

@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Coffee Break
 
-=AUTHOR
+=AUTHOR Nelo Onyiah
 
 It’s Monday morning, at least half the people in the building had to work
 through the weekend, everyone’s a little tired and there’s still a ton of

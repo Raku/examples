@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Let's Get Together
 
-=AUTHOR
+=AUTHOR David Romano
 
 In this event, you need to combine the contents of several text files into
 one. There are a number of things you need to do in order to succeed at this
