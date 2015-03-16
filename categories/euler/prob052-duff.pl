@@ -1,6 +1,5 @@
 use v6;
 
-sub log10($n) { return log($n) / log(10) }
 
 my $mag = 1;        # current power of 10
 my $n = $mag;       # number to start searching from
