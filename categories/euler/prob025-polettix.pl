@@ -54,7 +54,7 @@ while ($current_length < $length) {
     $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
 
     # Print a feedback every 20 steps
-    say "$c -> $current_length" unless $c % 20;
+    say "$c -> $current_length" unless $c % 100;
 }
 
 say "result: $c";
