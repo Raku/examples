@@ -2,7 +2,8 @@ use v6;
 
 my @m;
 
-my $f = open 'prob081-matrix.txt' or die "Can't open file for reading: $!";
+my $matrix-file = $*PROGRAM_NAME.IO.dirname ~ '/matrix.txt';
+my $f = open $matrix-file or die "Can't open file for reading: $!";
 for $f.lines {
     @m.push: [ .comb(/\d+/) ];
 }
