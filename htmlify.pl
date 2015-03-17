@@ -144,7 +144,7 @@ sub format-author-heading($example) {
 
 sub pod-title-contents($pod, $file) {
     my $title-element = $pod[0].contents[0];
-    my $title;
+    my $title = "";
     if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
         try {
             $title = $title-element.contents[0].contents[0];
@@ -162,7 +162,7 @@ sub pod-title-contents($pod, $file) {
 
 sub pod-author-contents($pod, $file) {
     my $author-element = $pod[0].contents[1];
-    my $author;
+    my $author = "";
     if $author-element ~~ Pod::Block::Named && $author-element.name eq "AUTHOR" {
         try {
             $author = $author-element.contents[0].contents[0];
@@ -174,6 +174,7 @@ sub pod-author-contents($pod, $file) {
     else {
         say "$file lacks an AUTHOR";
     }
+
     return $author;
 }
 
