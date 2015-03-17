@@ -12,7 +12,7 @@ If you want to contribute, just ask! The quicker choice is to use IRC:
 join `#perl6` on `irc.freenode.net` and you'll be welcome.
 
 Please use POD (mostly this template
-https://github.com/perl6/perl6-examples/blob/master/template_pod) when
+https://github.com/perl6/perl6-examples/blob/master/doc/example-template.pl) when
 adding a new example.
 
 ## Goals
