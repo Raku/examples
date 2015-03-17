@@ -46,7 +46,7 @@ my %examples = collect-example-metadata(%categories);
 write-index;
 write-index-files(%categories);
 create-category-dirs(%categories);
-write-example-files(%categories);
+write-example-files(%examples);
 
 sub collect-example-metadata(%categories) {
     my %examples;
@@ -114,25 +114,15 @@ sub create-category-dirs(%categories) {
     }
 }
 
-sub write-example-files(%categories) {
-    for %categories.keys -> $category {
+sub write-example-files(%examples) {
+    my @categories = %examples.keys;
+    for @categories -> $category {
         say "Creating example files for category: $category";
         my @files = files-in-category($category);
         my @filenames = @files.map: {.basename};
         for @files -> $file {
             next unless $file.IO.e;
-            my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-            my $pod = EVAL $perl-pod;
-            if !$pod {
-                my @contents = $file.lines.join("\n");
-                $pod = Array.new(pod-with-title($file.basename,
-                    pod-code(@contents),
-                ));
-            }
-            else {
-                # XXX: $file should be part of $pod metadata
-                pod-title-contents($pod, $file);
-            }
+            my $pod = %examples{$category}{""}{$file}.pod-contents;
             $pod.push: source-reference($file, $category);
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
