@@ -122,12 +122,24 @@ sub write-example-files(%examples) {
         my @filenames = @files.map: {.basename};
         for @files -> $file {
             next unless $file.IO.e;
-            my $pod = %examples{$category}{""}{$file}.pod-contents;
+            my $example = %examples{$category}{""}{$file};
+            my $pod = format-author-heading($example);
             $pod.push: source-reference($file, $category);
             my $html-file = $file.subst(/\.p(l|6)/, ".html");
             spurt "html/$html-file", p2h($pod);
         }
     }
+}
+
+sub format-author-heading($example) {
+    my $pod = $example.pod-contents;
+    if $example.author {
+        my $author-heading = Pod::FormattingCode.new(:type<I>,
+                                contents => ["Author: " ~ $example.author]);
+        $example.pod-contents[0].contents[1] = pod-block([$author-heading]);
+    }
+
+    return $pod;
 }
 
 sub pod-title-contents($pod, $file) {
