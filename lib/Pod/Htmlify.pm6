@@ -5,17 +5,6 @@ use Pod::To::HTML;
 use Pod::Convenience;
 use Perl6::Examples;
 
-sub url-munge($_) is export {
-    return $_ if m{^ <[a..z]>+ '://'};
-    return "/type/{uri_escape $_}" if m/^<[A..Z]>/;
-    return "/routine/{uri_escape $_}" if m/^<[a..z]>|^<-alpha>*$/;
-    # poor man's <identifier>
-    if m/ ^ '&'( \w <[[\w'-]>* ) $/ {
-        return "/routine/{uri_escape $0}";
-    }
-    return $_;
-}
-
 sub header-html(%categories) {
     my $header = slurp 'template/header.html';
     my $menu-items = [~]
