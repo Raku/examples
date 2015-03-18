@@ -1,6 +1,8 @@
 module Pod::Htmlify;
 
 use URI::Escape;
+use Pod::Convenience;
+use Perl6::Examples;
 
 sub url-munge($_) is export {
     return $_ if m{^ <[a..z]>+ '://'};
@@ -42,6 +44,42 @@ sub create-category-dirs(%categories) is export {
 
 sub files-in-category($category) is export {
     dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
+}
+
+sub collect-example-metadata(%categories) is export {
+    my %examples;
+    for %categories.kv -> $category, $category-title {
+        my $subcategory = "";
+        my @files = files-in-category($category);
+        my @filenames = @files.map: {.basename};
+        for @files -> $file {
+            say "Collecting metadata from $file";
+            my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
+            my $pod = EVAL $perl-pod;
+            my $file-basename = $file.basename;
+            if !$pod {
+                my @contents = $file.lines.join("\n");
+                $pod = Array.new(pod-with-title($file-basename,
+                    pod-code(@contents),
+                ));
+            }
+            my $example-title = pod-title-contents($pod, $file-basename);
+            my $author = pod-author-contents($pod, $file-basename);
+            my $link = pod-link($file-basename, "categories/$category/$file-basename");
+            my $example = Example.new(
+                            title => $example-title,
+                            author => $author,
+                            category => $category,
+                            subcategory => $subcategory,
+                            filename => $file,
+                            pod-link => $link,
+                            pod-contents => $pod,
+                            );
+            %examples{$category}{$subcategory}{$file} = $example;
+        }
+    }
+
+    return %examples;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
