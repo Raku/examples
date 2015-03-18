@@ -13,6 +13,21 @@ sub url-munge($_) is export {
     return $_;
 }
 
+sub header-html(%categories) is export {
+    my $header = slurp 'template/header.html';
+    my $menu-items = [~]
+        q[<div class="menu-items dark-green">],
+        %categories.keys.map( -> $category {qq[
+            <a class="menu-item selected darker-green"
+                href="/$category.html">
+                { $category.wordcase }
+            </a>
+        ]}),
+        q[</div>];
+    my $menu-pos = ($header ~~ /MENU/).from;
+    $header.subst('MENU', :p($menu-pos), $menu-items);
+}
+
 sub footer-html() is export {
     my $footer = slurp 'template/footer.html';
     $footer.subst('DATETIME', ~DateTime.now);
