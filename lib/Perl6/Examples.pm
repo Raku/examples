@@ -44,36 +44,4 @@ class Categories is export {
     }
 }
 
-sub get-categories(%categories) is export {
-    my @categories = categories-list(%categories);
-    @categories = append-subcategories(@categories);
-
-    return @categories;
-}
-
-sub append-subcategories(@categories) {
-    my %cookbook-categories-table;
-    my %wsg-categories-table;
-    for @categories -> $category {
-        given $category.key {
-            when "cookbook" {
-                $category.subcategories =
-                    categories-list(%cookbook-categories-table);
-            }
-            when "wsg" {
-                $category.subcategories =
-                    categories-list(%wsg-categories-table);
-            }
-        }
-    }
-
-    return @categories;
-}
-
-sub categories-list(%categories) {
-    return gather for %categories.keys -> $subcategory {
-        take Category.new(key => $subcategory, title => %categories{$subcategory});
-    }
-}
-
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -52,7 +52,6 @@ say $all-categories;
 exit 0;
 
 my %categories = %base-categories-table;
-my @categories = get-categories(%categories);
 
 my %examples = collect-example-metadata(%categories);
 
