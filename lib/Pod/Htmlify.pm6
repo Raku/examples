@@ -33,4 +33,11 @@ sub footer-html() is export {
     $footer.subst('DATETIME', ~DateTime.now);
 }
 
+sub create-category-dirs(%categories) is export {
+    for %categories.keys -> $category {
+        my $dir-name = "html/categories/$category";
+        mkdir $dir-name unless $dir-name.IO.d;
+    }
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6

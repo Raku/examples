@@ -93,13 +93,6 @@ sub files-in-category($category) {
     dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
 }
 
-sub create-category-dirs(%categories) {
-    for %categories.keys -> $category {
-        my $dir-name = "html/categories/$category";
-        mkdir $dir-name unless $dir-name.IO.d;
-    }
-}
-
 sub write-example-files(%examples) {
     my @categories = %examples.keys;
     for @categories -> $category {
