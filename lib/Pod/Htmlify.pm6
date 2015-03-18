@@ -5,6 +5,10 @@ use Pod::To::HTML;
 use Pod::Convenience;
 use Perl6::Examples;
 
+class Website is export {
+
+}
+
 sub header-html(%categories) {
     my $header = slurp 'template/header.html';
     my $menu-items = [~]
