@@ -40,4 +40,8 @@ sub create-category-dirs(%categories) is export {
     }
 }
 
+sub files-in-category($category) is export {
+    dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6

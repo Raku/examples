@@ -89,10 +89,6 @@ sub write-index-files(%categories) {
     }
 }
 
-sub files-in-category($category) {
-    dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
-}
-
 sub write-example-files(%examples) {
     my @categories = %examples.keys;
     for @categories -> $category {
