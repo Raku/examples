@@ -20,6 +20,7 @@ class Category is export {
     has @.subcategories is rw;
 }
 
+#| Manipulates groups of Category objects
 class Categories is export {
     has %.categories-table is rw;
 
