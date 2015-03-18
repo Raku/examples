@@ -37,7 +37,6 @@ class Categories is export {
             given $category.key {
                 when $to-category {
                     $category.subcategories = $subcategories.categories-list;
-                    say $category;
                 }
             }
         }
