@@ -41,6 +41,10 @@ class Categories is export {
             }
         }
     }
+
+    method keys {
+        return %!categories-table.keys;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

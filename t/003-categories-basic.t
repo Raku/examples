@@ -5,7 +5,7 @@ use Test;
 
 use Perl6::Examples;
 
-plan 4;
+plan 5;
 
 subtest {
     plan 2;
@@ -57,5 +57,16 @@ subtest {
     my @categories-list = $categories.categories-list;
     ok(@categories-list[0].subcategories[0] ~~ Category, "Appended subcategory is a Category");
 }
+
+subtest {
+    plan 1;
+
+    my %categories-table =
+        "receiver" => "bob",
+        "sender" => "alice",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+    is($categories.keys, <receiver sender>, "keys method returns expected list");
+}, "keys method";
 
 # vim: expandtab shiftwidth=4 ft=perl6
