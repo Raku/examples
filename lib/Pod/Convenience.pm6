@@ -163,4 +163,11 @@ sub format-author-heading($example) is export {
     return $pod;
 }
 
+sub source-reference($file, $category) is export {
+    pod-block("Source code: ",
+        pod-link($file.basename,
+            "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
+    );
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6

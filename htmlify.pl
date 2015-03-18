@@ -106,13 +106,6 @@ sub write-example-files(%examples) {
     }
 }
 
-sub source-reference($file, $category) {
-    pod-block("Source code: ",
-        pod-link($file.basename,
-            "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
-    );
-}
-
 sub p2h($pod) {
     pod2html $pod,
         :url(&url),
