@@ -1,9 +1,7 @@
 use v6;
 
 use lib 'lib';
-use Pod::To::Perl;
 use Pod::Htmlify;
-use Pod::Convenience;
 use Perl6::Examples;
 
 my %categories =
@@ -29,7 +27,5 @@ write-index;
 write-index-files(%categories, %examples);
 create-category-dirs(%categories);
 write-example-files(%examples);
-
-
 
 # vim: expandtab shiftwidth=4 ft=perl6
