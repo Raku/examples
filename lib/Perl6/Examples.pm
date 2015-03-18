@@ -20,6 +20,16 @@ class Category is export {
     has @.subcategories is rw;
 }
 
+class Categories is export {
+    has %.categories-table is rw;
+
+    method categories-list {
+        return gather for %!categories-table.keys -> $subcategory {
+            take Category.new(key => $subcategory, title => %!categories-table{$subcategory});
+        }
+    }
+}
+
 my %base-categories-table =
     "best-of-rosettacode" => "Best of Rosettacode",
     "99-problems"         => "99 problems",
