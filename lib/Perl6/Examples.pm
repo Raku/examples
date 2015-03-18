@@ -39,6 +39,8 @@ sub get-categories(%categories) is export {
 }
 
 sub append-subcategories(@categories) {
+    my %cookbook-categories-table;
+    my %wsg-categories-table;
     for @categories -> $category {
         given $category.key {
             when "cookbook" {
