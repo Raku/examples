@@ -36,11 +36,12 @@ sub files-in-category($category) {
     dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
 }
 
-sub collect-example-metadata(%categories) is export {
+sub collect-example-metadata($categories) is export {
     my %examples;
-    for %categories.kv -> $category, $category-title {
+    for $categories.categories-list -> $category, {
         my $subcategory = "";
-        my @files = files-in-category($category);
+        my $category-key = $category.key;
+        my @files = files-in-category($category-key);
         my @filenames = @files.map: {.basename};
         for @files -> $file {
             say "Collecting metadata from $file";
@@ -55,17 +56,17 @@ sub collect-example-metadata(%categories) is export {
             }
             my $example-title = pod-title-contents($pod, $file-basename);
             my $author = pod-author-contents($pod, $file-basename);
-            my $link = pod-link($file-basename, "categories/$category/$file-basename");
+            my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
             my $example = Example.new(
                             title => $example-title,
                             author => $author,
-                            category => $category,
+                            category => $category-key,
                             subcategory => $subcategory,
                             filename => $file,
                             pod-link => $link,
                             pod-contents => $pod,
                             );
-            %examples{$category}{$subcategory}{$file} = $example;
+            %examples{$category-key}{$subcategory}{$file} = $example;
         }
     }
 

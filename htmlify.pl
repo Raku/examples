@@ -47,13 +47,9 @@ my %wsg-categories-table =
 my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
 $all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
-say $all-categories;
-
-exit 0;
-
 my %categories = %base-categories-table;
 
-my %examples = collect-example-metadata(%categories);
+my %examples = collect-example-metadata($all-categories);
 
 write-index;
 write-index-files(%categories, %examples);
