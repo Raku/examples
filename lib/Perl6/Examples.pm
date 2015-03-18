@@ -55,8 +55,8 @@ my %wsg-subcategories =
     "advanced-2008" => "Advanced-level problems 2008",
 ;
 
-sub get-categories(%categories) {
-    my @categories = init-categories(%categories);
+sub get-categories(%categories) is export {
+    my @categories = categories-list(%categories);
     @categories = append-subcategories(@categories);
 
     return @categories;
@@ -67,11 +67,11 @@ sub append-subcategories(@categories) {
         given $category.key {
             when "cookbook" {
                 $category.subcategories =
-                    init-categories(%cookbook-subcategories);
+                    categories-list(%cookbook-subcategories);
             }
             when "wsg" {
                 $category.subcategories =
-                    init-categories(%wsg-subcategories);
+                    categories-list(%wsg-subcategories);
             }
         }
     }
@@ -79,7 +79,7 @@ sub append-subcategories(@categories) {
     return @categories;
 }
 
-sub init-categories(%categories) {
+sub categories-list(%categories) {
     return gather for %categories.keys -> $subcategory {
         take Category.new(key => $subcategory, title => %categories{$subcategory});
     }
