@@ -25,10 +25,14 @@ sub footer-html {
     $footer.subst('DATETIME', ~DateTime.now);
 }
 
-sub create-category-dirs(%categories) is export {
-    for %categories.keys -> $category {
-        my $dir-name = "html/categories/$category";
-        mkdir $dir-name unless $dir-name.IO.d;
+sub create-category-dirs($categories) is export {
+    for $categories.categories-list -> $category {
+        my $category-dir-name = "html/categories/" ~ $category.key;
+        mkdir $category-dir-name unless $category-dir-name.IO.d;
+        for $category.subcategories -> $subcategory {
+            my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
+            mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+        }
     }
 }
 
