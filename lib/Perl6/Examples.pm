@@ -20,7 +20,7 @@ class Category is export {
     has @.subcategories is rw;
 }
 
-my %categories =
+my %base-categories-table =
     "best-of-rosettacode" => "Best of Rosettacode",
     "99-problems"         => "99 problems",
     "cookbook"            => "Cookbook examples",
@@ -37,7 +37,7 @@ my %categories =
     "other"               => "Uncategorized examples",
 ;
 
-my %cookbook-subcategories =
+my %cookbook-categories-table =
     "01strings"                  => "Strings",
     "02numbers"                  => "Numbers",
     "03dates-and-times"          => "Dates and Times",
@@ -49,7 +49,7 @@ my %cookbook-subcategories =
     "13classes-objects-and-ties" => "Classes, Objects and Ties",
 ;
 
-my %wsg-subcategories =
+my %wsg-categories-table =
     "beginner-2007" => "Beginner-level problems 2007",
     "beginner-2008" => "Beginner-level problems 2008",
     "advanced-2008" => "Advanced-level problems 2008",
@@ -67,11 +67,11 @@ sub append-subcategories(@categories) {
         given $category.key {
             when "cookbook" {
                 $category.subcategories =
-                    categories-list(%cookbook-subcategories);
+                    categories-list(%cookbook-categories-table);
             }
             when "wsg" {
                 $category.subcategories =
-                    categories-list(%wsg-subcategories);
+                    categories-list(%wsg-categories-table);
             }
         }
     }
