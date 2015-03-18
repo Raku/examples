@@ -34,8 +34,8 @@ subtest {
     plan 2;
 
     my %categories-table =
-        "bob" => "receiver",
-        "alice" => "sender",
+        "receiver" => "bob",
+        "sender" => "alice",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
     my @categories-list = $categories.categories-list;
