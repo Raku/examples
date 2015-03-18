@@ -5,9 +5,9 @@ use Test;
 
 plan 3;
 
-use-ok "Perl6::Example";
+use-ok "Perl6::Examples";
 
-use Perl6::Example;
+use Perl6::Examples;
 subtest {
     plan 2;
 

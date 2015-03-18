@@ -5,7 +5,7 @@ use Pod::To::Perl;
 use Pod::To::HTML;
 use Pod::Htmlify;
 use Pod::Convenience;
-use Perl6::Example;
+use Perl6::Examples;
 
 my $head = slurp 'template/head.html';
 my $footer = footer-html;
