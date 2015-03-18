@@ -32,6 +32,17 @@ class Categories is export {
         }
     }
 
+    method append-subcategories(:$to-category, :$subcategories) {
+        for self.categories-list -> $category {
+            given $category.key {
+                when $to-category {
+                    $category.subcategories = $subcategories.categories-list;
+                    say $category;
+                }
+            }
+        }
+    }
+}
 
 sub get-categories(%categories) is export {
     my @categories = categories-list(%categories);
