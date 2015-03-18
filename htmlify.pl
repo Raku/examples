@@ -117,17 +117,6 @@ sub write-example-files(%examples) {
     }
 }
 
-sub format-author-heading($example) {
-    my $pod = $example.pod-contents;
-    if $example.author {
-        my $author-heading = Pod::FormattingCode.new(:type<I>,
-                                contents => ["Author: " ~ $example.author]);
-        $example.pod-contents[0].contents[1] = pod-block([$author-heading]);
-    }
-
-    return $pod;
-}
-
 sub source-reference($file, $category) {
     pod-block("Source code: ",
         pod-link($file.basename,

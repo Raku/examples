@@ -152,4 +152,15 @@ sub pod-author-contents($pod, $file) is export {
     return $author;
 }
 
+sub format-author-heading($example) is export {
+    my $pod = $example.pod-contents;
+    if $example.author {
+        my $author-heading = Pod::FormattingCode.new(:type<I>,
+                                contents => ["Author: " ~ $example.author]);
+        $example.pod-contents[0].contents[1] = pod-block([$author-heading]);
+    }
+
+    return $pod;
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6
