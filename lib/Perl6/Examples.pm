@@ -22,7 +22,7 @@ class Category is export {
 
 #| Manipulates groups of Category objects
 class Categories is export {
-    has %.categories-table is rw;
+    has %.categories-table;
 
     method categories-list {
         return gather for %!categories-table.keys -> $subcategory {

@@ -19,13 +19,10 @@ subtest {
 }, "Categories object instantiation";
 
 subtest {
-    plan 2;
+    plan 1;
 
     my $categories = Categories.new;
     my %categories-table = "key" => "value";
-    $categories.categories-table = %categories-table;
-    is($categories.categories-table, "key" => "value", "Can set categories-table attribute");
-
     $categories = Categories.new(categories-table => %categories-table);
     is($categories.categories-table, "key" => "value", "Set categories-table attr in constructor");
 }, "Attribute setting";
