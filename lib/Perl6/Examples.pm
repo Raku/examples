@@ -13,4 +13,11 @@ class Example is export {
     has $.pod-contents is rw;
 }
 
+#| Encapsulates a category's metadata
+class Category is export {
+    has $.key is rw;
+    has $.title is rw;
+    has @.subcategories is rw;
+}
+
 # vim: expandtab shiftwidth=4 ft=perl6
