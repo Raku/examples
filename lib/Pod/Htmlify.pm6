@@ -17,6 +17,11 @@ class Website is export {
             }
         }
     }
+
+    method write-index(:$base-dir = "html/") {
+        say "Creating main index file";
+        spurt $base-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
+    }
 }
 
 sub header-html(%categories) {
@@ -78,11 +83,6 @@ sub collect-example-metadata($categories) is export {
     }
 
     return %examples;
-}
-
-sub write-index is export {
-    say "Creating main index file";
-    spurt 'html/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
 }
 
 sub write-index-files(%categories, %examples) is export {

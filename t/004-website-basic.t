@@ -4,7 +4,7 @@ use lib 'lib';
 use Test;
 use Perl6::Examples;
 
-plan 3;
+plan 4;
 
 use-ok("Pod::Htmlify");
 
@@ -30,5 +30,16 @@ subtest {
 
     rmdir $base-dir if $base-dir.IO.d;
 }, "create-category-dirs functionality";
+
+subtest {
+    plan 1;
+
+    my $website = Website.new;
+    my $base-dir = "/tmp/website-test";
+    mkdir $base-dir unless $base-dir.IO.d;
+    $website.write-index(base-dir => $base-dir);
+    ok(($base-dir ~ "/index.html").IO.f, "index file created");
+    rmdir $base-dir if $base-dir.IO.d;
+}, "write-index functionality";
 
 # vim: expandtab shiftwidth=4 ft=perl6

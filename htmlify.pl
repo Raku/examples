@@ -52,10 +52,10 @@ my %categories = %base-categories-table;
 my %examples = collect-example-metadata($all-categories);
 
 
-write-index;
+my $website = Website.new;
+$website.write-index;
 write-index-files(%categories, %examples);
 
-my $website = Website.new;
 $website.create-category-dirs($all-categories);
 
 write-example-files(%examples);
