@@ -22,6 +22,20 @@ class Website is export {
         say "Creating main index file";
         spurt $base-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
     }
+
+    method write-category-indices(%categories, %examples, :$base-dir = "html/") {
+        say "Creating category index files";
+        my @headers = qw{File Title Author};
+        for %categories.kv -> $category, $title {
+            my @examples = %examples{$category}{""}.values;
+            my @rows = @examples.map: {[.pod-link, .title, .author]};
+            spurt $base-dir ~ "/$category.html", p2h(
+                pod-with-title($title,
+                    pod-table(@rows, headers => @headers),
+                ),
+            );
+        }
+    }
 }
 
 sub header-html(%categories) {
@@ -83,20 +97,6 @@ sub collect-example-metadata($categories) is export {
     }
 
     return %examples;
-}
-
-sub write-index-files(%categories, %examples) is export {
-    say "Creating category index files";
-    my @headers = qw{File Title Author};
-    for %categories.kv -> $category, $title {
-        my @examples = %examples{$category}{""}.values;
-        my @rows = @examples.map: {[.pod-link, .title, .author]};
-        spurt "html/$category.html", p2h(
-            pod-with-title($title,
-                pod-table(@rows, headers => @headers),
-            ),
-        );
-    }
 }
 
 sub write-example-files(%examples) is export {
