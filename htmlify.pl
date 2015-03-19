@@ -51,9 +51,13 @@ my %categories = %base-categories-table;
 
 my %examples = collect-example-metadata($all-categories);
 
+
 write-index;
 write-index-files(%categories, %examples);
-create-category-dirs($all-categories);
+
+my $website = Website.new;
+$website.create-category-dirs($all-categories);
+
 write-example-files(%examples);
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -6,7 +6,17 @@ use Pod::Convenience;
 use Perl6::Examples;
 
 class Website is export {
-
+    method create-category-dirs($categories, :$base-dir = "html/categories/") {
+        for $categories.categories-list -> $category {
+            my $category-dir-name = $base-dir ~ "/" ~ $category.key;
+            say $category-dir-name;
+            mkdir $category-dir-name unless $category-dir-name.IO.d;
+            for $category.subcategories -> $subcategory {
+                my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
+                mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+            }
+        }
+    }
 }
 
 sub header-html(%categories) {
@@ -27,17 +37,6 @@ sub header-html(%categories) {
 sub footer-html {
     my $footer = slurp 'template/footer.html';
     $footer.subst('DATETIME', ~DateTime.now);
-}
-
-sub create-category-dirs($categories) is export {
-    for $categories.categories-list -> $category {
-        my $category-dir-name = "html/categories/" ~ $category.key;
-        mkdir $category-dir-name unless $category-dir-name.IO.d;
-        for $category.subcategories -> $subcategory {
-            my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
-            mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
-        }
-    }
 }
 
 sub files-in-category($category) {
