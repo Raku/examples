@@ -37,11 +37,11 @@ class Website is export {
     }
 }
 
-sub header-html(%categories) {
+sub header-html(@category-keys) {
     my $header = slurp 'template/header.html';
     my $menu-items = [~]
         q[<div class="menu-items dark-green">],
-        %categories.keys.map( -> $category {qq[
+        @category-keys.map( -> $category {qq[
             <a class="menu-item selected darker-green"
                 href="/$category.html">
                 { $category.wordcase.subst('-', ' ', :global) }
@@ -138,7 +138,7 @@ sub p2h($pod) {
     pod2html $pod,
         :url(&url),
         :$head,
-        :header(header-html %categories),
+        :header(header-html %categories.keys),
         :$footer,
         :default-title("Perl 6 Examples");
 }
