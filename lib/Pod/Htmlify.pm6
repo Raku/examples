@@ -6,6 +6,8 @@ use Pod::Convenience;
 use Perl6::Examples;
 
 class Website is export {
+    has $.categories is rw;
+
     method create-category-dirs($categories, :$base-dir = "html/categories/") {
         for $categories.categories-list -> $category {
             my $category-dir-name = $base-dir ~ "/" ~ $category.key;
