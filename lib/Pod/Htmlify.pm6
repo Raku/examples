@@ -22,10 +22,10 @@ class Website is export {
         spurt $base-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
     }
 
-    method write-category-indices(%categories, %examples, :$base-dir = "html/") {
+    method write-category-indices($categories, %examples, :$base-dir = "html/") {
         say "Creating category index files";
         my @headers = qw{File Title Author};
-        for %categories.kv -> $category, $title {
+        for $categories.categories-table.kv -> $category, $title {
             my @examples = %examples{$category}{""}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
             spurt $base-dir ~ "/$category.html", p2h(

@@ -54,7 +54,7 @@ my %examples = collect-example-metadata($all-categories);
 
 my $website = Website.new;
 $website.write-index;
-$website.write-category-indices(%categories, %examples);
+$website.write-category-indices($all-categories, %examples);
 
 $website.create-category-dirs($all-categories);
 

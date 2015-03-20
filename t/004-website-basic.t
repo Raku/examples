@@ -92,7 +92,7 @@ subtest {
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
     $website.create-category-dirs($categories, base-dir => $base-dir);
-    $website.write-category-indices(%categories-table, %examples, base-dir => $base-dir);
+    $website.write-category-indices($categories, %examples, base-dir => $base-dir);
 
     ok(($base-dir ~ "/sender.html").IO.f,
         "index file for 'sender' category created");
