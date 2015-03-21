@@ -113,7 +113,7 @@ subtest {
     $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
     $website.create-category-dirs;
-    $website.write-category-indices(%examples, base-dir => $base-dir);
+    $website.write-category-indices(%examples);
 
     ok(($base-dir ~ "/sender.html").IO.e,
         "index file for 'sender' category created");
