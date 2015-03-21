@@ -37,9 +37,13 @@ subtest {
     ;
     my $categories = Categories.new(categories-table => %categories-table);
     my $website = Website.new(categories => $categories);
-    my $base-dir = "/tmp/website-test";
+    my $base-html-dir = "/tmp/website-test";
+    $website.base-html-dir = $base-html-dir;
+
+    my $base-dir = $base-html-dir ~ "/categories";
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.create-category-dirs(base-dir => $base-dir);
+
+    $website.create-category-dirs;
 
     ok(($base-dir ~ "/sender").IO.d, "category directory 'sender' created");
     ok(($base-dir ~ "/receiver").IO.d, "category directory 'receiver' created");
@@ -105,13 +109,14 @@ subtest {
 
     my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
+    $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.create-category-dirs(base-dir => $base-dir);
+    $website.create-category-dirs;
     $website.write-category-indices(%examples, base-dir => $base-dir);
 
-    ok(($base-dir ~ "/sender.html").IO.f,
+    ok(($base-dir ~ "/sender.html").IO.e,
         "index file for 'sender' category created");
-    ok(($base-dir ~ "/receiver.html").IO.f,
+    ok(($base-dir ~ "/receiver.html").IO.e,
         "index file for 'receiver' category created");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;

@@ -9,9 +9,9 @@ class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
 
-    method create-category-dirs(:$base-dir = "html/categories/") {
+    method create-category-dirs {
         for $!categories.categories-list -> $category {
-            my $category-dir-name = $base-dir ~ "/" ~ $category.key;
+            my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
             mkdir $category-dir-name unless $category-dir-name.IO.d;
             for $category.subcategories -> $subcategory {
                 my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
