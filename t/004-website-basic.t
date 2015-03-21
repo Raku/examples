@@ -44,7 +44,7 @@ subtest {
     ok(($base-dir ~ "/sender").IO.d, "category directory 'sender' created");
     ok(($base-dir ~ "/receiver").IO.d, "category directory 'receiver' created");
 
-    rmdir $base-dir if $base-dir.IO.d;
+    recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "create-category-dirs functionality";
 
 subtest {
@@ -57,7 +57,7 @@ subtest {
 
     ok(($base-dir ~ "/index.html").IO.f, "index file created");
 
-    rmdir $base-dir if $base-dir.IO.d;
+    recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "write-index functionality";
 
 subtest {
@@ -114,7 +114,15 @@ subtest {
     ok(($base-dir ~ "/receiver.html").IO.f,
         "index file for 'receiver' category created");
 
-    rmdir $base-dir if $base-dir.IO.d;
+    recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "write-category-indices functionality";
+
+#| recursively remove a directory
+sub recursive-rmdir($dirname) {
+    for dir($dirname) -> $file {
+        unlink $file;
+    }
+    rmdir $dirname;
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
