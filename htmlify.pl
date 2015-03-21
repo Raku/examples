@@ -52,7 +52,7 @@ my %categories = %base-categories-table;
 my %examples = collect-example-metadata($all-categories);
 
 
-my $website = Website.new;
+my $website = Website.new(categories => $all-categories);
 $website.write-index;
 $website.write-category-indices($all-categories, %examples);
 

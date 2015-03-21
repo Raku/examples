@@ -34,7 +34,7 @@ subtest {
         "receiver" => "bob",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
-    my $website = Website.new;
+    my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
     $website.create-category-dirs($categories, base-dir => $base-dir);
@@ -101,7 +101,7 @@ subtest {
                                         pod-contents => pod-title("receiver eve"),
                                     );
 
-    my $website = Website.new;
+    my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
     $website.create-category-dirs($categories, base-dir => $base-dir);
