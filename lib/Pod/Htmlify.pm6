@@ -7,6 +7,7 @@ use Perl6::Examples;
 
 class Website is export {
     has $.categories is rw;
+    has $.base-html-dir is rw = "html";
 
     method create-category-dirs(:$base-dir = "html/categories/") {
         for $!categories.categories-list -> $category {

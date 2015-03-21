@@ -12,7 +12,7 @@ use-ok("Pod::Htmlify");
 use Pod::Htmlify;
 
 subtest {
-    plan 3;
+    plan 4;
 
     ok(Website.new, "A website object can be instantiated");
 
@@ -24,6 +24,8 @@ subtest {
     my $website = Website.new(categories => $categories);
     ok($website.categories, "categories initialised to a value");
     is($website.categories.keys.elems, 2, "number of keys in categories");
+
+    is($website.base-html-dir, "html", "base html directory");
 }, "Website object instantiation";
 
 subtest {
