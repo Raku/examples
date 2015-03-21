@@ -119,8 +119,8 @@ subtest {
 
 #| recursively remove a directory
 sub recursive-rmdir($dirname) {
-    for dir($dirname) -> $file {
-        unlink $file;
+    for dir($dirname) -> $path {
+        $path.IO.d ?? recursive-rmdir($path) !! unlink $path;
     }
     rmdir $dirname;
 }
