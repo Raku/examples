@@ -56,7 +56,7 @@ my $website = Website.new(categories => $all-categories);
 $website.write-index;
 $website.write-category-indices($all-categories, %examples);
 
-$website.create-category-dirs($all-categories);
+$website.create-category-dirs;
 
 write-example-files(%examples);
 

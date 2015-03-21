@@ -37,7 +37,7 @@ subtest {
     my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.create-category-dirs($categories, base-dir => $base-dir);
+    $website.create-category-dirs(base-dir => $base-dir);
 
     ok(($base-dir ~ "/sender").IO.d, "category directory 'sender' created");
     ok(($base-dir ~ "/receiver").IO.d, "category directory 'receiver' created");
@@ -104,7 +104,7 @@ subtest {
     my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.create-category-dirs($categories, base-dir => $base-dir);
+    $website.create-category-dirs(base-dir => $base-dir);
     $website.write-category-indices($categories, %examples, base-dir => $base-dir);
 
     ok(($base-dir ~ "/sender.html").IO.f,
