@@ -20,9 +20,9 @@ class Website is export {
         }
     }
 
-    method write-index(:$base-dir = "html/") {
+    method write-index {
         say "Creating main index file";
-        spurt $base-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
+        spurt $!base-html-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
     }
 
     method write-category-indices(%examples, :$base-dir = "html/") {

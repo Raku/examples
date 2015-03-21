@@ -56,8 +56,9 @@ subtest {
 
     my $website = Website.new;
     my $base-dir = "/tmp/website-test";
+    $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.write-index(base-dir => $base-dir);
+    $website.write-index;
 
     ok(($base-dir ~ "/index.html").IO.f, "index file created");
 
