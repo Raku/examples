@@ -11,6 +11,44 @@ use-ok("Pod::Htmlify");
 
 use Pod::Htmlify;
 
+my %examples;
+my $filename = "sender/bob.pl";
+%examples{"sender"}{""}{$filename.IO.basename} = Example.new(
+                                    title => "sender bob",
+                                    author => "victor",
+                                    category => "sender",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("sender bob")],
+                                );
+$filename = "sender/charlie.p6";
+%examples{"sender"}{""}{$filename.IO.basename} = Example.new(
+                                    title => "sender charlie",
+                                    author => "victor",
+                                    category => "sender",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("sender charlie")],
+                                );
+$filename = "receiver/alice.pl";
+%examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
+                                    title => "receiver alice",
+                                    author => "victor",
+                                    category => "receiver",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("receiver alice")],
+                                );
+$filename = "receiver/eve.p6";
+%examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
+                                    title => "receiver eve",
+                                    author => "victor",
+                                    category => "receiver",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("receiver eve")],
+                                );
+
 subtest {
     plan 4;
 
@@ -74,40 +112,6 @@ subtest {
     ;
     my $categories = Categories.new(categories-table => %categories-table);
 
-    my %examples;
-    %examples{"sender"}{""}{"bob"} = Example.new(
-                                        title => "sender bob",
-                                        author => "victor",
-                                        category => "sender",
-                                        filename => "bob",
-                                        pod-link => "",
-                                        pod-contents => pod-title("sender bob"),
-                                    );
-    %examples{"sender"}{""}{"charlie"} = Example.new(
-                                        title => "sender charlie",
-                                        author => "victor",
-                                        category => "sender",
-                                        filename => "charlie",
-                                        pod-link => "",
-                                        pod-contents => pod-title("sender charlie"),
-                                    );
-    %examples{"receiver"}{""}{"alice"} = Example.new(
-                                        title => "receiver alice",
-                                        author => "victor",
-                                        category => "receiver",
-                                        filename => "alice",
-                                        pod-link => "",
-                                        pod-contents => pod-title("receiver alice"),
-                                    );
-    %examples{"receiver"}{""}{"eve"} = Example.new(
-                                        title => "receiver eve",
-                                        author => "victor",
-                                        category => "receiver",
-                                        filename => "eve",
-                                        pod-link => "",
-                                        pod-contents => pod-title("receiver eve"),
-                                    );
-
     my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
     $website.base-html-dir = $base-dir;
@@ -133,43 +137,6 @@ subtest {
     my $categories = Categories.new(categories-table => %categories-table);
 
     my $base-dir = "/tmp/website-test";
-    my %examples;
-    my $filename = "sender/bob.pl";
-    %examples{"sender"}{""}{$filename.IO.basename} = Example.new(
-                                        title => "sender bob",
-                                        author => "victor",
-                                        category => "sender",
-                                        filename => $filename,
-                                        pod-link => pod-link("text", "url"),
-                                        pod-contents => [pod-title("sender bob")],
-                                    );
-    $filename = "sender/charlie.p6";
-    %examples{"sender"}{""}{$filename.IO.basename} = Example.new(
-                                        title => "sender charlie",
-                                        author => "victor",
-                                        category => "sender",
-                                        filename => $filename,
-                                        pod-link => pod-link("text", "url"),
-                                        pod-contents => [pod-title("sender charlie")],
-                                    );
-    $filename = "receiver/alice.pl";
-    %examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
-                                        title => "receiver alice",
-                                        author => "victor",
-                                        category => "receiver",
-                                        filename => $filename,
-                                        pod-link => pod-link("text", "url"),
-                                        pod-contents => [pod-title("receiver alice")],
-                                    );
-    $filename = "receiver/eve.p6";
-    %examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
-                                        title => "receiver eve",
-                                        author => "victor",
-                                        category => "receiver",
-                                        filename => $filename,
-                                        pod-link => pod-link("text", "url"),
-                                        pod-contents => [pod-title("receiver eve")],
-                                    );
 
     my $website = Website.new(categories => $categories);
     $website.base-html-dir = $base-dir ~ "/html";
