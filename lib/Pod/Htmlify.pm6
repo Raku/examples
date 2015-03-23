@@ -60,8 +60,8 @@ sub footer-html {
     $footer.subst('DATETIME', ~DateTime.now);
 }
 
-sub files-in-category($category) {
-    dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
+sub files-in-category($category, :$base-dir = "./categories") {
+    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
 }
 
 sub collect-example-metadata($categories) is export {
