@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 6;
+plan 7;
 
 use-ok("Pod::Htmlify");
 
@@ -181,6 +181,53 @@ subtest {
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "write-example-files functionality";
+
+subtest {
+    plan 3;
+
+    my %categories-table =
+        "sender" => "alice",
+        "receiver" => "bob",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+
+    my $base-dir = "/tmp/website-test";
+
+    my $website = Website.new(categories => $categories);
+    $website.base-html-dir = $base-dir ~ "/html";
+    my $base-categories-dir = $base-dir ~ "/categories";
+    $website.base-categories-dir = $base-categories-dir;
+
+    mkdir $base-dir unless $base-dir.IO.d;
+    mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
+    mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
+
+    # set up some fake input examples
+    for <sender receiver> -> $category-dir {
+        for %examples{$category-dir}{""}.values -> $example {
+            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
+            mkdir $example-dir unless $example-dir.IO.d;
+            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
+            my $title = $example.title;
+            my $author = $example.author;
+            my $example-contents = qq:to/EOF/;
+            =begin pod
+            =TITLE $title
+            =AUTHOR $author
+            =end pod
+            EOF
+            $example-fname.IO.spurt($example-contents);
+        }
+    }
+
+    my %example-metadata = $website.collect-example-metadata($categories);
+    ok(%example-metadata, "Non-null examples metadata structure returned");
+
+    is(%example-metadata{"receiver"}{""}{"alice.pl"}.author, "victor");
+    is(%example-metadata{"sender"}{""}{"charlie.p6"}.title, "sender charlie");
+
+    recursive-rmdir($base-dir) if $base-dir.IO.d;
+}, "collect-example-metadata functionality";
 
 #| recursively remove a directory
 sub recursive-rmdir($dirname) {

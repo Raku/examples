@@ -56,6 +56,42 @@ class Website is export {
             }
         }
     }
+
+    method collect-example-metadata($categories) {
+        my %examples;
+        for $categories.categories-list -> $category, {
+            my $subcategory = "";
+            my $category-key = $category.key;
+            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
+            for @files -> $file {
+                say "Collecting metadata from $file";
+                my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
+                my $pod = EVAL $perl-pod;
+                my $file-basename = $file.basename;
+                if !$pod {
+                    my @contents = $file.lines.join("\n");
+                    $pod = Array.new(pod-with-title($file-basename,
+                        pod-code(@contents),
+                    ));
+                }
+                my $example-title = pod-title-contents($pod, $file-basename);
+                my $author = pod-author-contents($pod, $file-basename);
+                my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
+                my $example = Example.new(
+                                title => $example-title,
+                                author => $author,
+                                category => $category-key,
+                                subcategory => $subcategory,
+                                filename => $file,
+                                pod-link => $link,
+                                pod-contents => $pod,
+                                );
+                %examples{$category-key}{$subcategory}{$file-basename} = $example;
+            }
+        }
+
+        return %examples;
+    }
 }
 
 sub header-html(@category-keys) {
@@ -80,43 +116,6 @@ sub footer-html {
 
 sub files-in-category($category, :$base-dir = "./categories") {
     dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
-}
-
-sub collect-example-metadata($categories) is export {
-    my %examples;
-    for $categories.categories-list -> $category, {
-        my $subcategory = "";
-        my $category-key = $category.key;
-        my @files = files-in-category($category-key);
-        my @filenames = @files.map: {.basename};
-        for @files -> $file {
-            say "Collecting metadata from $file";
-            my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-            my $pod = EVAL $perl-pod;
-            my $file-basename = $file.basename;
-            if !$pod {
-                my @contents = $file.lines.join("\n");
-                $pod = Array.new(pod-with-title($file-basename,
-                    pod-code(@contents),
-                ));
-            }
-            my $example-title = pod-title-contents($pod, $file-basename);
-            my $author = pod-author-contents($pod, $file-basename);
-            my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
-            my $example = Example.new(
-                            title => $example-title,
-                            author => $author,
-                            category => $category-key,
-                            subcategory => $subcategory,
-                            filename => $file,
-                            pod-link => $link,
-                            pod-contents => $pod,
-                            );
-            %examples{$category-key}{$subcategory}{$file-basename} = $example;
-        }
-    }
-
-    return %examples;
 }
 
 my %categories =
