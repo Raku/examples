@@ -57,9 +57,9 @@ class Website is export {
         }
     }
 
-    method collect-example-metadata($categories) {
+    method collect-example-metadata {
         my %examples;
-        for $categories.categories-list -> $category, {
+        for $!categories.categories-list -> $category, {
             my $subcategory = "";
             my $category-key = $category.key;
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);

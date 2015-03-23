@@ -220,7 +220,7 @@ subtest {
         }
     }
 
-    my %example-metadata = $website.collect-example-metadata($categories);
+    my %example-metadata = $website.collect-example-metadata;
     ok(%example-metadata, "Non-null examples metadata structure returned");
 
     is(%example-metadata{"receiver"}{""}{"alice.pl"}.author, "victor");
