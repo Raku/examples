@@ -94,7 +94,7 @@ subtest {
     %examples{"receiver"}{""}{"alice"} = Example.new(
                                         title => "receiver alice",
                                         author => "victor",
-                                        category => "reciever",
+                                        category => "receiver",
                                         filename => "alice",
                                         pod-link => "",
                                         pod-contents => pod-title("receiver alice"),
@@ -102,7 +102,7 @@ subtest {
     %examples{"receiver"}{""}{"eve"} = Example.new(
                                         title => "receiver eve",
                                         author => "victor",
-                                        category => "reciever",
+                                        category => "receiver",
                                         filename => "eve",
                                         pod-link => "",
                                         pod-contents => pod-title("receiver eve"),
