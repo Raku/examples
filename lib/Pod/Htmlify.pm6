@@ -8,6 +8,7 @@ use Perl6::Examples;
 class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
+    has $.base-categories-dir is rw = "categories";
 
     method create-category-dirs {
         for $!categories.categories-list -> $category {
@@ -36,6 +37,23 @@ class Website is export {
                     pod-table(@rows, headers => @headers),
                 ),
             );
+        }
+    }
+
+    method write-example-files(%examples) {
+        my @categories = %examples.keys;
+        for @categories -> $category {
+            say "Creating example files for category: $category";
+            my @files = files-in-category($category, base-dir => $!base-categories-dir);
+            for @files -> $file {
+                next unless $file.IO.e;
+                my $example = %examples{$category}{""}{$file.IO.basename};
+                my $pod = format-author-heading($example);
+                $pod.push: source-reference($file, $category);
+                my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
+                $html-file = $!base-html-dir ~ "/categories/$category/" ~ $html-file;
+                spurt $html-file, p2h($pod);
+            }
         }
     }
 }
@@ -94,28 +112,11 @@ sub collect-example-metadata($categories) is export {
                             pod-link => $link,
                             pod-contents => $pod,
                             );
-            %examples{$category-key}{$subcategory}{$file} = $example;
+            %examples{$category-key}{$subcategory}{$file-basename} = $example;
         }
     }
 
     return %examples;
-}
-
-sub write-example-files(%examples) is export {
-    my @categories = %examples.keys;
-    for @categories -> $category {
-        say "Creating example files for category: $category";
-        my @files = files-in-category($category);
-        my @filenames = @files.map: {.basename};
-        for @files -> $file {
-            next unless $file.IO.e;
-            my $example = %examples{$category}{""}{$file};
-            my $pod = format-author-heading($example);
-            $pod.push: source-reference($file, $category);
-            my $html-file = $file.subst(/\.p(l|6)/, ".html");
-            spurt "html/$html-file", p2h($pod);
-        }
-    }
 }
 
 my %categories =
