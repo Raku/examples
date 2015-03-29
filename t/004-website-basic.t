@@ -116,7 +116,6 @@ subtest {
     my $base-dir = "/tmp/website-test";
     $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.create-category-dirs;
     $website.write-category-indices(%examples);
 
     ok(($base-dir ~ "/sender.html").IO.e,
