@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 8;
+plan 9;
 
 use-ok("Pod::Htmlify");
 
@@ -258,6 +258,61 @@ subtest {
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "p2h functionality";
+
+subtest {
+    plan 7;
+
+    my %categories-table =
+        "sender" => "alice",
+        "receiver" => "bob",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+    my $base-dir = "/tmp/website-test";
+    mkdir $base-dir unless $base-dir.IO.d;
+
+    my $website = Website.new(categories => $categories);
+    $website.base-html-dir = $base-dir ~ "/html";
+    $website.base-categories-dir = $base-dir ~ "/categories";
+
+    # need to check that base-html-dir and base-categories-dir exist
+
+    mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
+    mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
+
+    # set up some fake input examples
+    for <sender receiver> -> $category-dir {
+        for %examples{$category-dir}{""}.values -> $example {
+            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
+            mkdir $example-dir unless $example-dir.IO.d;
+            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
+            my $title = $example.title;
+            my $author = $example.author;
+            my $example-contents = qq:to/EOF/;
+            =begin pod
+            =TITLE $title
+            =AUTHOR $author
+            =end pod
+            EOF
+            $example-fname.IO.spurt($example-contents);
+        }
+    }
+
+    $website.build;
+
+    ok(($website.base-html-dir ~ "/index.html").IO.e, "index.html exists");
+    ok(($website.base-html-dir ~ "/sender.html").IO.e, "sender.html exists");
+    ok(($website.base-html-dir ~ "/receiver.html").IO.e, "receiver.html exists");
+    ok(($website.base-html-dir ~ "/categories/sender/bob.html").IO.e,
+        "sender examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/sender/charlie.html").IO.e,
+        "sender examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/receiver/alice.html").IO.e,
+        "receiver examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/receiver/eve.html").IO.e,
+        "receiver examples html files exist");
+
+    recursive-rmdir($base-dir) if $base-dir.IO.d;
+}, "build() functionality";
 
 #| recursively remove a directory
 sub recursive-rmdir($dirname) {

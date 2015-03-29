@@ -10,6 +10,14 @@ class Website is export {
     has $.base-html-dir is rw = "html";
     has $.base-categories-dir is rw = "categories";
 
+    method build {
+        self.write-index;
+        my %examples = self.collect-example-metadata;
+        self.write-category-indices(%examples);
+        self.create-category-dirs;
+        self.write-example-files(%examples);
+    }
+
     method create-category-dirs {
         for $!categories.categories-list -> $category {
             my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
