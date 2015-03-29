@@ -223,8 +223,10 @@ subtest {
     my %example-metadata = $website.collect-example-metadata;
     ok(%example-metadata, "Non-null examples metadata structure returned");
 
-    is(%example-metadata{"receiver"}{""}{"alice.pl"}.author, "victor");
-    is(%example-metadata{"sender"}{""}{"charlie.p6"}.title, "sender charlie");
+    is(%example-metadata{"receiver"}{""}{"alice.pl"}.author, "victor",
+        "author name in example");
+    is(%example-metadata{"sender"}{""}{"charlie.p6"}.title, "sender charlie",
+        "title text in example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-example-metadata functionality";
