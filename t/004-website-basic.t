@@ -248,13 +248,13 @@ subtest {
 
     my $pod = pod-with-title("This is a test title");
     my $html = $website.p2h($pod);
-    ok($html ~~ m/"This is a test title"/, "title text");
-    ok($html ~~ m/"Sender"/, "category key in menu");
-    ok($html ~~ m/"Receiver"/, "category key in menu");
+    ok($html ~~ m/'This is a test title'/, "title text");
+    ok($html ~~ m/Sender/, "category key in menu");
+    ok($html ~~ m/Receiver/, "category key in menu");
 
     $pod = Pod::Block.new(contents => ["hello"]);
     $html = $website.p2h($pod);
-    ok($html ~~ m/"Perl 6 Examples"/, "default title text");
+    ok($html ~~ m/'Perl 6 Examples'/, "default title text");
 }, "p2h functionality";
 
 #| recursively remove a directory
