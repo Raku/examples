@@ -9,10 +9,12 @@ class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
     has $.base-categories-dir is rw = "categories";
+    has %.examples-metadata;
 
     method build {
         self.write-index;
-        my %examples = self.collect-example-metadata;
+        self.collect-example-metadata;
+        my %examples = %!examples-metadata;
         self.write-category-indices(%examples);
         self.create-category-dirs;
         self.write-example-files(%examples);
@@ -67,7 +69,6 @@ class Website is export {
     }
 
     method collect-example-metadata {
-        my %examples;
         for $!categories.categories-list -> $category, {
             my $subcategory = "";
             my $category-key = $category.key;
@@ -95,11 +96,9 @@ class Website is export {
                                 pod-link => $link,
                                 pod-contents => $pod,
                                 );
-                %examples{$category-key}{$subcategory}{$file-basename} = $example;
+                %!examples-metadata{$category-key}{$subcategory}{$file-basename} = $example;
             }
         }
-
-        return %examples;
     }
 
     method p2h($pod) {
