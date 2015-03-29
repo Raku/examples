@@ -48,10 +48,6 @@ my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
 $all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
 my $website = Website.new(categories => $all-categories);
-$website.write-index;
-my %examples = $website.collect-example-metadata;
-$website.write-category-indices(%examples);
-$website.create-category-dirs;
-$website.write-example-files(%examples);
+$website.build;
 
 # vim: expandtab shiftwidth=4 ft=perl6
