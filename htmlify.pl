@@ -47,8 +47,6 @@ my %wsg-categories-table =
 my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
 $all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
-my %categories = %base-categories-table;
-
 my $website = Website.new(categories => $all-categories);
 $website.write-index;
 my %examples = $website.collect-example-metadata;
