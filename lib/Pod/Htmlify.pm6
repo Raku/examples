@@ -15,7 +15,7 @@ class Website is export {
         self.write-index;
         self.collect-example-metadata;
         my %examples = %!examples-metadata;
-        self.write-category-indices(%examples);
+        self.write-category-indices;
         self.create-category-dirs;
         self.write-example-files(%examples);
     }
@@ -37,11 +37,11 @@ class Website is export {
             self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
     }
 
-    method write-category-indices(%examples) {
+    method write-category-indices {
         say "Creating category index files";
         my @headers = qw{File Title Author};
         for $!categories.categories-table.kv -> $category, $title {
-            my @examples = %examples{$category}{""}.values;
+            my @examples = %!examples-metadata{$category}{""}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
             spurt $!base-html-dir ~ "/$category.html", self.p2h(
                 pod-with-title($title,
