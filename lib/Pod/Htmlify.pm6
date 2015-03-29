@@ -130,23 +130,6 @@ sub files-in-category($category, :$base-dir = "./categories") {
     dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
 }
 
-my %categories =
-    "best-of-rosettacode" => "Best of Rosettacode",
-    "99-problems"         => "99 problems",
-    "cookbook"            => "Cookbook examples",
-    "euler"               => "Answers for Project Euler",
-    "games"               => "Games written in Perl 6",
-    "interpreters"        => "Language or DSL interpreters",
-    "module-management"   => "Module management",
-    "parsers"             => "Example grammars",
-    "perlmonks"           => "Answers to perlmonks.org questions",
-    "rosalind"            => "Bioinformatics programming problems",
-    "shootout"            => "The Computer Language Benchmark Game",
-    "tutorial"            => "Tutorial examples",
-    "wsg"                 => "The Winter Scripting Games",
-    "other"               => "Uncategorized examples",
-;
-
 sub url($url) {
     return $url;
 }
