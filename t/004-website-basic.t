@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 7;
+plan 8;
 
 use-ok("Pod::Htmlify");
 
@@ -230,6 +230,32 @@ subtest {
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-example-metadata functionality";
+
+subtest {
+    plan 4;
+
+    my %categories-table =
+        "sender" => "alice",
+        "receiver" => "bob",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+
+    my $base-dir = "/tmp/website-test";
+
+    my $website = Website.new(categories => $categories);
+    $website.base-html-dir = $base-dir ~ "/html";
+    $website.base-categories-dir = $base-dir ~ "/categories";
+
+    my $pod = pod-with-title("This is a test title");
+    my $html = $website.p2h($pod);
+    ok($html ~~ m/"This is a test title"/, "title text");
+    ok($html ~~ m/"Sender"/, "category key in menu");
+    ok($html ~~ m/"Receiver"/, "category key in menu");
+
+    $pod = Pod::Block.new(contents => ["hello"]);
+    $html = $website.p2h($pod);
+    ok($html ~~ m/"Perl 6 Examples"/, "default title text");
+}, "p2h functionality";
 
 #| recursively remove a directory
 sub recursive-rmdir($dirname) {

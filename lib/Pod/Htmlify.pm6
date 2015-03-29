@@ -23,7 +23,7 @@ class Website is export {
 
     method write-index {
         say "Creating main index file";
-        spurt $!base-html-dir ~ '/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
+        spurt $!base-html-dir ~ '/index.html', self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
     }
 
     method write-category-indices(%examples) {
@@ -32,7 +32,7 @@ class Website is export {
         for $!categories.categories-table.kv -> $category, $title {
             my @examples = %examples{$category}{""}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
-            spurt $!base-html-dir ~ "/$category.html", p2h(
+            spurt $!base-html-dir ~ "/$category.html", self.p2h(
                 pod-with-title($title,
                     pod-table(@rows, headers => @headers),
                 ),
@@ -52,7 +52,7 @@ class Website is export {
                 $pod.push: source-reference($file, $category);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
                 $html-file = $!base-html-dir ~ "/categories/$category/" ~ $html-file;
-                spurt $html-file, p2h($pod);
+                spurt $html-file, self.p2h($pod);
             }
         }
     }
@@ -92,6 +92,18 @@ class Website is export {
 
         return %examples;
     }
+
+    method p2h($pod) {
+        my $head = slurp 'template/head.html';
+        my $footer = footer-html;
+        pod2html $pod,
+            :url(&url),
+            :$head,
+            :header(header-html $!categories.keys),
+            :$footer,
+            :default-title("Perl 6 Examples");
+    }
+
 }
 
 sub header-html(@category-keys) {
@@ -134,17 +146,6 @@ my %categories =
     "wsg"                 => "The Winter Scripting Games",
     "other"               => "Uncategorized examples",
 ;
-
-sub p2h($pod) {
-    my $head = slurp 'template/head.html';
-    my $footer = footer-html;
-    pod2html $pod,
-        :url(&url),
-        :$head,
-        :header(header-html %categories.keys),
-        :$footer,
-        :default-title("Perl 6 Examples");
-}
 
 sub url($url) {
     return $url;
