@@ -14,10 +14,9 @@ class Website is export {
     method build {
         self.write-index;
         self.collect-example-metadata;
-        my %examples = %!examples-metadata;
         self.write-category-indices;
         self.create-category-dirs;
-        self.write-example-files(%examples);
+        self.write-example-files;
     }
 
     method create-category-dirs {
@@ -51,14 +50,14 @@ class Website is export {
         }
     }
 
-    method write-example-files(%examples) {
-        my @categories = %examples.keys;
+    method write-example-files {
+        my @categories = %!examples-metadata.keys;
         for @categories -> $category {
             say "Creating example files for category: $category";
             my @files = files-in-category($category, base-dir => $!base-categories-dir);
             for @files -> $file {
                 next unless $file.IO.e;
-                my $example = %examples{$category}{""}{$file.IO.basename};
+                my $example = %!examples-metadata{$category}{""}{$file.IO.basename};
                 my $pod = format-author-heading($example);
                 $pod.push: source-reference($file, $category);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");

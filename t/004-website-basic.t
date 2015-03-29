@@ -166,7 +166,8 @@ subtest {
     }
 
     $website.create-category-dirs;
-    $website.write-example-files(%examples);
+    $website.examples-metadata = %examples;
+    $website.write-example-files;
 
     my @example-html-files = qw{
         sender/bob.html
