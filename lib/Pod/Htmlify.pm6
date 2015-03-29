@@ -31,7 +31,8 @@ class Website is export {
 
     method write-index {
         say "Creating main index file";
-        spurt $!base-html-dir ~ '/index.html', self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
+        spurt $!base-html-dir ~ '/index.html',
+            self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
     }
 
     method write-category-indices(%examples) {
