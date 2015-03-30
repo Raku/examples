@@ -67,37 +67,45 @@ class Website is export {
         }
     }
 
+    #| collect metadata for all example files
     method collect-all-metadata {
         for $!categories.categories-list -> $category, {
             my $subcategory = "";
             my $category-key = $category.key;
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
-                say "Collecting metadata from $file";
-                my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-                my $pod = EVAL $perl-pod;
-                my $file-basename = $file.basename;
-                if !$pod {
-                    my @contents = $file.lines.join("\n");
-                    $pod = Array.new(pod-with-title($file-basename,
-                        pod-code(@contents),
-                    ));
-                }
-                my $example-title = pod-title-contents($pod, $file-basename);
-                my $author = pod-author-contents($pod, $file-basename);
-                my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
-                my $example = Example.new(
-                                title => $example-title,
-                                author => $author,
-                                category => $category-key,
-                                subcategory => $subcategory,
-                                filename => $file,
-                                pod-link => $link,
-                                pod-contents => $pod,
-                                );
-                %!examples-metadata{$category-key}{$subcategory}{$file-basename} = $example;
+                my $example = self.collect-example-metadata($file, $category-key, $subcategory);
+                %!examples-metadata{$category-key}{$subcategory}{$file.basename} = $example;
             }
         }
+    }
+
+    #| collect metadata for a given example
+    method collect-example-metadata($file, $category-key, $subcategory) {
+        say "Collecting metadata from $file";
+        my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
+        my $pod = EVAL $perl-pod;
+        my $file-basename = $file.basename;
+        if !$pod {
+            my @contents = $file.lines.join("\n");
+            $pod = Array.new(pod-with-title($file-basename,
+                pod-code(@contents),
+            ));
+        }
+        my $example-title = pod-title-contents($pod, $file-basename);
+        my $author = pod-author-contents($pod, $file-basename);
+        my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
+        my $example = Example.new(
+                        title => $example-title,
+                        author => $author,
+                        category => $category-key,
+                        subcategory => $subcategory,
+                        filename => $file,
+                        pod-link => $link,
+                        pod-contents => $pod,
+                        );
+
+        return $example;
     }
 
     method p2h($pod) {
