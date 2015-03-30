@@ -221,7 +221,7 @@ subtest {
         }
     }
 
-    $website.collect-example-metadata;
+    $website.collect-all-metadata;
     my %example-metadata = $website.examples-metadata;
     ok(%example-metadata, "Non-null examples metadata structure set");
 
@@ -231,7 +231,7 @@ subtest {
         "title text in example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
-}, "collect-example-metadata functionality";
+}, "collect-all-metadata functionality";
 
 subtest {
     plan 4;

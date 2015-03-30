@@ -13,7 +13,7 @@ class Website is export {
 
     method build {
         self.write-index;
-        self.collect-example-metadata;
+        self.collect-all-metadata;
         self.write-category-indices;
         self.create-category-dirs;
         self.write-example-files;
@@ -67,7 +67,7 @@ class Website is export {
         }
     }
 
-    method collect-example-metadata {
+    method collect-all-metadata {
         for $!categories.categories-list -> $category, {
             my $subcategory = "";
             my $category-key = $category.key;
