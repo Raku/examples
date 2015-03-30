@@ -51,17 +51,17 @@ class Website is export {
     }
 
     method write-example-files {
-        my @categories = %!examples-metadata.keys;
-        for @categories -> $category {
-            say "Creating example files for category: $category";
-            my @files = files-in-category($category, base-dir => $!base-categories-dir);
+        for $!categories.categories-list -> $category {
+            my $category-key = $category.key;
+            say "Creating example files for category: $category-key";
+            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
                 next unless $file.IO.e;
-                my $example = %!examples-metadata{$category}{""}{$file.IO.basename};
+                my $example = %!examples-metadata{$category-key}{""}{$file.IO.basename};
                 my $pod = format-author-heading($example);
-                $pod.push: source-reference($file, $category);
+                $pod.push: source-reference($file, $category-key);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
-                $html-file = $!base-html-dir ~ "/categories/$category/" ~ $html-file;
+                $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
                 spurt $html-file, self.p2h($pod);
             }
         }
