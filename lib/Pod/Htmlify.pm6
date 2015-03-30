@@ -11,6 +11,7 @@ class Website is export {
     has $.base-categories-dir is rw = "categories";
     has %.examples-metadata;
 
+    #| build the website
     method build {
         self.write-index;
         self.collect-all-metadata;
@@ -19,6 +20,7 @@ class Website is export {
         self.write-example-files;
     }
 
+    #| create category and subcategory directories
     method create-category-dirs {
         for $!categories.categories-list -> $category {
             my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
@@ -30,12 +32,14 @@ class Website is export {
         }
     }
 
+    #| write main index file
     method write-index {
         say "Creating main index file";
         spurt $!base-html-dir ~ '/index.html',
             self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
     }
 
+    #| write index files for all categories
     method write-category-indices {
         say "Creating category index files";
         my @headers = qw{File Title Author};
@@ -50,6 +54,7 @@ class Website is export {
         }
     }
 
+    #| write html pages for all examples
     method write-example-files {
         for $!categories.categories-list -> $category {
             my $category-key = $category.key;
@@ -108,6 +113,7 @@ class Website is export {
         return $example;
     }
 
+    #| convert the POD into html
     method p2h($pod) {
         my $head = slurp 'template/head.html';
         my $footer = footer-html;
