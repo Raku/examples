@@ -187,8 +187,8 @@ subtest {
     plan 3;
 
     my %categories-table =
-        "sender" => "alice",
-        "receiver" => "bob",
+        "sender" => "bob",
+        "receiver" => "alice",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
 
