@@ -8,6 +8,7 @@ plan 3;
 use-ok "Perl6::Examples";
 
 use Perl6::Examples;
+use Pod::Convenience;
 
 subtest {
     plan 2;
@@ -23,7 +24,7 @@ subtest {
 }, "Category object instantiation";
 
 subtest {
-    plan 4;
+    plan 6;
 
     my $category = Category.new;
     $category.key = "key";
@@ -35,6 +36,30 @@ subtest {
     $category.subcategories = ("bob", "alice");
     ok($category.subcategories ~~ Array, "subcategories is an Array");
     is($category.subcategories, ("bob", "alice"), "Can set subcategories attribute");
+
+    my @examples = (
+        Example.new(
+            title => "sender bob",
+            author => "victor",
+            category => "sender",
+            filename => "bob.pl",
+            pod-link => pod-link("text", "url"),
+            pod-contents => [pod-title("sender bob")],
+        ),
+        Example.new(
+            title => "receiver alice",
+            author => "victor",
+            category => "receiver",
+            filename => "alice.p6",
+            pod-link => pod-link("text", "url"),
+            pod-contents => [pod-title("receiver alice")],
+        ),
+    );
+
+    $category.examples = @examples;
+    ok($category.examples ~~ Array, "examples is an Array");
+
+    ok($category.examples[0] ~~ Example, "examples contains a list of Example objects");
 
 }, "Attribute setting";
 
