@@ -74,7 +74,7 @@ class Website is export {
 
     #| collect metadata for all example files
     method collect-all-metadata {
-        for $!categories.categories-list -> $category, {
+        for $!categories.categories-list -> $category {
             my $category-key = $category.key;
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
