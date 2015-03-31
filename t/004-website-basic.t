@@ -225,10 +225,13 @@ subtest {
     my %example-metadata = $website.examples-metadata;
     ok(%example-metadata, "Non-null examples metadata structure set");
 
-    is(%example-metadata{"receiver"}{"alice.pl"}.author, "victor",
-        "author name in example");
-    is(%example-metadata{"sender"}{"charlie.p6"}.title, "sender charlie",
-        "title text in example");
+    my $receiver-category = $website.categories.category-with-key("receiver");
+    my $alice-example = $receiver-category.examples{"alice.pl"};
+    is($alice-example.author, "victor", "author name in example");
+
+    my $sender-category = $website.categories.category-with-key("sender");
+    my $charlie-example = $sender-category.examples{"charlie.p6"};
+    is($charlie-example.title, "sender charlie", "title text in example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-all-metadata functionality";
