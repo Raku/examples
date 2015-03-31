@@ -23,21 +23,20 @@ class Category is export {
 #| Manipulates groups of Category objects
 class Categories is export {
     has %.categories-table;
-    has @.categories-list;
-    has %!categories;
+    has %.categories;
 
-    submethod BUILD(:%categories-table, :@categories-list) {
+    submethod BUILD(:%categories-table) {
         %!categories-table = %categories-table;
-        @!categories-list = gather for %!categories-table.keys -> $category-key {
-            take Category.new(
-                key => $category-key,
-                title => %!categories-table{$category-key},
-            );
+        for %!categories-table.keys -> $category-key {
             %!categories{$category-key} = Category.new(
                                             key => $category-key,
                                             title => %!categories-table{$category-key},
                                             );
         }
+    }
+
+    method categories-list {
+        return %!categories.values;
     }
 
     method append-subcategories(:$to-category, :$subcategories) {
