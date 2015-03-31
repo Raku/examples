@@ -29,7 +29,10 @@ class Categories is export {
     submethod BUILD(:%categories-table, :@categories-list) {
         %!categories-table = %categories-table;
         @!categories-list = gather for %!categories-table.keys -> $category-key {
-            take Category.new(key => $category-key, title => %!categories-table{$category-key});
+            take Category.new(
+                key => $category-key,
+                title => %!categories-table{$category-key},
+            );
         }
     }
 
