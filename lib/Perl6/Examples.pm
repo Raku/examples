@@ -18,7 +18,7 @@ class Category is export {
     has $.key is rw;
     has $.title is rw;
     has @.subcategories is rw;
-    has @.examples is rw;
+    has %.examples is rw;
 }
 
 #| Manipulates groups of Category objects

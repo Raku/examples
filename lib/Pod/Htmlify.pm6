@@ -80,6 +80,7 @@ class Website is export {
             for @files -> $file {
                 my $example = self.collect-example-metadata($file, $category-key);
                 %!examples-metadata{$category-key}{$file.basename} = $example;
+                $category.examples{$file.basename} = $example;
             }
         }
     }

@@ -24,7 +24,7 @@ subtest {
 }, "Category object instantiation";
 
 subtest {
-    plan 6;
+    plan 7;
 
     my $category = Category.new;
     $category.key = "key";
@@ -37,8 +37,8 @@ subtest {
     ok($category.subcategories ~~ Array, "subcategories is an Array");
     is($category.subcategories, ("bob", "alice"), "Can set subcategories attribute");
 
-    my @examples = (
-        Example.new(
+    my %examples =
+        "bob.pl" => Example.new(
             title => "sender bob",
             author => "victor",
             category => "sender",
@@ -46,7 +46,7 @@ subtest {
             pod-link => pod-link("text", "url"),
             pod-contents => [pod-title("sender bob")],
         ),
-        Example.new(
+        "alice.p6" => Example.new(
             title => "receiver alice",
             author => "victor",
             category => "receiver",
@@ -54,12 +54,15 @@ subtest {
             pod-link => pod-link("text", "url"),
             pod-contents => [pod-title("receiver alice")],
         ),
-    );
+    ;
 
-    $category.examples = @examples;
-    ok($category.examples ~~ Array, "examples is an Array");
+    $category.examples = %examples;
+    ok($category.examples ~~ Hash, "examples is a Hash");
 
-    ok($category.examples[0] ~~ Example, "examples contains a list of Example objects");
+    for %examples.keys -> $key {
+        ok($category.examples{$key} ~~ Example,
+            "examples hash contains Example objects");
+    }
 
 }, "Attribute setting";
 
