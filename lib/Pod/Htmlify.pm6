@@ -44,7 +44,7 @@ class Website is export {
         say "Creating category index files";
         my @headers = qw{File Title Author};
         for $!categories.categories-table.kv -> $category, $title {
-            my @examples = %!examples-metadata{$category}{""}.values;
+            my @examples = %!examples-metadata{$category}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
             spurt $!base-html-dir ~ "/$category.html", self.p2h(
                 pod-with-title($title,
@@ -62,7 +62,7 @@ class Website is export {
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
                 next unless $file.IO.e;
-                my $example = %!examples-metadata{$category-key}{""}{$file.IO.basename};
+                my $example = %!examples-metadata{$category-key}{$file.IO.basename};
                 my $pod = format-author-heading($example);
                 $pod.push: source-reference($file, $category-key);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
@@ -75,18 +75,17 @@ class Website is export {
     #| collect metadata for all example files
     method collect-all-metadata {
         for $!categories.categories-list -> $category, {
-            my $subcategory = "";
             my $category-key = $category.key;
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
-                my $example = self.collect-example-metadata($file, $category-key, $subcategory);
-                %!examples-metadata{$category-key}{$subcategory}{$file.basename} = $example;
+                my $example = self.collect-example-metadata($file, $category-key);
+                %!examples-metadata{$category-key}{$file.basename} = $example;
             }
         }
     }
 
     #| collect metadata for a given example
-    method collect-example-metadata($file, $category-key, $subcategory) {
+    method collect-example-metadata($file, $category-key) {
         say "Collecting metadata from $file";
         my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
         my $pod = EVAL $perl-pod;
@@ -104,7 +103,6 @@ class Website is export {
                         title => $example-title,
                         author => $author,
                         category => $category-key,
-                        subcategory => $subcategory,
                         filename => $file,
                         pod-link => $link,
                         pod-contents => $pod,

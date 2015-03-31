@@ -13,7 +13,7 @@ use Pod::Htmlify;
 
 my %examples;
 my $filename = "sender/bob.pl";
-%examples{"sender"}{""}{$filename.IO.basename} = Example.new(
+%examples{"sender"}{$filename.IO.basename} = Example.new(
                                     title => "sender bob",
                                     author => "victor",
                                     category => "sender",
@@ -22,7 +22,7 @@ my $filename = "sender/bob.pl";
                                     pod-contents => [pod-title("sender bob")],
                                 );
 $filename = "sender/charlie.p6";
-%examples{"sender"}{""}{$filename.IO.basename} = Example.new(
+%examples{"sender"}{$filename.IO.basename} = Example.new(
                                     title => "sender charlie",
                                     author => "victor",
                                     category => "sender",
@@ -31,7 +31,7 @@ $filename = "sender/charlie.p6";
                                     pod-contents => [pod-title("sender charlie")],
                                 );
 $filename = "receiver/alice.pl";
-%examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
+%examples{"receiver"}{$filename.IO.basename} = Example.new(
                                     title => "receiver alice",
                                     author => "victor",
                                     category => "receiver",
@@ -40,7 +40,7 @@ $filename = "receiver/alice.pl";
                                     pod-contents => [pod-title("receiver alice")],
                                 );
 $filename = "receiver/eve.p6";
-%examples{"receiver"}{""}{$filename.IO.basename} = Example.new(
+%examples{"receiver"}{$filename.IO.basename} = Example.new(
                                     title => "receiver eve",
                                     author => "victor",
                                     category => "receiver",
@@ -149,7 +149,7 @@ subtest {
 
     # set up some fake input examples
     for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}{""}.values -> $example {
+        for %examples{$category-dir}.values -> $example {
             my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
             mkdir $example-dir unless $example-dir.IO.d;
             my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
@@ -205,7 +205,7 @@ subtest {
 
     # set up some fake input examples
     for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}{""}.values -> $example {
+        for %examples{$category-dir}.values -> $example {
             my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
             mkdir $example-dir unless $example-dir.IO.d;
             my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
@@ -225,9 +225,9 @@ subtest {
     my %example-metadata = $website.examples-metadata;
     ok(%example-metadata, "Non-null examples metadata structure set");
 
-    is(%example-metadata{"receiver"}{""}{"alice.pl"}.author, "victor",
+    is(%example-metadata{"receiver"}{"alice.pl"}.author, "victor",
         "author name in example");
-    is(%example-metadata{"sender"}{""}{"charlie.p6"}.title, "sender charlie",
+    is(%example-metadata{"sender"}{"charlie.p6"}.title, "sender charlie",
         "title text in example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
@@ -283,7 +283,7 @@ subtest {
 
     # set up some fake input examples
     for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}{""}.values -> $example {
+        for %examples{$category-dir}.values -> $example {
             my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
             mkdir $example-dir unless $example-dir.IO.d;
             my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
