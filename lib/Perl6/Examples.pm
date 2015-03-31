@@ -24,6 +24,7 @@ class Category is export {
 class Categories is export {
     has %.categories-table;
     has @.categories-list;
+    has %!categories;
 
     submethod BUILD(:%categories-table, :@categories-list) {
         %!categories-table = %categories-table;
@@ -32,6 +33,10 @@ class Categories is export {
                 key => $category-key,
                 title => %!categories-table{$category-key},
             );
+            %!categories{$category-key} = Category.new(
+                                            key => $category-key,
+                                            title => %!categories-table{$category-key},
+                                            );
         }
     }
 
@@ -47,6 +52,10 @@ class Categories is export {
 
     method keys {
         return %!categories-table.keys;
+    }
+
+    method category-with-key($key) {
+        return %!categories{$key};
     }
 }
 

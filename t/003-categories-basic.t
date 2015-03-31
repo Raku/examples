@@ -5,7 +5,7 @@ use Test;
 
 use Perl6::Examples;
 
-plan 5;
+plan 6;
 
 subtest {
     plan 2;
@@ -68,5 +68,23 @@ subtest {
     my $categories = Categories.new(categories-table => %categories-table);
     is($categories.keys, <receiver sender>, "keys method returns expected list");
 }, "keys method";
+
+subtest {
+    plan 2;
+
+    my %categories-table =
+        "receiver" => "bob",
+        "sender" => "alice",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+    my $expected-category = Category.new(
+                                key => "receiver",
+                                title => "bob",
+                            );
+    is($categories.category-with-key("receiver").key, $expected-category.key,
+        "expected Category object returned");
+    is($categories.category-with-key("receiver").title, $expected-category.title,
+        "expected Category object returned");
+}, "category-with-key method";
 
 # vim: expandtab shiftwidth=4 ft=perl6
