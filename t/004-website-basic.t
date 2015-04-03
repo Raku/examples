@@ -147,23 +147,7 @@ subtest {
     mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
     mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
 
-    # set up some fake input examples
-    for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}.values -> $example {
-            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
-            mkdir $example-dir unless $example-dir.IO.d;
-            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
-            my $title = $example.title;
-            my $author = $example.author;
-            my $example-contents = qq:to/EOF/;
-            =begin pod
-            =TITLE $title
-            =AUTHOR $author
-            =end pod
-            EOF
-            $example-fname.IO.spurt($example-contents);
-        }
-    }
+    create-fake-examples($website);
 
     $website.create-category-dirs;
     $website.examples-metadata = %examples;
@@ -203,23 +187,7 @@ subtest {
     mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
     mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
 
-    # set up some fake input examples
-    for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}.values -> $example {
-            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
-            mkdir $example-dir unless $example-dir.IO.d;
-            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
-            my $title = $example.title;
-            my $author = $example.author;
-            my $example-contents = qq:to/EOF/;
-            =begin pod
-            =TITLE $title
-            =AUTHOR $author
-            =end pod
-            EOF
-            $example-fname.IO.spurt($example-contents);
-        }
-    }
+    create-fake-examples($website);
 
     $website.collect-all-metadata;
     my %example-metadata = $website.examples-metadata;
@@ -284,23 +252,7 @@ subtest {
     mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
     mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
 
-    # set up some fake input examples
-    for <sender receiver> -> $category-dir {
-        for %examples{$category-dir}.values -> $example {
-            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
-            mkdir $example-dir unless $example-dir.IO.d;
-            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
-            my $title = $example.title;
-            my $author = $example.author;
-            my $example-contents = qq:to/EOF/;
-            =begin pod
-            =TITLE $title
-            =AUTHOR $author
-            =end pod
-            EOF
-            $example-fname.IO.spurt($example-contents);
-        }
-    }
+    create-fake-examples($website);
 
     $website.build;
 
@@ -325,6 +277,26 @@ sub recursive-rmdir($dirname) {
         $path.IO.d ?? recursive-rmdir($path) !! unlink $path;
     }
     rmdir $dirname;
+}
+
+#| set up some fake input examples
+sub create-fake-examples($website) {
+    for <sender receiver> -> $category-dir {
+        for %examples{$category-dir}.values -> $example {
+            my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
+            mkdir $example-dir unless $example-dir.IO.d;
+            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
+            my $title = $example.title;
+            my $author = $example.author;
+            my $example-contents = qq:to/EOF/;
+            =begin pod
+            =TITLE $title
+            =AUTHOR $author
+            =end pod
+            EOF
+            $example-fname.IO.spurt($example-contents);
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
