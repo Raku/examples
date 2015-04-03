@@ -12,41 +12,41 @@ use-ok("Pod::Htmlify");
 use Pod::Htmlify;
 
 my %examples;
-my $filename = "sender/bob.pl";
-%examples{"sender"}{$filename.IO.basename} = Example.new(
-                                    title => "sender bob",
-                                    author => "victor",
-                                    category => "sender",
-                                    filename => $filename,
-                                    pod-link => pod-link("text", "url"),
-                                    pod-contents => [pod-title("sender bob")],
-                                );
-$filename = "sender/charlie.p6";
-%examples{"sender"}{$filename.IO.basename} = Example.new(
-                                    title => "sender charlie",
-                                    author => "victor",
-                                    category => "sender",
-                                    filename => $filename,
-                                    pod-link => pod-link("text", "url"),
-                                    pod-contents => [pod-title("sender charlie")],
-                                );
-$filename = "receiver/alice.pl";
+my $filename = "receiver/bob.pl";
 %examples{"receiver"}{$filename.IO.basename} = Example.new(
-                                    title => "receiver alice",
+                                    title => "receiver bob",
                                     author => "victor",
                                     category => "receiver",
                                     filename => $filename,
                                     pod-link => pod-link("text", "url"),
-                                    pod-contents => [pod-title("receiver alice")],
+                                    pod-contents => [pod-title("receiver bob")],
                                 );
-$filename = "receiver/eve.p6";
+$filename = "receiver/charlie.p6";
 %examples{"receiver"}{$filename.IO.basename} = Example.new(
-                                    title => "receiver eve",
+                                    title => "receiver charlie",
                                     author => "victor",
                                     category => "receiver",
                                     filename => $filename,
                                     pod-link => pod-link("text", "url"),
-                                    pod-contents => [pod-title("receiver eve")],
+                                    pod-contents => [pod-title("receiver charlie")],
+                                );
+$filename = "sender/alice.pl";
+%examples{"sender"}{$filename.IO.basename} = Example.new(
+                                    title => "sender alice",
+                                    author => "victor",
+                                    category => "sender",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("sender alice")],
+                                );
+$filename = "sender/eve.p6";
+%examples{"sender"}{$filename.IO.basename} = Example.new(
+                                    title => "sender eve",
+                                    author => "victor",
+                                    category => "sender",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("sender eve")],
                                 );
 
 subtest {
@@ -170,10 +170,10 @@ subtest {
     $website.write-example-files;
 
     my @example-html-files = qw{
-        sender/bob.html
-        sender/charlie.html
-        receiver/alice.html
-        receiver/eve.html
+        receiver/bob.html
+        receiver/charlie.html
+        sender/alice.html
+        sender/eve.html
     };
     for @example-html-files -> $html-file {
         ok(($base-dir ~ "/html/categories/$html-file").IO.e,
@@ -225,13 +225,13 @@ subtest {
     my %example-metadata = $website.examples-metadata;
     ok(%example-metadata, "Non-null examples metadata structure set");
 
-    my $receiver-category = $website.categories.category-with-key("receiver");
-    my $alice-example = $receiver-category.examples{"alice.pl"};
+    my $sender-category = $website.categories.category-with-key("sender");
+    my $alice-example = $sender-category.examples{"alice.pl"};
     is($alice-example.author, "victor", "author name in example");
 
-    my $sender-category = $website.categories.category-with-key("sender");
-    my $charlie-example = $sender-category.examples{"charlie.p6"};
-    is($charlie-example.title, "sender charlie", "title text in example");
+    my $receiver-category = $website.categories.category-with-key("receiver");
+    my $charlie-example = $receiver-category.examples{"charlie.p6"};
+    is($charlie-example.title, "receiver charlie", "title text in example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-all-metadata functionality";
@@ -307,14 +307,14 @@ subtest {
     ok(($website.base-html-dir ~ "/index.html").IO.e, "index.html exists");
     ok(($website.base-html-dir ~ "/sender.html").IO.e, "sender.html exists");
     ok(($website.base-html-dir ~ "/receiver.html").IO.e, "receiver.html exists");
-    ok(($website.base-html-dir ~ "/categories/sender/bob.html").IO.e,
-        "sender examples html files exist");
-    ok(($website.base-html-dir ~ "/categories/sender/charlie.html").IO.e,
-        "sender examples html files exist");
-    ok(($website.base-html-dir ~ "/categories/receiver/alice.html").IO.e,
+    ok(($website.base-html-dir ~ "/categories/receiver/bob.html").IO.e,
         "receiver examples html files exist");
-    ok(($website.base-html-dir ~ "/categories/receiver/eve.html").IO.e,
+    ok(($website.base-html-dir ~ "/categories/receiver/charlie.html").IO.e,
         "receiver examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/sender/alice.html").IO.e,
+        "sender examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/sender/eve.html").IO.e,
+        "sender examples html files exist");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "build() functionality";
