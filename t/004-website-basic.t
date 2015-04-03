@@ -49,6 +49,16 @@ $filename = "sender/eve.p6";
                                     pod-contents => [pod-title("sender eve")],
                                 );
 
+$filename = "quantum/victor.p6";
+%examples{"verifier"}{$filename.IO.basename} = Example.new(
+                                    title => "quantum verifier victor",
+                                    author => "victor",
+                                    category => "verifier",
+                                    filename => $filename,
+                                    pod-link => pod-link("text", "url"),
+                                    pod-contents => [pod-title("quantum verifier victor")],
+                                );
+
 subtest {
     plan 4;
 
@@ -281,11 +291,18 @@ sub recursive-rmdir($dirname) {
 
 #| set up some fake input examples
 sub create-fake-examples($website) {
-    for <sender receiver> -> $category-dir {
+    for <sender receiver verifier> -> $category-dir {
         for %examples{$category-dir}.values -> $example {
             my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
             mkdir $example-dir unless $example-dir.IO.d;
-            write-fake-example($example, $website.base-categories-dir);
+            if $category-dir eq "verifier" {
+                my $subcat-dir = $example-dir ~ "/" ~ "quantum";
+                mkdir $subcat-dir unless $subcat-dir.IO.d;
+                write-fake-example($example, $example-dir);
+            }
+            else {
+                write-fake-example($example, $website.base-categories-dir);
+            }
         }
     }
 }
