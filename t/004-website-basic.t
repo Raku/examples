@@ -285,18 +285,23 @@ sub create-fake-examples($website) {
         for %examples{$category-dir}.values -> $example {
             my $example-dir = $website.base-categories-dir ~ "/" ~ $category-dir;
             mkdir $example-dir unless $example-dir.IO.d;
-            my $example-fname = $website.base-categories-dir ~ "/" ~ $example.filename;
-            my $title = $example.title;
-            my $author = $example.author;
-            my $example-contents = qq:to/EOF/;
-            =begin pod
-            =TITLE $title
-            =AUTHOR $author
-            =end pod
-            EOF
-            $example-fname.IO.spurt($example-contents);
+            write-fake-example($example, $website.base-categories-dir);
         }
     }
+}
+
+#| write the actual fake example text to file
+sub write-fake-example($example, $base-dir) {
+    my $example-fname = $base-dir ~ "/" ~ $example.filename;
+    my $title = $example.title;
+    my $author = $example.author;
+    my $example-contents = qq:to/EOF/;
+    =begin pod
+    =TITLE $title
+    =AUTHOR $author
+    =end pod
+    EOF
+    $example-fname.IO.spurt($example-contents);
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
