@@ -178,13 +178,22 @@ subtest {
 }, "write-example-files functionality";
 
 subtest {
-    plan 3;
+    plan 4;
 
     my %categories-table =
         "sender" => "bob",
         "receiver" => "alice",
+        "verifier" => "victor",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
+    my %subcategories-table =
+        "quantum" => "victor",
+    ;
+    my $quantum-subcategories = Categories.new(categories-table => %subcategories-table);
+    $categories.append-subcategories(
+        to-category => "verifier",
+        subcategories => $quantum-subcategories
+    );
 
     my $base-dir = "/tmp/website-test";
 
@@ -210,6 +219,12 @@ subtest {
     my $receiver-category = $website.categories.category-with-key("receiver");
     my $charlie-example = $receiver-category.examples{"charlie.p6"};
     is($charlie-example.title, "receiver charlie", "title text in example");
+
+    my $verifier-category = $website.categories.category-with-key("verifier");
+    my $verifier-subcategory = $verifier-category.subcategories.category-with-key("quantum");
+    my $victor-example = $verifier-subcategory.examples{"victor.p6"};
+    is($victor-example.title, "quantum verifier victor",
+        "title text in subcategory example");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-all-metadata functionality";
