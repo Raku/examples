@@ -16,7 +16,7 @@ class Example is export {
 class Category is export {
     has $.key is rw;
     has $.title is rw;
-    has @.subcategories is rw;
+    has $.subcategories is rw;
     has %.examples is rw;
 }
 
@@ -43,7 +43,7 @@ class Categories is export {
         for self.categories-list -> $category {
             given $category.key {
                 when $to-category {
-                    $category.subcategories = $subcategories.categories-list;
+                    $category.subcategories = $subcategories;
                 }
             }
         }

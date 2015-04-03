@@ -41,7 +41,7 @@ subtest {
 }, "categories-list functionality";
 
 subtest {
-    plan 1;
+    plan 3;
 
     my %categories-table =
         "receiver" => "bob",
@@ -53,10 +53,18 @@ subtest {
         "initial-state" => "H + V",
     ;
     my $subcategories = Categories.new(categories-table => %subcategories-table);
-    $categories.append-subcategories(to-category => "receiver", subcategories => $subcategories);
+    $categories.append-subcategories(
+        to-category => "receiver",
+        subcategories => $subcategories);
     my @categories-list = $categories.categories-list;
-    ok(@categories-list[0].subcategories[0] ~~ Category, "Appended subcategory is a Category");
-}
+    ok(@categories-list[0].subcategories ~~ Categories,
+        "Appended subcategories are a Categories object");
+    my @subcategories-list = @categories-list[0].subcategories.categories-list;
+    ok(@subcategories-list[0] ~~ Category,
+        "Appended subcategory is a Category object");
+    is(@subcategories-list[0].key, "entangled-state",
+        "Appended subcategory contains expected data");
+}, "append-subcategories functionality";
 
 subtest {
     plan 1;

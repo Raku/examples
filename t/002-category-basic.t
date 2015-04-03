@@ -18,7 +18,7 @@ subtest {
     my $category = Category.new(
                     key => "",
                     title => "",
-                    subcategories => ["", ""],
+                    subcategories => Categories.new(),
                 );
     ok($category, "Instantiation setting all attributes");
 }, "Category object instantiation";
@@ -33,9 +33,9 @@ subtest {
     $category.title = "my title";
     is($category.title, "my title", "Can set title attribute");
 
-    $category.subcategories = ("bob", "alice");
-    ok($category.subcategories ~~ Array, "subcategories is an Array");
-    is($category.subcategories, ("bob", "alice"), "Can set subcategories attribute");
+    $category.subcategories = Categories.new(categories-table => {"subcat" => "blah"});
+    ok($category.subcategories ~~ Categories, "subcategories is a Categories object");
+    ok($category.subcategories, "Can set subcategories attribute");
 
     my %examples =
         "bob.pl" => Example.new(

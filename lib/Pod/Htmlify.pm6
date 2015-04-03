@@ -25,9 +25,11 @@ class Website is export {
         for $!categories.categories-list -> $category {
             my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
             mkdir $category-dir-name unless $category-dir-name.IO.d;
-            for $category.subcategories -> $subcategory {
-                my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
-                mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+            if $category.subcategories {
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
+                    mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+                }
             }
         }
     }
@@ -81,6 +83,18 @@ class Website is export {
                 my $example = self.collect-example-metadata($file, $category-key);
                 %!examples-metadata{$category-key}{$file.basename} = $example;
                 $category.examples{$file.basename} = $example;
+            }
+            if $category.subcategories {
+                for $category.subcategories.categories-list <-> $subcategory {
+                    my $subcategory-key = $subcategory.key;
+                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
+                    my @files = files-in-category($subcategory-key,
+                                                  base-dir => $base-dir);
+                    for @files -> $file {
+                        my $example = self.collect-example-metadata($file, $subcategory-key);
+                        $subcategory.examples{$file.basename} = $example;
+                    }
+                }
             }
         }
     }
