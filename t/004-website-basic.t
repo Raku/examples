@@ -126,7 +126,10 @@ subtest {
     my $base-dir = "/tmp/website-test";
     $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
-    $website.examples-metadata = %examples;
+
+    create-fake-examples($website);
+
+    $website.collect-all-metadata;
     $website.write-category-indices;
 
     ok(($base-dir ~ "/sender.html").IO.e,
@@ -160,7 +163,7 @@ subtest {
     create-fake-examples($website);
 
     $website.create-category-dirs;
-    $website.examples-metadata = %examples;
+    $website.collect-all-metadata;
     $website.write-example-files;
 
     my @example-html-files = qw{
