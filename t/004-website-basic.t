@@ -141,13 +141,22 @@ subtest {
 }, "write-category-indices functionality";
 
 subtest {
-    plan 4;
+    plan 5;
 
     my %categories-table =
         "sender" => "alice",
         "receiver" => "bob",
+        "verifier" => "victor",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
+    my %subcategories-table =
+        "quantum" => "victor",
+    ;
+    my $quantum-subcategories = Categories.new(categories-table => %subcategories-table);
+    $categories.append-subcategories(
+        to-category => "verifier",
+        subcategories => $quantum-subcategories
+    );
 
     my $base-dir = "/tmp/website-test";
 
@@ -171,6 +180,7 @@ subtest {
         receiver/charlie.html
         sender/alice.html
         sender/eve.html
+        verifier/quantum/victor.html
     };
     for @example-html-files -> $html-file {
         ok(($base-dir ~ "/html/categories/$html-file").IO.e,

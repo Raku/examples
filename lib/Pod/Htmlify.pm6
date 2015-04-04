@@ -71,6 +71,23 @@ class Website is export {
                 $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
                 spurt $html-file, self.p2h($pod);
             }
+            if $category.subcategories {
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcategory-key = $subcategory.key;
+                    say "Creating example files for subcategory: $subcategory-key";
+                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
+                    my @files = files-in-category($subcategory-key, base-dir => $base-dir);
+                    for @files -> $file {
+                        next unless $file.IO.e;
+                        my $example = $subcategory.examples{$file.IO.basename};
+                        my $pod = format-author-heading($example);
+                        $pod.push: source-reference($file, $subcategory-key);
+                        my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
+                        $html-file = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/" ~ $html-file;
+                        spurt $html-file, self.p2h($pod);
+                    }
+                }
+            }
         }
     }
 
