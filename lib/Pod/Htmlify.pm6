@@ -20,75 +20,11 @@ class Website is export {
         self.write-example-files;
     }
 
-    #| create category and subcategory directories
-    method create-category-dirs {
-        for $!categories.categories-list -> $category {
-            my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
-            mkdir $category-dir-name unless $category-dir-name.IO.d;
-            if $category.subcategories {
-                for $category.subcategories.categories-list -> $subcategory {
-                    my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
-                    mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
-                }
-            }
-        }
-    }
-
     #| write main index file
     method write-index {
         say "Creating main index file";
         spurt $!base-html-dir ~ '/index.html',
             self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
-    }
-
-    #| write index files for all categories
-    method write-category-indices {
-        say "Creating category index files";
-        my @headers = qw{File Title Author};
-        for $!categories.categories-table.kv -> $category, $title {
-            my @examples = %!examples-metadata{$category}.values;
-            my @rows = @examples.map: {[.pod-link, .title, .author]};
-            spurt $!base-html-dir ~ "/$category.html", self.p2h(
-                pod-with-title($title,
-                    pod-table(@rows, headers => @headers),
-                ),
-            );
-        }
-    }
-
-    #| write html pages for all examples
-    method write-example-files {
-        for $!categories.categories-list -> $category {
-            my $category-key = $category.key;
-            say "Creating example files for category: $category-key";
-            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
-            for @files -> $file {
-                next unless $file.IO.e;
-                my $example = %!examples-metadata{$category-key}{$file.IO.basename};
-                my $pod = format-author-heading($example);
-                $pod.push: source-reference($file, $category-key);
-                my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
-                $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
-                spurt $html-file, self.p2h($pod);
-            }
-            if $category.subcategories {
-                for $category.subcategories.categories-list -> $subcategory {
-                    my $subcategory-key = $subcategory.key;
-                    say "Creating example files for subcategory: $subcategory-key";
-                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
-                    my @files = files-in-category($subcategory-key, base-dir => $base-dir);
-                    for @files -> $file {
-                        next unless $file.IO.e;
-                        my $example = $subcategory.examples{$file.IO.basename};
-                        my $pod = format-author-heading($example);
-                        $pod.push: source-reference($file, $subcategory-key);
-                        my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
-                        $html-file = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/" ~ $html-file;
-                        spurt $html-file, self.p2h($pod);
-                    }
-                }
-            }
-        }
     }
 
     #| collect metadata for all example files
@@ -143,6 +79,70 @@ class Website is export {
         return $example;
     }
 
+    #| write index files for all categories
+    method write-category-indices {
+        say "Creating category index files";
+        my @headers = qw{File Title Author};
+        for $!categories.categories-table.kv -> $category, $title {
+            my @examples = %!examples-metadata{$category}.values;
+            my @rows = @examples.map: {[.pod-link, .title, .author]};
+            spurt $!base-html-dir ~ "/$category.html", self.p2h(
+                pod-with-title($title,
+                    pod-table(@rows, headers => @headers),
+                ),
+            );
+        }
+    }
+
+    #| create category and subcategory directories
+    method create-category-dirs {
+        for $!categories.categories-list -> $category {
+            my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
+            mkdir $category-dir-name unless $category-dir-name.IO.d;
+            if $category.subcategories {
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
+                    mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+                }
+            }
+        }
+    }
+
+    #| write html pages for all examples
+    method write-example-files {
+        for $!categories.categories-list -> $category {
+            my $category-key = $category.key;
+            say "Creating example files for category: $category-key";
+            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
+            for @files -> $file {
+                next unless $file.IO.e;
+                my $example = %!examples-metadata{$category-key}{$file.IO.basename};
+                my $pod = format-author-heading($example);
+                $pod.push: source-reference($file, $category-key);
+                my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
+                $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
+                spurt $html-file, self.p2h($pod);
+            }
+            if $category.subcategories {
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcategory-key = $subcategory.key;
+                    say "Creating example files for subcategory: $subcategory-key";
+                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
+                    my @files = files-in-category($subcategory-key, base-dir => $base-dir);
+                    for @files -> $file {
+                        next unless $file.IO.e;
+                        my $example = $subcategory.examples{$file.IO.basename};
+                        my $pod = format-author-heading($example);
+                        $pod.push: source-reference($file, $subcategory-key);
+                        my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");
+                        $html-file = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/" ~ $html-file;
+                        spurt $html-file, self.p2h($pod);
+                    }
+                }
+            }
+        }
+    }
+
     #| convert the POD into html
     method p2h($pod) {
         my $head = slurp 'template/head.html';
@@ -155,6 +155,14 @@ class Website is export {
             :default-title("Perl 6 Examples");
     }
 
+}
+
+sub files-in-category($category, :$base-dir = "./categories") {
+    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
+}
+
+sub url($url) {
+    return $url;
 }
 
 sub header-html(@category-keys) {
@@ -175,14 +183,6 @@ sub header-html(@category-keys) {
 sub footer-html {
     my $footer = slurp 'template/footer.html';
     $footer.subst('DATETIME', ~DateTime.now);
-}
-
-sub files-in-category($category, :$base-dir = "./categories") {
-    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
-}
-
-sub url($url) {
-    return $url;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
