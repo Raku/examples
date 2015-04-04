@@ -100,7 +100,7 @@ class Website is export {
         for $!categories.categories-table.kv -> $category-key, $title {
             my @examples = %!examples-metadata{$category-key}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
-            spurt $!base-html-dir ~ "/$category-key.html", self.p2h(
+            spurt $!base-html-dir ~ "/categories/$category-key.html", self.p2h(
                 pod-with-title($title,
                     pod-table(@rows, headers => @headers),
                 ),

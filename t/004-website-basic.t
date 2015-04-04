@@ -142,11 +142,11 @@ subtest {
     $website.create-category-dirs;
     $website.write-category-indices;
 
-    ok(($base-dir ~ "/sender.html").IO.e,
+    ok(($base-dir ~ "/categories/sender.html").IO.e,
         "index file for 'sender' category created");
-    ok(($base-dir ~ "/receiver.html").IO.e,
+    ok(($base-dir ~ "/categories/receiver.html").IO.e,
         "index file for 'receiver' category created");
-    ok(($base-dir ~ "/verifier.html").IO.e,
+    ok(($base-dir ~ "/categories/verifier.html").IO.e,
         "index file for 'verifier' category created");
     ok(($base-dir ~ "/categories/verifier/quantum.html").IO.e,
         "index file for 'quantum' subcategory of 'verifier' category created");
@@ -309,8 +309,8 @@ subtest {
     $website.build;
 
     ok(($website.base-html-dir ~ "/index.html").IO.e, "index.html exists");
-    ok(($website.base-html-dir ~ "/sender.html").IO.e, "sender.html exists");
-    ok(($website.base-html-dir ~ "/receiver.html").IO.e, "receiver.html exists");
+    ok(($website.base-html-dir ~ "/categories/sender.html").IO.e, "sender.html exists");
+    ok(($website.base-html-dir ~ "/categories/receiver.html").IO.e, "receiver.html exists");
     ok(($website.base-html-dir ~ "/categories/receiver/bob.html").IO.e,
         "receiver examples html files exist");
     ok(($website.base-html-dir ~ "/categories/receiver/charlie.html").IO.e,
