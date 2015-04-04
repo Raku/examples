@@ -91,6 +91,23 @@ class Website is export {
                     pod-table(@rows, headers => @headers),
                 ),
             );
+            my $category = $!categories.category-with-key($category-key);
+            if $category.subcategories {
+                my $subcategories = $category.subcategories;
+                for $subcategories.categories-table.kv -> $subcategory-key, $title {
+                    my $subcategory = $subcategories.category-with-key($subcategory-key);
+                    my @examples = $subcategory.examples.values;
+                    my @rows = @examples.map: {[.pod-link, .title, .author]};
+                    my $base-dir = $!base-html-dir ~ "/categories/" ~ $category-key;
+                    my $output-file = $base-dir ~ "/$subcategory-key.html";
+                    say $output-file;
+                    spurt $output-file, self.p2h(
+                        pod-with-title($title,
+                            pod-table(@rows, headers => @headers),
+                        ),
+                    );
+                }
+            }
         }
     }
 

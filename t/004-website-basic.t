@@ -114,13 +114,22 @@ subtest {
 }, "write-index functionality";
 
 subtest {
-    plan 2;
+    plan 4;
 
     my %categories-table =
         "sender" => "alice",
         "receiver" => "bob",
+        "verifier" => "victor",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
+    my %subcategories-table =
+        "quantum" => "victor",
+    ;
+    my $quantum-subcategories = Categories.new(categories-table => %subcategories-table);
+    $categories.append-subcategories(
+        to-category => "verifier",
+        subcategories => $quantum-subcategories
+    );
 
     my $website = Website.new(categories => $categories);
     my $base-dir = "/tmp/website-test";
@@ -130,12 +139,17 @@ subtest {
     create-fake-examples($website);
 
     $website.collect-all-metadata;
+    $website.create-category-dirs;
     $website.write-category-indices;
 
     ok(($base-dir ~ "/sender.html").IO.e,
         "index file for 'sender' category created");
     ok(($base-dir ~ "/receiver.html").IO.e,
         "index file for 'receiver' category created");
+    ok(($base-dir ~ "/verifier.html").IO.e,
+        "index file for 'verifier' category created");
+    ok(($base-dir ~ "/categories/verifier/quantum.html").IO.e,
+        "index file for 'quantum' subcategory of 'verifier' category created");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "write-category-indices functionality";
