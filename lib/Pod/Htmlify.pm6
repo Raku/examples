@@ -191,7 +191,7 @@ sub header-html(@category-keys) {
         q[<div class="menu-items dark-green">],
         @category-keys.map( -> $category {qq[
             <a class="menu-item selected darker-green"
-                href="/$category.html">
+                href="/categories/$category.html">
                 { $category.wordcase.subst('-', ' ', :global) }
             </a>
         ]}),
