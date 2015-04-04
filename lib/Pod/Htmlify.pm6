@@ -79,6 +79,20 @@ class Website is export {
         return $example;
     }
 
+    #| create category and subcategory directories
+    method create-category-dirs {
+        for $!categories.categories-list -> $category {
+            my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
+            mkdir $category-dir-name unless $category-dir-name.IO.d;
+            if $category.subcategories {
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
+                    mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
+                }
+            }
+        }
+    }
+
     #| write index files for all categories
     method write-category-indices {
         say "Creating category index files";
@@ -106,20 +120,6 @@ class Website is export {
                             pod-table(@rows, headers => @headers),
                         ),
                     );
-                }
-            }
-        }
-    }
-
-    #| create category and subcategory directories
-    method create-category-dirs {
-        for $!categories.categories-list -> $category {
-            my $category-dir-name = $!base-html-dir ~ "/categories/" ~ $category.key;
-            mkdir $category-dir-name unless $category-dir-name.IO.d;
-            if $category.subcategories {
-                for $category.subcategories.categories-list -> $subcategory {
-                    my $subcat-dir-name ~= $category-dir-name ~ "/" ~ $subcategory.key;
-                    mkdir $subcat-dir-name unless $subcat-dir-name.IO.d;
                 }
             }
         }
