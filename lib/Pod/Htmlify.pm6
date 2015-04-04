@@ -157,14 +157,17 @@ class Website is export {
 
 }
 
+#| find all perl6 files within the given category
 sub files-in-category($category, :$base-dir = "./categories") {
     dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
 }
 
+#| return the link to the POD's url
 sub url($url) {
     return $url;
 }
 
+#| return the header html for the current page
 sub header-html(@category-keys) {
     my $header = slurp 'template/header.html';
     my $menu-items = [~]
@@ -180,6 +183,7 @@ sub header-html(@category-keys) {
     $header.subst('MENU', :p($menu-pos), $menu-items);
 }
 
+#| return the footer html for the current page
 sub footer-html {
     my $footer = slurp 'template/footer.html';
     $footer.subst('DATETIME', ~DateTime.now);
