@@ -83,10 +83,10 @@ class Website is export {
     method write-category-indices {
         say "Creating category index files";
         my @headers = qw{File Title Author};
-        for $!categories.categories-table.kv -> $category, $title {
-            my @examples = %!examples-metadata{$category}.values;
+        for $!categories.categories-table.kv -> $category-key, $title {
+            my @examples = %!examples-metadata{$category-key}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
-            spurt $!base-html-dir ~ "/$category.html", self.p2h(
+            spurt $!base-html-dir ~ "/$category-key.html", self.p2h(
                 pod-with-title($title,
                     pod-table(@rows, headers => @headers),
                 ),
