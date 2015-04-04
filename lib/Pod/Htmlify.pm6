@@ -15,8 +15,8 @@ class Website is export {
     method build {
         self.write-index;
         self.collect-all-metadata;
-        self.write-category-indices;
         self.create-category-dirs;
+        self.write-category-indices;
         self.write-example-files;
     }
 
