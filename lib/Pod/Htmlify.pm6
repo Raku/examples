@@ -66,7 +66,7 @@ class Website is export {
         }
         my $example-title = pod-title-contents($pod, $file-basename);
         my $author = pod-author-contents($pod, $file-basename);
-        my $link = pod-link($file-basename, "categories/$category-key/$file-basename");
+        my $link = pod-link($file-basename, "$category-key/$file-basename");
         my $example = Example.new(
                         title => $example-title,
                         author => $author,
