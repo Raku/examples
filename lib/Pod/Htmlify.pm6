@@ -70,7 +70,6 @@ class Website is export {
         my $example = Example.new(
                         title => $example-title,
                         author => $author,
-                        category => $category-key,
                         filename => $file,
                         pod-link => $link,
                         pod-contents => $pod,
@@ -114,7 +113,6 @@ class Website is export {
                     my @rows = @examples.map: {[.pod-link, .title, .author]};
                     my $base-dir = $!base-html-dir ~ "/categories/" ~ $category-key;
                     my $output-file = $base-dir ~ "/$subcategory-key.html";
-                    say $output-file;
                     spurt $output-file, self.p2h(
                         pod-with-title($title,
                             pod-table(@rows, headers => @headers),

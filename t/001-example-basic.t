@@ -16,7 +16,6 @@ subtest {
     my $example = Example.new(
                     title => "",
                     author => "",
-                    category => "",
                     filename => "",
                     pod-link => "",
                     pod-contents => "",
@@ -25,7 +24,7 @@ subtest {
 }, "Object instantiation";
 
 subtest {
-    plan 6;
+    plan 5;
 
     my $example = Example.new;
     $example.title = "my title";
@@ -33,9 +32,6 @@ subtest {
 
     $example.author = "bob";
     is($example.author, "bob", "Can set author attribute");
-
-    $example.category = "Cookbook";
-    is($example.category, "Cookbook", "Can set category attribute");
 
     $example.filename = "001-blah.pl";
     is($example.filename, "001-blah.pl", "Can set filename attribute");
