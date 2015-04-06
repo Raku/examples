@@ -285,13 +285,23 @@ subtest {
 }, "p2h functionality";
 
 subtest {
-    plan 7;
+    plan 9;
 
     my %categories-table =
         "sender" => "alice",
         "receiver" => "bob",
+        "verifier" => "victor",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
+    my %subcategories-table =
+        "quantum" => "quantum victor",
+    ;
+    my $quantum-subcategories = Categories.new(categories-table => %subcategories-table);
+    $categories.append-subcategories(
+        to-category => "verifier",
+        subcategories => $quantum-subcategories
+    );
+
     my $base-dir = "/tmp/website-test";
     mkdir $base-dir unless $base-dir.IO.d;
 
@@ -319,6 +329,10 @@ subtest {
         "sender examples html files exist");
     ok(($website.base-html-dir ~ "/categories/sender/eve.html").IO.e,
         "sender examples html files exist");
+    ok(($website.base-html-dir ~ "/categories/verifier.html").IO.e,
+        "verifier examples summary html file exists");
+    my $verifier-summary = slurp $website.base-html-dir ~ "/categories/verifier.html";
+    ok($verifier-summary ~~ /"quantum victor"/, "verifier contents");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "build() functionality";

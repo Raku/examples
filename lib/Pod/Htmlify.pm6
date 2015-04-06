@@ -99,12 +99,38 @@ class Website is export {
         for $!categories.categories-table.kv -> $category-key, $title {
             my @examples = %!examples-metadata{$category-key}.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
-            spurt $!base-html-dir ~ "/categories/$category-key.html", self.p2h(
-                pod-with-title($title,
-                    pod-table(@rows, headers => @headers),
-                ),
-            );
+            my $category-index-pod;
             my $category = $!categories.category-with-key($category-key);
+
+            if $category.subcategories {
+                my $category-index-html = qq:to/EOT/;
+                =begin Html
+                <h2>Categories for $title </h2>
+                <ul>
+                EOT
+
+                for $category.subcategories.categories-list -> $subcategory {
+                    my $subcat-title = $subcategory.title;
+                    my $subcat-key = $subcategory.key;
+                    $category-index-html ~= qq:to/EOT/;
+                    <li><a href="/categories/$category-key/$subcat-key.html">$subcat-title </a></li>
+                    EOT
+                }
+
+                $category-index-html ~= qq:to/EOT/;
+                </ul>
+                =end Html
+                \$=pod
+                EOT
+                $category-index-pod = EVAL $category-index-html;
+            }
+            else {
+                $category-index-pod = pod-with-title($title,
+                                        pod-table(@rows, headers => @headers),
+                                    );
+            }
+            spurt $!base-html-dir ~ "/categories/$category-key.html",
+                    self.p2h($category-index-pod);
             if $category.subcategories {
                 my $subcategories = $category.subcategories;
                 for $subcategories.categories-table.kv -> $subcategory-key, $title {
