@@ -9,7 +9,6 @@ class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
     has $.base-categories-dir is rw = "categories";
-    has %.examples-metadata;
 
     #| build the website
     method build {
@@ -34,7 +33,6 @@ class Website is export {
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
                 my $example = self.collect-example-metadata($file, $category-key);
-                %!examples-metadata{$category-key}{$file.basename} = $example;
                 $category.examples{$file.basename} = $example;
             }
             if $category.subcategories {
@@ -97,10 +95,10 @@ class Website is export {
         say "Creating category index files";
         my @headers = qw{File Title Author};
         for $!categories.categories-table.kv -> $category-key, $title {
-            my @examples = %!examples-metadata{$category-key}.values;
+            my $category = $!categories.category-with-key($category-key);
+            my @examples = $category.examples.values;
             my @rows = @examples.map: {[.pod-link, .title, .author]};
             my $category-index-pod;
-            my $category = $!categories.category-with-key($category-key);
 
             if $category.subcategories {
                 my $category-index-html = qq:to/EOT/;
@@ -157,7 +155,7 @@ class Website is export {
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
                 next unless $file.IO.e;
-                my $example = %!examples-metadata{$category-key}{$file.IO.basename};
+                my $example = $category.examples{$file.IO.basename};
                 my $pod = format-author-heading($example);
                 $pod.push: source-reference($file, $category-key);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)/, ".html");

@@ -205,7 +205,7 @@ subtest {
 }, "write-example-files functionality";
 
 subtest {
-    plan 4;
+    plan 3;
 
     my %categories-table =
         "sender" => "bob",
@@ -236,8 +236,6 @@ subtest {
     create-fake-examples($website);
 
     $website.collect-all-metadata;
-    my %example-metadata = $website.examples-metadata;
-    ok(%example-metadata, "Non-null examples metadata structure set");
 
     my $sender-category = $website.categories.category-with-key("sender");
     my $alice-example = $sender-category.examples{"alice.pl"};
@@ -308,8 +306,6 @@ subtest {
     my $website = Website.new(categories => $categories);
     $website.base-html-dir = $base-dir ~ "/html";
     $website.base-categories-dir = $base-dir ~ "/categories";
-
-    # need to check that base-html-dir and base-categories-dir exist
 
     mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
     mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
