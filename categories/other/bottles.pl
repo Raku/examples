@@ -1,5 +1,17 @@
 use v6;
 
+=begin pod
+
+=TITLE 99 bottles of beer
+
+=AUTHOR Gerhard R
+
+Print the lyrics to the
+L<99 bottles of beer|http://en.wikipedia.org/wiki/99_Bottles_of_Beer>
+song.
+
+=end pod
+
 my @bottles = ((99...2) X~ ' bottles'),
               '1 bottle',
               'no more bottles',
