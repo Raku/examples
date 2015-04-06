@@ -1,6 +1,9 @@
 =begin pod
 
-=head1 TITLE
+=TITLE Short title for the example
+
+=AUTHOR Who wrote this example? (either real name or nick)
+
 DESCRIPTION
 
 =head1 What's interesting here?
@@ -13,14 +16,15 @@ DESCRIPTION
 
 L<link-for-more-information>
 
-=end pod
-
-CODE
-
-=begin pod
-
 =head1 Features used
 
 =item C<name> - L<url>
 
+If the example solves an interesting problem with a known result, mention
+what the expected result of the computation is.
+
 =end pod
+
+CODE
+
+# vim: expandtab shiftwidth=4 ft=perl6
