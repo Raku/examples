@@ -74,8 +74,11 @@ category, use the following:
 
 ## Building the examples documentation
 
-To build the examples documentation web pages, simply run the `htmlify.p6`
-script in the base directory:
+To build the examples documentation web pages, simply run
+
+    $ make html
+
+or you can run the `htmlify.p6` script in the base directory:
 
     $ perl6 htmlify.p6
 
