@@ -2,6 +2,8 @@
 
 =TITLE Create a two-dimensional array at runtime
 
+=AUTHOR Salve J. Nilsen
+
 Get two integers from the user, then create a two-dimensional array where the
 two dimensions have the sizes given by those numbers, and which can be accessed
 in the most natural way possible. Write some element of that array, and then

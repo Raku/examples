@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Last fridays of the year
 
+=AUTHOR Salve J. Nilsen
+
 Write a program or a script that returns the last Fridays of each month
 of a given year. The year may be given through any simple input method
 in your language (command line, std in, etc.).

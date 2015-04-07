@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Copy a string
 
+=AUTHOR Salve J. Nilsen
+
 This task is about copying a string. Where it is relevant, distinguish
 between copying the contents of a string versus making an additional
 reference to an existing string.
