@@ -25,6 +25,15 @@ adding a new example.
 
 | Directory          | Description                              |
 |--------------------|------------------------------------------|
+|categories          | All example categories |
+|bin                 | Utility scripts |
+|lib                 | Utility modules |
+|doc                 | Out-of-script documentation |
+
+### Categories
+
+| Directory          | Description |
+|--------------------|-------------|
 |best-of-rosettacode | The best of the rosettacode.org examples |
 |99-problems         | Based on lisp 99 problems |
 |cookbook            | Cookbook examples |
@@ -32,16 +41,13 @@ adding a new example.
 |games               | Games should go in here :) |
 |interpreters        | Language or DSL interpreters |
 |module-management   | Module management |
+|other               | All other examples |
 |parsers             | Example grammars |
 |perlmonks           | Answers to perlmonks.org questions |
 |rosalind            | Bioinformatics programming problems |
 |shootout            | [The Computer Language Benchmark Game](http://shootout.alioth.debian.org/) |
 |tutorial            | Tutorial examples |
 |wsg                 | Answers for Winter Scripting Games |
-|bin                 | utility scripts |
-|lib                 | utility modules |
-|doc                 | out-of-script documentation |
-|other               | all other |
 
 Since you have a commit-bit (if not then talk to the folks at #perl6 on
 irc.freenode.net) feel free to commit your changes to the main repository.
