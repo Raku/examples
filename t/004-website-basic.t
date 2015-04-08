@@ -136,6 +136,10 @@ subtest {
     $website.base-html-dir = $base-dir;
     mkdir $base-dir unless $base-dir.IO.d;
 
+    my $base-categories-dir = $base-dir ~ "/categories";
+    $website.base-categories-dir = $base-categories-dir;
+    mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
+
     create-fake-examples($website);
 
     $website.collect-all-metadata;
@@ -173,14 +177,14 @@ subtest {
     );
 
     my $base-dir = "/tmp/website-test";
+    mkdir $base-dir unless $base-dir.IO.d;
 
     my $website = Website.new(categories => $categories);
     $website.base-html-dir = $base-dir ~ "/html";
+    mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
+
     my $base-categories-dir = $base-dir ~ "/categories";
     $website.base-categories-dir = $base-categories-dir;
-
-    mkdir $base-dir unless $base-dir.IO.d;
-    mkdir $website.base-html-dir unless $website.base-html-dir.IO.d;
     mkdir $website.base-categories-dir unless $website.base-categories-dir.IO.d;
 
     create-fake-examples($website);
