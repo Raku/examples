@@ -1,10 +1,23 @@
 use v6;
 
-# Specification:
-#   P12 (**) Decode a run-length encoded list.
-#       Given a run-length code list generated as specified in problem P11.
-#       Construct its uncompressed version.
+=begin pod
 
+=TITLE P12 - Decode a run-length encoded list.
+
+=AUTHOR David Romano
+
+=head1 Specification
+
+   P12 (**) Decode a run-length encoded list.
+       Given a run-length code list generated as specified in problem P11.
+       Construct its uncompressed version.
+
+=head1 Example
+
+    > say prob12(([<4 a>],'b',[<2 c>],[<2 a>], 'd', [<4 e>]));
+    a a a a b c c a a d e e e e
+
+=end pod
 
 my @l = ([<4 a>],'b',[<2 c>],[<2 a>], 'd', [<4 e>]);
 sub prob12 (@in) {

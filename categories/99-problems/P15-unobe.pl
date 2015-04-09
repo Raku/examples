@@ -1,11 +1,21 @@
 use v6;
 
-# Specification:
-#   P15 (**) Replicate the elements of a list a given number of times.
-# Example:
-# > say ~repli <a b c>,3;
-# a a a b b b c c c
+=begin pod
 
+=TITLE P15 - Replicate the elements of a list a given number of times.
+
+=AUTHOR David Romano
+
+=head1 Specification
+
+   P15 (**) Replicate the elements of a list a given number of times.
+
+=head1 Example
+
+    > say prob15(<a b c>, 3);
+    a a a b b b c c c
+
+=end pod
 
 my @l = <a b c>;
 sub prob15(@in, $n) {
