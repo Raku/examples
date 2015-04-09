@@ -194,7 +194,7 @@ sub expected-output {
     END
 
     %expected-output{"P13-topo.pl"} = q:to/END/;
-    (Bool::False, [4, "a"], Bool::False, "b", Bool::False, [2, "c"], Bool::False, [2, "a"], Bool::False, "d", 0, [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
     END
 
     %expected-output{"P13-viklund.pl"} = q:to/END/;
