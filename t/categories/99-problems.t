@@ -103,8 +103,8 @@ sub expected-output {
     END
 
     %expected-output{"P06-topo.pl"} = q:to/END/;
-    e d c b a
-    a b c b a
+    False
+    True
     END
 
     %expected-output{"P07-eric256.pl"} = q:to/END/;
