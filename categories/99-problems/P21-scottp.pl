@@ -1,20 +1,32 @@
 use v6;
 
-# Specification:
-# P21 (*) Insert an element at a given position into an array.
-#         You may choose to mutate the array in-place or to create a new
-#         sequence and return it.
-#
-# Example 1 (mutating in-place);
-# > my @l = <a b c d>
-# > insert_at('alfa',@l,2);
-# > say ~@l;
-# a alfa b c d
-#
-# Example 2 (creating a copy):
-# > say ~insert_at_copy('alfa', <a b c d>, 2);
-# a alfa b c d
+=begin pod
 
+=TITLE P21 - Insert an element at a given position into an array.
+
+=AUTHOR Scott Penrose
+
+=head1 Specification
+
+    P21 (*) Insert an element at a given position into an array.
+            You may choose to mutate the array in-place or to create a new
+            sequence and return it.
+
+=head1 Examples
+
+Example 1 (mutating in-place);
+
+    > my @l = <a b c d>
+    > insert_at('alfa',@l,2);
+    > say ~@l;
+    a alfa b c d
+
+Example 2 (creating a copy):
+
+    > say ~insert_at_copy('alfa', <a b c d>, 2);
+    a alfa b c d
+
+=end pod
 
 # a. Simple version, in place
 # 	@array	- your "@array" must always use "@" - even for a single element
@@ -25,7 +37,6 @@ use v6;
 my @array = <a b c d>;
 @array.splice(1, 0, 'alfa');
 say ~@array;
-
 
 # b. Using a sub in-place
 # 	$in, @arr, $pos - you can insert an array in the middle of your parameters
@@ -42,7 +53,6 @@ my @array2 = <a b c d>;
 
 insert_at('alfa', @array2, 2);
 say ~@array2;
-
 
 # c. Using a sub, returning a copy
 #    This time we must copy the sequence and mutate that

@@ -1,12 +1,29 @@
 use v6;
 
-# Specification:
-#   P03 - Find the K'th element of a list.
-#         The first element in the list is number 1.
-# Example:
-# > say element_at <a b c d e>,3;
-# c
+=begin pod
 
+=TITLE P03 - Find the K'th element of a list.
+
+=AUTHOR Scott Penrose
+
+Specification:
+  P03 - Find the K'th element of a list.
+        The first element in the list is number 1.
+
+=head1 Example:
+
+    > say element_at <a b c d e>,3;
+    c
+
+=head1 LISP
+
+    P03 (*) Find the K'th element of a list.
+    The first element in the list is number 1.
+    Example:
+    * (element-at '(a b c d e) 3)
+    C
+
+=end pod
 
 # a. One line example:
 #   <> can be used to generate an array, similar to perl 5 - qw<a b c d>
@@ -27,23 +44,5 @@ sub element_at (@l, $n) {
 	return @l[$n - 1];
 }
 say element_at <a b c d e>,3;
-
-# ORIGINAL LISP SPECIFICATION
-
-=begin pod
-
-=head1 NAME
-
-P03 - Find the K'th element of a list.
-
-=head1 LISP
-
- P03 (*) Find the K'th element of a list.
- The first element in the list is number 1.
- Example:
- * (element-at '(a b c d e) 3)
- C
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

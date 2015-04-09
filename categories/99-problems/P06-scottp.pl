@@ -1,8 +1,22 @@
 use v6;
 
-# Specification:
-#   P06 (*) Find out whether a list is a palindrome.
-#   A palindrome can be read forward or backward; e.g. <x a m a x>.
+=begin pod
+
+=TITLE P06 - Find out whether a list is a palindrome.
+
+=AUTHOR Scott Penrose
+
+Specification:
+
+    P06 (*) Find out whether a list is a palindrome.
+    A palindrome can be read forward or backward; e.g. <x a m a x>.
+
+=head1 LISP
+
+ P06 (*) Find out whether a list is a palindrome.
+ A palindrome can be read forward or backward; e.g. (x a m a x).
+
+=end pod
 
 # Create a list palindrome
 my @l = <A B C B A>;
@@ -17,20 +31,5 @@ if (@l eq @l.reverse) {
 else {
 	say @l, ' is not a palindrome';
 }
-
-# ORIGINAL LISP SPECIFICATION
-
-=begin pod
-
-=head1 NAME
-
-P06 - Find out whether a list is a palindrome.
-
-=head1 LISP
-
- P06 (*) Find out whether a list is a palindrome.
- A palindrome can be read forward or backward; e.g. (x a m a x).
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
