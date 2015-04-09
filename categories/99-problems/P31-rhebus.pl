@@ -1,11 +1,21 @@
 use v6;
 
-# Specification:
-# P31 (**) Determine whether a given integer number is prime.
-# Example:
-# > say is_prime 7
-# 1
+=begin pod
 
+=TITLE P31 - Determine whether a given integer number is prime.
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+    P31 (**) Determine whether a given integer number is prime.
+
+=head1 Example
+
+    > say is_prime 7
+    1
+
+=end pod
 
 sub is_prime (Int $n) {
     for 2..sqrt $n -> $k {

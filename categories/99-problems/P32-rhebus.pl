@@ -1,12 +1,22 @@
 use v6;
 
-# Specification:
-#   P32 (**) Determine the greatest common divisor of two positive integer
-#       numbers.  Use Euclid's algorithm.
-# Example:
-# > say gcd(36,63);
-# 9
+=begin pod
 
+=TITLE P32 - Determine the greatest common divisor of two positive integer
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+   P32 (**) Determine the greatest common divisor of two positive integer
+       numbers.  Use Euclid's algorithm.
+
+=head1 Example
+
+    > say gcd(36,63);
+    9
+
+=end pod
 
 # Example 1: iterative
 #   we specify type constraints on our input parameters
@@ -18,7 +28,6 @@ sub gcdi (Int $a is copy, Int $b is copy) {
 }
 
 gcdi(36,63).say;
-
 
 # Example 2: recursive
 #   This can take advantage of a tail-call optimization, if the compiler
@@ -32,7 +41,6 @@ sub gcdr (Int $a, Int $b) {
 
 gcdr(36,63).say;
 gcdr(63,36).say;
-
 
 # Example 3: series operator
 #   The series operator generates series lazily. It takes some start terms, a

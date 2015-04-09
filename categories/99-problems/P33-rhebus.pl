@@ -1,12 +1,22 @@
 use v6;
 
-# Specification:
-# P33 (*) Determine whether two positive integer numbers are coprime.
-#   Two numbers are coprime if their greatest common divisor equals 1.
-# Example:
-# > say coprime(35,64)
-# 1
+=begin pod
 
+=TITLE P33 - Determine whether two positive integer numbers are coprime.
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+    P33 (*) Determine whether two positive integer numbers are coprime.
+      Two numbers are coprime if their greatest common divisor equals 1.
+
+=head1 Example
+
+    > say coprime(35,64)
+    1
+
+=end pod
 
 # This is from P32-rhebus.pl
 sub gcds (Int $a, Int $b) {
@@ -16,7 +26,6 @@ sub gcds (Int $a, Int $b) {
 sub coprime (Int $a, Int $b) { gcds($a,$b) == 1 }
 
 say coprime(35,64);
-
 
 # Another option is to make coprime an operator:
 # (theoretically 'our' is unnecessary but rakudo needs it
