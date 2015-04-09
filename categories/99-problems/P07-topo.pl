@@ -1,5 +1,18 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P07 - Flatten a nested array structure.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > my @a = 1, 2, [3, 4], 5;
+    > say flatten(@a).perl;
+    (1, 2, 3, 4, 5).list
+
+=end pod
 
 sub flatten(@array)
 {
@@ -14,13 +27,5 @@ my @a = 1, 2, [3, 4], 5;
 say @a.perl;
 say 'Flattened:';
 say flatten(@a).perl;
-
-=begin pod
-
-=head1 NAME
-
-P07 - Flatten a nested array structure.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

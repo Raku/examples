@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P12 - Decode modified run-length encoding.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say decode(([5, "a"], [2, "b"], "c", "b", "d", [2, "e"]).list).perl;
+    ("a", "a", "a", "a", "a", "b", "b", "c", "b", "d", "e", "e").list
+
+=end pod
 
 sub decode(@list)
 {
@@ -10,13 +22,5 @@ sub decode(@list)
 }
 
 say decode(([5, "a"], [2, "b"], "c", "b", "d", [2, "e"]).list).perl;
-
-=begin pod
-
-=head1 NAME
-
-P12 - Decode modified run-length encoding.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

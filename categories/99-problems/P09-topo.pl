@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P09 - Pack consecutive duplicate elements of a list into sublists.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say pack-consecutive-dups(<a a a a a b b c b d e e>.list).perl;
+    > (["a", "a", "a", "a", "a"], ["b", "b"], ["c"], ["b"], ["d"], ["e", "e"]).list
+
+=end pod
 
 sub pack-consecutive-dups(@list)
 {
@@ -18,13 +30,5 @@ sub pack-consecutive-dups(@list)
 }
 
 say pack-consecutive-dups(<a a a a a b b c b d e e>.list).perl;
-
-=begin pod
-
-=head1 NAME
-
-P09 - Pack consecutive duplicate elements of a list into sublists.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

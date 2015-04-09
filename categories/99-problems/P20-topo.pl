@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P20 - Remove the C<k>th element of a list.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say remove-at(<a b c d e>, 4);
+    a b c e
+
+=end pod
 
 sub remove-at(@list is copy, $place)
 {
@@ -9,13 +21,5 @@ sub remove-at(@list is copy, $place)
 }
 
 say remove-at(<a b c d e>, 4);
-
-=begin pod
-
-=head1 NAME
-
-P20 - Remove the C<k>th element of a list.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
