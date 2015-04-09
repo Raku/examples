@@ -157,7 +157,7 @@ sub expected-output {
     END
 
     %expected-output{"P10-topo.pl"} = q:to/END/;
-    ([Bool::False; 5, "a"], [Bool::False; 2, "b"], [Bool::False; 1, "c"], [Bool::False; 1, "b"], [Bool::False; 1, "d"], [0; 2, "e"]).list
+    ([5, "a"], [2, "b"], [1, "c"], [1, "b"], [1, "d"], [2, "e"]).list
     END
 
     %expected-output{"P10-unobe.pl"} = q:to/END/;
@@ -166,7 +166,7 @@ sub expected-output {
     END
 
     %expected-output{"P11-topo.pl"} = q:to/END/;
-    (Bool::False, [4, "a"], Bool::False, "b", Bool::False, [2, "c"], Bool::False, [2, "a"], Bool::False, "d", 0, [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
     END
 
     %expected-output{"P11-unobe.pl"} = q:to/END/;
