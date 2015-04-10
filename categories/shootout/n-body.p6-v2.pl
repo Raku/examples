@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Perform an N-body simulation of the Jovian planets
 
-=AUTHOR
+=AUTHOR Gerhard R
 
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=nbody>
 
