@@ -87,7 +87,7 @@ sub expected-output {
     e d c b a
     END
 
-    %expected-output{"P06-ajscogo.pl"} = q:to/END/;
+    %expected-output{"P06-ajs.pl"} = q:to/END/;
     a b c d E is a palindrome
     a b c b a is a palindrome
     a b b E is a palindrome
