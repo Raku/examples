@@ -1,5 +1,134 @@
 use v6;
 
+=begin pod
+
+=TITLE Blackjack!
+
+=AUTHOR David Whipp
+
+In Blackjack! competitors must write a script that deals and plays a single
+hand of Blackjack (Twenty-One).
+
+Event Scenario
+
+For the final event in the Advanced Division you must write a script that
+can deal – and play – a single hand of Blackjack (also known as Twenty-One).
+For the purposes of this event, we’ll be playing a simplified version of
+Blackjack, one that features the following rules:
+
+=item No betting is involved. (Sorry; maybe next year.)
+
+=item All aces are worth 11 points. And yes, we know: in standard Blackjack,
+      aces can be worth either 1 point or 11 points. For Event 10, however, aces
+      will only be worth 11 points. (We don’t want to make this event too
+      complicated.)
+
+Oh, OK: if you want to you can make aces worth 1 or 11. But you don’t have
+to do this unless you want to.
+
+=item All face cards (Kings, Queens, Jacks) are worth 10 points.
+
+=item All other cards are equal to their face value: the three of spades is
+      worth 3 points, the 7 of diamonds is worth 7 points, etc.
+
+=item Ties (pushes) go the dealer. Suppose, at the end of the hand, the player
+      has 18 points and the dealer has 18 points. In that case, the dealer is
+      declared the winner.
+
+Your script should start by “shuffling” a standard deck of playing cards and
+then dealing two cards to the player and two more to the dealer. (Not sure
+what cards make up a ‘standard deck of playing cards?” Then click here for
+more information.) As in regular blackjack, the two cards to the player
+should be dealt “face up;” that is, both cards should be revealed:
+
+    Your cards:
+    Seven of Spades
+    Eight of Spades
+
+By contrast, only one of the dealer’s cards should be revealed:
+
+    Dealer's cards:
+    Ace of Hearts
+
+Note. Notice that we specified the cards by name. Don’t just list card
+values, like this:
+
+    7
+    8
+
+That will cause your script to fail. Be specific when it comes to listing cards.
+
+Again, following standard Blackjack rules, the player should be given the
+option to stay (play the two cards he or she was dealt) or hit (be dealt
+another card). In other words:
+
+    Stay (s) or hit (h) ?
+
+If the player chooses “hit,” then he or she should be dealt another card. If
+the sum total of the three cards is more than 21, then the player
+automatically loses:
+
+    Stay (s) or hit (h) ?h
+    Seven of Spades
+    Eight of Spades
+    Seven of Diamonds
+    Over 21. Sorry, you lose.
+
+If the sum total is 20 or less, then the player is given another opportunity
+to hit or stay. (If the sum total is 21 the player wins.) As soon as the
+player chooses to stay, the dealer (the computer) checks to see if its point
+total exceeds that of the player. For example, suppose the player has the
+seven of spades and the eight of spades; that means that the player has 15
+points. Now suppose that the dealer has the ace of hearts and the six of
+diamonds. That means that the dealer has 17 points (11 + 6), which also
+means that the dealer automatically wins.
+
+Now, suppose the player has 16 points and the dealer has 13. In that case,
+the dealer must be dealt another card. Let’s examine some possibilities for
+that next card:
+
+=item The dealer is dealt a two, giving the dealer 15 points. That’s less than
+      the player’s 16, so the dealer must go again.
+
+=item The dealer is dealt a nine, giving it 22 points. 22 is more than 21, so
+      the dealer loses.
+
+=item The dealer is dealt a three, giving both the dealer and the player 16.
+      Because ties go to the dealer, the dealer automatically wins.
+
+A complete hand might play out something like this:
+
+=begin code
+Your cards:
+King of Hearts
+Seven of Hearts
+
+Dealer's cards:
+Nine of Hearts
+
+Stay (s) or hit (h)?s
+
+You have 17.
+
+Dealer’s cards:
+Nine of Hearts
+Seven of Diamonds
+
+Dealers' cards:
+
+Nine of Hearts
+Seven of Diamonds
+Five of Diamonds
+The dealer has 21. Sorry, you lose.
+=end code
+
+See? That shouldn’t be too terribly hard, especially not for anyone who made
+it through the first nine events.
+
+L<http://web.archive.org/web/20080406020248/http://www.microsoft.com/technet/scriptcenter/funzone/games/games08/aevent10.mspx>
+
+=end pod
+
 my $player_is_human = 1;
 
 my @values = (
