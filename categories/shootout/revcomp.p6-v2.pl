@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Read DNA sequences and write their reverse-complement
 
-=AUTHOR
+=AUTHOR Gerhard R
 
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=revcomp>
 
