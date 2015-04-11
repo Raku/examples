@@ -25,6 +25,13 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
 =item roll
 =item grammar
 
+=head1 Features used
+
+=item C<roll> - L<http://perlcabal.org/syn/S32/Containers.html#roll>
+=item C<given> - L<http://perlcabal.org/syn/S04.html#Switch_statements>
+=item C<prompt> - L<http://perlcabal.org/syn/S32/IO.html#prompt>
+=item C<grammar> - L<http://perlcabal.org/syn/S05.html#Grammars>
+
 =head2 Depth counter
 
 =end pod
@@ -96,21 +103,9 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
         token balanced { '[]' | '[' ~ ']' <balanced> }
     }
 
-    my $n = prompt "Number of bracket pairs: ";
     my $s = <[ ]>.roll($n*2).join;
     say "$s { BalBrack.parse($s) ?? "is" !! "is not" } well-balanced";
 
 }
-
-=begin pod
-
-=head1 Features used
-
-=item C<roll> - L<http://perlcabal.org/syn/S32/Containers.html#roll>
-=item C<given> - L<http://perlcabal.org/syn/S04.html#Switch_statements>
-=item C<prompt> - L<http://perlcabal.org/syn/S32/IO.html#prompt>
-=item C<grammar> - L<http://perlcabal.org/syn/S05.html#Grammars>
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
