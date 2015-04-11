@@ -54,6 +54,7 @@ my $n = prompt "Number of bracket pairs: ";
     }
 
     my $s = (<[ ]> xx $n).pick(*).join;
+    say "Using depth counter method";
     say "$s {balanced($s) ?? "is" !! "is not"} well-balanced";
 }
 
@@ -70,6 +71,7 @@ my $n = prompt "Number of bracket pairs: ";
     }
 
     my $s = <[ ]>.roll($n*2).join;
+    say "Using an FP oriented method";
     say "$s { balanced($s) ?? "is" !! "is not" } well-balanced";
 }
 
@@ -86,6 +88,7 @@ my $n = prompt "Number of bracket pairs: ";
     }
 
     my $s = <[ ]>.roll($n*2).join;
+    say "Using a string munging method";
     say "$s is", ' not' xx not balanced($s), " well-balanced";
 }
 
@@ -103,6 +106,7 @@ my $n = prompt "Number of bracket pairs: ";
     }
 
     my $s = <[ ]>.roll($n*2).join;
+    say "Parsing brackets with a grammer";
     say "$s { BalBrack.parse($s) ?? "is" !! "is not" } well-balanced";
 
 }
