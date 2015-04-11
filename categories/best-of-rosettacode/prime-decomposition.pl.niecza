@@ -23,7 +23,7 @@ L<http://rosettacode.org/wiki/Prime_decomposition#Perl_6>
 
 =end pod
 
-constant @primes = 2, 3, 5, -> $n is copy {
+my @primes = 2, 3, 5, -> $n is copy {
     repeat { $n += 2 } until $n %% none @primes ... { $_ * $_ >= $n }
     $n;
 } ... *;
@@ -46,4 +46,4 @@ sub factors(Int $remainder is copy) {
 
 say factors 536870911;
 
-# vim: expandtab shiftwidth=2 ft=perl6: textwidth=75
+# vim: expandtab shiftwidth=4 ft=perl6
