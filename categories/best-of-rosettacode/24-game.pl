@@ -51,22 +51,27 @@ grammar Exp24 {
     token op { '+' | '-' | '*' | '/' }
 }
 
-my @digits = roll 4, 1..9;  # to a gamer, that's a "4d9" roll
-say "Here are your digits: {@digits}";
+my @default-digits = roll 4, 1..9;  # to a gamer, that's a "4d9" roll
 
-while my $exp = prompt "\n24-Exp? " {
-    unless is-valid($exp, @digits) {
-        say "Sorry, your expression is not valid!";
-        next;
-    }
+sub MAIN ($digits = Nil){
+    my @digits = $digits.split(/\s+/);
+    @digits = @digits.elems == 4 ?? @digits !! @default-digits;
+    say "Here are your digits: {@digits}";
 
-    my $value = EVAL $exp;
-    say "$exp = $value";
-    if $value == 24 {
-        say "You win!";
-        last;
+    while my $exp = prompt "\n24-Exp? " {
+        unless is-valid($exp, @digits) {
+            say "Sorry, your expression is not valid!";
+            next;
+        }
+
+        my $value = EVAL $exp;
+        say "$exp = $value";
+        if $value == 24 {
+            say "You win!";
+            last;
+        }
+        say "Sorry, your expression doesn't evaluate to 24!";
     }
-    say "Sorry, your expression doesn't evaluate to 24!";
 }
 
 sub is-valid($exp, @digits) {
