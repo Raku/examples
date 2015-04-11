@@ -44,7 +44,7 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
         return $l == 0;
     }
 
-    my $n = prompt "Number of brackets >";
+    my $n = prompt "Number of bracket pairs: ";
     my $s = (<[ ]> xx $n).pick(*).join;
     say "$s {balanced($s) ?? "is" !! "is not"} well-balanced";
 }
