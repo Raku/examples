@@ -14,8 +14,13 @@ in your language (command line, std in, etc.).
 
 L<http://rosettacode.org/wiki/Last_Fridays#Perl_6>
 
-=end pod
+=head1 Features used
 
+The MAIN sub - L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
+
+Date objects - L<http://perlcabal.org/syn/S32/Temporal.html#Date>
+
+=end pod
 
 sub MAIN (Int $year = Date.today.year) {
     my @fri;
@@ -24,16 +29,5 @@ sub MAIN (Int $year = Date.today.year) {
     }
     .say for @fri[1..12];
 }
-
-
-=begin pod
-
-=head1 Features used
-
-The MAIN sub - L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
-
-Date objects - L<http://perlcabal.org/syn/S32/Temporal.html#Date>
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
