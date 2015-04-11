@@ -1,14 +1,24 @@
 use v6;
 
-# Specification:
-#   P08 (**) Eliminate consecutive duplicates of list elements.
-#       If a list contains repeated elements they should be replaced with a
-#       single copy of the element. The order of the elements should not be
-#       changed.
-#
-# Example:
-# > say ~compress(<a a a a b c c a a d e e e e>)
-# a b c a d e
+=begin pod
+
+=TITLE P08 - Eliminate consecutive duplicates of list elements.
+
+=AUTHOR Eric Hodges
+
+=head1 Specification
+
+   P08 (**) Eliminate consecutive duplicates of list elements.
+       If a list contains repeated elements they should be replaced with a
+       single copy of the element. The order of the elements should not be
+       changed.
+
+=head1 Example
+
+    > say ~compress(<a a a a b c c a a d e e e e>)
+    a b c a d e
+
+=end pod
 
 die "Example doesn't yet work in Niecza" if $*VM ~~ 'niecza';
 

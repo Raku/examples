@@ -1,10 +1,23 @@
 use v6;
 
-# Specification:
-# P39 (*) A list of prime numbers.
-#   Given a range of integers by its lower and upper limit, construct a list
-#   of all prime numbers in that range.
+=begin pod
 
+=TITLE P39 - A list of prime numbers.
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+    P39 (*) A list of prime numbers.
+      Given a range of integers by its lower and upper limit, construct a list
+      of all prime numbers in that range.
+
+=head1 Example
+
+    > say ~primes(10..20);
+    11 13 17 19
+
+=end pod
 
 # Copied from P31-rhebus.pl
 sub is_prime (Int $n) {

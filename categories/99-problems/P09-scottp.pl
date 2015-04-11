@@ -1,13 +1,23 @@
 use v6;
 
-# Specification:
-#   P09 (**) Pack consecutive duplicates of list elements into sublists.
-#       If a list contains repeated elements they should be placed in separate
-#       sublists.
-# Example:
-# > pack_dup(<a a a a b c c a a d e e e e>).perl.say
-# [["a","a","a","a"],["b"],["c","c"],["a","a"],["d"],["e","e","e","e"]]
+=begin pod
 
+=TITLE P09 - Pack consecutive duplicates of list elements into sublists.
+
+=AUTHOR Scott Penrose
+
+=head1 Specification
+
+   P09 (**) Pack consecutive duplicates of list elements into sublists.
+       If a list contains repeated elements they should be placed in separate
+       sublists.
+
+=head1 Example
+
+    > pack_dup(<a a a a b c c a a d e e e e>).perl.say
+    [["a","a","a","a"],["b"],["c","c"],["a","a"],["d"],["e","e","e","e"]]
+
+=end pod
 
 my @l = <a a a a b c c a a d e e e e>;
 sub packit (@in) {

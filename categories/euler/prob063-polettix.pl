@@ -1,9 +1,22 @@
-# The 5-digit number, 16807=7**5, is also a fifth power.
-# Similarly, the 9-digit number, 134217728=8**9, is a ninth power.
-#
-# How many n-digit positive integers exist which are also an nth power?
-
 use v6;
+
+=begin pod
+
+=TITLE Powerful digit counts
+
+=AUTHOR polettix
+
+L<https://projecteuler.net/problem=63>
+
+The 5-digit number, 16807=7^5, is also a fifth power. Similarly, the 9-digit
+number, 134217728=8^9, is a ninth power.
+
+How many n-digit positive integers exist which are also an nth power?
+
+
+Expected result: 49
+
+=end pod
 
 # As of August 24th, 2009 we don't have big integers, so we'll have
 # to conjure up something. We'll represent each number with an

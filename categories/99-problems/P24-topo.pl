@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P24 - Draw C<N> different random numbers from the set C<1..M>.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say lotto-select(6, 49);
+    37 8 32 15 21 46
+
+=end pod
 
 sub lotto-select($n, $m)
 {
@@ -10,13 +22,5 @@ sub lotto-select($n, $m)
 }
 
 say lotto-select(6, 49);
-
-=begin pod
-
-=head1 NAME
-
-P24 - Draw C<N> different random numbers from the set C<1..M>.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

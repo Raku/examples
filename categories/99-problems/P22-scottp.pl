@@ -1,12 +1,23 @@
 use v6;
-# Specification:
-#   P22 (*) Create a list containing all integers within a given range.
-#           If first argument is smaller than second, produce a list in
-#           decreasing order.
-# Example:
-# > say ~range(4, 9);
-# 4 5 6 7 8 9
 
+=begin pod
+
+=TITLE P22 - Create a list containing all integers within a given range.
+
+=AUTHOR Scott Penrose
+
+=head1 Specification
+
+   P22 (*) Create a list containing all integers within a given range.
+           If first argument is smaller than second, produce a list in
+           decreasing order.
+
+=head1 Examples
+
+    > say ~range(4, 9);
+    4 5 6 7 8 9
+
+=end pod
 
 # a. Simple version - but only works in order
 say ~list(4 .. 9);

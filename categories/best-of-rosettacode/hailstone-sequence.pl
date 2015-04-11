@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Hailstone sequence
 
+=AUTHOR Salve J. Nilsen
+
 The Hailstone sequence of numbers can be generated from a starting positive
 integer, n by:
 

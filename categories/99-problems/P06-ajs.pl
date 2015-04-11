@@ -1,9 +1,10 @@
-#!/usr/bin/env perl6
 use v6;
 
 =begin pod
 
 =TITLE P06 - Find out whether a list is a palindrome.
+
+=AUTHOR Aaron Sherman
 
 =end pod
 

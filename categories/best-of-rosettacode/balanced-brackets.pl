@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Balanced brackets
 
+=AUTHOR Filip Sergot
+
 Generate a string with N opening brackets (“[”) and N closing brackets
 (“]”), in some arbitrary order.
 

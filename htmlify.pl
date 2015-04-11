@@ -1,29 +1,10 @@
 use v6;
 
 use lib 'lib';
-use Pod::To::Perl;
-use Pod::To::HTML;
 use Pod::Htmlify;
-use Pod::Convenience;
+use Perl6::Examples;
 
-my $head = slurp 'template/head.html';
-my $footer = footer-html;
-sub header-html(%categories) {
-    my $header = slurp 'template/header.html';
-    my $menu-items = [~]
-        q[<div class="menu-items dark-green">],
-        %categories.keys.map( -> $category {qq[
-            <a class="menu-item selected darker-green"
-                href="/$category.html">
-                { $category.wordcase }
-            </a>
-        ]}),
-        q[</div>];
-    my $menu-pos = ($header ~~ /MENU/).from;
-    $header.subst('MENU', :p($menu-pos), $menu-items);
-}
-
-my %categories =
+my %base-categories-table =
     "best-of-rosettacode" => "Best of Rosettacode",
     "99-problems"         => "99 problems",
     "cookbook"            => "Cookbook examples",
@@ -40,90 +21,33 @@ my %categories =
     "other"               => "Uncategorized examples",
 ;
 
-write-index;
-write-index-files(%categories);
-create-category-dirs(%categories);
-write-example-files(%categories);
+my $all-categories = Categories.new(categories-table => %base-categories-table);
 
-sub write-index {
-    say "Creating main index file";
-    spurt 'html/index.html', p2h EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod";
-}
+my %cookbook-categories-table =
+    "01strings"                  => "Strings",
+    "02numbers"                  => "Numbers",
+    "03dates-and-times"          => "Dates and Times",
+    "04arrays"                   => "Arrays",
+    "05hashes"                   => "Hashes",
+    "07file-access"              => "File access",
+    "09directories"              => "Directories",
+    "10subroutines"              => "Subroutines",
+    "13classes-objects-and-ties" => "Classes, Objects and Ties",
+;
 
-sub write-index-files(%categories) {
-    say "Creating category index files";
-    for %categories.kv -> $category, $title {
-        my @files = files-in-category($category);
-        my @filenames = @files.map: {.basename};
-        my @pod-links = @filenames.map: {pod-link($_, "categories/$category/$_")};
-        spurt "html/$category.html", p2h(
-            pod-with-title($title,
-                pod-table(@pod-links),
-            ),
-        );
-    }
-}
+my $cookbook-categories = Categories.new(categories-table => %cookbook-categories-table);
+$all-categories.append-subcategories(to-category => "cookbook", subcategories => $cookbook-categories);
 
-sub files-in-category($category) {
-    dir("categories/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
-}
+my %wsg-categories-table =
+    "beginner-2007" => "Beginner-level problems 2007",
+    "beginner-2008" => "Beginner-level problems 2008",
+    "advanced-2008" => "Advanced-level problems 2008",
+;
 
-sub create-category-dirs(%categories) {
-    for %categories.keys -> $category {
-        my $dir-name = "html/categories/$category";
-        mkdir $dir-name unless $dir-name.IO.d;
-    }
-}
+my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
+$all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
-sub write-example-files(%categories) {
-    for %categories.keys -> $category {
-        say "Creating example files for category: $category";
-        my @files = files-in-category($category);
-        my @filenames = @files.map: {.basename};
-        for @files -> $file {
-            next unless $file.IO.e;
-            my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-            my $pod = EVAL $perl-pod;
-            if !$pod {
-                my @contents = $file.lines.join("\n");
-                $pod = Array.new(pod-with-title($file.basename,
-                    pod-code(@contents),
-                ));
-            }
-            else {
-                my $title-element = $pod[0].contents[0];
-                if $title-element ~~ Pod::Block::Named && $title-element.name eq "TITLE" {
-                    my $title = $title-element.contents[0].contents[0];
-                }
-                else {
-                    say "$file lacks a TITLE";
-                }
-            }
-            $pod.push: source-reference($file, $category);
-            my $html-file = $file.subst(/\.p(l|6)/, ".html");
-            spurt "html/$html-file", p2h($pod);
-        }
-    }
-}
-
-sub source-reference($file, $category) {
-    pod-block("Source code: ",
-        pod-link($file.basename,
-            "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
-    );
-}
-
-sub p2h($pod) {
-    pod2html $pod,
-        :url(&url),
-        :$head,
-        :header(header-html %categories),
-        :$footer,
-        :default-title("Perl 6 Examples");
-}
-
-sub url($url) {
-    return $url;
-}
+my $website = Website.new(categories => $all-categories);
+$website.build;
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -2,7 +2,9 @@
 
 =TITLE Ackermann function
 
- The Ackermann function is a classic recursive example in computer science.
+=AUTHOR Filip Sergot
+
+The Ackermann function is a classic recursive example in computer science.
 
 =head1 More
 
@@ -12,6 +14,11 @@ L<http://rosettacode.org/wiki/Ackermann_function#Perl_6>
 
 =item ternary chaining
 =item recursive funtion
+
+=head1 Features used
+
+=item C<ternary operator> - L<http://perlcabal.org/syn/S03.html#Conditional_operator_precedence>
+=item C<multi subs> - L<http://perlcabal.org/syn/S12.html#Multisubs_and_Multimethods>
 
 =end pod
 
@@ -23,14 +30,5 @@ sub A(Int $m, Int $n) {
 
 }
 A(1, 2).say;
-
-=begin pod
-
-=head1 Features used
-
-=item C<ternary operator> - L<http://perlcabal.org/syn/S03.html#Conditional_operator_precedence>
-=item C<multi subs> - L<http://perlcabal.org/syn/S12.html#Multisubs_and_Multimethods>
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

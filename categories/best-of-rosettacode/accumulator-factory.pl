@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Accumulator factory
 
+=AUTHOR Salve J. Nilsen
+
 A problem posed by Paul Graham is that of creating a function that takes a
 single (numeric) argument and which returns another function that is an
 accumulator. The returned accumulator function in turn also takes a single

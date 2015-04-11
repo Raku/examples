@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P19 - Rotate a list C<n> places to the left.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say rotate(<a b c d e f g>.list, 3).perl;
+    Array.new("d", "e", "f", "g", "a", "b", "c")
+
+=end pod
 
 sub rotate(@list is copy, $places is copy)
 {
@@ -14,13 +26,5 @@ sub rotate(@list is copy, $places is copy)
 
 say rotate(<a b c d e f g>.list, 3).perl;
 say rotate(<a b c d e f g>.list, -3).perl;
-
-=begin pod
-
-=head1 NAME
-
-P19 - Rotate a list C<n> places to the left.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

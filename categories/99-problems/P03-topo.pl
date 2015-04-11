@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P03 - Find the C<k>th element of a list.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say get-at(<a b c d e>, 4)
+    e
+
+=end pod
 
 sub get-at(@list, $elem)
 {
@@ -7,13 +19,5 @@ sub get-at(@list, $elem)
 }
 
 say get-at(<a b c d e>, 4);
-
-=begin pod
-
-=head1 NAME
-
-P03 - Find the C<k>th element of a list.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6

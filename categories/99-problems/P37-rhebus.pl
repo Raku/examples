@@ -1,17 +1,30 @@
 use v6;
 
-# Specification:
-#   P37 (**) Calculate Euler's totient function phi(m) (improved).
-#       See problem P34 for the definition of Euler's totient function. If the
-#       list of the prime factors of a number m is known in the form of
-#       problem P36 then the function phi(m) can be efficiently calculated as
-#       follows: Let ((p1 m1) (p2 m2) (p3 m3) ...) be the list of prime
-#       factors (and their multiplicities) of a given number m. Then phi(m)
-#       can be calculated with the following formula:
-#
-#   phi(m) = (p1-1) * p1 ** (m1-1) * (p2-1) * p2 ** (m2-1)
-#          * (p3-1) * p3 ** (m3-1) * ...
+=begin pod
 
+=TITLE P37 - Calculate Euler's totient function phi(m) (improved).
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+   P37 (**) Calculate Euler's totient function phi(m) (improved).
+       See problem P34 for the definition of Euler's totient function. If the
+       list of the prime factors of a number m is known in the form of
+       problem P36 then the function phi(m) can be efficiently calculated as
+       follows: Let ((p1 m1) (p2 m2) (p3 m3) ...) be the list of prime
+       factors (and their multiplicities) of a given number m. Then phi(m)
+       can be calculated with the following formula:
+
+   phi(m) = (p1-1) * p1 ** (m1-1) * (p2-1) * p2 ** (m2-1)
+          * (p3-1) * p3 ** (m3-1) * ...
+
+=head1 Example
+
+    > say "phi2(315): ", totient(315);
+    phi2(315): 144
+
+=end pod
 
 # Straight from P36-rhebus.pl
 sub prime_factors_mult (Int $n) {
@@ -32,14 +45,11 @@ sub prime_factors_mult (Int $n) {
     }
 }
 
-
 # 1. One-liner version
-
 say "phi($_): ", [*] prime_factors_mult($_).map({ (.key-1) * .key ** (.value-1) })
     for 1..20;
 
 say [*] prime_factors_mult(315).map: { (.key-1) * .key ** (.value-1) };
-
 
 # 2. sub version
 # note that when prime_factors_mult returns an empty list, [*] returns the

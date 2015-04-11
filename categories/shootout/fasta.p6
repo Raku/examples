@@ -1,9 +1,43 @@
-# The Computer Language Benchmarks Game
-#
-# Based on the submission for Perl 5.
-# contributed by Daniel carrera
-#
-# USAGE: perl6 fasta.p6.pl 1000
+use v6;
+
+=begin pod
+
+=TITLE Generate and write random DNA sequences
+
+=AUTHOR Daniel Carrera
+
+Based on the submission for Perl 5.
+
+The program should
+
+=item generate DNA sequences, by copying from a given sequence
+=item generate DNA sequences, by weighted random selection from 2 alphabets
+=item convert the expected probability of selecting each nucleotide into
+      cumulative probabilities
+=item match a random number against those cumulative probabilities to select
+      each nucleotide (use linear search or binary search)
+
+=item use this linear congruential generator to calculate a random number
+      each time a nucleotide needs to be selected (don't cache the random number
+      sequence)
+
+
+    IM = 139968
+    IA = 3877
+    IC = 29573
+    Seed = 42
+
+    Random (Max)
+    Seed = (Seed * IA + IC) modulo IM
+         = Max * Seed / IM
+
+write 3 sequences line-by-line in FASTA format.
+
+USAGE:
+
+    perl6 fasta.p6.pl 1000
+
+=end pod
 
 constant IM = 139968;
 constant IA = 3877;
@@ -96,3 +130,4 @@ sub gen_random($length) {
 	} , 1..$length;
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6

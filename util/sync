@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -az --delete html/* examples.perl6.org@www.p6c.org:/var/www/examples.perl6.org

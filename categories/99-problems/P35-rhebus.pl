@@ -1,12 +1,22 @@
 use v6;
 
-# Specification:
-# P35 (**) Determine the prime factors of a given positive integer.
-#   Construct a flat list containing the prime factors in ascending order.
-# Example:
-# > say ~prime_factors 315
-# 3 3 5 7
+=begin pod
 
+=TITLE P35 - Determine the prime factors of a given positive integer.
+
+=AUTHOR Philip Potter
+
+=head1 Specification
+
+    P35 (**) Determine the prime factors of a given positive integer.
+      Construct a flat list containing the prime factors in ascending order.
+
+=head1 Example
+
+    > say ~prime_factors 315
+    3 3 5 7
+
+=end pod
 
 sub prime_factors (Int $n) {
     my $residue = $n;
@@ -31,6 +41,5 @@ sub prime_factors (Int $n) {
 say ~prime_factors($_) for 2..20;
 say ~prime_factors(315);
 say ~prime_factors(1723);
-
 
 # vim: expandtab shiftwidth=4 ft=perl6

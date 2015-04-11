@@ -1,14 +1,24 @@
 use v6;
 
-# Specification:
-#   P36 (**) Determine the prime factors of a given positive integer (2).
-#       Construct a list containing the prime factors and their multiplicity.
-# Example:
-# > prime_factors_mult(315).perl.say
-# (3 => 2, 5 => 1, 7 => 1)
-#
-#   Hint: The problem is similar to problem P13.
+=begin pod
 
+=TITLE P36 - Determine the prime factors of a given positive integer (2).
+
+=AUTHOR Philip Potter
+
+Hint: The problem is similar to problem P13.
+
+=head1 Specification
+
+    P36 (**) Determine the prime factors of a given positive integer (2).
+        Construct a list containing the prime factors and their multiplicity.
+
+=head1 Example
+
+    > prime_factors_mult(315).perl.say
+    (3 => 2, 5 => 1, 7 => 1)
+
+=end pod
 
 sub prime_factors_mult (Int $n) {
     my $residue = $n;

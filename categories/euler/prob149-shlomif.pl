@@ -2,11 +2,22 @@ use v6;
 
 =begin pod
 
-=head1 DESCRIPTION
+=TITLE Searching for a maximum-sum subsequence
+
+=AUTHOR Shlomi Fish
+
+L<https://projecteuler.net/problem=149>
 
 Looking at the table below, it is easy to verify that the maximum possible sum
 of adjacent numbers in any direction (horizontal, vertical, diagonal or
-anti-diagonal) is 16 (= 8 + 7 + 1).  −253        2 9−651 3273 −18−4  8
+anti-diagonal) is 16 (= 8 + 7 + 1).
+
+=begin table
+−2   5   3  2
+ 9  −6   5  1
+ 3   2   7  3
+−1   8  −4  8
+=end table
 
 Now, let us repeat the search, but on a much larger scale:
 
@@ -25,11 +36,9 @@ second row, and so on.
 Finally, find the greatest sum of (any number of) adjacent entries in any
 direction (horizontal, vertical, diagonal or anti-diagonal).
 
+Expected result: 52852124
+
 =end pod
-
-# use integer;
-
-# use Math::BigInt "lib" => "GMP";
 
 class FiboRand {
     has $.k is rw = 1;
@@ -39,12 +48,10 @@ class FiboRand {
         my $k = $.k;
         my $s_k;
 
-        if ($k <= 55)
-        {
+        if ($k <= 55) {
             $s_k = (((100003 - 200003*$k + 300007*($k**3)) % 1000000) - 500000);
         }
-        else
-        {
+        else {
             $s_k = (((@.last_nums[*-24] + @.last_nums[*-55] + 1000000) % 1000000) - 500000);
             shift(@.last_nums);
         }
@@ -59,41 +66,34 @@ class FiboRand {
 {
     my $rand = FiboRand.new;
 
-    for 1 .. 9 -> $k
-    {
+    for 1 .. 9 -> $k {
         $rand.fetch();
     }
 
-    if ($rand.fetch() != -393027)
-    {
+    if ($rand.fetch() != -393027) {
         die "Wrong s10!";
     }
 
-    for 11 .. 99 -> $k
-    {
+    for 11 .. 99 -> $k {
         $rand.fetch();
     }
 
-    if ($rand.fetch() != 86613)
-    {
+    if ($rand.fetch() != 86613) {
         die "Wrong s100!";
     }
 }
 
-class Max
-{
+class Max {
     has $.s is rw = 0;
     has $.e is rw = 0;
-    method add($n)
-    {
+    method add($n) {
         $.s = max($.s, ($.e = max($.e + $n, 0)));
 
         return;
     }
 
     # g = get()
-    method g()
-    {
+    method g() {
         return $.s;
     }
 }
@@ -110,12 +110,10 @@ my @anti_diag_max = map { Max.new }, (1 .. $SIZE);
 my $diag_offset = 0;
 my $anti_diag_offset = 0;
 
-sub handle_row()
-{
+sub handle_row() {
     my $horiz = Max.new;
     # First row.
-    for 0 .. $SIZE-1 -> $x
-    {
+    for 0 .. $SIZE-1 -> $x {
         my $s = $rand.fetch();
 
         @vert_max[$x].add($s);
@@ -137,8 +135,7 @@ sub handle_row()
     return;
 }
 
-for 1 .. $SIZE -> $y
-{
+for 1 .. $SIZE -> $y {
     print "Y=$y\n";
     handle_row();
 }
@@ -146,7 +143,7 @@ for 1 .. $SIZE -> $y
 
 print "Result = ", max(
     $max_max, (map { $_.g() }, @vert_max, @diag_max, @anti_diag_max
-    )
+)
 ), "\n";
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Arbitrary-precision integers (included)
 
+=AUTHOR Salve J. Nilsen
+
 Using the in-built capabilities of your language, calculate the integer
 value of:
 
@@ -18,26 +20,19 @@ Find and show the number of decimal digits in the answer.
 
 L<http://rosettacode.org/wiki/Arbitrary-precision_integers_(included)#Perl_6>
 
-
 =head1 What's interesting here?
 
 =item metaoperator
 =item casting
 =item {} in string
 
-=end pod
-
-
-my $x = ~[**] 5, 4, 3, 2;
-say "5**4**3**2 = {substr($x,0,20)}...{substr($x,$x.chars-20)} and has {$x.chars} digits";
-
-
-=begin pod
-
 =head1 Features used
 
 =item C<> - L<http://perlcabal.org/syn/>
 
 =end pod
+
+my $x = ~[**] 5, 4, 3, 2;
+say "5**4**3**2 = {substr($x,0,20)}...{substr($x,$x.chars-20)} and has {$x.chars} digits";
 
 # vim: expandtab shiftwidth=4 ft=perl6

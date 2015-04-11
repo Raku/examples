@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Bowling
 
-=AUTHOR
+=AUTHOR Eric Hodges
 
 In Bowling, competitors will be given the score card for a 10-frame bowling
 game and asked to calculate the score.

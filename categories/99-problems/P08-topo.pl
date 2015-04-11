@@ -1,5 +1,17 @@
-#!/usr/bin/env perl6
 use v6;
+
+=begin pod
+
+=TITLE P08 - Eliminate consecutive duplicates of list elements.
+
+=AUTHOR Ryan Connelly
+
+=head1 Example
+
+    > say eliminate-consecutive-duplicates(<a a a a a b b c b d e e>);
+    a b c b d e
+
+=end pod
 
 sub eliminate-consecutive-duplicates(@list)
 {
@@ -19,13 +31,5 @@ sub eliminate-consecutive-duplicates(@list)
 }
 
 say eliminate-consecutive-duplicates(<a a a a a b b c b d e e>);
-
-=begin pod
-
-=head1 NAME
-
-P08 - Eliminate consecutive duplicates of list elements.
-
-=end pod
 
 # vim: expandtab shiftwidth=4 ft=perl6
