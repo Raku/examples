@@ -20,13 +20,13 @@ L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Perl_6>
 =item infix sub definition
 =item reduction meta-operator
 =item self-declared parameters
-=item range operator with first value excluded
-=item Zip metaoperator with an infinite list on the right side
+=item sequence operator to get a decreasing order
+=item Zip metaoperator with list of different sizes
 =item use of rational numbers as a default
 
 =end pod
 
-sub infix:<choose> { [*] $^n - $^p ^.. $n Z/ 1 .. * }
+sub infix:<choose> { [*] ($^n ... 0) Z/ 1 .. $^p }
 
 say 5 choose 3;
 
