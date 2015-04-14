@@ -329,7 +329,7 @@ which provide advanced interpolation control:
 
     # Double quoted strings
     say "I have to escape my \"double quotes\" in this string";
-    say q/This string allows "double quotes" seamlessly/;
+    say qq/This string allows "double quotes" seamlessly/;
 
 The slashes in q// and qq// can be replaced with most of the
 delimiters that worked in Perl 5. All of Unicode above Latin-1 is reserved
