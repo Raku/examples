@@ -168,7 +168,6 @@ class Website is export {
                 my $example = $category.examples{$file.IO.basename};
                 my $pod = format-author-heading($example);
                 $pod.push: source-reference($file, $category-key);
-                $pod.push: source-without-pod($file);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
                 $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
                 spurt $html-file, self.p2h($pod);
@@ -184,7 +183,6 @@ class Website is export {
                         my $example = $subcategory.examples{$file.IO.basename};
                         my $pod = format-author-heading($example);
                         $pod.push: source-reference($file, $subcategory-key);
-                        $pod.push: source-without-pod($file);
                         my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
                         $html-file = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/" ~ $html-file;
                         spurt $html-file, self.p2h($pod);
