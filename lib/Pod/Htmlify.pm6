@@ -201,9 +201,26 @@ class Website is export {
         pod2html $pod,
             :url(&url),
             :$head,
-            :header(header-html $!categories.keys),
+            :header(self.header-html),
             :$footer,
             :default-title("Perl 6 Examples");
+    }
+
+    #| return the header html for the current page
+    method header-html {
+        my $header = slurp 'template/header.html';
+        my @category-keys = $!categories.keys;
+        my $menu-items = [~]
+            q[<div class="menu-items dark-green">],
+            @category-keys.map( -> $category {qq[
+                <a class="menu-item selected darker-green"
+                    href="/categories/$category.html">
+                    { $category.wordcase.subst('-', ' ', :global) }
+                </a>
+            ]}),
+            q[</div>];
+        my $menu-pos = ($header ~~ /MENU/).from;
+        $header.subst('MENU', :p($menu-pos), $menu-items);
     }
 
 }
@@ -216,22 +233,6 @@ sub files-in-category($category, :$base-dir = "./categories") {
 #| return the link to the POD's url
 sub url($url) {
     return $url;
-}
-
-#| return the header html for the current page
-sub header-html(@category-keys) {
-    my $header = slurp 'template/header.html';
-    my $menu-items = [~]
-        q[<div class="menu-items dark-green">],
-        @category-keys.map( -> $category {qq[
-            <a class="menu-item selected darker-green"
-                href="/categories/$category.html">
-                { $category.wordcase.subst('-', ' ', :global) }
-            </a>
-        ]}),
-        q[</div>];
-    my $menu-pos = ($header ~~ /MENU/).from;
-    $header.subst('MENU', :p($menu-pos), $menu-items);
 }
 
 #| return the footer html for the current page

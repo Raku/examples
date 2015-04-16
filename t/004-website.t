@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 10;
+plan 11;
 
 use-ok("Pod::Htmlify");
 
@@ -277,6 +277,24 @@ subtest {
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "collect-all-metadata functionality";
+
+subtest {
+    plan 4;
+
+    my %categories-table =
+        "sender" => "alice",
+        "receiver" => "bob",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+    my $website = Website.new(categories => $categories);
+
+    my $header-html = $website.header-html;
+    ok($header-html ~~ m/'sender.html'/, "category key link in menu tab");
+    ok($header-html ~~ m/'receiver.html'/, "category key link in menu tab");
+    ok($header-html ~~ m/Sender/, "wordcase category key in menu tab");
+    ok($header-html ~~ m/Receiver/, "wordcase category key in menu tab");
+}, "header-html functionality";
+
 
 subtest {
     plan 4;
