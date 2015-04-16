@@ -21,6 +21,23 @@ my %base-categories-table =
     "other"               => "Uncategorized examples",
 ;
 
+my %menu-tabs =
+    "/categories/best-of-rosettacode.html" => "Rosettacode",
+    "/categories/99-problems.html"         => "99 Problems",
+    "/categories/cookbook.html"            => "Cookbook",
+    "/categories/euler.html"               => "Euler",
+    "/categories/games.html"               => "Games",
+    "/categories/interpreters.html"        => "Interpreters",
+    "/categories/module-management.html"   => "Modules",
+    "/categories/parsers.html"             => "Grammars",
+    "/categories/perlmonks.html"           => "Perlmonks",
+    "/categories/rosalind.html"            => "Rosalind",
+    "/categories/shootout.html"            => "Shootout",
+    "/categories/tutorial.html"            => "Tutorial",
+    "/categories/wsg.html"                 => "WSG",
+    "/categories/other.html"               => "Other",
+;
+
 my $all-categories = Categories.new(categories-table => %base-categories-table);
 
 my %cookbook-categories-table =
@@ -48,6 +65,7 @@ my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
 $all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
 my $website = Website.new(categories => $all-categories);
+$website.menu-tabs = %menu-tabs;
 $website.build;
 
 # vim: expandtab shiftwidth=4 ft=perl6
