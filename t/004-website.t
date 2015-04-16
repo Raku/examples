@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 9;
+plan 10;
 
 use-ok("Pod::Htmlify");
 
@@ -75,6 +75,26 @@ subtest {
 
     is($website.base-html-dir, "html", "base html directory");
 }, "Website object instantiation";
+
+subtest {
+    plan 1;
+
+    my %categories-table =
+        "sender" => "alice",
+        "receiver" => "bob",
+    ;
+    my $categories = Categories.new(categories-table => %categories-table);
+    my $website = Website.new(categories => $categories);
+
+    my %expected-tabs =
+        "sender.html" => "Sender",
+        "receiver.html" => "Receiver",
+    ;
+    is($website.menu-tabs, %expected-tabs,
+        "menu tabs set automatically from category keys");
+
+    # menu items set explicitly
+}, "menu-tabs functionality";
 
 subtest {
     plan 2;

@@ -9,6 +9,15 @@ class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
     has $.base-categories-dir is rw = "categories";
+    has %.menu-tabs;
+
+    submethod BUILD(:$categories) {
+        $!categories = $categories;
+        for $categories.keys -> $category-key {
+            %!menu-tabs{$category-key ~ ".html"} =
+                $category-key.wordcase.subst('-', ' ', :global);
+        }
+    }
 
     #| build the website
     method build {
