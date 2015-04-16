@@ -31,6 +31,10 @@ programming language!
 <dd>
     Language or DSL interpreters
 </dd>
+<dt><a href="/categories/module-management.html">Module Management</a></dt>
+<dd>
+    Examples of organising modules
+</dd>
 <dt><a href="/categories/parsers.html">Parsers</a></dt>
 <dd>
     Example grammars
@@ -46,6 +50,10 @@ programming language!
 <dt><a href="/categories/shootout.html">Shootout</a></dt>
 <dd>
     Implementations for the Computer Language Benchmark Game
+</dd>
+<dt><a href="/categories/tutorial.html">Perl6 Tutorial Examples</a></dt>
+<dd>
+    Initial work in collecting Perl 6 tutorial examples
 </dd>
 <dt><a href="/categories/wsg.html">Winter Scripting Games</a></dt>
 <dd>
