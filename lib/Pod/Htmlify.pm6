@@ -14,7 +14,7 @@ class Website is export {
     submethod BUILD(:$categories) {
         $!categories = $categories;
         for $categories.keys -> $category-key {
-            %!menu-tabs{$category-key ~ ".html"} =
+            %!menu-tabs{"/categories/" ~ $category-key ~ ".html"} =
                 $category-key.wordcase.subst('-', ' ', :global);
         }
     }
@@ -214,7 +214,7 @@ class Website is export {
             q[<div class="menu-items dark-green">],
             %!menu-tabs.keys.map( -> $menu-tab-link {qq[
                 <a class="menu-item selected darker-green"
-                    href="/categories/$menu-tab-link">
+                    href="$menu-tab-link">
                     { %!menu-tabs{$menu-tab-link} }
                 </a>
             ]}),

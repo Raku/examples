@@ -87,8 +87,8 @@ subtest {
     my $website = Website.new(categories => $categories);
 
     my %expected-tabs =
-        "sender.html" => "Sender",
-        "receiver.html" => "Receiver",
+        "/categories/sender.html" => "Sender",
+        "/categories/receiver.html" => "Receiver",
     ;
     is($website.menu-tabs, %expected-tabs,
         "menu tabs set automatically from category keys");
