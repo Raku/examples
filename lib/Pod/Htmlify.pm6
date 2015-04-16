@@ -212,10 +212,10 @@ class Website is export {
         my @category-keys = $!categories.keys;
         my $menu-items = [~]
             q[<div class="menu-items dark-green">],
-            @category-keys.map( -> $category {qq[
+            %!menu-tabs.keys.map( -> $menu-tab-link {qq[
                 <a class="menu-item selected darker-green"
-                    href="/categories/$category.html">
-                    { $category.wordcase.subst('-', ' ', :global) }
+                    href="/categories/$menu-tab-link">
+                    { %!menu-tabs{$menu-tab-link} }
                 </a>
             ]}),
             q[</div>];
