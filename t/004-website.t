@@ -92,8 +92,6 @@ subtest {
     ;
     is($website.menu-tabs, %expected-tabs,
         "menu tabs set automatically from category keys");
-
-    # menu items set explicitly
 }, "menu-tabs functionality";
 
 subtest {
@@ -279,7 +277,7 @@ subtest {
 }, "collect-all-metadata functionality";
 
 subtest {
-    plan 4;
+    plan 8;
 
     my %categories-table =
         "sender" => "alice",
@@ -293,6 +291,19 @@ subtest {
     ok($header-html ~~ m/'receiver.html'/, "category key link in menu tab");
     ok($header-html ~~ m/Sender/, "wordcase category key in menu tab");
     ok($header-html ~~ m/Receiver/, "wordcase category key in menu tab");
+
+    # menu items set explicitly
+    $website.menu-tabs =
+        "verifier.html" => "Verifier: Victor",
+        "eavesdropper.html" => "Eavesdropper: Eve",
+    ;
+
+    $header-html = $website.header-html;
+    ok($header-html ~~ m/'verifier.html'/, "explicitly set menu tab link");
+    ok($header-html ~~ m/'eavesdropper.html'/, "explicitly set menu tab link");
+    ok($header-html ~~ m/'Verifier: Victor'/, "explicitly set menu tab text`");
+    ok($header-html ~~ m/'Eavesdropper: Eve'/, "explicitly set menu tab text`");
+
 }, "header-html functionality";
 
 
