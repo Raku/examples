@@ -162,6 +162,7 @@ class Website is export {
         for $!categories.categories-list -> $category {
             my $category-key = $category.key;
             say "Creating example files for category: $category-key";
+            my $html-dir = $!base-html-dir ~ "/categories/$category-key/";
             my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
             for @files -> $file {
                 next unless $file.IO.e;
@@ -169,7 +170,7 @@ class Website is export {
                 my $pod = format-author-heading($example);
                 $pod.push: source-reference($file, $category-key);
                 my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
-                $html-file = $!base-html-dir ~ "/categories/$category-key/" ~ $html-file;
+                $html-file = $html-dir ~ $html-file;
                 spurt $html-file, self.p2h($pod);
             }
             if $category.subcategories {
@@ -178,13 +179,14 @@ class Website is export {
                     say "Creating example files for subcategory: $subcategory-key";
                     my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
                     my @files = files-in-category($subcategory-key, base-dir => $base-dir);
+                    my $html-dir = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/";
                     for @files -> $file {
                         next unless $file.IO.e;
                         my $example = $subcategory.examples{$file.IO.basename};
                         my $pod = format-author-heading($example);
                         $pod.push: source-reference($file, $subcategory-key);
                         my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
-                        $html-file = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/" ~ $html-file;
+                        $html-file = $html-dir ~ $html-file;
                         spurt $html-file, self.p2h($pod);
                     }
                 }
