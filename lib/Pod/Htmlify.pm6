@@ -163,34 +163,30 @@ class Website is export {
             my $category-key = $category.key;
             say "Creating example files for category: $category-key";
             my $html-dir = $!base-html-dir ~ "/categories/$category-key/";
-            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
-            for @files -> $file {
-                next unless $file.IO.e;
-                my $example = $category.examples{$file.IO.basename};
-                my $pod = format-author-heading($example);
-                $pod.push: source-reference($file, $category-key);
-                my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
-                $html-file = $html-dir ~ $html-file;
-                spurt $html-file, self.p2h($pod);
-            }
+            self.write-example-html($category, $!base-categories-dir, $html-dir);
             if $category.subcategories {
                 for $category.subcategories.categories-list -> $subcategory {
                     my $subcategory-key = $subcategory.key;
                     say "Creating example files for subcategory: $subcategory-key";
                     my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
-                    my @files = files-in-category($subcategory-key, base-dir => $base-dir);
                     my $html-dir = $!base-html-dir ~ "/categories/$category-key/$subcategory-key/";
-                    for @files -> $file {
-                        next unless $file.IO.e;
-                        my $example = $subcategory.examples{$file.IO.basename};
-                        my $pod = format-author-heading($example);
-                        $pod.push: source-reference($file, $subcategory-key);
-                        my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
-                        $html-file = $html-dir ~ $html-file;
-                        spurt $html-file, self.p2h($pod);
-                    }
+                    self.write-example-html($subcategory, $base-dir, $html-dir);
                 }
             }
+        }
+    }
+
+    #| write example html to file
+    method write-example-html($category, $category-dir, $html-dir) {
+        my @files = files-in-category($category.key, base-dir => $category-dir);
+        for @files -> $file {
+            next unless $file.IO.e;
+            my $example = $category.examples{$file.IO.basename};
+            my $pod = format-author-heading($example);
+            $pod.push: source-reference($file, $category.key);
+            my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
+            $html-file = $html-dir ~ $html-file;
+            spurt $html-file, self.p2h($pod);
         }
     }
 
