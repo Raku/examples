@@ -41,15 +41,16 @@ my %menu-tabs =
 my $all-categories = Categories.new(categories-table => %base-categories-table);
 
 my %cookbook-categories-table =
-    "01strings"                  => "Strings",
-    "02numbers"                  => "Numbers",
-    "03dates-and-times"          => "Dates and Times",
-    "04arrays"                   => "Arrays",
-    "05hashes"                   => "Hashes",
-    "07file-access"              => "File access",
-    "09directories"              => "Directories",
-    "10subroutines"              => "Subroutines",
-    "13classes-objects-and-ties" => "Classes, Objects and Ties",
+    "01strings"                  => "1. Strings",
+    "02numbers"                  => "2. Numbers",
+    "03dates-and-times"          => "3. Dates and Times",
+    "04arrays"                   => "4. Arrays",
+    "05hashes"                   => "5. Hashes",
+    "07file-access"              => "7. File access",
+    "09directories"              => "9. Directories",
+    "10subroutines"              => "10. Subroutines",
+    "13classes-objects-and-ties" => "13. Classes, Objects and Ties",
+    "17sockets"                  => "17. Sockets",
 ;
 
 my $cookbook-categories = Categories.new(categories-table => %cookbook-categories-table);
