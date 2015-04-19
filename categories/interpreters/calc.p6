@@ -106,17 +106,19 @@ my grammar Arith {
     }
 }
 
-my $input = (@*ARGS[0] // slurp);
+sub MAIN($input = (@*ARGS[0] // slurp)) {
+    try Arith.parse($input);
+    if $! {
+        say "Parse failed: ", $!.message;
 
-try Arith.parse($input);
-if $! {
-    say "Parse failed: ", $!.message;
+    }
+    elsif $/ {
+        say $();
 
-} elsif $/ {
-    say $();
-
-} else {
-    say "Parse failed.";
+    }
+    else {
+        say "Parse failed.";
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
