@@ -38,24 +38,23 @@ class Website is export {
     #| collect metadata for all example files
     method collect-all-metadata {
         for $!categories.categories-list <-> $category {
-            my $category-key = $category.key;
-            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
-            for @files -> $file {
-                my $example = self.collect-example-metadata($file, $category-key);
-                $category.examples{$file.basename} = $example;
-            }
+            self.collect-category-metadata($category, $!base-categories-dir);
             if $category.subcategories {
                 for $category.subcategories.categories-list <-> $subcategory {
-                    my $subcategory-key = $subcategory.key;
-                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
-                    my @files = files-in-category($subcategory-key,
-                                                  base-dir => $base-dir);
-                    for @files -> $file {
-                        my $example = self.collect-example-metadata($file, $subcategory-key);
-                        $subcategory.examples{$file.basename} = $example;
-                    }
+                    my $base-dir = $!base-categories-dir ~ "/" ~ $category.key;
+                    self.collect-category-metadata($subcategory, $base-dir);
                 }
             }
+        }
+    }
+
+    #| collect metadata for a given category
+    method collect-category-metadata($category, $category-dir) {
+        my $category-key = $category.key;
+        my @files = files-in-category($category-key, base-dir => $category-dir);
+        for @files -> $file {
+            my $example = self.collect-example-metadata($file, $category-key);
+            $category.examples{$file.basename} = $example;
         }
     }
 
