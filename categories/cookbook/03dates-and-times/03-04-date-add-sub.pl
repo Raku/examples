@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Adding and Subtracting Dates
+=TITLE Adding and Subtracting Dates
+
+=AUTHOR stmuk
 
 You want to calculate a past or future timeday from a given one.
 

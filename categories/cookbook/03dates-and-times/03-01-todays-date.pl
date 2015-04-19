@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Today's Date
+=TITLE Today's Date
+
+=AUTHOR stmuk
 
 You want year, month and day for today's date.
 

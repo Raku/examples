@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 From date to week of year, month of year, day of year
+=TITLE From date to week of year, month of year, day of year
+
+=AUTHOR stmuk
 
 You have a date and want week of year, month of year, day of year
 
