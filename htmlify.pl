@@ -51,6 +51,7 @@ my %cookbook-categories-table =
     "10subroutines"              => "10. Subroutines",
     "13classes-objects-and-ties" => "13. Classes, Objects and Ties",
     "17sockets"                  => "17. Sockets",
+    "20web-automation"           => "20. Web Automation",
 ;
 
 my $cookbook-categories = Categories.new(categories-table => %cookbook-categories-table);
