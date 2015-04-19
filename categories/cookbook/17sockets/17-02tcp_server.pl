@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Writing a TCP Server
+
+=TITLE Writing a TCP Server
+
+=AUTHOR stmuk
 
 You want to write a TCP Server to listen on a socket
 

@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Get/Set Filetime
+=TITLE Get/Set Filetime
+
+=AUTHOR stmuk
 
 You want to get and set a utime on a file's inode
 

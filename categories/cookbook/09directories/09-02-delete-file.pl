@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Delete File
+=TITLE Delete File
+
+=AUTHOR stmuk
 
 You want to delete a file
 

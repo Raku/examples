@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Copy/Move File
+=TITLE Copy/Move File
+
+=AUTHOR stmuk
 
 You want to copy and move a file
 

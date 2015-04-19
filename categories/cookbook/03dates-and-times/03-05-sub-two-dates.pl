@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Subtracting Two Dates From Each other
+=TITLE Subtracting Two Dates From Each other
+
+=AUTHOR stmuk
 
 Subtracting Two Dates From Each other returning days
 

@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Hi-Res Timings
+=TITLE Hi-Res Timings
+
+=AUTHOR stmuk
 
 You want to measure sub-second timings
 

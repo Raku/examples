@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Process all files in a directory
+=TITLE Process all files in a directory
+
+=AUTHOR stmuk
 
 You want to process all files in a directory 
 

@@ -2,7 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 Epoch Seconds to DateTime 
+=TITLE Epoch Seconds to DateTime 
+
+=AUTHOR stmuk
 
 You want to convert as seconds past the epoch to a datetime (ISO 8601) 
 
