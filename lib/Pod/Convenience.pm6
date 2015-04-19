@@ -173,6 +173,7 @@ sub source-reference($file, $category) is export {
 sub source-without-pod($file) is export {
     my $example-source = slurp $file;
     $example-source.=subst(rx:s/\=begin pod.*\=end pod/, '');
+    $example-source.=subst(rx/^^'# vim:'.*$$/, '');
     $example-source.=subst(rx/\n ** 3..*/, "\n\n");
 
     return pod-code([$example-source]);
