@@ -1,0 +1,40 @@
+use v6;
+
+=begin pod
+
+=TITLE remove directory and its contents
+
+=AUTHOR stmuk
+
+You want to remove a directory and files and directories inside it.
+
+DOESNT WORK
+
+=end pod
+
+use File::Find;
+
+# note binding := for a list
+
+my @files :=  find(:dir("foo"),:keep-going);
+
+#  returns a list of IO::Path objects
+
+for @files -> $io {
+    say $io.abspath;
+}
+
+for @files -> $io {
+
+    if $io.d:so {
+        $io.rmdir;
+    }
+    elsif $io.f:so {
+        $io.unlink;
+    }
+ 
+}
+
+
+# vim: ft=perl6
+# vim: expandtab shiftwidth=4 ft=perl6
