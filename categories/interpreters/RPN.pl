@@ -12,8 +12,6 @@ use v6;
 
 =end pod
 
-use v6;
-
 my token Op { '+' || '-' || '*' || '/' };
 my token Value { \d+[\.\d+]? };
 my token  Item { <Value> || <Op> };
