@@ -1,10 +1,10 @@
-#!/usr/bin/env perl6
-
 use v6;
 
 =begin pod
 
 =TITLE Simple Infix Arithmetic Calculator
+
+=AUTHOR Yichun Zhang
 
 Operators supported: +, -, *, /, and ^.
 
@@ -118,3 +118,5 @@ if $! {
 } else {
     say "Parse failed.";
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
