@@ -1,9 +1,16 @@
-# Reverse Polish Notation Calculator.
-#
-# Copyright 2009 Daniel Carrera
-# This is free software. You can use it under the terms of Perl itself.
-#
-# USAGE: perl6 RPN.pl  "5 4 + 3 / 5 3 - *"
+use v6;
+
+=begin pod
+
+=TITLE Reverse Polish Notation Calculator
+
+=AUTHOR Daniel Carrera
+
+=head1 USAGE
+
+    perl6 RPN.pl  "5 4 + 3 / 5 3 - *"
+
+=end pod
 
 use v6;
 

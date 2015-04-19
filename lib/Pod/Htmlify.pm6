@@ -38,24 +38,23 @@ class Website is export {
     #| collect metadata for all example files
     method collect-all-metadata {
         for $!categories.categories-list <-> $category {
-            my $category-key = $category.key;
-            my @files = files-in-category($category-key, base-dir => $!base-categories-dir);
-            for @files -> $file {
-                my $example = self.collect-example-metadata($file, $category-key);
-                $category.examples{$file.basename} = $example;
-            }
+            self.collect-category-metadata($category, $!base-categories-dir);
             if $category.subcategories {
                 for $category.subcategories.categories-list <-> $subcategory {
-                    my $subcategory-key = $subcategory.key;
-                    my $base-dir = $!base-categories-dir ~ "/" ~ $category-key;
-                    my @files = files-in-category($subcategory-key,
-                                                  base-dir => $base-dir);
-                    for @files -> $file {
-                        my $example = self.collect-example-metadata($file, $subcategory-key);
-                        $subcategory.examples{$file.basename} = $example;
-                    }
+                    my $base-dir = $!base-categories-dir ~ "/" ~ $category.key;
+                    self.collect-category-metadata($subcategory, $base-dir);
                 }
             }
+        }
+    }
+
+    #| collect metadata for a given category
+    method collect-category-metadata($category, $category-dir) {
+        my $category-key = $category.key;
+        my @files = files-in-category($category-key, base-dir => $category-dir);
+        for @files -> $file {
+            my $example = self.collect-example-metadata($file, $category-key);
+            $category.examples{$file.basename} = $example;
         }
     }
 
@@ -63,14 +62,8 @@ class Website is export {
     method collect-example-metadata($file, $category-key) {
         say "Collecting metadata from $file";
         my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-        my $pod = EVAL $perl-pod;
         my $file-basename = $file.basename;
-        if !$pod {
-            my @contents = $file.lines.join("\n");
-            $pod = Array.new(pod-with-title($file-basename,
-                pod-code(@contents),
-            ));
-        }
+        my $pod = (EVAL $perl-pod) || [pod-with-title($file-basename)];
         my $example-title = pod-title-contents($pod, $file-basename);
         my $author = pod-author-contents($pod, $file-basename);
         my $html-file = $file-basename.subst(/\.p[l||6]$/, ".html");
@@ -184,6 +177,7 @@ class Website is export {
             my $example = $category.examples{$file.IO.basename};
             my $pod = format-author-heading($example);
             $pod.push: source-reference($file, $category.key);
+            $pod.push: source-without-pod($file);
             my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
             $html-file = $html-dir ~ $html-file;
             spurt $html-file, self.p2h($pod);

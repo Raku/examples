@@ -4,11 +4,15 @@ use v6;
 
 =TITLE Brainfuck Interpreter
 
-USAGE: perl6 brainfuck.p6.pl myprog.bf
+=AUTHOR Daniel Carrera
+
+Inspired by C<Acme::Brainfuck>.
+
+=head1 USAGE
+
+    perl6 brainfuck.p6.pl myprog.bf
 
 Below is "Hello world" in Brainfuck:
-
-Contributed by Daniel Carrera, inspired by Acme::Brainfuck
 
 =begin code
 ++++++++++    initializes cell zero to 10
