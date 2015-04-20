@@ -1,9 +1,19 @@
 use v6;
 
-# Specification:
-#    From http://www.perlmonks.org/?node_id=731808
-#    Given a list of URL prefixes, and a list of product IDs, make a list
-#    consisting of each URL prefix concatenated with each product ID.
+=begin pod
+
+=TITLE Combinations
+
+=AUTHOR Eric Hodges
+
+Specification:
+
+From L<http://www.perlmonks.org/?node_id=731808>
+
+Given a list of URL prefixes, and a list of product IDs, make a list
+consisting of each URL prefix concatenated with each product ID.
+
+=end pod
 
 my @urls = ('http://www.something.com/blah.aspx?code=',
             'http://www.somethingelse.com/stuff.aspx?thing=');
