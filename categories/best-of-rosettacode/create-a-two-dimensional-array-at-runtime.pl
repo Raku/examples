@@ -1,3 +1,5 @@
+use v6;
+
 =begin pod
 
 =TITLE Create a two-dimensional array at runtime

@@ -1,3 +1,5 @@
+use v6;
+
 =begin pod
 
 =TITLE Binomial Coefficient
