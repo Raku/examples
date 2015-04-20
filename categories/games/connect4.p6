@@ -1,5 +1,15 @@
 use v6;
 
+=begin pod
+
+=TITLE Connect4
+
+=AUTHOR David Whipp
+
+Play the L<Connect4|http://en.wikipedia.org/wiki/Connect_Four> game.
+
+=end pod
+
 # pre-declare types
 class Game { ... };
 class Move { ... };

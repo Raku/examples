@@ -1,5 +1,13 @@
 use v6;
 
+=begin pod
+
+=TITLE Wizard - fight against magical creatures as a wizard
+
+=AUTHOR Eric Hodges
+
+=end pod
+
 my $DEBUG = 0;
 
 multi wiz-prompt (Str $prompt, @options = ()) {

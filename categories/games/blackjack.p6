@@ -1,5 +1,19 @@
 use v6;
 
+=begin pod
+
+=TITLE Blackjack
+
+=AUTHOR David Whipp
+
+Play Blackjack (a.k.a. 21) just like in a casino.
+
+=head1 USAGE
+
+    perl6 blackjack.p6
+
+=end pod
+
 my $player_is_human = 1;
 
 my @values = (

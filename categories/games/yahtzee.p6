@@ -1,6 +1,15 @@
-#!/usr/bin/env perl6
-
 use v6;
+
+=begin pod
+
+=TITLE Yahtzee
+
+=AUTHOR David Romano
+
+Simulate rolling dice for the game of
+L<Yahtzee|http://en.wikipedia.org/wiki/Yahtzee>.
+
+=end pod
 
 sub roll-dice { map { (1..6).pick }, 1..$^rolls };
 

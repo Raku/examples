@@ -1,10 +1,19 @@
 use v6;
-# From a silly discussion in #perl6...
-# See http://rhebus.posterous.com/learning-perl-6-by-playing-silly-games
-# and feel free to add a further golfed refinement to the end
 
-# Specification:
-# Find out who won, if anyone, in a game of tic-tac-toe.
+=begin pod
+
+=TITLE Tic Tac Toe
+
+=AUTHOR Philip Potter
+
+From a silly discussion in #perl6...
+See L<http://rhebus.posterous.com/learning-perl-6-by-playing-silly-games>
+and feel free to add a further golfed refinement to the end
+
+Specification:
+Find out who won, if anyone, in a game of tic-tac-toe.
+
+=end pod
 
 sub tictactoe-masak (*@b) {
     my @lines = [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6];

@@ -1,6 +1,14 @@
-#!/usr/bin/env perl6
-
 use v6;
+
+=begin pod
+
+=TITLE Flashcard
+
+=AUTHOR David Romano
+
+Learn foreign language vocabulary using flashcards.
+
+=end pod
 
 my %table = (:context => (), :text => (), :link => (), :item => (), :group => ());
 # item => ({ text => @text[0], context => %table{'context'}[0], score => 0 # },...)
