@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Printing a list with commas
+
+=TITLE Printing a list with commas
+
+=AUTHOR Scott Penrose
 
 You'd like to print out a list containing an unknown number of elements,
 placing an "and" before the last element and commas between each element if

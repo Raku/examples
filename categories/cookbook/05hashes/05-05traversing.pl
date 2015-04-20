@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Traversing a hash
+
+=TITLE Traversing a hash
+
+=AUTHOR Scott Penrose
 
 You want to perform an action on each entry (i.e., each pair) in a hash.
 

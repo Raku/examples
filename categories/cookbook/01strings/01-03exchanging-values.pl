@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Swapping values
+
+=TITLE Swapping values
+
+=AUTHOR Scott Penrose
 
 You want to swap values without using a temporary variable
 

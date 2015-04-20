@@ -2,9 +2,9 @@ use v6;
 
 =begin pod
 
-=head1 NAME
+=TITLE Perl 6 Cookbook: Introduction to Strings
 
-Perl 6 Cookbook: Introduction to Strings
+=AUTHOR Scott Penrose
 
 =head1 Definition
 

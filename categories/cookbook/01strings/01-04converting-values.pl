@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Converting between characters and numbers.
+
+=TITLE Converting between characters and numbers.
+
+=AUTHOR Scott Penrose
 
 You want to convert characters to their numeric value or vice-versa
 

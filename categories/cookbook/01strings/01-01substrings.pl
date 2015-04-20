@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Substrings
+
+=TITLE Substrings
+
+=AUTHOR Scott Penrose
 
 You want to access or modify a portion of a string, not the whole thing.
 

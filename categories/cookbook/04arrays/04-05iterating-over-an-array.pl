@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Iterating Over an Array
+
+=TITLE Iterating Over an Array
+
+=AUTHOR Scott Penrose
 
 You want to iterate over the elements in an array
 

@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Accessing subroutine arguments
+
+=TITLE Accessing subroutine arguments
+
+=AUTHOR Steve Mynott
 
 You have written a function that takes arguments supplied by its caller and
 you need to access those arguments

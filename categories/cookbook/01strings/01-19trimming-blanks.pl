@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Trimming blanks from a string
+
+=TITLE Trimming blanks from a string
+
+=AUTHOR Scott Penrose
 
 =end pod
 

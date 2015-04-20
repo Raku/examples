@@ -1,7 +1,10 @@
 use v6;
 
 =begin pod
-=head1 Constructing an object
+
+=TITLE Constructing an object
+
+=AUTHOR Scott Penrose
 
 =head2 Problem
 

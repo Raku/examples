@@ -1,9 +1,10 @@
 use v6;
 
-=pod
-
 =begin pod
-=head1 Valid Number
+
+=TITLE Valid Number
+
+=AUTHOR Steve Mynott
 
 You want to check if a string is a valid number.
 
@@ -15,7 +16,7 @@ You want to check if a string is a valid number.
   # that variable will cause it to be coerced into an integer or a
   # number.
 
-  # Ensure that a variable is used to store a real number. 
+  # Ensure that a variable is used to store a real number.
 
   my Num $number;
 
@@ -28,8 +29,8 @@ You want to check if a string is a valid number.
   # it against the rule for integers or reals.
 
 # XXX At the moment you have to make use of modules/Grammar/Perl6.pm
-# to get below working.  When grammar support is more mature this 
-# will be fixed.  
+# to get below working.  When grammar support is more mature this
+# will be fixed.
 
   given $string {
     say "Integer" if /^<Int>$/;
