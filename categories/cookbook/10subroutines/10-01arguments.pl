@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Accessing subroutine arguments
 
-=AUTHOR Steve Mynott
+=AUTHOR
 
 You have written a function that takes arguments supplied by its caller and
 you need to access those arguments

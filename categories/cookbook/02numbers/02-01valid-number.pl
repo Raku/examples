@@ -8,8 +8,6 @@ use v6;
 
 You want to check if a string is a valid number.
 
-# XXX pugs currently ignores types for everything but MMD.
-
   # Most of the time you will not need to do this.  Rather then testing
   # for a scalar's numerical nature you can ensure that the variable
   # contains a number by setting its type.  Assigning a number to
@@ -28,15 +26,18 @@ You want to check if a string is a valid number.
   # corresponds to a real or an integer.  In this situation compare
   # it against the rule for integers or reals.
 
-# XXX At the moment you have to make use of modules/Grammar/Perl6.pm
-# to get below working.  When grammar support is more mature this
-# will be fixed.
-
-  given $string {
-    say "Integer" if /^<Int>$/;
-    say "Rational"  if /^<Rat>$/;
-  }
-
 =end pod
+
+type(12);
+
+type(14.12);
+
+sub type ( $string) {
+    print $string ~ ' is a ';
+    given $string {
+        when Int { say "Integer"; }
+        when Rat { say "Rational"; }
+    }
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
