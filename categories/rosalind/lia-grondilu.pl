@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Independent Alleles
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/lia/>
 
 Sample input

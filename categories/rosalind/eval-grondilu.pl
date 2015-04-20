@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Expected Number of Restriction Sites
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/eval/>
 
 Sample input

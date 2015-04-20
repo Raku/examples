@@ -2,9 +2,11 @@ use v6;
 
 =begin pod
 
-Introduction to Alternative Splicing
+=TITLE Introduction to Alternative Splicing
 
-http://rosalind.info/problems/aspc/
+=AUTHOR L. Grondin
+
+L<http://rosalind.info/problems/aspc/>
 
 Expected output from default input data:
 

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Open Reading Frames
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/orf/>
 
 Sample input

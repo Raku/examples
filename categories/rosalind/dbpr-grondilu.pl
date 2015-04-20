@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Introduction to Protein Databases
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/dbpr/>
 
 Sample input

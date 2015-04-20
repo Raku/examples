@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Mortal Fibonacci Rabbits
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/fibd/>
 

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Inferring mRNA from Protein
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/mrna/>
 
 Sample input

@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Using the Spectrum Graph to Infer Peptides
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/sgra/>
 

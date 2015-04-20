@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Finding a Shared Spliced Motif
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/lcsq/>
 

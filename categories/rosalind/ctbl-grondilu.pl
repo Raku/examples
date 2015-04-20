@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Creating a Character Table
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/ctbl/>
 
 Sample input

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Finding a Motif in DNA
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/subs/>
 
 Sample input

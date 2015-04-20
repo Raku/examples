@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Overlap Graphs
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/grph/>
 
 Sample input

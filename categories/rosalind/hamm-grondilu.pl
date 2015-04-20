@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Counting Point Mutations
 
+=AUTHOR L. Grondin
+
 Evolution as a Sequence of Mistakes
 
 L<http://rosalind.info/problems/hamm/>

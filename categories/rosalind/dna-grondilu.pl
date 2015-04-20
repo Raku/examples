@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Counting DNA Nucleotides
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/dna/>
 

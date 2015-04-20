@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Mendel's First Law
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/iprb/>
 
 Sample input

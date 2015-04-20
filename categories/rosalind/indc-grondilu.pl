@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Independent Segregation of Chromosomes
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/indc/>
 
 Sample input

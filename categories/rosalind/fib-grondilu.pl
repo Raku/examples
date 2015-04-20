@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Rabbits and Recurrence Relations
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/fib/>
 

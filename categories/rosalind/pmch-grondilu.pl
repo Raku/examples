@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Perfect Matchings and RNA Secondary Structures
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/pmch/>
 

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Matching Random Motifs
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/rstr/>
 
 Sample input

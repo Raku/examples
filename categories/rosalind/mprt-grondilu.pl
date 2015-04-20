@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Finding a Protein Motif
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/mprt/>
 
 Sample input

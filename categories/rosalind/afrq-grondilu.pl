@@ -2,9 +2,11 @@ use v6;
 
 =begin pod
 
-Counting Disease Carriers
+=TITLE Counting Disease Carriers
 
-http://rosalind.info/problems/afrq/
+=AUTHOR L. Grondin
+
+L<http://rosalind.info/problems/afrq/>
 
 Expected output from default input data:
 

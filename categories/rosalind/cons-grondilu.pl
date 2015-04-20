@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Consensus and Profile
 
+=AUTHOR L. Grondin
+
 Finding a Most Likely Common Ancestor
 
 L<http://rosalind.info/problems/cons/>

@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Creating a Character Table from Genetic Strings
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/cstr/>
 
 Sample input

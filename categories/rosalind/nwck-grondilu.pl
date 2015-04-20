@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Distances in Trees
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/nwck/>
 

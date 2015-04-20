@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Introduction to Pattern Matching
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/trie/>
 
 Sample dataset:

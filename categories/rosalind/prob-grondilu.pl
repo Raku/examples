@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Introduction to Random Strings
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/prob/>
 
 Sample input

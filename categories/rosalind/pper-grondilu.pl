@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Partial Permutations
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/pper/>
 
 Sample input

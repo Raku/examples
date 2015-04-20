@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Transitions and Transversions
 
-=AUTHOR grondilu
+=AUTHOR L. Grondin
 
 L<http://rosalind.info/problems/tran/>
 

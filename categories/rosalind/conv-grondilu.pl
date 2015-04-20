@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Comparing Spectra with the Spectral Convolution
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/conv/>
 
 Sample input

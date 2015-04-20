@@ -4,6 +4,8 @@ use v6;
 
 =TITLE Inferring Protein from Spectrum
 
+=AUTHOR L. Grondin
+
 L<http://rosalind.info/problems/spec/>
 
 Sample input
