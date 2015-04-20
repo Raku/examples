@@ -38,7 +38,7 @@ Specification:
 #   say called in procedure form
 #   This time we use the range operator .. to create a Range object
 sub my_but_last (@l) {
-	return @l[@l.elems-2 .. @l.elems-1];
+    return @l[@l.elems-2 .. @l.elems-1];
 }
 
 #   ~ operator stringifies the result: ~<a b> goes to 'a b'

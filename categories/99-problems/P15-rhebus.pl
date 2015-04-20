@@ -18,7 +18,7 @@ use v6;
 =end pod
 
 sub repli(@l,$n) {
-	return @l.map({$_ xx $n});
+    return @l.map({$_ xx $n});
 }
 
 say ~repli <a b c>,3;

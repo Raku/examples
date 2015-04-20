@@ -5,13 +5,13 @@ my $DEBUG = 0;
 multi wiz-prompt (Str $prompt, @options = ()) {
     my $choice;
     for (@options.kv) -> $key, $item {
-	   $item.key //= $key;
+           $item.key //= $key;
     }
 
     until (defined $choice && $choice ~~ any(@options.map: {.key})) {
         say $prompt;
         for @options -> $value {
-		say "\t", $value.key, "\t", $value.text;
+                say "\t", $value.key, "\t", $value.text;
         }
         $choice = .prompt;
     }
@@ -80,7 +80,7 @@ class Mortal is WObject {
 }
 
 class Monster is Mortal {
-	has $.gold is rw;
+        has $.gold is rw;
 }
 
 class Room is WObject {

@@ -11,8 +11,8 @@ sub round {
         say "Dice: { @roll }";
         my @dice = prompt("Which dice do you want to roll again (1-5)? ").split(/\s+/);
         if @dice[0] eq "" {
-	    $rolls = 3;
-	}
+            $rolls = 3;
+        }
         else {
             @roll[map { $^index - 1 }, @dice] = roll-dice(@dice.elems);
             $rolls++;

@@ -28,19 +28,19 @@ Sample output
 =end pod
 
 grammar FASTA {
-	token TOP { ^ \n* <DNA-string>+ }
-	token DNA-string { '>' (\N+) \n (<[ACGT\n]>+) }
+    token TOP { ^ \n* <DNA-string>+ }
+    token DNA-string { '>' (\N+) \n (<[ACGT\n]>+) }
 }
 
 my $actions = class {
-	method TOP($/) {
-		make $<DNA-string>>>.ast
-	}
+    method TOP($/) {
+        make $<DNA-string>>>.ast
+    }
 
-	method DNA-string($/) {
-		make [~$0, 100 * +.comb(/<[GC]>/) / +.comb(/<[ACGT]>/)]
-			given ~$1
-	}
+    method DNA-string($/) {
+        make [~$0, 100 * +.comb(/<[GC]>/) / +.comb(/<[ACGT]>/)]
+        given ~$1
+    }
 };
 
 my $default-input = q:to/END/;
@@ -59,7 +59,7 @@ sub MAIN($input-file = Nil) {
     my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
 
     FASTA.parse($_, :$actions).ast.sort(*.[1]).[*-1] ~ '%' ==> say()
-	    given $input;
+        given $input;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

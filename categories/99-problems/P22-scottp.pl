@@ -23,13 +23,13 @@ use v6;
 say ~list(4 .. 9);
 
 # b. Try reverse
-#	Simple check on arguments
-#	Then just reverse the forward version of the list
+#       Simple check on arguments
+#       Then just reverse the forward version of the list
 sub range($a, $b) {
-	if ($a > $b) {
-		return list($b .. $a).reverse;
-	}
-	return list($a .. $b);
+    if ($a > $b) {
+        return list($b .. $a).reverse;
+    }
+    return list($a .. $b);
 }
 say ~range(4, 9);
 say ~range(7, 2);

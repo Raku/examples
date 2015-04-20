@@ -29,24 +29,24 @@ Example 2 (creating a copy):
 =end pod
 
 # a. Simple version, in place
-# 	@array	- your "@array" must always use "@" - even for a single element
-#	.splice - Your array is also an object, you can call the method .splice
-#		- offset - where to add (starting 0)
-#		- length - how many to replace (0 for insert)
-#		- What to add
+#       @array  - your "@array" must always use "@" - even for a single element
+#       .splice - Your array is also an object, you can call the method .splice
+#               - offset - where to add (starting 0)
+#               - length - how many to replace (0 for insert)
+#               - What to add
 my @array = <a b c d>;
 @array.splice(1, 0, 'alfa');
 say ~@array;
 
 # b. Using a sub in-place
-# 	$in, @arr, $pos - you can insert an array in the middle of your parameters
-# 	The array is like a reference, so if you splice on the actual array, not a
-# 	copy of it, you will mutate the caller's copy.
+#       $in, @arr, $pos - you can insert an array in the middle of your parameters
+#       The array is like a reference, so if you splice on the actual array, not a
+#       copy of it, you will mutate the caller's copy.
 #   However if you modify the argument, you must declare it with "is rw" or
 #   the compiler may complain at you.
 sub insert_at ($in, @arr is rw, $pos) {
-	@arr.splice($pos - 1, 0, $in);
-	return;
+    @arr.splice($pos - 1, 0, $in);
+    return;
 }
 
 my @array2 = <a b c d>;

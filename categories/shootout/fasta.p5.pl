@@ -65,11 +65,11 @@ sub makeRepeatFasta {
     my $r = length $s;
     my $ss = $s . $s . substr($s, 0, $n % $r);
     for my $j(0..int($n / LINELENGTH)-1) {
-	my $i = $j*LINELENGTH % $r;
-	print substr($ss, $i, LINELENGTH), "\n";
+        my $i = $j*LINELENGTH % $r;
+        print substr($ss, $i, LINELENGTH), "\n";
     }
     if ($n % LINELENGTH) {
-	print substr($ss, -($n % LINELENGTH)), "\n";
+        print substr($ss, -($n % LINELENGTH)), "\n";
     }
 }
 

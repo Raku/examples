@@ -30,12 +30,12 @@ my @motif = <ACAG GT CCG>;
 
 sub interwove($a, $b) {
     gather if none($a, $b) eq '' {
-	for &?ROUTINE($a.substr(1), $b) {
-	    take $a.substr(0,1) ~ $_
-	}
-	for &?ROUTINE($a, $b.substr(1)) {
-	    take $b.substr(0,1) ~ $_
-	}
+        for &?ROUTINE($a.substr(1), $b) {
+            take $a.substr(0,1) ~ $_
+        }
+        for &?ROUTINE($a, $b.substr(1)) {
+            take $b.substr(0,1) ~ $_
+        }
     }
     elsif $a eq '' { take $b }
     else { take $a }
@@ -44,9 +44,9 @@ sub interwove($a, $b) {
 my %seen;
 for @motif -> $a {
     say gather for @motif -> $b {
-	my @interwove = interwove($a, $b).unique;
-	take %seen{sort($a, $b).join(':')} //=
-	+so grep rx/ <@interwove> /, $dna;
+        my @interwove = interwove($a, $b).unique;
+        take %seen{sort($a, $b).join(':')} //=
+        +so grep rx/ <@interwove> /, $dna;
     }
 }
 

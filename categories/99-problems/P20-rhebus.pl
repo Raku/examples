@@ -30,22 +30,22 @@ Example 2 (returning a copy):
 =end pod
 
 # a. Simple version, in place
-# 	@array	- your "@array" must always use "@" - even for a single element
-#	.splice - Your array is also an object, you can call the method .splice
-#		- offset - where to remove (starting 0)
-#		- length - how many to remove
-#		- What to add in its place (nothing in this case, see P21-scottp.pl
-#		                            for an example of adding)
+#       @array  - your "@array" must always use "@" - even for a single element
+#       .splice - Your array is also an object, you can call the method .splice
+#               - offset - where to remove (starting 0)
+#               - length - how many to remove
+#               - What to add in its place (nothing in this case, see P21-scottp.pl
+#                                           for an example of adding)
 my @array = <a b c d>;
 @array.splice(1, 1);
 say ~@array;
 
 # b. Using a sub in-place
-# 	@arr is declared with "is rw", so if you splice on the actual array, not a
-# 	copy of it, you will mutate the caller's copy.
+#       @arr is declared with "is rw", so if you splice on the actual array, not a
+#       copy of it, you will mutate the caller's copy.
 sub remove-at (@arr is rw, Int $pos) {
-	@arr.splice($pos - 1, 1);
-	return;
+    @arr.splice($pos - 1, 1);
+    return;
 }
 
 my @array2 = <a b c d>;

@@ -23,21 +23,21 @@ use v6;
 
 my @l = <a a a a b c c a a d e e e e>;
 sub packit (@in) {
-	my @out;
-	my $last = shift @in;
-	my $count = 1;
-	for @in -> $t {
-		if ($last eq $t) {
-			$count++;
-		}
-		else {
-			push @out, [$count, $last];
-			$last = $t;
-			$count = 1;
-		}
-	}
-	push @out, [$count, $last];
-	return @out;
+    my @out;
+    my $last = shift @in;
+    my $count = 1;
+    for @in -> $t {
+        if ($last eq $t) {
+            $count++;
+        }
+        else {
+            push @out, [$count, $last];
+            $last = $t;
+            $count = 1;
+        }
+    }
+    push @out, [$count, $last];
+    return @out;
 }
 say ~@l;
 say packit(@l).perl;

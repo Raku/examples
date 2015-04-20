@@ -18,7 +18,7 @@ use v6;
 =end pod
 
 sub dupli(@l) {
-	return @l.map({$_, $_});
+    return @l.map({$_, $_});
 }
 say ~dupli(<a b c c d>);
 
