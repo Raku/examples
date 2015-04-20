@@ -63,3 +63,4 @@ tictactoe-rhebus2( 1, 1, 1,
                    0,-1,-1,
                   -1,-1, 0);
 
+# vim: expandtab shiftwidth=4 ft=perl6
