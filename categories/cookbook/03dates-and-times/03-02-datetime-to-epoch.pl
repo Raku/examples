@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE DateTime to Epoch Seconds 
+=TITLE DateTime to Epoch Seconds
 
 =AUTHOR stmuk
 

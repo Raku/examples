@@ -6,7 +6,7 @@ use v6;
 
 =AUTHOR stmuk
 
-You want to process all files in a directory 
+You want to process all files in a directory
 
 =end pod
 

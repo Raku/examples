@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE Process files recursively 
+=TITLE Process files recursively
 
 =AUTHOR stmuk
 

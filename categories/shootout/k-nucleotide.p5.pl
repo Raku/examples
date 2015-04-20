@@ -7,7 +7,7 @@
 
 my ($sequence);
 $/ = ">";
-/^THREE/ and $sequence = uc(join "", grep !/^THREE/, split /\n+/) while 
+/^THREE/ and $sequence = uc(join "", grep !/^THREE/, split /\n+/) while
 <STDIN>;
 
 my ($l,%h,$sum) = (length $sequence);
@@ -15,7 +15,7 @@ foreach my $frame (1,2) {
   %h = ();
   update_hash_for_frame($frame);
   $sum = $l - $frame + 1;
-  printf "$_ %.3f\n", $h{$_}*100/$sum for sort { $h{$b} <=> $h{$a} || $a 
+  printf "$_ %.3f\n", $h{$_}*100/$sum for sort { $h{$b} <=> $h{$a} || $a
 cmp $b } keys %h;
   print "\n";
 }
