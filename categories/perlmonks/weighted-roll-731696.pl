@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE Weighed roll
+=TITLE Weighted roll
 
 =AUTHOR Eric Hodges
 
