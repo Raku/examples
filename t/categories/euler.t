@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 4;
 
 subtest {
     plan 5;
@@ -48,6 +48,21 @@ subtest {
     }
 
 }, "prob003";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob004";
+    my @authors = <unobe>;
+    my $expected-output = 906609;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output, $name);
+    }
+
+}, "prob004";
 
 sub run-example($name) {
     my $base-dir = "categories/euler";
