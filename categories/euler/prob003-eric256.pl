@@ -35,11 +35,13 @@ class Primes {
 
 my $prime = Primes.new();
 my $number = 600851475143;
-while ($number > 1) {
+my @primes = gather while ($number > 1) {
     if !($number % $prime.next) {
         $number /= $prime.current;
-        say "Found: ", $prime.current;
+        take $prime.current;
     }
 }
+
+say @primes.max;
 
 # vim: expandtab shiftwidth=4 ft=perl6
