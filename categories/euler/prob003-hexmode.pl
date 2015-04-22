@@ -33,14 +33,18 @@ class Prime {
     }
 }
 
-my $p = Prime.new;
-my @q = gather { take $p.next for (0..10) };
-my @r;
+my $number = 600851475143;
 
-for (0..10) {
-    push @r, $p.next;
-}
-say @q.join(",");
-say @r.join(",");
+my $prime = Prime.new;
+my $current-prime;
+my @primes = gather repeat {
+    $current-prime = $prime.next;
+    if $number %% $current-prime {
+        take $current-prime;
+        $number /= $current-prime;
+    }
+} while ($current-prime < $number);
+
+say @primes.max;
 
 # vim: expandtab shiftwidth=4 ft=perl6
