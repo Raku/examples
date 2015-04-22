@@ -80,7 +80,7 @@ sub expected-output {
 
     %expected-output{"P05-scottp.pl"} = q:to/END/;
     D C B A
-    ("D", "C", "B", "A").list
+    ("D", "C", "B", "A")
     END
 
     %expected-output{"P05-topo.pl"} = q:to/END/;
@@ -108,21 +108,21 @@ sub expected-output {
     END
 
     %expected-output{"P07-eric256.pl"} = q:to/END/;
-    Array.new([], "a", [], "b", [], "c", "d", "e")
+    [[], "a", [], "b", [], "c", "d", "e"]<>
     END
 
     %expected-output{"P07-topo.pl"} = q:to/END/;
-    Array.new(1, 2, [3, 4], 5)
+    [1, 2, [3, 4], 5]<>
     Flattened:
-    (1, 2, 3, 4, 5).list
+    (1, 2, 3, 4, 5)
     END
 
     %expected-output{"P07-viklund.pl"} = q:to/END/;
-    (1, 2, 3, 4, 5).list
+    (1, 2, 3, 4, 5)
     END
 
     %expected-output{"P08-eric256.pl"} = q:to/END/;
-    Array.new("a", "b", "c", "a", "d", "e")
+    ["a", "b", "c", "a", "d", "e"]<>
     END
 
     %expected-output{"P08-topo.pl"} = q:to/END/;
@@ -130,75 +130,75 @@ sub expected-output {
     END
 
     %expected-output{"P08-viklund.pl"} = q:to/END/;
-    Array.new("a", "b", "c", "a", "d", "e")
+    ["a", "b", "c", "a", "d", "e"]<>
     END
 
     %expected-output{"P09-rje.pl"} = q:to/END/;
-    Array.new(["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"])
+    [["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"]]<>
     END
 
     %expected-output{"P09-scottp.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    Array.new(["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"])
+    [["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"]]<>
     END
 
     %expected-output{"P09-topo.pl"} = q:to/END/;
-    (["a", "a", "a", "a", "a"], ["b", "b"], ["c"], ["b"], ["d"], ["e", "e"]).list
+    (["a", "a", "a", "a", "a"], ["b", "b"], ["c"], ["b"], ["d"], ["e", "e"])
     END
 
     %expected-output{"P09-unobe.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    (["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"]).list
+    (["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"])
     END
 
     %expected-output{"P10-scottp.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    Array.new([4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"])
+    [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]<>
     END
 
     %expected-output{"P10-topo.pl"} = q:to/END/;
-    ([5, "a"], [2, "b"], [1, "c"], [1, "b"], [1, "d"], [2, "e"]).list
+    ([5, "a"], [2, "b"], [1, "c"], [1, "b"], [1, "d"], [2, "e"])
     END
 
     %expected-output{"P10-unobe.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    ([4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]).list
+    ([4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"])
     END
 
     %expected-output{"P11-topo.pl"} = q:to/END/;
-    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
     END
 
     %expected-output{"P11-unobe.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
     END
 
     %expected-output{"P12-rhebus.pl"} = q:to/END/;
     4 a b 2 c 2 a d 4 e
-    ("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e").list
+    ("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e")
     END
 
     %expected-output{"P12-topo.pl"} = q:to/END/;
-    ("a", "a", "a", "a", "a", "b", "b", "c", "b", "d", "e", "e").list
+    ("a", "a", "a", "a", "a", "b", "b", "c", "b", "d", "e", "e")
     END
 
     %expected-output{"P12-unobe.pl"} = q:to/END/;
-    Array.new(["4", "a"], "b", ["2", "c"], ["2", "a"], "d", ["4", "e"])
-    Array.new("a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e")
+    [["4", "a"], "b", ["2", "c"], ["2", "a"], "d", ["4", "e"]]<>
+    ["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]<>
     END
 
     %expected-output{"P13-rhebus.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    ([4, "a"],).list
+    ([4, "a"],)
     END
 
     %expected-output{"P13-topo.pl"} = q:to/END/;
-    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
     END
 
     %expected-output{"P13-viklund.pl"} = q:to/END/;
-    Array.new([4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"])
+    [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]<>
     END
 
     %expected-output{"P14-scottp.pl"} = q:to/END/;
@@ -210,7 +210,7 @@ sub expected-output {
     END
 
     %expected-output{"P14-viklund.pl"} = q:to/END/;
-    ("a", "a", "b", "b", "c", "c", "c", "c", "d", "d").list
+    ("a", "a", "b", "b", "c", "c", "c", "c", "d", "d")
     END
 
     %expected-output{"P15-rhebus.pl"} = q:to/END/;
@@ -222,12 +222,12 @@ sub expected-output {
     END
 
     %expected-output{"P15-unobe.pl"} = q:to/END/;
-    Array.new("a", "b", "c")
-    ("a", "a", "a", "b", "b", "b", "c", "c", "c").list
+    ["a", "b", "c"]<>
+    ("a", "a", "a", "b", "b", "b", "c", "c", "c")
     END
 
     %expected-output{"P16-edpratomo.pl"} = q:to/END/;
-    ("A", "B", "D", "E", "G", "H", "K").list
+    ("A", "B", "D", "E", "G", "H", "K")
     END
 
     %expected-output{"P16-topo.pl"} = q:to/END/;
@@ -235,11 +235,11 @@ sub expected-output {
     END
 
     %expected-output{"P17-topo.pl"} = q:to/END/;
-    (["a", "a", "a", "a", "a", "a", "a", "a"], ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"]).list
+    (["a", "a", "a", "a", "a", "a", "a", "a"], ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"])
     END
 
     %expected-output{"P17-unobe.pl"} = q:to/END/;
-    Array.new("a", "b", "c", "d", "e", "f", "g", "h", "i", "k")
+    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "k"]<>
     (["a", "b", "c"], ["d", "e", "f", "g", "h", "i", "k"])
     END
 
@@ -248,8 +248,8 @@ sub expected-output {
     END
 
     %expected-output{"P19-topo.pl"} = q:to/END/;
-    Array.new("d", "e", "f", "g", "a", "b", "c")
-    Array.new("e", "f", "g", "a", "b", "c", "d")
+    ["d", "e", "f", "g", "a", "b", "c"]<>
+    ["e", "f", "g", "a", "b", "c", "d"]<>
     END
 
     %expected-output{"P20-rhebus.pl"} = q:to/END/;
@@ -281,8 +281,8 @@ sub expected-output {
     END
 
     %expected-output{"P22-topo.pl"} = q:to/END/;
-    (5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20).list
-    (20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5).list
+    (5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+    (20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5)
     END
 
     %expected-output{"P23-topo.pl"} = q:to/END/;
@@ -418,38 +418,38 @@ sub expected-output {
     END
 
     %expected-output{"P36-ovid.pl"} = q:to/END/;
-    Prime factors of 17 are: ("17" => 1,).list
-    Prime factors of 53 are: ("53" => 1,).list
+    Prime factors of 17 are: ("17" => 1,)
+    Prime factors of 53 are: ("53" => 1,)
     Prime factors of 90 are: ("2" => 1, "3" => 2, "5" => 1)
     Prime factors of 94 are: ("2" => 1, "47" => 1)
     Prime factors of 200 are: ("2" => 3, "5" => 2)
-    Prime factors of 289 are: ("17" => 2,).list
-    Prime factors of 62710561 are: ("7919" => 2,).list
+    Prime factors of 289 are: ("17" => 2,)
+    Prime factors of 62710561 are: ("7919" => 2,)
     END
 
     %expected-output{"P36-rhebus.pl"} = q:to/END/;
-    ().list
-    (2 => 1,).list
-    (3 => 1,).list
-    (2 => 2,).list
-    (5 => 1,).list
-    (2 => 1, 3 => 1).list
-    (7 => 1,).list
-    (2 => 3,).list
-    (3 => 2,).list
-    (2 => 1, 5 => 1).list
-    (11 => 1,).list
-    (2 => 2, 3 => 1).list
-    (13 => 1,).list
-    (2 => 1, 7 => 1).list
-    (3 => 1, 5 => 1).list
-    (2 => 4,).list
-    (17 => 1,).list
-    (2 => 1, 3 => 2).list
-    (19 => 1,).list
-    (2 => 2, 5 => 1).list
-    (3 => 2, 5 => 1, 7 => 1).list
-    (1723 => 1,).list
+    ()
+    (2 => 1,)
+    (3 => 1,)
+    (2 => 2,)
+    (5 => 1,)
+    (2 => 1, 3 => 1)
+    (7 => 1,)
+    (2 => 3,)
+    (3 => 2,)
+    (2 => 1, 5 => 1)
+    (11 => 1,)
+    (2 => 2, 3 => 1)
+    (13 => 1,)
+    (2 => 1, 7 => 1)
+    (3 => 1, 5 => 1)
+    (2 => 4,)
+    (17 => 1,)
+    (2 => 1, 3 => 2)
+    (19 => 1,)
+    (2 => 2, 5 => 1)
+    (3 => 2, 5 => 1, 7 => 1)
+    (1723 => 1,)
     END
 
     %expected-output{"P37-rhebus.pl"} = q:to/END/;
@@ -609,7 +609,7 @@ sub expected-output {
     END
 
     %expected-output{"P91-edpratomo.pl"} = q:to/END/;
-    FOUND: Array.new(0 => 0, 1 => 2, 0 => 4, 2 => 3, 4 => 4, 3 => 2, 4 => 0, 2 => 1, 3 => 3, 4 => 1, 2 => 0, 0 => 1, 1 => 3, 3 => 4, 4 => 2, 3 => 0, 1 => 1, 0 => 3, 2 => 4, 4 => 3, 3 => 1, 1 => 0, 2 => 2, 1 => 4, 0 => 2)
+    FOUND: [0 => 0, 1 => 2, 0 => 4, 2 => 3, 4 => 4, 3 => 2, 4 => 0, 2 => 1, 3 => 3, 4 => 1, 2 => 0, 0 => 1, 1 => 3, 3 => 4, 4 => 2, 3 => 0, 1 => 1, 0 => 3, 2 => 4, 4 => 3, 3 => 1, 1 => 0, 2 => 2, 1 => 4, 0 => 2]<>
     END
 
     return %expected-output;
