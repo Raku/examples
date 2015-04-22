@@ -35,7 +35,6 @@ accordingly. This speeds up things in Rakudo!
 
 my $sum = 1000;
 for 1 .. ($sum / 3) -> $x {
-    say $x;
     for ($x + 1) .. (($sum + $x) / 2) -> $y {
         my $z = $sum - $x - $y;
         if ($z * $z == $x * $x + $y * $y) {
