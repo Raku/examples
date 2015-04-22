@@ -25,7 +25,7 @@ for %hash.keys -> $key {
 }
 
 for %hash {
-    say $_; # hmm ...
+    .say;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
