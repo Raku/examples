@@ -42,7 +42,7 @@ my @r = gather {
         $f = $fibber.next;
     }
 }
-say @r.join(",");
+
 say [+] @r;
 
 # vim: expandtab shiftwidth=4 ft=perl6

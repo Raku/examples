@@ -28,6 +28,6 @@ while ($term < 4000000) {
     ($last_term, $term) = ($term, $term + $last_term);
     $sum += $term unless $term % 2;
 }
-say "Total $sum";
+say $sum;
 
 # vim: expandtab shiftwidth=4 ft=perl6
