@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 subtest {
     plan 5;
@@ -48,6 +48,16 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob004";
+
+subtest {
+    plan 2;
+
+    my $problem = "prob005";
+    my @authors = <unobe xfix>;
+    my $expected-output = 232792560;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob005";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
