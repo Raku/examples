@@ -40,7 +40,7 @@ grammar CSSGrammar {
         token time        {:i <number> [ ms | s ] }
         token freq        {:i <number> k?hz }
         token string      { ('"' | \') (<- nl>|\\ \n)*? $0 }
-        token uri         { url '(' ~ ')' [ <string> | <url>] }
+        token uri         {:i url '(' ~ ')' [ <string> | <url>] }
         token url         { ( <- [\( \) \' \" \\]> )* }
         token FUNCTION    { <cssident> '(' }
         token INCLUDES    { '~=' }
@@ -48,7 +48,7 @@ grammar CSSGrammar {
 
         token important_sym {:i '!'important }
 
-        rule import  {:i'@import' [<string>|<uri>] <media_list>? ';' }
+        rule import       {:i'@import' [<string>|<uri>] <media_list>? ';' }
 
         rule media        {:i'@media' <media_list> <media_rules> }
         rule media_list   {<media_type> +%','}
