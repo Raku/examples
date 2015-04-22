@@ -26,12 +26,7 @@ subtest {
     my @authors = <eric256 gerdr hexmode>;
     my $expected-output = 4613732;
 
-    for @authors -> $author {
-        my $name = "$problem-$author.pl";
-        my $output = run-example($name);
-        is($output.chomp, $expected-output, $name);
-    }
-
+    check-example-solutions($problem, $expected-output, @authors)
 }, "prob002";
 
 subtest {
@@ -41,12 +36,7 @@ subtest {
     my @authors = <eric256 gerdr hexmode lanny>;
     my $expected-output = 6857;
 
-    for @authors -> $author {
-        my $name = "$problem-$author.pl";
-        my $output = run-example($name);
-        is($output.chomp, $expected-output, $name);
-    }
-
+    check-example-solutions($problem, $expected-output, @authors)
 }, "prob003";
 
 subtest {
@@ -56,14 +46,19 @@ subtest {
     my @authors = <unobe>;
     my $expected-output = 906609;
 
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob004";
+
+#| check examples provided by the given authors
+sub check-example-solutions($problem, $expected-output, @authors) {
     for @authors -> $author {
         my $name = "$problem-$author.pl";
         my $output = run-example($name);
         is($output.chomp, $expected-output, $name);
     }
+}
 
-}, "prob004";
-
+#| run the given example script
 sub run-example($name) {
     my $base-dir = "categories/euler";
     my $script-path = $base-dir ~ "/" ~ $name;
