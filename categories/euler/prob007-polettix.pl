@@ -17,9 +17,6 @@ Expected result: 104743
 
 =end pod
 
-# The number of primes we want, defaults to challenge's request
-my $nth = shift(@*ARGS) || 10001;
-
 # A simple implementation of Eratosthenes' sieve
 sub primes_iterator {
     return sub {
@@ -38,11 +35,18 @@ sub primes_iterator {
     }
 }
 
-my $it = primes_iterator();
-for 1 .. $nth - 1 -> $i {
-    $it();
-    say "found $i primes so far" unless $i % 100;
+#= nth: The number of primes we want, defaults to challenge's request
+#= vebose: print verbose progress information
+sub MAIN(Int :$nth = 10001, Bool :$verbose = False) {
+    my $it = primes_iterator();
+    for 1 .. $nth - 1 -> $i {
+        $it();
+        if $verbose {
+            say "found $i primes so far" unless $i % 100;
+        }
+    }
+
+    say $it();
 }
-say 'result: ', $it();
 
 # vim: expandtab shiftwidth=4 ft=perl6
