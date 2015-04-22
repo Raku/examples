@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 9;
 
 subtest {
     plan 5;
@@ -58,6 +58,46 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob005";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob006";
+    my @authors = <polettix>;
+    my $expected-output = 25164150;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob006";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob007";
+    my @authors = <polettix>;
+    my $expected-output = 104743;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob007";
+
+subtest {
+    plan 2;
+
+    my $problem = "prob008";
+    my @authors = <duff duff2>;
+    my $expected-output = 40824;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob008";
+
+subtest {
+    plan 3;
+
+    my $problem = "prob009";
+    my @authors = <gerdr-feeds gerdr polettix>;
+    my $expected-output = 31875000;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob009";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
