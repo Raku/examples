@@ -31,21 +31,24 @@ my $limit = 10 ** $digits;
 my $count = 0;
 
 # 9 is the maximum possible base for this problem. 9**22 has 21 digits
-for 1 .. 9 -> $x {
-    my @x = (1);
-    for 1 .. * -> $y {
-        @x = multby(@x, $x);
-        my $px = printable(@x);
-        if ($px.encode('utf-8').bytes == $y) {
-            say "$x ** $y = $px (", $px.encode('utf-8').bytes, ')';
-            $count++;
-        }
-        elsif ($px.encode('utf-8').bytes < $y) {
-            last;
+sub MAIN(Bool :$verbose = False) {
+    for 1 .. 9 -> $x {
+        my @x = (1);
+        for 1 .. * -> $y {
+            @x = multby(@x, $x);
+            my $px = printable(@x);
+            if ($px.encode('utf-8').bytes == $y) {
+                say "$x ** $y = $px (", $px.encode('utf-8').bytes, ')'
+                    if $verbose;
+                $count++;
+            }
+            elsif ($px.encode('utf-8').bytes < $y) {
+                last;
+            }
         }
     }
+    say $count;
 }
-say $count;
 
 sub printable (@x is copy) {
     my $msb = pop @x;
