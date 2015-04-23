@@ -87,11 +87,10 @@ multi MAIN(Int $A = 100, Int $B = 100, Bool :$verify, Bool :$feeds) {
     &count-smartly.wrap(&bench);
     &count-feedly.wrap(&bench);
 
-    printf "got %u [%ums]\n",
-    ($feeds ?? &count-feedly !! &count-smartly)($A, $B);
+    my ($result, $runtime) = ($feeds ?? &count-feedly !! &count-smartly)($A, $B);
+    say $result;
 
-    printf "expected %u [%ums]\n",
-    count-naively $A, $B if $verify;
+    printf "expected %u [%ums]\n", count-naively $A, $B if $verify;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
