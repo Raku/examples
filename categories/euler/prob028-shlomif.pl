@@ -38,6 +38,6 @@ for 2, 4 ... 1000 -> $step {
         $sum += $num;
     }
 }
-say "Sum = $sum";
+say $sum;
 
 # vim: expandtab shiftwidth=4 ft=perl6
