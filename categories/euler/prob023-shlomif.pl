@@ -73,6 +73,6 @@ for (1 .. $MAX) -> $num {
     }
 }
 
-say "Sum == ", ((((1 + $MAX) * $MAX) +> 1)-$total);
+say ((((1 + $MAX) * $MAX) +> 1)-$total);
 
 # vim: expandtab shiftwidth=4 ft=perl6
