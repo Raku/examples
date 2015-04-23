@@ -24,7 +24,7 @@ Which starting number, under one million, produces the longest chain?
 
 NOTE: Once the chain starts the terms are allowed to go above one million.
 
-Expected result: the starting number 837799 produces a sequence of 525
+Expected result: The starting number 837799 produces a sequence of length 525
 
 =end pod
 
@@ -52,7 +52,6 @@ for 1 ..^ 1_000_000 -> $n {
     }
 }
 
-say $max;
-say $start;
+say "The starting number $start produces a sequence of length $max";
 
 # vim: expandtab shiftwidth=4 ft=perl6
