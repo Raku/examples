@@ -30,7 +30,7 @@ of two abundant numbers.
 Expected result: 4179871
 
 Based on:
-https://bitbucket.org/shlomif/project-euler/src/aa5eecd18f0825901afeb3c54dcda0da79ac3576/project-euler/23/euler-23-4.pl?at=default
+L<https://bitbucket.org/shlomif/project-euler/src/aa5eecd18f0825901afeb3c54dcda0da79ac3576/project-euler/23/euler-23-4.pl?at=default>
 
 =end pod
 
