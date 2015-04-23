@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 43;
 
 subtest {
     plan 5;
@@ -310,6 +310,164 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob029";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob031";
+    my @authors = <shlomif>;
+    my $expected-output = 73682;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob031";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob036";
+    my @authors = <xenu>;
+    my $expected-output = 872187;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob036";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob047";
+    my @authors = <gerdr>;
+    my $expected-output = 134043;
+
+    # build the library required to run this example
+    # assume gcc is available
+    my $path = "categories/euler";
+    qqx{gcc --std=c99 -fPIC -c -o $path/prob047-gerdr.o $path/prob047-gerdr.c};
+    qqx{gcc -shared -o $path/prob047-gerdr.so $path/prob047-gerdr.o};
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob047";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob052";
+    my @authors = <duff>;
+    my $expected-output = 142857;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob052";
+
+subtest {
+    plan 2;
+
+    my $problem = "prob053";
+    my @authors = <duff gerdr>;
+    my $expected-output = 4075;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob053";
+
+subtest {
+    plan 2;
+
+    my $problem = "prob063";
+    my @authors = <moritz polettix>;
+    my $expected-output = 49;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob063";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob067";
+    my @authors = <felher>;
+    my $expected-output = 7273;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob067";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob081";
+    my @authors = <moritz>;
+    my $expected-output = 427337;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob081";
+
+skip("prob092-moritz.pl takes too long to run");
+if False {
+    subtest {
+        plan 1;
+
+        my $problem = "prob092";
+        my @authors = <moritz>;
+        my $expected-output = 8581146;
+
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob092";
+}
+
+skip("prob104-moritz.pl takes too long to run");
+if False {
+    subtest {
+        plan 1;
+
+        my $problem = "prob104";
+        my @authors = <moritz>;
+        my $expected-output = 329468;
+
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob104";
+}
+
+skip("prob149-shlomif.pl takes too long to run");
+if False {
+    subtest {
+        plan 1;
+
+        my $problem = "prob149";
+        my @authors = <shlomif>;
+        my $expected-output = 52852124;
+
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob149";
+}
+
+subtest {
+    plan 1;
+
+    my $problem = "prob168";
+    my @authors = <shlomif>;
+    my $expected-output = 59206;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob168";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob188";
+    my @authors = <shlomif>;
+    my $expected-output = 95962097;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob188";
+
+skip("prob189-shlomif.pl takes too long to run");
+if False {
+    subtest {
+        plan 1;
+
+        my $problem = "prob189";
+        my @authors = <shlomif>;
+        my $expected-output = 10834893628237824;
+
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob189";
+}
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
