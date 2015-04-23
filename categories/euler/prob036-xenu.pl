@@ -27,13 +27,23 @@ Expected result: 872187
 # Because of memory leak in these versions, this code eats tens of gigabytes of RAM
 #
 
-my $palindromNumbersSum = 0;
-loop (my $i = 1; $i <= 999999; $i+=2) {
-    if ( ($i.flip == $i) && (sprintf('%b',$i).flip == sprintf('%b',$i)) ) {
-        $palindromNumbersSum += $i;
+sub MAIN(Bool :$verbose = False) {
+    my $palindromNumbersSum = 0;
+    loop (my $i = 1; $i <= 999999; $i+=2) {
+        if ( ($i.flip == $i) && (sprintf('%b',$i).flip == sprintf('%b',$i)) ) {
+            $palindromNumbersSum += $i;
+        }
+        if $verbose {
+            say "Checked $i of 999999 numbers" unless $i % 99999;
+        }
+
     }
-    say "Checked $i of 999999 numbers" unless $i % 99999;
+    if $verbose {
+        say "Number of double-base palindromes: $palindromNumbersSum";
+    }
+    else {
+        say $palindromNumbersSum;
+    }
 }
-say "Number of double-base palindromes: $palindromNumbersSum";
 
 # vim: expandtab shiftwidth=4 ft=perl6
