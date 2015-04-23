@@ -38,8 +38,6 @@ $f.close;
 
 my ($max-x, $max-y) = +@m[0], +@m;
 
-say "Size: $max-x x $max-y";
-
 @m[0][$_] += @m[0][$_-1] for 1..$max-x-1;
 @m[$_][0] += @m[$_-1][0] for 1..$max-y-1;
 
