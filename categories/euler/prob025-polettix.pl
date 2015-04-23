@@ -34,42 +34,46 @@ Expected result: 4782
 
 =end pod
 
+our $limit;
+our $digits;
 # You can optionally pass how many digits you're looking for, defaults
 # to the request in the original challenge.
-my $length = shift(@*ARGS) || 1000;
+sub MAIN(Int :$length = 1000, Bool :$verbose = False) {
+    # As of August 12, 2009 we don't have big integers, so we'll have
+    # to conjure up something. We'll represent each number with an
+    # array of digits, base 10 for ease of length computation. The most
+    # significant part is at the end of the array, i.e. the array should
+    # be read in reverse.
+    $digits = 10;
+    $limit = 10 ** $digits;
+    my @x = (0);
+    my @y = (1);
 
-# As of August 12, 2009 we don't have big integers, so we'll have
-# to conjure up something. We'll represent each number with an
-# array of digits, base 10 for ease of length computation. The most
-# significant part is at the end of the array, i.e. the array should
-# be read in reverse.
-my $digits = 10;
-my $limit = 10 ** $digits;
-my @x = (0);
-my @y = (1);
+    # This will count the n-th Fibonacci number
+    my $c = 1;
+    my $current_length = 1;
+    while ($current_length < $length) {
+        ++$c;
 
-# This will count the n-th Fibonacci number
-my $c = 1;
-my $current_length = 1;
-while ($current_length < $length) {
-    ++$c;
+        # (x, y) = (y, x + y)
+        my @z = @y;
+        addto(@y, @x); # modifies @y in-place
+        @x = @z;
 
-    # (x, y) = (y, x + y)
-    my @z = @y;
-    addto(@y, @x); # modifies @y in-place
-    @x = @z;
+        # The most significant part of the number is in the last element
+        # of the array; every other element is $digits bytes long by
+        # definition.
+        my $msb = printable([@y[*-1]]);
+        $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
 
-    # The most significant part of the number is in the last element
-    # of the array; every other element is $digits bytes long by
-    # definition.
-    my $msb = printable([@y[*-1]]);
-    $current_length = $msb.encode('utf-8').bytes + (@y - 1) * $digits;
+        # Print a feedback every 20 steps
+        if $verbose {
+            say "$c -> $current_length" unless $c % 100;
+        }
+    }
 
-    # Print a feedback every 20 steps
-    say "$c -> $current_length" unless $c % 100;
+    say $c;
 }
-
-say "result: $c";
 
 # Add a "number" to another, modifies first parameter in place.
 # This assumes that length(@y) <= length(@x), which will be true in
