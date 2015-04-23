@@ -1,5 +1,5 @@
 *.so
+*.o
 html/*.html
 html/categories
-categories/rosalind/lcsq.o
 categories/wsg/beginner-2008/firstlines.out
