@@ -27,7 +27,7 @@ seen that 1/7 has a 6-digit recurring cycle.
 Find the value of d < 1000 for which 1/d contains the longest recurring
 cycle in its decimal fraction part.
 
-Expected result: the recurring cycle is 983, and the cycle is length is 982
+Expected result: The recurring cycle is 983, and the cycle length is 982
 
 =end pod
 
@@ -56,6 +56,6 @@ for (2 .. 999) -> $n {
     }
 }
 
-say "Value == $max_n with a cycle of $max_cycle_len"
+say "The recurring cycle is $max_n, and the cycle length is $max_cycle_len";
 
 # vim: expandtab shiftwidth=4 ft=perl6
