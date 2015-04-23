@@ -18,16 +18,18 @@ Expected result: 49
 
 =end pod
 
-my $count = 0;
-for 1..9 -> $x {
-    for 1..200 -> $y {
-        if ($x**$y).chars == $y {
-            say "$x**$y";
-            $count++;
+sub MAIN(Bool :$verbose = False) {
+    my $count = 0;
+    for 1..9 -> $x {
+        for 1..200 -> $y {
+            if ($x**$y).chars == $y {
+                say "$x**$y" if $verbose;
+                $count++;
+            }
         }
     }
+    say $count;
+    say "missing bigint support: answer should be 49" if $verbose;
 }
-say $count;
-say "missing bigint support: answer should be 49";
 
 # vim: expandtab shiftwidth=4 ft=perl6
