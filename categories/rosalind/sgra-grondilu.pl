@@ -26,8 +26,6 @@ Sample output
 
 =end pod
 
-use List::Utils;
-
 my $default-input = q:to/END/;
     3524.8542
     3623.5245
