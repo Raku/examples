@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 32;
 
 my $skip = True;
 
@@ -385,6 +385,201 @@ subtest {
     }
 
 }, "lia";
+
+subtest {
+    plan 1;
+
+    my $problem = "mmch";
+    my @authors = <grondilu>;
+    my $expected-output = 6;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "mmch";
+
+subtest {
+    plan 1;
+
+    my $problem = "mprt";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    B5ZC00
+    85 118 142 306 395
+    P07204_TRBM_HUMAN
+    47 115 116 382 409
+    P20840_SAG1_YEAST
+    79 109 135 248 306 348 364 402 485 501 614
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "mprt";
+
+subtest {
+    plan 1;
+
+    my $problem = "mrna";
+    my @authors = <grondilu>;
+    my $expected-output = 12;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "mrna";
+
+subtest {
+    plan 1;
+
+    my $problem = "nwck";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    1 2
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "nwck";
+
+subtest {
+    plan 1;
+
+    my $problem = "orf";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    MLLGSFRLIPKETLIQVAGSSPCNLS
+    M
+    MGMTPRLGLESLLE
+    MTPRLGLESLLE
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp.split(/\s+/).sort.join(" "),
+           $expected-output.chomp.split(/\s+/).sort.join(" "),
+           $name);
+    }
+
+}, "orf";
+
+subtest {
+    plan 1;
+
+    my $problem = "pmch";
+    my @authors = <grondilu>;
+    my $expected-output = 12;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "pmch";
+
+subtest {
+    plan 1;
+
+    my $problem = "pper";
+    my @authors = <grondilu>;
+    my $expected-output = 51200;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "pper";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    -5.737 -5.217 -5.263 -5.360 -5.958 -6.628 -7.009
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "prob";
+
+if $skip {
+    skip("Doesn't exactly agree with expected output");
+}
+else {
+    subtest {
+        plan 1;
+
+        my $problem = "qrt";
+        my @authors = <grondilu>;
+        my $expected-output = q:to/EOD/;
+        {elephant, dog} {rabbit, robot}
+        {cat, dog} {mouse, rabbit}
+        {mouse, rabbit} {cat, elephant}
+        {dog, elephant} {mouse, rabbit}
+        EOD
+
+        for @authors -> $author {
+            my $name = "$problem-$author.pl";
+            my $output = run-example($name);
+            is($output.chomp, $expected-output.chomp, $name);
+        }
+
+    }, "qrt";
+}
+
+subtest {
+    plan 1;
+
+    my $problem = "rna";
+    my @authors = <gerdr>;
+    my $expected-output = q:to/EOD/;
+    GAUGGAACUUGACUACGUAAAUU
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "rna";
+
+subtest {
+    plan 1;
+
+    my $problem = "rstr";
+    my @authors = <grondilu>;
+    my $expected-output = 0.689;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "rstr";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
