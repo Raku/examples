@@ -12,6 +12,7 @@ install:
     - rakudobrew build-panda
     - panda install URI
     - panda install Pod::To::HTML
+    - panda install LWP::Simple
 
 script:
     - make test
