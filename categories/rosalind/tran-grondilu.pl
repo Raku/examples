@@ -45,7 +45,7 @@ sub MAIN($input-file = Nil) {
             if "$a$b" eq any <AG GA CT TC> { $transitions++ }
             else { $transversions++ }
         }
-        say $transitions/$transversions;
+        say ($transitions/$transversions).fmt("%0.11f");
     }
 }
 
