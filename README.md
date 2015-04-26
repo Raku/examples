@@ -1,5 +1,7 @@
 # Perl 6 Examples
 
+[![Build Status](https://travis-ci.org/perl6/perl6-examples.svg?branch=master)](https://travis-ci.org/perl6/perl6-examples)
+
 This is intended to be a repository for all kinds of Perl 6 examples.
 
 All examples should work for any full implementation of Perl 6.
