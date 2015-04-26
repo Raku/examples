@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 41;
 
 my $skip = True;
 
@@ -552,6 +552,23 @@ else {
 subtest {
     plan 1;
 
+    my $problem = "revc";
+    my @authors = <gerdr>;
+    my $expected-output = q:to/EOD/;
+    ACCGGGTTTT
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "revc";
+
+subtest {
+    plan 1;
+
     my $problem = "rna";
     my @authors = <gerdr>;
     my $expected-output = q:to/EOD/;
@@ -580,6 +597,169 @@ subtest {
     }
 
 }, "rstr";
+
+subtest {
+    plan 1;
+
+    my $problem = "sexl";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    0.18 0.5 0.32
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "sexl";
+
+if $skip {
+    skip("Doesn't exactly agree with expected output");
+}
+else {
+    subtest {
+        plan 1;
+
+        my $problem = "sgra";
+        my @authors = <grondilu>;
+        my $expected-output = q:to/EOD/;
+        WMSPG
+        EOD
+
+        for @authors -> $author {
+            my $name = "$problem-$author.pl";
+            my $output = run-example($name);
+            is($output.chomp, $expected-output.chomp, $name);
+        }
+
+    }, "sgra";
+}
+
+subtest {
+    plan 1;
+
+    my $problem = "spec";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    WMQS
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "spec";
+
+subtest {
+    plan 1;
+
+    my $problem = "sseq";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    3 4 5
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "sseq";
+
+subtest {
+    plan 1;
+
+    my $problem = "subs";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    2 4 10
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "subs";
+
+if $skip {
+    skip("Doesn't exactly agree with expected output");
+}
+else {
+    subtest {
+        plan 1;
+
+        my $problem = "suff";
+        my @authors = <grondilu>;
+        my $expected-output = q:to/EOD/;
+        AAATG$
+        G$
+        T
+        ATG$
+        TG$
+        A
+        A
+        AAATG$
+        G$
+        T
+        G$
+        $
+        EOD
+
+        for @authors -> $author {
+            my $name = "$problem-$author.pl";
+            my $output = run-example($name);
+            is($output.chomp, $expected-output.chomp, $name);
+        }
+
+    }, "suff";
+}
+
+subtest {
+    plan 1;
+
+    my $problem = "tran";
+    my @authors = <grondilu>;
+    my $expected-output = 1.21428571429;
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "tran";
+
+subtest {
+    plan 1;
+
+    my $problem = "trie";
+    my @authors = <grondilu>;
+    my $expected-output = q:to/EOD/;
+    1 2 A
+    2 3 T
+    3 4 A
+    4 5 G
+    5 6 A
+    3 7 C
+    1 8 G
+    8 9 A
+    9 10 T
+    EOD
+
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output.chomp, $name);
+    }
+
+}, "trie";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
