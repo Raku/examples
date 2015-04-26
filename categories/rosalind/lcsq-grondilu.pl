@@ -17,7 +17,7 @@ Sample input
 
 Sample output
 
-    AACTG
+    AACTGG
 
 Note: the C<lcsq> shared library needs to be built first.  For example, on a
 Linux system use the following commands:
