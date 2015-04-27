@@ -10,7 +10,7 @@ Based on the submission for Perl 5.
 
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=regexdna>
 
-USAGE: perl6 regex-dna.p6.pl regex-dna.input
+USAGE: perl6 regex-dna.p6 regex-dna.input
 
 =end pod
 

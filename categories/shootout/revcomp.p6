@@ -10,7 +10,7 @@ Based on the submission for Perl 5.
 
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=revcomp>
 
-USAGE: perl6 revcomp.p6.pl revcomp.input
+USAGE: perl6 revcomp.p6 revcomp.input
 
 =end pod
 

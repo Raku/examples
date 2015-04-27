@@ -8,7 +8,7 @@ use v6;
 
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=nbody>
 
-USAGE: perl6 n-body.p6.pl 1000
+USAGE: perl6 n-body.p6 1000
 
 =end pod
 

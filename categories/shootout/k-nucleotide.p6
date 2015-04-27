@@ -10,7 +10,7 @@ L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=knucleotide>
 
 Based on the submission for Perl 5.
 
-USAGE: perl6 k-nucleotide.p6.pl k-nucleotide.input
+USAGE: perl6 k-nucleotide.p6 k-nucleotide.input
 
 =end pod
 
