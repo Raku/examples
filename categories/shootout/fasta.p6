@@ -16,11 +16,9 @@ The program should
       cumulative probabilities
 =item match a random number against those cumulative probabilities to select
       each nucleotide (use linear search or binary search)
-
 =item use this linear congruential generator to calculate a random number
       each time a nucleotide needs to be selected (don't cache the random number
       sequence)
-
 
     IM = 139968
     IA = 3877
@@ -35,7 +33,7 @@ write 3 sequences line-by-line in FASTA format.
 
 USAGE:
 
-    perl6 fasta.p6.pl 1000
+    perl6 fasta.p6 1000
 
 =end pod
 
