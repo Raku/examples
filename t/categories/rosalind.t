@@ -761,15 +761,6 @@ subtest {
 
 }, "trie";
 
-#| check examples provided by the given authors
-sub check-example-solutions($problem, $expected-output, @authors) {
-    for @authors -> $author {
-        my $name = "$problem-$author.pl";
-        my $output = run-example($name);
-        is($output.chomp, $expected-output, $name);
-    }
-}
-
 #| run the given example script
 sub run-example($name) {
     my $base-dir = "categories/rosalind";
