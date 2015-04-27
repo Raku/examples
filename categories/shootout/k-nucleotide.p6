@@ -47,7 +47,7 @@ sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/k-nucleotide.input") {
     for <ggt ggta ggtatt ggtattttaatt ggtattttaatttatagt> -> $seq {
         %table = ();
         update_hash($seq.chars);
-        printf "%3d\t$seq\n", (%table{$seq} || 0);
+        printf "%3d    $seq\n", (%table{$seq} || 0);
     }
 
     # Procedure to update a hashtable of k-nucleotide keys and count values
