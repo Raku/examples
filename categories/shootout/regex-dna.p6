@@ -12,6 +12,22 @@ L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=regexdna>
 
 USAGE: perl6 regex-dna.p6 regex-dna.input
 
+Expected output
+
+    agggtaaa|tttaccct 0
+    [cgt]gggtaaa|tttaccc[acg] 3
+    a[act]ggtaaa|tttacc[agt]t 9
+    ag[act]gtaaa|tttac[agt]ct 8
+    agg[act]taaa|ttta[agt]cct 10
+    aggg[acg]aaa|ttt[cgt]ccct 3
+    agggt[cgt]aa|tt[acg]accct 4
+    agggta[cgt]a|t[acg]taccct 3
+    agggtaa[cgt]|[acg]ttaccct 5
+
+    101745
+    100000
+    133640
+
 =end pod
 
 sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/regex-dna.input") {

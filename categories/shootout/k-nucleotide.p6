@@ -12,6 +12,36 @@ Based on the submission for Perl 5.
 
 USAGE: perl6 k-nucleotide.p6 k-nucleotide.input
 
+Expected output
+
+    A 30.298
+    T 30.157
+    C 19.793
+    G 19.752
+
+    AA 9.177
+    TA 9.137
+    AT 9.136
+    TT 9.094
+    AC 6.000
+    CA 5.999
+    GA 5.986
+    AG 5.985
+    TC 5.970
+    CT 5.970
+    GT 5.957
+    TG 5.956
+    CC 3.915
+    CG 3.910
+    GC 3.908
+    GG 3.902
+
+    14717GGT
+    4463GGTA
+    472GGTATT
+    902GGTATTTTAATT
+    902GGTATTTTAATTGGTATTTTAATTTATAGT
+
 =end pod
 
 sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/k-nucleotide.input") {

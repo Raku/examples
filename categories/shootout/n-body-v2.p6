@@ -10,6 +10,11 @@ L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=nbody>
 
 USAGE: perl6 n-body-v2.p6 [N=1000] [dt=1e-2]
 
+Expected output
+
+    -0.169075164
+    -0.169087605
+
 =end pod
 
 constant SOLAR_MASS = 4 * pi * pi;
