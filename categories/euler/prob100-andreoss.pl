@@ -33,3 +33,5 @@ my $total = 21;
       while $total <= 10 ** 12 ;
 
 say $blue;
+
+# vim: expandtab shiftwidth=4 ft=perl6

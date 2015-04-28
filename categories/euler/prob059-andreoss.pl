@@ -98,3 +98,5 @@ sub MAIN(Bool :$verbose = False, :$file = 'cipher.txt', :$word = @common-words[0
 
     say "Done in {now - BEGIN now}" if $verbose;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
