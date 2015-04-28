@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 44;
 
 subtest {
     plan 5;
@@ -409,6 +409,16 @@ if False {
         check-example-solutions($problem, $expected-output, @authors)
     }, "prob092";
 }
+
+subtest {
+    plan 1;
+
+    my $problem = "prob100";
+    my @authors = <andreoss>;
+    my $expected-output = 756872327473;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob100";
 
 skip("prob104-moritz.pl takes too long to run");
 if False {
