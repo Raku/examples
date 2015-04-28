@@ -81,7 +81,7 @@ my Body @bodies = (
         [ 2.68067772490389322e-03,
           1.62824170038242295e-03,
          -9.51592254519715870e-05])
-).for: -> $m, [$x, $y, $z], [$vx, $vy, $vz] {
+).flatmap: -> $m, [$x, $y, $z], [$vx, $vy, $vz] {
     Body.new:
         :m($m * SOLAR_MASS),
         :r(Vector.new: :$x, :$y, :$z),
