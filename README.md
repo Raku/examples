@@ -55,6 +55,14 @@ Since you have a commit-bit (if not then talk to the folks at #perl6 on
 irc.freenode.net) feel free to commit your changes to the main repository.
 No need to submit a pull request!
 
+## Dependencies
+
+To run all examples and tests, the following modules need to be installed:
+
+    URI
+    Pod::To::HTML
+    LWP::Simple
+
 ## Running the examples
 
 To run most examples (all examples excluding those which take a very long
