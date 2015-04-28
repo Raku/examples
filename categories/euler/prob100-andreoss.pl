@@ -22,7 +22,7 @@ my $blue  = 15;
 my $total = 21;
 
 ( $blue ,
-  $total ) =  3 * $blue + 2 * $total - 2, 
+  $total ) =  3 * $blue + 2 * $total - 2,
               4 * $blue + 3 * $total - 3
       while $total <= 10 ** 12 ;
 

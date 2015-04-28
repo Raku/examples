@@ -67,7 +67,7 @@ sub guess-password(Str $w, @cipher) {
 
 	my @password  = @chunk[^3] XOR @word;
 	my $count =  [+] do for @common-words.grep({$_ !~~ $w}) -> $word {
-	    elems $decrypted ~~ m:g:i/$word/ 
+	    elems $decrypted ~~ m:g:i/$word/
 	}
 
 	%tries{$password} += $count if $count > 0;
@@ -89,7 +89,7 @@ sub MAIN(Bool :$verbose = False, :$file = 'cipher.txt', :$word = @common-words[0
 	$pass  = %variants.max(*.value).key;
 	say "The password is more likely to be '$pass'. " if $verbose;
     }
-        
+
     my $decrypted =  as-word @cipher XOR as-code($pass);
 
     say "The message: {$decrypted.perl}" if $verbose;
