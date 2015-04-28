@@ -84,7 +84,7 @@ sub addto (@x is rw, @y) {
     # put "0"s to iterate over the whole $x. This could be
     # improved, but it's unlikely that two consecutive Fibonacci
     # numbers differ by more than one digit
-    for @x Z (@y, 0, *) -> $x is rw, $y {
+    for (@x Z (@y, 0, *)).flat -> $x is rw, $y {
         $x += $y + $rest;
         $rest = ($x / $limit).Int;
         $x %= $limit;
