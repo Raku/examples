@@ -23,7 +23,12 @@ Sample output
 use LWP::Simple;
 
 sub MAIN(Str $id = "Q5SLP9") {
-    for split "\n", LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt}) {
+    my $base-path = $*PROGRAM_NAME.IO.dirname;
+    my $id-fname = $base-path ~ "/$id.txt";
+    my $input = $id-fname.IO.e
+        ?? $id-fname.IO.slurp
+        !! LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt});
+    for split "\n", $input {
         if / GO\; .* \sP\: (.*?)\;/ {
             say $/[0].Str
         }
