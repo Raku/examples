@@ -40,7 +40,7 @@ sub MAIN($input-file = Nil) {
             push @dna, $_[0].subst: "\n", '', :g;
         }
         my ($transitions, $transversions);
-        for @dna[0].comb Z @dna[1].comb -> ($a, $b) {
+        for (@dna[0].comb Z @dna[1].comb).flat -> $a, $b {
             next unless $a ne $b;
             if "$a$b" eq any <AG GA CT TC> { $transitions++ }
             else { $transversions++ }
