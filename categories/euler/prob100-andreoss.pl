@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE XOR decryption
+=TITLE Arranged probability
 
 =AUTHOR Andrei Osipov
 
