@@ -55,7 +55,6 @@ sub as-word(*@s) {
     @s.map(*.chr).join
 }
 
-
 sub guess-password(Str $w, @cipher) {
     my @word = as-code $w;
 
@@ -80,7 +79,10 @@ sub guess-password(Str $w, @cipher) {
     %tries;
 }
 
-sub MAIN(Bool :$verbose = False, :$file = 'cipher.txt', :$word = @common-words[0], :$pass is copy) {
+sub MAIN(Bool :$verbose = False,
+        :$file = $*PROGRAM_NAME.IO.dirname ~ '/cipher.txt',
+        :$word = @common-words[0],
+        :$pass is copy) {
     die "'$file' is missing" unless $file.IO.e ;
     my @cipher     = map *.Int, split /<[,]>/ , slurp $file;
 
