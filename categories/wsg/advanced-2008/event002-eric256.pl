@@ -65,7 +65,8 @@ L<http://web.archive.org/web/20080325083541/http://www.microsoft.com/technet/scr
 
 =end pod
 
-my @lines = slurp("skaters.txt").split("\n");
+my $input-file = $*PROGRAM_NAME.IO.dirname ~ "/skaters.txt";
+my @lines = slurp($input-file).split("\n");
 
 my %skaters ;
 for @lines {
