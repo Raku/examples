@@ -133,7 +133,7 @@ for $phone_number.split('') {
     say $_, "->", %digits{$_}.join('-');
     if (@test_words.elems) {
         my @values = %digits{$_}.values;
-        @test_words = @test_words X~ '.' X~ @values;
+        @test_words = @test_words X~ '' X~ @values;
     }
     else {
         @test_words = %digits{$_}.values;
