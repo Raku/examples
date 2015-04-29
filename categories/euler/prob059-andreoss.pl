@@ -58,7 +58,7 @@ sub as-word(*@s) {
 sub guess-password(Str $w, @cipher) {
     my @word = as-code $w;
 
-    my @chunks = @cipher.rotor(@word.elems => - (@word.elems -1));
+    my @chunks := @cipher.rotor((@word.elems) => -(@word.elems - 1));
     my %tries;
     my $offset = 0;
 
