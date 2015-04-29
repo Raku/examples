@@ -200,6 +200,18 @@ sub MAIN(Str :$pw = "") {
     }
 
     say "'$password' scored $score";
+
+    given $score {
+        when $_ <= 6 {
+            say "A password of score $score indicates a weak password.";
+        }
+        when 7 < $_ <= 10 {
+            say "A password of score $score indicates a moderately-strong password.";
+        }
+        when $_ >= 11 {
+            say "A password of score $score indicates a strong password.";
+        }
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
