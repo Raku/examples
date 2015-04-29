@@ -1,0 +1,121 @@
+ID   SSB_THET8               Reviewed;         263 AA.
+AC   Q5SLP9; Q70M05;
+DT   29-MAR-2005, integrated into UniProtKB/Swiss-Prot.
+DT   21-DEC-2004, sequence version 1.
+DT   04-FEB-2015, entry version 72.
+DE   RecName: Full=Single-stranded DNA-binding protein {ECO:0000255|HAMAP-Rule:MF_00984};
+DE            Short=SSB {ECO:0000255|HAMAP-Rule:MF_00984};
+GN   Name=ssb; OrderedLocusNames=TTHA0244;
+OS   Thermus thermophilus (strain HB8 / ATCC 27634 / DSM 579).
+OC   Bacteria; Deinococcus-Thermus; Deinococci; Thermales; Thermaceae;
+OC   Thermus.
+OX   NCBI_TaxID=300852;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [GENOMIC DNA], AND SUBUNIT.
+RX   PubMed=12368464;
+RA   Dabrowski S., Olszewski M., Piatek R., Brillowska-Dabrowska A.,
+RA   Konopa G., Kur J.;
+RT   "Identification and characterization of single-stranded-DNA-binding
+RT   proteins from Thermus thermophilus and Thermus aquaticus -- new
+RT   arrangement of binding domains.";
+RL   Microbiology 148:3307-3315(2001).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE [GENOMIC DNA].
+RA   Perales C., Cava F., Berenguer J.;
+RT   "One step beyond PCR and RT-PCR: the SSB protein from Thermus
+RT   thermophilus.";
+RL   Submitted (APR-2003) to the EMBL/GenBank/DDBJ databases.
+RN   [3]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=HB8 / ATCC 27634 / DSM 579;
+RA   Masui R., Kurokawa K., Nakagawa N., Tokunaga F., Koyama Y.,
+RA   Shibata T., Oshima T., Yokoyama S., Yasunaga T., Kuramitsu S.;
+RT   "Complete genome sequence of Thermus thermophilus HB8.";
+RL   Submitted (OCT-2004) to the EMBL/GenBank/DDBJ databases.
+CC   -!- FUNCTION: Plays an important role in DNA replication,
+CC       recombination and repair. Binds to ssDNA and to an array of
+CC       partner proteins to recruit them to their sites of action during
+CC       DNA metabolism. {ECO:0000255|HAMAP-Rule:MF_00984}.
+CC   -!- SUBUNIT: Homodimer. {ECO:0000269|PubMed:12368464}.
+CC   -!- SIMILARITY: Contains 2 SSB domains. {ECO:0000255|HAMAP-
+CC       Rule:MF_00984}.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AF079160; AAC28386.2; -; Genomic_DNA.
+DR   EMBL; AJ564626; CAD92097.1; -; Genomic_DNA.
+DR   EMBL; AP008226; BAD70067.1; -; Genomic_DNA.
+DR   RefSeq; WP_011227803.1; NC_006461.1.
+DR   RefSeq; YP_143510.1; NC_006461.1.
+DR   PDB; 2CWA; X-ray; 1.96 A; A=1-263.
+DR   PDBsum; 2CWA; -.
+DR   ProteinModelPortal; Q5SLP9; -.
+DR   SMR; Q5SLP9; 1-259.
+DR   STRING; 300852.TTHA0244; -.
+DR   EnsemblBacteria; BAD70067; BAD70067; BAD70067.
+DR   GeneID; 3167973; -.
+DR   KEGG; ttj:TTHA0244; -.
+DR   PATRIC; 23955433; VBITheThe93045_0244.
+DR   eggNOG; COG0629; -.
+DR   HOGENOM; HOG000023350; -.
+DR   KO; K03111; -.
+DR   OMA; WRDLAEW; -.
+DR   OrthoDB; EOG6M9F32; -.
+DR   BioCyc; TTHE300852:GH8R-253-MONOMER; -.
+DR   EvolutionaryTrace; Q5SLP9; -.
+DR   Proteomes; UP000000532; Chromosome.
+DR   GO; GO:0003697; F:single-stranded DNA binding; IEA:InterPro.
+DR   GO; GO:0006310; P:DNA recombination; IEA:UniProtKB-KW.
+DR   GO; GO:0006281; P:DNA repair; IEA:UniProtKB-KW.
+DR   GO; GO:0006260; P:DNA replication; IEA:UniProtKB-KW.
+DR   Gene3D; 2.40.50.140; -; 2.
+DR   HAMAP; MF_00984; SSB; 1.
+DR   InterPro; IPR012340; NA-bd_OB-fold.
+DR   InterPro; IPR000424; Primosome_PriB/ssb.
+DR   InterPro; IPR011344; ssDNA-bd.
+DR   PANTHER; PTHR10302; PTHR10302; 1.
+DR   Pfam; PF00436; SSB; 2.
+DR   SUPFAM; SSF50249; SSF50249; 2.
+DR   TIGRFAMs; TIGR00621; ssb; 2.
+DR   PROSITE; PS50935; SSB; 2.
+PE   1: Evidence at protein level;
+KW   3D-structure; Complete proteome; DNA damage; DNA recombination;
+KW   DNA repair; DNA replication; DNA-binding; Reference proteome; Repeat.
+FT   CHAIN         1    263       Single-stranded DNA-binding protein.
+FT                                /FTId=PRO_0000096150.
+FT   DOMAIN        5    108       SSB 1. {ECO:0000255|HAMAP-Rule:MF_00984}.
+FT   DOMAIN      128    227       SSB 2. {ECO:0000255|HAMAP-Rule:MF_00984}.
+FT   MOTIF       258    263       Important for interaction with partner
+FT                                proteins. {ECO:0000255|HAMAP-
+FT                                Rule:MF_00984}.
+FT   CONFLICT     93     93       R -> K (in Ref. 2; CAD92097).
+FT                                {ECO:0000305}.
+FT   CONFLICT    241    241       V -> A (in Ref. 2; CAD92097).
+FT                                {ECO:0000305}.
+FT   CONFLICT    260    260       E -> D (in Ref. 1 and 2). {ECO:0000305}.
+FT   STRAND        5     16       {ECO:0000244|PDB:2CWA}.
+FT   STRAND       19     22       {ECO:0000244|PDB:2CWA}.
+FT   STRAND       28     39       {ECO:0000244|PDB:2CWA}.
+FT   STRAND       49     59       {ECO:0000244|PDB:2CWA}.
+FT   HELIX        60     64       {ECO:0000244|PDB:2CWA}.
+FT   TURN         65     69       {ECO:0000244|PDB:2CWA}.
+FT   STRAND       75     85       {ECO:0000244|PDB:2CWA}.
+FT   STRAND       96    107       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      114    116       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      122    125       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      128    139       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      142    145       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      151    161       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      169    178       {ECO:0000244|PDB:2CWA}.
+FT   HELIX       179    185       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      193    206       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      208    210       {ECO:0000244|PDB:2CWA}.
+FT   STRAND      212    224       {ECO:0000244|PDB:2CWA}.
+SQ   SEQUENCE   263 AA;  29882 MW;  7BD2BC31AE3B9214 CRC64;
+     MARGLNRVFL IGALATRPDM RYTPAGLAIL DLTLAGQDLL LSDNGGEREV SWYHRVRLLG
+     RQAEMWGDLL DQGQLVFVEG RLEYRQWERE GERRSELQIR ADFLDPLDDR GKERAEDSRG
+     QPRLRAALNQ VFLMGNLTRD PELRYTPQGT AVARLGLAVN ERRQGAEERT HFVEVQAWRD
+     LAEWAAELRK GDGLFVIGRL VNDSWTSSSG ERRFQTRVEA LRLERPTRGP AQAGGSRSRE
+     VQTGGVDIDE GLEDFPPEEE LPF
+//

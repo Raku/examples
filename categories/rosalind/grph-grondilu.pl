@@ -49,7 +49,7 @@ sub MAIN($input-file = Nil) {
         take ~.[0], ~.[1].subst(/\n/,'', :g);
     }
 
-    for %dna X %dna -> $a, $b {
+    for (%dna X %dna).flat -> $a, $b {
         next if $a.key eq $b.key;
         say 'Rosalind_' «~« ($a, $b)».key
         if $a.value.substr(*-3) eq $b.value.substr(0, 3);

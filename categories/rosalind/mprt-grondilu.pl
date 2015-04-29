@@ -36,8 +36,12 @@ my @default-data = qw{
 sub MAIN($input-file = Nil) {
     my @input = $input-file ?? $input-file.IO.lines !! @default-data;
     my $N-glycosylation = rx / N <-[P]> <[ST]> <-[P]> /;
+    my $base-path = $*PROGRAM_NAME.IO.dirname;
     for @input -> $id {
-        my $fasta = qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
+        my $fasta-name = $base-path ~ "/$id.fasta";
+        my $fasta = $fasta-name.IO.e
+            ?? $fasta-name.IO.slurp
+            !! qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
         given join '', grep /^ <.alpha>+ $/, $fasta.split: "\n" {
             if $N-glycosylation {
                 say $id;
