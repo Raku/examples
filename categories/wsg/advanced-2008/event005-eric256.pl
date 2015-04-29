@@ -155,6 +155,11 @@ sub MAIN(Str :$pw = "") {
 
     my $score = 13;
 
+    unless $password ~~ rx/<[A..Z]>/ {
+        $score--;
+        say "No uppercase letters in password.";
+    }
+
     if %dict{$password} :exists {
         $score--;
         say "Password matched dictionary";
