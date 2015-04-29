@@ -155,16 +155,6 @@ sub MAIN(Str :$pw = "", Bool :$verbose = False) {
 
     my $score = 13;
 
-    unless $password ~~ rx/<[A..Z]>/ {
-        $score--;
-        say "No uppercase letters in password.";
-    }
-
-    if $password ~~ rx/<[a..z]> ** 4..*/ {
-        $score--;
-        say "Four consecutive lowercase letters in password.";
-    }
-
     if %dict{$password} :exists {
         $score--;
         say "Password matched dictionary";
@@ -197,6 +187,16 @@ sub MAIN(Str :$pw = "", Bool :$verbose = False) {
     if $password.chars == none(10..20) {
         $score--;
         say "Password is too short (less than 10) or too long (more than 20)"
+    }
+
+    unless $password ~~ rx/<[A..Z]>/ {
+        $score--;
+        say "No uppercase letters in password.";
+    }
+
+    if $password ~~ rx/<[a..z]> ** 4..*/ {
+        $score--;
+        say "Four consecutive lowercase letters in password.";
     }
 
     say "'$password' scored $score" if $verbose;
