@@ -65,6 +65,12 @@ sub guess-password(Str $w, @cipher) {
     for @chunks -> @chunk {
 
 	my @password  = @chunk[^3] XOR @word;
+	my $password  = as-word @password;
+
+	next unless $password ~~ /^^ <[a..z]> ** 3 $$/ ;
+
+	my $decrypted = as-word @cipher[$offset .. *] XOR @password;
+
 	my $count =  [+] do for @common-words.grep({$_ !~~ $w}) -> $word {
 	    elems $decrypted ~~ m:g:i/$word/
 	}
