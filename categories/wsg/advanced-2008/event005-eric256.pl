@@ -199,6 +199,19 @@ sub MAIN(Str :$pw = "", Bool :$verbose = False) {
         say "Four consecutive lowercase letters in password.";
     }
 
+    my @chars = $password.split('');
+    my %letter-frequency;
+    for @chars -> $char {
+        if $char ~~ rx/<[a..zA..Z]>/ {
+            %letter-frequency{$char} =
+                %letter-frequency{$char}:exists ?? ++%letter-frequency{$char} !! 1;
+        }
+    }
+    if %letter-frequency.values.any > 1 {
+        $score--;
+        say "Duplicate letters in password.";
+    }
+
     say "'$password' scored $score" if $verbose;
 
     say "";
