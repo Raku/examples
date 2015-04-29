@@ -160,6 +160,11 @@ sub MAIN(Str :$pw = "") {
         say "No uppercase letters in password.";
     }
 
+    if $password ~~ rx/<[a..z]> ** 4..*/ {
+        $score--;
+        say "Four consecutive lowercase letters in password.";
+    }
+
     if %dict{$password} :exists {
         $score--;
         say "Password matched dictionary";
