@@ -192,7 +192,6 @@ loop {
             loop {
                 $choice = lc $*IN.get;
                 last if $choice eq "h" | "s";
-                #last if $choice ~~ /h|s/;
                 say "invalid entry: 'h' or 's'";
             }
         }
