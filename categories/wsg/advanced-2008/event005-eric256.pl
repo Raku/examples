@@ -145,13 +145,13 @@ L<http://web.archive.org/web/20080410170315/http://www.microsoft.com/technet/scr
 
 =end pod
 
-sub MAIN(Str :$pw = "") {
+sub MAIN(Str :$pw = "", Bool :$verbose = False) {
     my $password = $pw || prompt("Enter password to test: ");
 
     my $input-file = $*PROGRAM_NAME.IO.dirname ~ "/wordlist.txt";
     my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars > 6}) X 1);
 
-    say "Testing strength of password '$password'";
+    say "Testing strength of password '$password'" if $verbose;
 
     my $score = 13;
 
@@ -199,8 +199,9 @@ sub MAIN(Str :$pw = "") {
         say "Password is too short (less than 10) or too long (more than 20)"
     }
 
-    say "'$password' scored $score";
+    say "'$password' scored $score" if $verbose;
 
+    say "";
     given $score {
         when $_ <= 6 {
             say "A password of score $score indicates a weak password.";
