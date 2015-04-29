@@ -197,7 +197,7 @@ sub MAIN(Bool :$computer-player = False) {
                 }
             }
             else {
-                $choice = "stay" unless $player_value < 16;
+                $choice = $player_value < 16 ?? "hit" !! "stay";
             }
             say $choice;
             last if $choice ~~ /s/;
