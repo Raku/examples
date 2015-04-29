@@ -110,7 +110,7 @@ Stay (s) or hit (h)?s
 
 You have 17.
 
-Dealer’s cards:
+Dealer's cards:
 Nine of Hearts
 Seven of Diamonds
 
@@ -122,7 +122,7 @@ Five of Diamonds
 The dealer has 21. Sorry, you lose.
 =end code
 
-See? That shouldn’t be too terribly hard, especially not for anyone who made
+See? That shouldn't be too terribly hard, especially not for anyone who made
 it through the first nine events.
 
 L<http://web.archive.org/web/20080406020248/http://www.microsoft.com/technet/scriptcenter/funzone/games/games08/aevent10.mspx>
@@ -182,7 +182,7 @@ loop {
     say "current value is { $player_value.perl }";
 
     if $player_value == 21 {
-        say "congradulations, you win!";
+        say "congratulations, you win!";
         exit 0;
     }
     elsif $player_value < 21 {
@@ -203,7 +203,7 @@ loop {
         last if $choice ~~ /s/;
     }
     else {
-        say "Sorry, you bust!";
+        say "sorry, you bust!";
         exit 0;
     }
 }
@@ -221,7 +221,7 @@ loop {
     say "dealer value: {$dealer_value.perl}";
 
     if $dealer_value == any( $player_value ^.. 21) {
-        say "you loose!";
+        say "you lose!";
         exit 0;
     }
     elsif $dealer_value < 21 {
