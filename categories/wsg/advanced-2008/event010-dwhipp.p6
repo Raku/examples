@@ -129,110 +129,168 @@ L<http://web.archive.org/web/20080406020248/http://www.microsoft.com/technet/scr
 
 =end pod
 
-my $player_is_human = 1;
+sub MAIN(Bool :$computer-player = False) {
+    my $player_is_human = not $computer-player;
 
-my @values = (
-    ace => 1|11,
-    two => 2,
-    three => 3,
-    four => 4,
-    five => 5,
-    six => 6,
-    seven => 7,
-    eight => 8,
-    nine => 9,
-    ten => 10,
-    jack => 10,
-    queen => 10,
-    king => 10,
-);
+    my @values = (
+        ace => 1|11,
+        two => 2,
+        three => 3,
+        four => 4,
+        five => 5,
+        six => 6,
+        seven => 7,
+        eight => 8,
+        nine => 9,
+        ten => 10,
+        jack => 10,
+        queen => 10,
+        king => 10,
+    );
 
-my @suites = < spades clubs diamonds hearts >;
+    my @suites = < spades clubs diamonds hearts >;
 
-my @deck = ( @values X @suites ).for: {
-    my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value
-};
+    my @deck = ( @values X @suites ).for: {
+        my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value
+    };
 
-my @cards = @deck.pick( @deck.elems );
+    my @cards = $computer-player ?? default-cards() !! @deck.pick( @deck.elems );
 
-my @dealer;
-my @player;
+    my @dealer;
+    my @player;
 
-@dealer.push( @cards.shift );
-@player.push( @cards.shift );
-@dealer.push( @cards.shift );
+    @dealer.push( @cards.shift );
+    @player.push( @cards.shift );
+    @dealer.push( @cards.shift );
 
-say "DEALER:";
-say @dealer[0].key;
-say "";
+    say "DEALER:";
+    say @dealer[0].key;
+    say "";
 
-say "PLAYER:";
-.key.say for @player;
+    say "PLAYER:";
+    .key.say for @player;
 
-my $player_value = [+] @player.map: { .value };
+    my $player_value = [+] @player.map: { .value };
 
-loop {
-    my $card = @cards.shift;
+    loop {
+        my $card = @cards.shift;
 
-    @player.push( $card );
-    say $card.key;
+        @player.push( $card );
+        say $card.key;
 
-    $player_value += $card.value;
+        $player_value += $card.value;
 
-    say "current value is { $player_value.perl }";
+        say "current value is { $player_value.perl }";
 
-    if $player_value == 21 {
-        say "congratulations, you win!";
-        exit 0;
-    }
-    elsif $player_value < 21 {
-        say "hit (h) or stay (s)";
-        my $choice;
-        if ($player_is_human) {
-            loop {
-                $choice = lc $*IN.get;
-                last if $choice eq "h" | "s";
-                say "invalid entry: 'h' or 's'";
+        if $player_value == 21 {
+            say "congratulations, you win!";
+            exit 0;
+        }
+        elsif $player_value < 21 {
+            say "hit (h) or stay (s)";
+            my $choice;
+            if ($player_is_human) {
+                loop {
+                    $choice = lc $*IN.get;
+                    last if $choice eq "h" | "s";
+                    say "invalid entry: 'h' or 's'";
+                }
             }
+            else {
+                $choice = "stay" unless $player_value < 16;
+            }
+            say $choice;
+            last if $choice ~~ /s/;
         }
         else {
-            $choice = "stay" unless $player_value < 16;
+            say "sorry, you bust!";
+            exit 0;
         }
-        say $choice;
-        last if $choice ~~ /s/;
     }
-    else {
-        say "sorry, you bust!";
-        exit 0;
+
+    say "";
+
+    $player_value = max (4 .. 21).grep: { $_ == $player_value };
+
+    say "DEALER:";
+    .key.say for @dealer;
+
+    my $dealer_value = [+] @dealer.map: { .value };
+
+    loop {
+        say "dealer value: {$dealer_value.perl}";
+
+        if $dealer_value == any( $player_value ^.. 21) {
+            say "you lose!";
+            exit 0;
+        }
+        elsif $dealer_value < 21 {
+            my $card = @cards.shift;
+            @dealer.push( $card );
+            say $card.key;
+            $dealer_value += $card.value;
+        }
+        else {
+            say "dealer bust: you win!";
+            exit 0;
+        }
     }
 }
 
-say "";
-
-$player_value = max (4 .. 21).grep: { $_ == $player_value };
-
-say "DEALER:";
-.key.say for @dealer;
-
-my $dealer_value = [+] @dealer.map: { .value };
-
-loop {
-    say "dealer value: {$dealer_value.perl}";
-
-    if $dealer_value == any( $player_value ^.. 21) {
-        say "you lose!";
-        exit 0;
-    }
-    elsif $dealer_value < 21 {
-        my $card = @cards.shift;
-        @dealer.push( $card );
-        say $card.key;
-        $dealer_value += $card.value;
-    }
-    else {
-        say "dealer bust: you win!";
-        exit 0;
-    }
+sub default-cards {
+    return [
+    "three of diamonds" => 3,
+    "five of diamonds" => 5,
+    "seven of diamonds" => 7,
+    "ten of diamonds" => 10,
+    "two of diamonds" => 2,
+    "jack of spades" => 10,
+    "five of clubs" => 5,
+    "five of hearts" => 5,
+    "eight of diamonds" => 8,
+    "six of spades" => 6,
+    "five of spades" => 5,
+    "king of hearts" => 10,
+    "nine of diamonds" => 9,
+    "two of hearts" => 2,
+    "king of clubs" => 10,
+    "eight of clubs" => 8,
+    "two of spades" => 2,
+    "ace of hearts" => any(1, 11),
+    "nine of hearts" => 9,
+    "eight of spades" => 8,
+    "jack of diamonds" => 10,
+    "jack of hearts" => 10,
+    "nine of clubs" => 9,
+    "ten of hearts" => 10,
+    "eight of hearts" => 8,
+    "king of spades" => 10,
+    "ace of spades" => any(1, 11),
+    "queen of hearts" => 10,
+    "nine of spades" => 9,
+    "two of clubs" => 2,
+    "queen of diamonds" => 10,
+    "three of spades" => 3,
+    "queen of clubs" => 10,
+    "three of clubs" => 3,
+    "ten of spades" => 10,
+    "ace of clubs" => any(1, 11),
+    "ace of diamonds" => any(1, 11),
+    "four of hearts" => 4,
+    "six of clubs" => 6,
+    "ten of clubs" => 10,
+    "seven of hearts" => 7,
+    "king of diamonds" => 10,
+    "four of diamonds" => 4,
+    "seven of spades" => 7,
+    "queen of spades" => 10,
+    "four of spades" => 4,
+    "six of hearts" => 6,
+    "four of clubs" => 4,
+    "seven of clubs" => 7,
+    "six of diamonds" => 6,
+    "three of hearts" => 3,
+    "jack of clubs" => 10]<>;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
