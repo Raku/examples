@@ -217,13 +217,13 @@ sub MAIN(Str :$pw = "", Bool :$verbose = False) {
     say "";
     given $score {
         when $_ <= 6 {
-            say "A password of score $score indicates a weak password.";
+            say "A password score of $score indicates a weak password.";
         }
         when 7 < $_ <= 10 {
-            say "A password of score $score indicates a moderately-strong password.";
+            say "A password score of $score indicates a moderately-strong password.";
         }
         when $_ >= 11 {
-            say "A password of score $score indicates a strong password.";
+            say "A password score of $score indicates a strong password.";
         }
     }
 }
