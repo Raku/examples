@@ -39,8 +39,8 @@ my $run-dir = $*PROGRAM_NAME.IO.dirname;
 my @files = dir($run-dir);
 my $output = $run-dir ~ '/firstlines.out';
 
-# only select .txt files
-for @files.grep: { .match(/\.txt $$/) } {
+# only select .txt files required for this event
+for @files.grep: { .match(/test.*\.txt $$/) } {
     my $inputfh = open $_, :r;
     my $outputfh = open $output, :a;
     $outputfh.say( $($inputfh.get) ); # $(...) forces item context
