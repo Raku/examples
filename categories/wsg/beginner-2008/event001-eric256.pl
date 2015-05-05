@@ -46,6 +46,6 @@ my $p = 0;
 for @cards[0..@cards-2].kv -> $k, $v {
     $p += (@cards[$k+0 .. ^*-1].grep: {$_ eq $v}).elems -1
 };
-say $p;
+say "Total: $p";
 
 # vim: expandtab shiftwidth=4 ft=perl6
