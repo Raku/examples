@@ -56,7 +56,7 @@ for $lines.split(/\n/) {
 }
 
 for %order.kv -> $drink, $qty {
-    "{$drink} {$qty}".say;
+    "{$drink}: {$qty}".say;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
