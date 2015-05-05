@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 4;
 
 my $skip = True;
 
@@ -51,6 +51,36 @@ subtest {
 
     check-example-solutions($problem, $expected-output.chomp, @authors)
 }, "event006";
+
+subtest {
+    plan 1;
+
+    my $problem = "event010";
+    my @authors = <eric256>;
+    my $expected-output = q:to/EOD/;
+    checking 2
+    checking 5
+    checking 7
+    checking /
+    checking 8
+    checking 1
+    checking X
+    checking 9
+    checking /
+    checking 5
+    checking 3
+    checking 7
+    checking 0
+    checking 4
+    checking 5
+    checking X
+    checking 2
+    checking 0
+    66
+    EOD
+
+    check-example-solutions($problem, $expected-output.chomp, @authors)
+}, "event010";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
