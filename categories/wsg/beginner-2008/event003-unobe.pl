@@ -38,6 +38,7 @@ L<http://web.archive.org/web/20081227065437/http://www.microsoft.com/technet/scr
 my $run-dir = $*PROGRAM_NAME.IO.dirname;
 my @files = dir($run-dir);
 my $output = $run-dir ~ '/newfile.txt';
+$output.IO.unlink if $output.IO.e;
 
 # only select .txt files required for this event
 for @files.grep: { .match(/test.*\.txt $$/) } {
