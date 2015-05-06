@@ -41,7 +41,7 @@ subtest {
 }, "categories-list functionality";
 
 subtest {
-    plan 4;
+    plan 5;
 
     my %categories-table =
         "receiver" => "bob",
@@ -63,7 +63,9 @@ subtest {
     ok(@subcategories-list[0] ~~ Category,
         "Appended subcategory is a Category object");
     is(@subcategories-list.elems, 2, "Number of appended subcategories");
-    is(@subcategories-list[0].key, "entangled-state",
+    ok(@subcategories-list[0].key ~~ ("entangled-state", "initial-state").any,
+        "Appended subcategory contains expected data");
+    ok(@subcategories-list[1].key ~~ ("entangled-state", "initial-state").any,
         "Appended subcategory contains expected data");
 }, "append-subcategories functionality";
 
