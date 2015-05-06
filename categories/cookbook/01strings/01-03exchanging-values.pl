@@ -10,7 +10,7 @@ You want to swap values without using a temporary variable
 
 =end pod
 
-my ($x, $y) = (3,2);
+my ($x, $y) = (3, 2);
 ($x, $y) = ($y, $x);
 # XXX Binding (:=) is more efficient, because it doesn't copy the values.
 # XXX Compile-time binding (::=) could not be used here, as the cells
