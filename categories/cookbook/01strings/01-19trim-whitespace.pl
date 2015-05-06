@@ -6,7 +6,7 @@ use v6;
 
 =AUTHOR stmuk
 
-You have a string with leading and/or trailing whitespace 
+You have a string with leading and/or trailing whitespace
 you wish to remove
 
 =end pod
