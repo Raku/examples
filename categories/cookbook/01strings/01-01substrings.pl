@@ -16,7 +16,7 @@ say $string.substr($offset);
 
 # want to replace everything but the first two letters with the string
 # "gilism ain't for wimps"
-# this code works in Perl 5, but not in Perl 6
+# this code works in Perl 5, but not in Perl 6 since strings are immutable
 # substr($string, $offset) = "gilism ain't for wimps";
 # say $string;
 $string = $string.substr(0, $offset) ~ "gilism ain't for wimps";
