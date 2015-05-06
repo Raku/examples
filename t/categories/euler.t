@@ -11,7 +11,12 @@ subtest {
     my @authors = <cspencer eric256 grondilu hexmode unobe>;
     my $expected-output = 233168;
 
-    check-example-solutions($problem, $expected-output, @authors)
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.chomp, $expected-output, $name);
+    }
+
 }, "prob001";
 
 subtest {
@@ -363,6 +368,16 @@ subtest {
 }, "prob053";
 
 subtest {
+    plan 1;
+
+    my $problem = "prob054";
+    my @authors = <andreoss>;
+    my $expected-output = 376;
+
+    check-example-solutions($problem, $expected-output, @authors);
+}, "prob054";
+
+subtest { 
     plan 1;
 
     my $problem = "prob059";
