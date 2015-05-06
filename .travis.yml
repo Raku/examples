@@ -13,6 +13,7 @@ install:
     - panda install URI
     - panda install Pod::To::HTML
     - panda install LWP::Simple
+    - panda install Algorithm::Soundex
 
 script:
     - make test
