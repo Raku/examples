@@ -21,7 +21,7 @@ sub rec($factor, @counts, $result)
             {
                 my @c = @counts;
                 @c[$size]--;
-                for $size+1 .. 4 -> $s
+                for $size ^.. 4 -> $s
                 {
                     @c[$s]++;
                 }
