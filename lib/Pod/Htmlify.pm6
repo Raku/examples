@@ -202,7 +202,7 @@ class Website is export {
         my @category-keys = $!categories.keys;
         my $menu-items = [~]
             q[<div class="menu-items dark-green">],
-            %!menu-tabs.keys.map( -> $menu-tab-link {qq[
+            %!menu-tabs.keys.sort.map( -> $menu-tab-link {qq[
                 <a class="menu-item selected darker-green"
                     href="$menu-tab-link">
                     { %!menu-tabs{$menu-tab-link} }
