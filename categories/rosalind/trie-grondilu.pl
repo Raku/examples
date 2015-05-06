@@ -26,6 +26,14 @@ Sample output:
     8 9 A
     9 10 T
 
+Usage:
+
+    $ perl6 trie-grondilu.pl
+
+or
+
+    $ perl6 trie-grondilu.pl --data="GAT ATC"
+
 =end pod
 
 my Int $node = 1;
