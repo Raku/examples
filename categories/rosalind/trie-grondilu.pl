@@ -40,7 +40,8 @@ sub trie(@string is copy, $root = $node) {
     }
 }
 
-sub MAIN(@input = qw{ATAGA ATC GAT}) {
+sub MAIN(:$data = "ATAGA ATC GAT") {
+    my @input = $data.split(/\s+/);
     trie @input;
 }
 
