@@ -1,6 +1,5 @@
 use v6;
 
-my $total_num = 0;
 my $sum = 0;
 
 # rec is short for "recurse".
@@ -11,7 +10,6 @@ sub rec($factor, @counts, $result)
     if $cnt == 0
     {
         $sum += $factor * $result;
-        $total_num += $factor;
     }
     else
     {
@@ -34,4 +32,4 @@ sub rec($factor, @counts, $result)
 
 rec(1,[1],0);
 
-say "Result == ", ($sum / $total_num - 2).fmt("%.6f");
+say "Result == ", ($sum - 2).fmt("%.6f");
