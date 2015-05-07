@@ -16,7 +16,7 @@ the root to a new vertex. This symbol is then used to label the edge.
 We may then iterate the process by moving down one level as follows. Say
 that an edge connecting the root to a node I<v> is labeled with 'A'; then we
 delete the first symbol from every string in the collection beginning with
-'A' and then treat v as our root. We apply this process to all nodes that
+'A' and then treat I<v> as our root. We apply this process to all nodes that
 are adjacent to the root, and then we move down another level and continue.
 See Figure 1 for an example of a trie.
 
