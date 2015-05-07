@@ -252,7 +252,7 @@ subtest {
     for @authors -> $author {
         my $name = "$problem-$author.pl";
         my $output = run-example($name);
-        is($output.chomp, $expected-output.chomp, $name);
+        is($output.split(/\n/).sort, $expected-output.split(/\n/).sort, $name);
     }
 
 }, "grph";
