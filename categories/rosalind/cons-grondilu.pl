@@ -47,7 +47,8 @@ my %profile;
 
 for @default-data[] {
     my @dna = .comb;
-    for kv classify { @dna[$_] }, ^@dna -> $k, $v {
+    my %dna-index-map = classify { @dna[$_] }, ^@dna;
+    for %dna-index-map.kv -> $k, $v {
         %profile{$k}[$v[]]»++;
     }
 }
