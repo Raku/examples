@@ -25,10 +25,10 @@ subtest {
     my @authors = <unobe>;
     my $expected-output = q:to/EOD/;
     Dulce et decorum est...
-    "There is no such thing on earth as an uninteresting subject; the only
-    T
     "There have always been literate ignoramuses who have read too widely and not
     3
+    "There is no such thing on earth as an uninteresting subject; the only
+    T
     EOD
 
     my $name = $problem ~ '-' ~ @authors[0] ~ '.pl';

@@ -36,7 +36,7 @@ L<http://web.archive.org/web/20081227065437/http://www.microsoft.com/technet/scr
 =end pod
 
 my $run-dir = $*PROGRAM_NAME.IO.dirname;
-my @files = dir($run-dir);
+my @files = dir($run-dir).sort;
 my $output = $run-dir ~ '/newfile.txt';
 $output.IO.unlink if $output.IO.e;
 
