@@ -69,6 +69,6 @@ sub rec($n, $d, @counts, $result)
 
 rec(1, 1, [1],0);
 
-say "Result == ", ($sum - 2).fmt("%.6f");
+say ($sum - 2).fmt("%.6f");
 
 # vim: expandtab shiftwidth=4 ft=perl6
