@@ -49,7 +49,11 @@ subtest {
     Cappuccino: 18
     EOD
 
-    check-example-solutions($problem, $expected-output.chomp, @authors)
+    for @authors -> $author {
+        my $name = "$problem-$author.pl";
+        my $output = run-example($name);
+        is($output.split(/\n/).sort, $expected-output.split(/\n/).sort, $name);
+    }
 }, "event006";
 
 subtest {
