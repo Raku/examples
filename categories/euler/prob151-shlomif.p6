@@ -41,7 +41,6 @@ my $sum = 0;
 # $n is numerator ; $d is denominator
 sub rec($n, $d, @counts, $result)
 {
-    say @counts.join(",");
     my $cnt = [+] @counts;
     if $cnt == 0
     {
