@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 47;
 
 subtest {
     plan 5;
@@ -465,6 +465,16 @@ if False {
         check-example-solutions($problem, $expected-output, @authors)
     }, "prob149";
 }
+
+subtest {
+    plan 1;
+
+    my $problem = "prob151";
+    my @authors = <shlomif>;
+    my $expected-output = 0.464399;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob151";
 
 subtest {
     plan 1;
