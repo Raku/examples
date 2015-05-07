@@ -99,7 +99,7 @@ class Website is export {
         my @headers = qw{File Title Author};
         for $!categories.categories-table.sort(*.key)>>.kv -> ($category-key, $title) {
             my $category = $!categories.category-with-key($category-key);
-            my @examples = $category.examples.values;
+            my @examples = $category.examples.values.sort(:by<filename>);
             my @rows = @examples.map: {[.pod-link, .title, .author]};
             my $category-index-pod;
 
