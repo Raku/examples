@@ -433,10 +433,28 @@ if False {
 subtest {
     plan 1;
 
+    my $problem = "prob098";
+    my @authors = <andreoss>;
+    my $expected-output = 18769;
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob098";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob099";
+    my @authors = <andreoss>;
+    my $expected-output = 709;
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob099";
+
+
+subtest {
+    plan 1;
+
     my $problem = "prob100";
     my @authors = <andreoss>;
     my $expected-output = 756872327473;
-
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob100";
 
