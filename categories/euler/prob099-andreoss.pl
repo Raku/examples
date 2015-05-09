@@ -47,3 +47,5 @@ sub MAIN(:$file  = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'base_exp.txt'),
 		    line => $n++);
     }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

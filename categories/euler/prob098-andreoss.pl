@@ -72,3 +72,4 @@ sub MAIN(Bool :$verbose = False,
     }
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6
