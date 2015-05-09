@@ -160,7 +160,8 @@ class Deal {
 	if $rank {
 	    my %h = ThreeOfKind => my $x = EVAL($rank.value);
 	    
-	    if my $one-pair = @.cards».rank.&counts.grep(*.key == 2)[0] {		%h<OnePair>  =  EVAL($one-pair.value);
+	    if my $one-pair = @.cards».rank.&counts.grep(*.key == 2)[0] {
+		%h<OnePair>  =  EVAL($one-pair.value);
 	    } else {
 		%h<HighCard> = max grep { $_ !~~ $x }, @.cards».rank;
 	    }
