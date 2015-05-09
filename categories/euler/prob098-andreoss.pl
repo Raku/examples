@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Anagramic squares
 
-=AUTHOR Andrei Osipov 
+=AUTHOR Andrei Osipov
 
 L<https://projecteuler.net/problem=98>
 
@@ -18,20 +18,20 @@ NOTE: All anagrams formed must be contained in the given text file.
 
 
 Expected result:  18769
-		      
+
 =end pod
 
 sub correspond([$word1, $word2], [$num1, $num2]) {
     $word2.trans($word1 => ~$num1) eq $num2   &&
     $num2.trans( ~$num1 => $word1) eq $word2;
-    
+
 }
 
 sub anagrams(@x) {
     my %aux;
     my %result;
 
-    %aux{$_.comb.sort.join}.push: $_ 
+    %aux{$_.comb.sort.join}.push: $_
 	for @x;
 
     for %aux.kv -> $k, @v {
@@ -52,14 +52,14 @@ sub MAIN(Bool :$verbose = False,
     die "$file is missing" unless $file.IO.e;
 
     my @words = sort unique $file.IO.slurp.split: / <[,"]>+ /;
-    
-    my %words   =  anagrams(@words);    
+
+    my %words   =  anagrams(@words);
     my $longest-word = %words.keys.max;
     my %squares =  anagrams(
 	(1 ... (10**($longest-word + 1).sqrt)) »**» 2
     );
-    
-    
+
+
     say max do for 3 ... $longest-word -> \size {
 	do for @(%words{size}) -> @pair {
 	    do for @(%squares{size}) -> @nums {

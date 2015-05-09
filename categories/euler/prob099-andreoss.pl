@@ -17,8 +17,8 @@ Using base_exp.txt L<https://projecteuler.net/project/resources/p099_base_exp.tx
 NOTE: The first two lines in the file represent the numbers in the example given above.
 
 Expected result: 709
-	  
-=end pod		
+
+=end pod
 
 class BaseExp {
     has $.base;
