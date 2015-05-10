@@ -110,7 +110,7 @@ subtest {
 subtest {
     plan 1;
 
-    my $example-name = "01-06reversing-strings.pl";
+    my $example-name = "01-07reversing-strings.pl";
     my $expected-output = q:to/EOD/;
     egarfissO hsimaeuqS era sdroW cigaM ehT
     Ossifrage Squeamish are Words Magic The
@@ -118,7 +118,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-06reversing-strings.pl";
+}, "01-07reversing-strings.pl";
 
 subtest {
     plan 1;
