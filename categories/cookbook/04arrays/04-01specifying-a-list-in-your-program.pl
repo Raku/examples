@@ -16,11 +16,11 @@ say @a[1];
 
 # angle brackes to autoquote items
 {
-  my @a = <alpha beta gamma>;
+    my @a = <alpha beta gamma>;
 
-  for @a -> $e {
-    say $e;
-  }
+    for @a -> $e {
+        say $e;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
