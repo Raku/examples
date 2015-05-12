@@ -31,86 +31,83 @@ class Symbol {
 class Env {
     has       %.scope;
     has  Env  $.outer;
-    method find($key) is rw {
+    method resolve($key) is rw {
 	if %.scope{$key}:exists {
 	    %.scope{$key}
 	}
 	else {
 	    fail "Not found symbol '$key'" unless $.outer;
-	    $.outer.find($key)
+	    $.outer.resolve($key)
 	}
     }
     method merge(*@env) {
 	%.scope = %.scope, %(@env)
     }
-    method evaluate-tokens($x) {
-	given $x {
-	    when Symbol {
-		self.find($x)
+    multi method evaluate-tokens(Number $x) {
+	$x
+    }
+    multi method evaluate-tokens(Symbol $x) {
+	self.resolve($x)
+    }
+    multi method evaluate-tokens(Positional $x) {
+	my @x = @($x);
+	my $verb = @x.shift;
+	given $verb {
+	    when 'quote'   {
+		@x.shift;
 	    }
-	    when Positional {
-		given $x[0] {
-		    when 'quote'   {
-			my $exp = $x[1];
-			$exp;
-		    }
-		    when 'if'      {
-			my ($test,
-			    $conseq,
-			    $alt) = $x[1 ... *];
-			self.evaluate-tokens(
-			    self.evaluate-tokens($test)
-			    ?? $conseq
-			    !! $alt
-			)
+	    when 'if'      {
+		my ($test,
+		    $conseq,
+		    $alt) = @x;
+		self.evaluate-tokens(
+		    self.evaluate-tokens($test)
+		    ?? $conseq
+		    !! $alt
+		)
+		
+	    }
+	    when 'set!'    {
+		my ($var, $exp) = @x;
+		self.resolve($var) = self.evaluate-tokens($exp);
+		#return $var;
 			
-		    }
-		    when 'set!'    {
-			my ($var, $exp) = $x[1 ... *];
-			self.find($var) = self.evaluate-tokens($exp);
-			#return $var;
-			
-		    }
-		    when 'define'  {
-			my ($var, $exp) = $x[1 ... *];
-			$.scope{$var}  =self.evaluate-tokens($exp);
-		    }
-		    when 'lambda'  {
-			my ($vars, $exp) = $x[1 ... *];
-			Func.new( code => -> *@argv {
-					my %x = ($vars.list Z @argv);
-					my $new-env = Env.new(scope => %x , outer => self);
-					$new-env.evaluate-tokens($exp)
+	    }
+	    when 'define'  {
+		my ($var, $exp) = @x;
+		$.scope{$var}  =self.evaluate-tokens($exp);
+	    }
+	    when 'lambda'  {
+		my ($vars, $exp) = @x;
+		Func.new( code => -> *@argv {
+				my %x = ($vars.list Z @argv);
+				my $new-env = Env.new(scope => %x , outer => self);
+				$new-env.evaluate-tokens($exp)
 				    },
-				  desc => "function:{$vars[]}" );
-			
-		    }
-		    when 'begin'   {
-			my $val;
-			for @($x)[1..*] -> $exp {
-			    $val = self.evaluate-tokens($exp);
-			}
-			$val;
-		    }
-		    default {
-			my ($func, @list) = map { self.evaluate-tokens($^x) }, @( $x );
-			if $func ~~ Func {
-			    $func.eval(@list)
-			}
-			else {
-			    $func(@list);
-			}
-		    }
-		    
+			  desc => "function:{$vars[]}" );
+		
+	    }
+	    when 'begin'   {
+		my $val;
+		for @x -> $exp {
+		    $val = self.evaluate-tokens($exp);
 		}
+		$val;
 	    }
 	    default {
-		$x;
+		my $func = self.evaluate-tokens($verb);
+		my @args = map {
+		    self.evaluate-tokens($^x)
+		}, @x;
+		
+		$func.eval(@args)
+		
+		
 	    }
+	    
 	}
-    }
 
-    
+    }
 }
 
 our %*LISP-GLOBAL =
@@ -119,7 +116,9 @@ map { $_.key => Func.new(code => $_.value, desc => "builtin:{$_.key}") },
  '-'          => -> *@a { [-] @a },
  '*'          => -> *@a { [*] @a },
  '/'          => -> *@a { [/] @a },
- 'abs'        => -> *@a { @a[0].abs     },
+ 'abs'        => -> $a {
+	$a.abs
+    },
  'not'        => -> *@a { not @a },
  '>'          => -> *@a { [>] @a },
  '<'          => -> *@a { [<] @a },
@@ -127,17 +126,17 @@ map { $_.key => Func.new(code => $_.value, desc => "builtin:{$_.key}") },
  '<='         => -> *@a { [<=]  @a },
  '='          => -> *@a { [==]  @a },
  'equal?'     => -> *@a { [~~]  @a },
- 'length' => -> *@a {
-	@a[0].elems
+ 'length' => -> @a {
+		@a[0].elems # FIX
     },
  'cons'   => -> *@a { [ @a.item ]},
- 'car'    => -> *@a      { @a[0][0] },
- 'cdr'    => -> *@a {
-	@a[0][1..*]
+ 'car'    => ->  @a  {  @a[0] },
+ 'cdr'    => ->  @a {
+	@a[1..*]
     },
  'append' => -> *@a {
 	my @x =  @a[0][0..*];
-	@x.push:       @a[1];
+	@x.push: @a[1];
 	@x;
     },
  'list'   => -> *@a { [ @a.item ]  },
@@ -248,7 +247,8 @@ multi to-string(Positional $exp) {
 }
 multi to-string(Symbol $exp) { $exp }
 
-multi to-string($exp) { "fuck!" }
+multi to-string(False) { "#f" }
+multi to-string(True)  { "#t" }
 
 
 # say "==> "~  eval("(list 1 2 (list 3 4))").perl;
@@ -339,4 +339,4 @@ sub tests {
     done
     ;
 
-}
+ }
