@@ -16,15 +16,15 @@ my %hash = (
     'three' => 'trois'
 );
 
-for %hash.kv -> $key, $value {
+for %hash.sort(*.key)>>.kv -> ($key, $value) {
     say "The word '$key' is '$value' in French.";
 }
 
-for %hash.keys -> $key {
+for %hash.keys.sort -> $key {
     say "$key => %hash{$key}";
 }
 
-for %hash {
+for %hash.sort {
     .say;
 }
 
