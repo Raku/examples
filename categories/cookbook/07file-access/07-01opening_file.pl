@@ -32,9 +32,6 @@ my $output = open($filename, :w)
 #      write and read (overwriting a a file) will we have this?
 
 # Closing the file
-# $input.close orelse die $!;
-# close($input);
-
 $input.close or die $!;
 close($output);
 
