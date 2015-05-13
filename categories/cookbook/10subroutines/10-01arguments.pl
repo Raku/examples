@@ -30,7 +30,7 @@ sub whole (@names, %flags) {
     for @names -> $name {
         say $name;
     }
-    for %flags.kv -> $key, $value {
+    for %flags.sort(*.key)>>.kv -> ($key, $value) {
         say "$key => $value";
     }
 }
