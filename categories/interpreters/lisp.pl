@@ -12,7 +12,8 @@ Inspired by L<http://www.norvig.com/lispy.html>
 =end pod
 
 
-subset Number of Str where *  ~~ /^^ <[0..9.]>+ $$/;
+subset Number of Str where  -> $x {
+    so $x ~~ /^^ \d+ ( '.' \d* )? $$/ }
 
 class Func {
 	has Callable $.code;
@@ -229,7 +230,7 @@ sub repl {
 	my Int $balance = 0; 
 	loop {
 		try {
-			exit unless my $p =  prompt($exp eq '' ?? "> " !! ("--" xx $balance) ~ "> ");
+			exit unless defined my $p =  prompt($exp eq '' ?? "> " !! ("--" xx $balance) ~ "> ");
 			$exp ~= "$p ";
 			$exp ~~ s:i/ ';' ** 1..* .*? $$//; 
 			$balance = balanced $exp;
@@ -260,6 +261,7 @@ multi to-string(Positional $exp) {
 multi to-string(Symbol $exp) { $exp }
 
 multi to-string(Bool $x ) { $x ?? "#t" !! "#f" }
+multi to-string(Any $x) { $x.perl }
 
 
 sub MAIN(Bool :$run-tests = False,
@@ -348,5 +350,4 @@ sub tests {
 	ok eval("(sqrt 4)").Int == 2, 'sqrt example';
 
 	done;
-
 }
