@@ -252,7 +252,7 @@ sub repl {
 multi to-string(Number $exp) {
 	$exp
 }
-multi to-stnring(Func $exp) {
+multi to-string(Func $exp) {
 	$exp.gist;
 }
 multi to-string(Positional $exp) {
@@ -265,9 +265,7 @@ multi to-string(Any $x) { $x.perl }
 
 
 sub MAIN(Bool :$run-tests = False,
-Str  :$file)
-
-{
+	 Str  :$file) {
 	if $file {
 		die "Can't open '$file'" unless $file.IO.f;
 		my $exp;
