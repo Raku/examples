@@ -11,7 +11,7 @@ You want to delete a file
 =end pod
 
 # create a file
-my $f = open "foo",:w;
+my $f = open "foo", :w;
 $f.print(time);
 $f.close;
 

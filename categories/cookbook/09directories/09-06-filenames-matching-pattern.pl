@@ -10,7 +10,7 @@ You want a list of filenames matching a pattern
 
 =end pod
 
-my @perl-files = dir "." , test=>/\.pl/;
+my @perl-files = dir ".", test=>/\.pl/;
 
 #  returns a list of IO::Path objects
 
