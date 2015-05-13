@@ -14,7 +14,7 @@ use File::Find;
 
 # note binding := for a list
 
-my @files :=  find(:dir("/etc"),:type('file'));
+my @files := find(:dir("/etc"), :type('file'));
 
 #  returns a list of IO::Path objects
 

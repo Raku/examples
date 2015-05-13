@@ -10,7 +10,7 @@ You want to process all files in a directory
 
 =end pod
 
-for  dir(".") -> $f {
+for dir(".") -> $f {
     say $f.perl;
 }
 

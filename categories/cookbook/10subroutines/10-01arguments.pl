@@ -30,7 +30,7 @@ sub whole (@names, %flags) {
     for @names -> $name {
         say $name;
     }
-    for %flags.kv -> $key, $value {
+    for %flags.sort(*.key)>>.kv -> ($key, $value) {
         say "$key => $value";
     }
 }
@@ -57,7 +57,7 @@ named_params(1, :second(2), :third(3));
 sub transport ($planet, *@names) {
     say "Transporting to $planet:";
     for @names -> $name {
-        say "\t$name";
+        say "    $name";
     }
 }
 transport('Magrathea', 'Arthur', 'Ford', 'Ovid');
