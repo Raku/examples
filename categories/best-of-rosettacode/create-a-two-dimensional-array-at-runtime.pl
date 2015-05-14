@@ -22,9 +22,9 @@ L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6>
 my ($major, $minor) = prompt("Dimensions? ").comb(/\d+/);
 die "Please enter two dimensions" unless $major && $minor;
 
-my @array := [ for ^$major { [ for ^$minor {'@'} ] } ];
+my @array := [ for ^$major { [ for ^$minor { '@' } ] } ];
 
-@array[ pick 1, ^$major ][ pick 1, ^$minor ] = ' ';
+@array[ (^$major).pick  ][ (^$minor).pick ] = ' ';
 
 .say for @array;
 
