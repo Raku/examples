@@ -127,9 +127,9 @@ our %*BUILTINS    =
 '-'          => -> *@a { +@a > 1 ?? [-] @a !! - @a[0] },
 '*'          => -> *@a { [*] @a },
 '/'          => -> *@a { [/] @a },
-'abs'        =>  -> $a { abs $a },
-'not'        =>  -> $a { not $a } ,
-'so'         =>  -> $a { so  $a } , 
+'abs'        => -> $a { abs $a },
+'not'        => -> $a { not $a } ,
+'so'         => -> $a { so  $a } , 
 '>'          => -> *@a { [>] @a },
 '<'          => -> *@a { [<] @a },
 '>='         => -> *@a { [>=]  @a },
@@ -176,7 +176,6 @@ sub tokenize(Str $s) {
 			.split(/\s+/, :g)\
 			.grep(*.chars);
 }
-
 
 multi read-from-tokens([]) {
     fail  "unexpected EOF while reading"
