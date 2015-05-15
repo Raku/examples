@@ -14,6 +14,7 @@ install:
     - panda install Pod::To::HTML
     - panda install LWP::Simple
     - panda install Algorithm::Soundex
+    - panda install DBIish
 
 script:
     - make test
