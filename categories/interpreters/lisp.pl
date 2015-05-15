@@ -13,75 +13,79 @@ Inspired by L<http://www.norvig.com/lispy.html>
 
 
 subset Number of Str where  -> $x {
-    so $x ~~ /^^ \d+ ( '.' \d* )? $$/ }
+	so $x ~~ /^^ <[-+]>?\d+ ( '.' \d* )? $$/ }
 
-class Func {
-	has Callable $.code;
-	has Str      $.desc;
-	method eval(@a) { $.code.(|@a)   }
-	method gist     { "#<{$.desc}>" }
-}
-
-class Symbol {
-	has $.name;
-	method CALL-ME($x) {
-		Symbol.new(name => $x);
+	class Func {
+		has Callable $.code;
+		has Str      $.desc;
+		method eval(@a) { $.code.(|@a)   }
+		method gist     { "#<{$.desc}>" }
 	}
-	method Str  { $.name }
-}
 
-
-class Env {
-	has       %.scope;
-	has  Env  $.outer;
-	method resolve($key) is rw {
-		if %.scope{$key}:exists {
-			%.scope{$key}
+	class Symbol {
+		has $.name;
+		method CALL-ME($x) {
+			Symbol.new(name => $x);
 		}
-		else {
-			fail "Not found symbol '$key'" unless $.outer;
-			$.outer.resolve($key)
+		method Str  { $.name }
+	}
+
+
+	class Env {
+		has       %.scope;
+		has  Env  $.outer;
+		method resolve($key) is rw {
+			if %.scope{$key}:exists {
+				%.scope{$key}
+			}
+			else {
+				fail "Not found symbol '$key'" unless $.outer;
+				$.outer.resolve($key)
+			}
 		}
-	}
-	method merge(*@env) {
-		%.scope = %.scope, %(@env)
-	}
-	multi method evaluate-tokens(Number $x) {
-		$x
-	}
-	multi method evaluate-tokens(Symbol $x) {
-		self.resolve($x)
-	}
-	multi method evaluate-tokens(Positional $x) {
-		my @x = @($x);
-		fail "Syntax error" if +@x == 0;
-		my $verb = @x.shift;
-		given $verb {
-			when 'quote'   {
-				if @x[0] ~~ Positional {
-					[ @x[0] ];
+		method merge(*@env) {
+			%.scope = %.scope, %(@env)
+		}
+		multi method evaluate-tokens(Number $x) {
+			$x
+		}
+		multi method evaluate-tokens(Symbol $x) {
+			self.resolve($x)
+		}
+		multi method evaluate-tokens(Positional $x) {
+			my @x = @($x);
+			fail "Syntax error" if +@x == 0;
+			my $verb = @x.shift;
+			given $verb {
+				when 'quote'   {
+					if @x[0] ~~ Positional {
+						[ @x[0] ];
+					}
+					else { @x[0] }
 				}
-				else { @x[0] }
-			}
-			when 'if'      {
-				my ($test,
-				$conseq,
-				$alt) = @x;
-				self.evaluate-tokens(
-					self.evaluate-tokens($test)
-					?? $conseq
-					!! $alt
-				)
-			}
-			when 'set!'    {
-				my ($var, $exp) = @x;
-				self.resolve($var) = self.evaluate-tokens($exp);
-				#return $var;
+				when 'if'      {
+					my ($test,
+					$conseq,
+					$alt) = @x;
+					self.evaluate-tokens(
+						self.evaluate-tokens($test)
+						?? $conseq
+						!! $alt
+					)
+				}
+				when 'set!'    {
+					my ($var, $exp) = @x;
+					self.resolve($var) = self.evaluate-tokens($exp);
+					#return $var;
 
-			}
-			when 'define'  {
-				my ($var, $exp) = @x;
-				$.scope{$var}  =self.evaluate-tokens($exp);
+				}
+				when 'define'  {
+				my ($var, $exp) = @x; 
+				if $var ~~ Positional {
+					$.scope{$var[0]} = 
+					self.evaluate-tokens([ Symbol('λ'), [ $var[1..*] ], $exp]); 
+				} 
+				else { $.scope{$var}  =self.evaluate-tokens($exp); }
 			}
 			when 'lambda' | 'λ' {
 				my ($vars, $exp) = @x;
@@ -90,7 +94,7 @@ class Env {
 					my $new-env = Env.new(scope => %x , outer => self);
 					$new-env.evaluate-tokens($exp)
 				},
-				desc => "function:{$vars[]}" );
+				desc => "closure:arity:{$vars.elems}" );
 
 			}
 			when 'begin'   {
@@ -119,7 +123,7 @@ class Env {
 
 our %*BUILTINS    =
 '+'          => -> *@a { [+] @a },
-'-'          => -> *@a { [-] @a },
+'-'          => -> *@a { +@a > 1 ?? [-] @a !! - @a[0] },
 '*'          => -> *@a { [*] @a },
 '/'          => -> *@a { [/] @a },
 'abs'        =>  -> $a { abs $a },
