@@ -148,7 +148,10 @@ sub run-example($name, :$script-input = Nil, :$script-args = Nil) {
     my $base-dir = "categories/best-of-rosettacode";
     my $script-path = $base-dir ~ "/" ~ $name;
     my $base-cmd = "perl6 $script-path";
-    my $output = $script-input ?? qqx{echo $script-input | $base-cmd \"$script-args\"}
+
+    $base-cmd ~= qq{ "$script-args" } if  $script-args;
+    
+    my $output = $script-input ?? qqx{echo $script-input | $base-cmd }
                                !! qqx{$base-cmd};
 
     return $output;
