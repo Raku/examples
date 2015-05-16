@@ -1,5 +1,39 @@
 use v6;
 
+=begin pod
+
+=TITLE Special subset sums: testing
+
+=AUTHOR Shlomi Fish
+
+L<https://projecteuler.net/problem=105>
+
+Let C<S(A)> represent the sum of elements in set C<A> of size C<n>. We shall
+call it a special sum set if for any two non-empty disjoint subsets, C<B>
+and C<C>, the following properties are true:
+
+    S(B) ≠ S(C); that is, sums of subsets cannot be equal.
+    If B contains more elements than C then S(B) > S(C).
+
+For example, {81, 88, 75, 42, 87, 84, 86, 65} is not a special sum set
+because 65 + 87 + 88 = 75 + 81 + 84, whereas {157, 150, 164, 119, 79, 159,
+161, 139, 158} satisfies both rules for all possible subset pair
+combinations and C<S(A) = 1286>.
+
+Using C<sets.txt> (right click and "Save Link/Target As..."), a 4K text file
+with one-hundred sets containing seven to twelve elements (the two examples
+given above are the first two sets in the file), identify all the special
+sum sets, C<A₁, A₂, ..., Aₖ>, and find the value of C<S(A₁) + S(A₂) + ... +
+S(Aₖ)>.
+
+NOTE: This problem is related to
+L<Problem 103|https://projecteuler.net/problem=103> and
+L<Problem 106|https://projecteuler.net/problem=106>.
+
+Expected result: 73702
+
+=end pod
+
 sub is_special_sum_set(@A)
 {
     my $recurse;
