@@ -53,15 +53,17 @@ sub is_special_sum_set(@A)
     return $ret;
 }
 
-my $total_sum = 0;
+sub MAIN(:$verbose = False) {
+    my $total_sum = 0;
 
-for 'sets.txt'.IO.lines -> $l
-{
-    say "Processing $l";
-    my @set = $l.split(',');
-    if (is_special_sum_set(@set))
+    for 'sets.txt'.IO.lines -> $l
     {
-        $total_sum += ([+] @set);
+	say "Processing $l" if $verbose;
+	my @set = $l.split(',');
+	if (is_special_sum_set(@set))
+	{
+	    $total_sum += ([+] @set);
+	}
     }
+    $verbose ?? say "Total Sum = $total_sum" !! say $total_sum;
 }
-say "Total Sum = $total_sum";
