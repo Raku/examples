@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 50;
 
 subtest {
     plan 5;
@@ -470,6 +470,16 @@ if False {
         check-example-solutions($problem, $expected-output, @authors)
     }, "prob104";
 }
+
+subtest {
+    plan 1;
+
+    my $problem = "prob105";
+    my @authors = <shlomif>;
+    my $expected-output = 73702;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob105";
 
 skip("prob149-shlomif.pl takes too long to run");
 if False {
