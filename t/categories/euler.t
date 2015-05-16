@@ -12,7 +12,7 @@ subtest {
     my $expected-output = 233168;
 
     for @authors -> $author {
-        my $name = "$problem-$author.pl";
+        my $name = "$problem-$author";
         my $output = run-example($name);
         is($output.chomp, $expected-output, $name);
     }
@@ -530,7 +530,7 @@ if False {
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
     for @authors -> $author {
-        my $name = "$problem-$author.pl";
+        my $name = "$problem-$author";
         my $output = run-example($name);
         is($output.chomp, $expected-output, $name);
     }
@@ -540,6 +540,9 @@ sub check-example-solutions($problem, $expected-output, @authors) {
 sub run-example($name) {
     my $base-dir = "categories/euler";
     my $script-path = $base-dir ~ "/" ~ $name;
+    $script-path = "$script-path.pl".IO.e
+                ?? "$script-path.pl"
+                !! "$script-path.p6";
     my $base-cmd = "perl6 $script-path";
     my $output = qqx{$base-cmd};
 
