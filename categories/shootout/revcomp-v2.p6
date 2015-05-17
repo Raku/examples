@@ -197,7 +197,7 @@ sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/revcomp.input") {
     }
 
     sub dump {
-        LEAVE @seq = Nil;
+        LEAVE @seq = Empty;
         return unless $desc.defined;
 
         @seq.splice($_, 0, "\n")
