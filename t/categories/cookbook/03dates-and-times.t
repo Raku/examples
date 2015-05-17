@@ -8,12 +8,10 @@ subtest {
     plan 1;
 
     my $example-name = "03-01-todays-date.pl";
-    my $expected-output = q:to/EOD/;
-    2015 5 9
-    EOD
+    my $expected-output = rx/\d ** 4 \s+ \d ** 1..2 \s+ \d ** 1..2/;
 
     my $output = run-example($example-name);
-    is($output, $expected-output, $example-name);
+    like($output, $expected-output, $example-name);
 }, "03-01-todays-date.pl";
 
 subtest {
