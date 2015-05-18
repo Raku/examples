@@ -188,7 +188,7 @@ Expected output
 
 =end pod
 
-sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/revcomp.input") {
+sub MAIN($input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "revcomp.input")) {
     my ($desc,$seq) = ('','');
     my $input = open $input-file;
     while $input.get -> $line {

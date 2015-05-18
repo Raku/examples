@@ -23,8 +23,7 @@ Sample output
 use LWP::Simple;
 
 sub MAIN(Str $id = "Q5SLP9") {
-    my $base-path = $*PROGRAM_NAME.IO.dirname;
-    my $id-fname = $base-path ~ "/$id.txt";
+    my $id-fname = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "$id.txt");
     my $input = $id-fname.IO.e
         ?? $id-fname.IO.slurp
         !! LWP::Simple.get(qq{http://www.uniprot.org/uniprot/$id.txt});

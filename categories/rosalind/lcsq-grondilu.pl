@@ -29,7 +29,7 @@ Linux system use the following commands:
 
 use NativeCall;
 
-sub lcsq(Str $, Str $ --> Str) is native($*PROGRAM_NAME.IO.dirname ~ '/lcsq') {*}
+sub lcsq(Str $, Str $ --> Str) is native($*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'lcsq')) {*}
 
 my $default-input = q:to/END/;
     >Rosalind_23

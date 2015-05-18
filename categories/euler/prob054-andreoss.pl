@@ -228,7 +228,7 @@ multi infix:«<=>»(Deal $a, Deal $b) returns Order {
 
 sub MAIN(Bool :$verbose    = False,
 	 Bool :$run-tests  = False,
-	 :$file   = $*PROGRAM_NAME.IO.dirname ~ '/poker.txt',
+	 :$file   = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'poker.txt'),
 	 :$lines  = Inf, # read only X lines from file
 	) {
     die "'$file' is missing" unless $file.IO.e ;

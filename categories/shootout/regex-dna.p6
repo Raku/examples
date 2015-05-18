@@ -30,7 +30,7 @@ Expected output
 
 =end pod
 
-sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/regex-dna.input") {
+sub MAIN($input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "regex-dna.input")) {
     my $input = $input-file.IO.slurp;
     my $data = $input.lines.grep({ $_ !~~ /^ \>/}).join.lc;
 

@@ -44,7 +44,7 @@ Expected output
 
 =end pod
 
-sub MAIN($input-file = $*PROGRAM_NAME.IO.dirname ~ "/k-nucleotide.input") {
+sub MAIN($input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "k-nucleotide.input")) {
     my $fh = open $input-file.IO;
 
     # Read FASTA file and extract DNA sequence THREE.

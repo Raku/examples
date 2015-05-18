@@ -48,7 +48,7 @@ L<http://web.archive.org/web/20081210123558/http://www.microsoft.com/technet/scr
 
 our %count_for;
 
-sub MAIN(Str $orders = $*PROGRAM_NAME.IO.dirname ~ '/coffee.txt') {
+sub MAIN(Str $orders = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'coffee.txt')) {
     # get the data
     my @contents = $orders.IO.lines;
 

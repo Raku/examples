@@ -38,7 +38,7 @@ sub MAIN($input-file = Nil) {
     my $N-glycosylation = rx / N <-[P]> <[ST]> <-[P]> /;
     my $base-path = $*PROGRAM_NAME.IO.dirname;
     for @input -> $id {
-        my $fasta-name = $base-path ~ "/$id.fasta";
+        my $fasta-name = $*SPEC.catdir($base-path, "$id.fasta");
         my $fasta = $fasta-name.IO.e
             ?? $fasta-name.IO.slurp
             !! qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
