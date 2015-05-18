@@ -8,13 +8,18 @@ use v6;
 
 L<https://projecteuler.net/problem=54>
 
-The file, poker.txt, contains one-thousand random hands dealt to two players. Each line of the file contains ten cards (separated by a single space): the first five are Player 1's cards and the last five are Player 2's cards. You can assume that all hands are valid (no invalid characters or repeated cards), each player's hand is in no specific order, and in each hand there is a clear winner.
+The file, poker.txt, contains one-thousand random hands dealt to two
+players. Each line of the file contains ten cards (separated by a single
+space): the first five are Player 1's cards and the last five are Player 2's
+cards. You can assume that all hands are valid (no invalid characters or
+repeated cards), each player's hand is in no specific order, and in each
+hand there is a clear winner.
 
 How many hands does Player 1 win?
 
 Expected result: 376
 
-=end pod		
+=end pod
 
 enum Rank <
 	Two Three Four Five
@@ -44,8 +49,8 @@ multi strigify(Hash $x) {
 
 class Card {
     has Rank  $.rank;
-    has Suit  $.suit; 
-    
+    has Suit  $.suit;
+
     method parse-rank(Str $r) returns Rank {
 	given $r {
 	    when /\d/ { Rank($r.Int - 2) }
@@ -73,7 +78,7 @@ class Card {
 	self.new(rank => $v, suit => $s)
     }
 
-    
+
 }
 
 
@@ -98,7 +103,7 @@ class Deal {
 	$x.score = $x!best-hand;
 	$x;
     }
-    
+
     method !best-hand {
 	self!royal-flush 	//
 	self!straight-flush 	//
@@ -112,7 +117,7 @@ class Deal {
         self!high-card
     }
 
-    
+
     method !straight {
 	my @v = @.cards».rank.sort;
 	if @v.join eq (@v.min ... @v.max).map({Rank($_)}).join {
@@ -153,22 +158,22 @@ class Deal {
 	    FullHouse => Ace
 	}
     }
-    
+
     method !three-of-kind {
 	my $rank = @.cards».rank.&counts.grep(*.key == 3)[0];
-	
+
 	if $rank {
 	    my %h = ThreeOfKind => my $x = EVAL($rank.value);
-	    
+
 	    if my $one-pair = @.cards».rank.&counts.grep(*.key == 2)[0] {
 		%h<OnePair>  =  EVAL($one-pair.value);
 	    } else {
 		%h<HighCard> = max grep { $_ !~~ $x }, @.cards».rank;
 	    }
 	    %h;
-	}	
+	}
     }
-    
+
     method !two-pairs {
 	my @pairs = @.cards»\
 		.rank.&counts\
@@ -178,7 +183,7 @@ class Deal {
  	    TwoPairs  => my $y=@pairs.map({ EVAL $_.value }).max,
 	    HighCard  => max grep { $_ !~~ $x | $y },@.cards».rank;
 	}
-	
+
     }
 
     method !one-pair {
@@ -197,7 +202,7 @@ class Deal {
 }
 
 
-multi infix:«~~~»(Deal $a, Hand $h) { 
+multi infix:«~~~»(Deal $a, Hand $h) {
     so $a.score{$h};
 }
 
@@ -207,17 +212,17 @@ multi infix:«<=>»(Deal $a, Deal $b) returns Order {
 	return More if $a.score{$h}.defined && !$b.score{$h}.defined;
 	return Less if $b.score{$h}.defined && !$a.score{$h}.defined;
 	next unless $a.score{$h}.defined && $b.score{$h}.defined;
-	
+
 	if $a.score{$h} & $b.score{$h} ~~ List {
 	    my $cmp = max $a.score{$h} Z<=> $b.score{$h};
 	    return Less if $cmp ~~ Same | Less;
 	    return More if $cmp ~~ More;
 	}
-	
+
 	my $cmp =  $a.score{$h} <=> $b.score{$h};
 
 	next if $cmp ~~ Same;
-	return $cmp;	
+	return $cmp;
     }
 }
 
@@ -230,7 +235,7 @@ sub MAIN(Bool :$verbose    = False,
     return tests if $run-tests;
 
     say [+] gather for $file.IO.lines[^$lines] {
-	my $line = $_; # for mutability 
+	my $line = $_; # for mutability
 	$line ~~ s:nth(5)/\s/;/;
 	my ($h1,$h2) = $line.split: /';'/;
 	my $d1 = Deal($h1);
@@ -240,7 +245,7 @@ sub MAIN(Bool :$verbose    = False,
 	    take 1;
 	    	}
     }
-    
+
 }
 
 sub tests {
@@ -252,9 +257,9 @@ sub tests {
     ok (Deal("5H 7H 8H AH TH") ~~~  Flush) &&
        (Deal("5H 7H 8H AC TH") !~~~ Flush), "Detects flush ";
     ok Deal("TH JH QH KH AH")  ~~~ RoyalFlush, "Detects royal flush ";
-    ok Deal("5H 5C 6S 7S KD") <=> Deal("2C 3S 8S 8D TD") ~~ Less,"Player 2 wins [1]";  
+    ok Deal("5H 5C 6S 7S KD") <=> Deal("2C 3S 8S 8D TD") ~~ Less,"Player 2 wins [1]";
     ok Deal("5D 8C 9S JS AC") <=> Deal("2C 5C 7D 8S QH") ~~ More, "Player 1 wins [2]";
-    ok Deal("2D 9C AS AH AC") <=> Deal("3D 6D 7D TD QD") ~~ Less, "Player 2 wins [3]";  
+    ok Deal("2D 9C AS AH AC") <=> Deal("3D 6D 7D TD QD") ~~ Less, "Player 2 wins [3]";
     ok Deal("4D 6S 9H QH QC") <=> Deal("3D 6D 7H QD QS") ~~ More, "Player 1 wins [4]";
     ok Deal("2H 2D 4C 4D 4S") <=> Deal("3C 3D 3S 9S 9D") ~~ More, "Player 1 wins [5]";
     ok Deal("7C 5H KC QH JD") <=> Deal("AS KH 4C AD 4S") ~~ Less, "Player 2 wins [6]";
@@ -265,3 +270,5 @@ sub tests {
     ok Deal("JC TH 4S 6S JD") <=> Deal("2D 4D 6C 3D 4C") ~~ More, "Problem [5]";
     done;
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
