@@ -396,7 +396,24 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob063";
+subtest {
+    plan 1;
 
+    my $problem = "prob065";
+    my @authors = <andreoss>;
+    my $expected-output = 272;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob065";
+subtest {
+    plan 1;
+
+    my $problem = "prob066";
+    my @authors = <andreoss>;
+    my $expected-output = 661;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob066";
 subtest {
     plan 1;
 
@@ -406,7 +423,14 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob067";
+subtest {
+    plan  1;
+    my $problem = "prob080";
+    my @authors = <andreoss>;
+    my $expected-output = 40886;
 
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob080";
 subtest {
     plan 1;
 
