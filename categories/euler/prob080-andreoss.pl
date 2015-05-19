@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Square root digital expansion
 
-=AUTHOR Your name (or nick, if you want)
+=AUTHOR Andrei Osipov
 
 L<https://projecteuler.net/problem=80> 
 
