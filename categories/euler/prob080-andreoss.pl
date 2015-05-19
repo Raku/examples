@@ -16,7 +16,7 @@ hundred decimal digits is 475.
 For the first one hundred natural numbers, find the total of the digital sums of the first
 one hundred decimal digits for all the irrational square roots.
 
-The following algoritms was used for the solution:
+The following algoritm was used for the solution:
 L<http://www.afjarvis.staff.shef.ac.uk/maths/jarvisspec02.pdf>
 
 Expected result:  40886

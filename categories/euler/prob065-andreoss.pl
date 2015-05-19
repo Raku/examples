@@ -3,7 +3,7 @@ use v6;
 
 =begin pod
 
-=TITLE Square root digital expansion
+=TITLE Convergents of e
 
 =AUTHOR Andrei Osipov
 
