@@ -406,7 +406,14 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob067";
+subtest {
+    plan  1;
+    my $problem = "prob080";
+    my @authors = <andreoss>;
+    my $expected-output = 40886;
 
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob080";
 subtest {
     plan 1;
 
