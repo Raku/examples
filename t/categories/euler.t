@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 50;
+plan 53;
 
 subtest {
     plan 5;
