@@ -150,7 +150,7 @@ sub MAIN(Bool :$computer-player = False) {
 
     my @suites = < spades clubs diamonds hearts >;
 
-    my @deck = ( @values X @suites ).for: {
+    my @deck = ( @values X @suites ).flatmap: {
         my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value
     };
 
