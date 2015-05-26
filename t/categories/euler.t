@@ -316,6 +316,8 @@ subtest {
 
     my $problem = "prob030";
     my @authors = <andreoss>;
+    my $expected-output = 443839;
+
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob030";
 
