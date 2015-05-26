@@ -33,29 +33,29 @@ sub sqrt-subtraction($n) {
     my Int $a = $n * 5 ;
     my Int $b = 5;
     while $b < 10 * 10 ** $limit {
-	given $a <=> $b {
-	    when More | Same {
-		# replace a with a − b, and add 10 to b.
-		$a -=  $b;
-		$b += 10;
-	    }
-	    when Less {
-		# add two zeros to a
-		$a *= 100;
-		# add a zero to b just before the final digit (which will always be ‘5’).
-		$b = ($b - (my $x = $b % 10)) * 10 + $x;
-	    }
-	}
+        given $a <=> $b {
+            when More | Same {
+                # replace a with a − b, and add 10 to b.
+                $a -=  $b;
+                $b += 10;
+            }
+            when Less {
+                # add two zeros to a
+                $a *= 100;
+                # add a zero to b just before the final digit (which will always be ‘5’).
+                $b = ($b - (my $x = $b % 10)) * 10 + $x;
+            }
+        }
     }
     $b;
 }
 
 sub MAIN(Bool :$verbose = False) {
     say [+] do for 1 ... 100 -> $n {
-	next if $n.sqrt.floor ** 2 == $n;
-	my $x = [+] $n.&sqrt-subtraction.comb[^$limit];
-	say "$n $x"  if $verbose;
-	$x;
+        next if $n.sqrt.floor ** 2 == $n;
+        my $x = [+] $n.&sqrt-subtraction.comb[^$limit];
+        say "$n $x"  if $verbose;
+        $x;
     }
     say "Done in {now - INIT now}" if $verbose;
 }

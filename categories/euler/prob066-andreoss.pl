@@ -27,7 +27,7 @@ following:
 5² – 6×2²= 1
 
 8² – 7×3²= 1
-	
+
 Hence, by considering minimal solutions in x for D ≤ 7, the largest x is
 obtained when D=5.
 
@@ -47,9 +47,9 @@ sub next-triplet([\a,\b,\k], \N) {
 
     # finding minimal l
     1 .. N.sqrt.floor
-	==> grep  -> \l { (a + b * l) %% k } \
-	==> sort  -> \l { abs(l ** 2 - N)  } \
-	==> my @r;
+        ==> grep  -> \l { (a + b * l) %% k } \
+        ==> sort  -> \l { abs(l ** 2 - N)  } \
+        ==> my @r;
 
     my \l = @r.shift;
 
@@ -73,7 +73,7 @@ sub chakravala(NonSquarable \N) {
     my ($a, $b, $k) = simple-solution N;
 
     ($a,$b,$k) = next-triplet [$a,$b,$k], N
-	while $k != 1;
+        while $k != 1;
 
     $a, $b, $k;
 }
