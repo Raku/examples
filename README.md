@@ -62,6 +62,9 @@ To run all examples and tests, the following modules need to be installed:
     URI
     Pod::To::HTML
     LWP::Simple
+    Algorithm::Soundex
+    DBIish
+    Text::VimColour
 
 ## Running the examples
 
