@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 58;
 
 subtest {
     plan 5;
@@ -360,6 +360,16 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob036";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob038";
+    my @authors = <andreoss>;
+    my $expected-output = 932718654;
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob038";
 
 subtest {
     plan 1;
