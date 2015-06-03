@@ -24,7 +24,7 @@ include it once in your sum.
 =end   pod
 
 sub is-pandigital($n is copy) {
-    # #`«17x slower» return so all $n.comb.one == all 1..9; 
+    # #`«17x slower» return so all $n.comb.one == all 1..9;
     return unless 123456789 <= $n <= 987654321;
     my $x = 0;
     loop ( ; $n != 0 ; $n div=10) {
@@ -50,7 +50,7 @@ sub is-unusual($a, $b) {
 
 say [+] unique gather for 1 ... 2000 -> $x {
     for 1 ... 50 -> $y {
-        take $x * $y if is-unusual $x, $y 
+        take $x * $y if is-unusual $x, $y
     }
 }
 
