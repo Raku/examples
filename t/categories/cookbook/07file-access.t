@@ -14,6 +14,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
+    unlink "test_file";  # the script generates this file
 }, "07-01opening_file.pl";
 
 #| run the given example script

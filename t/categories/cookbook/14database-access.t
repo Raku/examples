@@ -14,6 +14,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
+    unlink "video.db"; # the script creates this file
 }, "14-09-dbi-sql.pl";
 
 #| run the given example script
