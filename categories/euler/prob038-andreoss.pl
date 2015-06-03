@@ -49,3 +49,5 @@ say max gather for 1 .. 9999 -> $x {
         take $l if is-pandigital $l;
     }
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

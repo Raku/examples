@@ -54,4 +54,4 @@ say [+] unique gather for 1 ... 2000 -> $x {
     }
 }
 
-
+# vim: expandtab shiftwidth=4 ft=perl6

@@ -35,3 +35,4 @@ say 1 / [*] gather for 10 ...^ 100 -> $den {
     }
 }
 
+# vim: expandtab shiftwidth=4 ft=perl6
