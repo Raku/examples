@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE Splitting a filename up
+=TITLE Splitting up a filename
 
 =AUTHOR stmuk
 
