@@ -12,8 +12,8 @@ You want to process all files in a directory
 
 sub MAIN(:$dir = ".") {
     # print Perl's representation of each file
-    for dir($dir) -> $f {
-        say $f.perl;
+    for dir($dir) -> $file {
+        say $file.perl;
     }
 }
 
