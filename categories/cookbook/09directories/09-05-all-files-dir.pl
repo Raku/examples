@@ -10,8 +10,11 @@ You want to process all files in a directory
 
 =end pod
 
-for dir(".") -> $f {
-    say $f.perl;
+sub MAIN(:$dir = ".") {
+    # print Perl's representation of each file
+    for dir($dir) -> $f {
+        say $f.perl;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
