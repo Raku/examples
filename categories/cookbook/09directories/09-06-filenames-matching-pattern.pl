@@ -10,12 +10,14 @@ You want a list of filenames matching a pattern
 
 =end pod
 
-my @perl-files = dir ".", test=>/\.pl/;
+sub MAIN(:$dir = ".") {
+    my @perl-files = dir $dir, test => /\.pl/;
 
-#  returns a list of IO::Path objects
+    #  returns a list of IO::Path objects
 
-for @perl-files -> $io {
-    say $io.basename;
+    for @perl-files.sort -> $io {
+        say $io.basename;
+    }
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
