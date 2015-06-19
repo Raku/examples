@@ -12,7 +12,7 @@ You want to process all files in a directory
 
 sub MAIN(:$dir = ".") {
     # print Perl's representation of each file
-    for dir($dir) -> $file {
+    for dir($dir).sort -> $file {
         say $file.perl;
     }
 }
