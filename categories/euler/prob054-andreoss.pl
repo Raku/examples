@@ -24,7 +24,7 @@ enum Rank <
     Six Seven Eight Nine
     Ten Jack Queen King Ace
 >;
- 
+
 enum Suit <
     Hearts Diamonds Clubs Spades
 >;
@@ -101,15 +101,15 @@ class Deal {
         so %.score{$h};
     }
     method !best-hand {
-        self!royal-flush        
-        // self!straight-flush  
-        // self!full-house      
-        // self!flush           
-        // self!straight                
-        // self!four-of-kind    
-        // self!three-of-kind   
-        // self!two-pairs          
-        // self!one-pair                
+        self!royal-flush
+        // self!straight-flush
+        // self!full-house
+        // self!flush
+        // self!straight
+        // self!four-of-kind
+        // self!three-of-kind
+        // self!two-pairs
+        // self!one-pair
         // self!high-card
     }
 
@@ -153,10 +153,10 @@ class Deal {
             (FullHouse) => Ace
         }
     }
-    
+
     method !three-of-kind {
         my $rank = @.cards».rank.&counts.grep(*.key == 3)[0];
-        
+
         if $rank {
             my Ranks %h{Hand} = (ThreeOfKind) =>  my $x = $rank.value;
 
@@ -235,7 +235,7 @@ sub MAIN(Bool :$verbose    = False,
             take 1;
         }
     }
-    
+
 }
 
 sub TEST {
