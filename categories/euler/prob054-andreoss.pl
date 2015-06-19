@@ -225,7 +225,7 @@ sub MAIN(Bool :$verbose    = False,
     die "'$file' is missing" unless $file.IO.e ;
     return TEST if $run-tests;
 
-    say [+] gather for $file.IO.lines[^$lines] <-> $line {
+    say [+] gather for $file.IO.lines[^$lines] -> $line is copy {
         $line ~~ s:nth(5)/\s/;/;
         my ($h1,$h2) = $line.split: /';'/;
         my $d1 = Deal($h1);
