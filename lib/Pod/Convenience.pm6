@@ -163,10 +163,12 @@ sub format-author-heading($example) is export {
     return $pod;
 }
 
-sub source-reference($file, $category) is export {
+sub source-reference($file, $category-name, $base-category-dir) is export {
+    my $base-github-url = "https://github.com/perl6/perl6-examples/blob/master";
+    my $filename = $file.basename;
     pod-block("Source code: ",
-        pod-link($file.basename,
-            "https://github.com/perl6/perl6-examples/blob/master/categories/$category/" ~ $file.basename),
+        pod-link($filename,
+            "$base-github-url/$base-category-dir/$category-name/$filename"),
     );
 }
 

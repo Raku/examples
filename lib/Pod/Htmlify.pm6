@@ -177,7 +177,7 @@ class Website is export {
             next unless $file.IO.e;
             my $example = $category.examples{$file.IO.basename};
             my $pod = format-author-heading($example);
-            $pod.push: source-reference($file, $category.key);
+            $pod.push: source-reference($file, $category.key, $category-dir);
             $pod.push: source-without-pod($file);
             my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
             $html-file = $html-dir ~ $html-file;
