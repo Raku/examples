@@ -150,7 +150,7 @@ sub run-example($name, :$script-input = Nil, :$script-args = Nil) {
     my $base-cmd = "perl6 $script-path";
 
     $base-cmd ~= qq{ "$script-args" } if  $script-args;
-    
+
     my $output = $script-input ?? qqx{echo $script-input | $base-cmd }
                                !! qqx{$base-cmd};
 

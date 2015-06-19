@@ -417,7 +417,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors);
 }, "prob054";
 
-subtest { 
+subtest {
     plan 1;
 
     my $problem = "prob059";
