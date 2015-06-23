@@ -20,7 +20,7 @@ How many hands does Player 1 win?
 =end pod
 
 enum Rank <
-    Two Three Four
+    Two Three Four Five
     Six Seven Eight Nine
     Ten Jack Queen King Ace
 >;
@@ -201,7 +201,7 @@ multi infix:«<=>»(Deal $a, Deal $b) returns Order {
     for Hand.enums.sort(*.value).keys.map({Hand($_)}) -> $h {
         return More if $a.score{$h}.defined && !$b.score{$h}.defined;
         return Less if $b.score{$h}.defined && !$a.score{$h}.defined;
-        next unless $a.score{$h} & $b.score{$h};
+        next unless $a.score{$h}.defined & $b.score{$h}.defined;
 
         if $a.score{$h} & $b.score{$h} ~~ List {
             my $cmp = max $a.score{$h} Z<=> $b.score{$h};
