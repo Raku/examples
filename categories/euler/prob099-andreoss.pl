@@ -42,7 +42,7 @@ multi infix:«cmp»(BaseExp $a, BaseExp $b) {
 multi my-max($a, $b where $a cmp $b ~~ More) { $a }
 multi my-max($a, $b) { $b }
 
-sub MAIN(:$file  = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'base_exp.txt'),
+sub MAIN(:$file  = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'base_exp.txt'),
 	) {
     die "'$file' is missing" unless $file.IO.e ;
     my $n = 1 ;

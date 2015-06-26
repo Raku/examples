@@ -65,7 +65,7 @@ L<http://web.archive.org/web/20080325083541/http://www.microsoft.com/technet/scr
 
 =end pod
 
-my $input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "skaters.txt");
+my $input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "skaters.txt");
 my @lines = slurp($input-file).split("\n");
 
 my %skaters ;

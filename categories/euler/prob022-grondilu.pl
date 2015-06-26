@@ -25,7 +25,7 @@ Expected result: 871198282
 
 my $i = 1;
 constant A = 'A'.ord - 1;
-my $names-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "names.txt");
+my $names-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "names.txt");
 my $data = slurp $names-file;
 my @names = sort $data.subst('"', '', :g).split(',');
 say [+] gather

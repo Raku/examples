@@ -46,7 +46,7 @@ L<http://web.archive.org/web/20081210123558/http://www.microsoft.com/technet/scr
 
 =end pod
 
-my $coffee-list = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'coffee.txt');
+my $coffee-list = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'coffee.txt');
 my $lines = slurp($coffee-list).chomp;
 my %order;
 for $lines.split(/\n/) {

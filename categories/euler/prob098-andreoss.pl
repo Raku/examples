@@ -55,7 +55,7 @@ sub anagrams(@x) {
 
 
 sub MAIN(Bool :$verbose = False,
-	 Str  :$file    = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'words.txt')) {
+	 Str  :$file    = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'words.txt')) {
 
     die "$file is missing" unless $file.IO.e;
 

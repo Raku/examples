@@ -113,7 +113,7 @@ L<http://web.archive.org/web/20080321224441/http://www.microsoft.com/technet/scr
 =end pod
 
 sub MAIN(Bool :$verbose = False) {
-    my $input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "wordlist.txt");
+    my $input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "wordlist.txt");
     my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars == 7}) X 1);
 
     my %digits = (

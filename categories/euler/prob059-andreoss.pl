@@ -86,7 +86,7 @@ sub guess-password(Str $w, @cipher) {
 }
 
 sub MAIN(Bool :$verbose = False,
-        :$file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'cipher.txt'),
+        :$file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'cipher.txt'),
         :$word = @common-words[0],
         :$pass is copy) {
     die "'$file' is missing" unless $file.IO.e ;

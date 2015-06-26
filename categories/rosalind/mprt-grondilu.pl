@@ -36,7 +36,7 @@ my @default-data = qw{
 sub MAIN($input-file = Nil) {
     my @input = $input-file ?? $input-file.IO.lines !! @default-data;
     my $N-glycosylation = rx / N <-[P]> <[ST]> <-[P]> /;
-    my $base-path = $*PROGRAM_NAME.IO.dirname;
+    my $base-path = $*PROGRAM-NAME.IO.dirname;
     for @input -> $id {
         my $fasta-name = $*SPEC.catdir($base-path, "$id.fasta");
         my $fasta = $fasta-name.IO.e

@@ -187,7 +187,7 @@ Expected output
 my %trans = 'wsatugcyrkmbdhvnATUGCYRKMBDHVN'.comb Z=>
     'WSTAACGRYMKVHDBNTAACGRYMKVHDBN'.comb;
 
-sub MAIN($input-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "revcomp.input")) {
+sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "revcomp.input")) {
     my ($desc, @seq);
 
     for $input-file.IO.lines {

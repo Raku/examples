@@ -95,7 +95,7 @@ sub int-to-roman(Int \n) returns Str is cached {
 
 
 sub MAIN(Bool :$run-tests = False,
-         Str  :$file      = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'roman.txt')) {
+         Str  :$file      = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'roman.txt')) {
 
     return TEST if $run-tests;
     die "$file is missing" unless $file.IO.e;

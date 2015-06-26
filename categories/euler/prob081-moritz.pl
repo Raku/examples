@@ -29,7 +29,7 @@ Expected result: 427337
 
 my @m;
 
-my $matrix-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'matrix.txt');
+my $matrix-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'matrix.txt');
 my $f = open $matrix-file or die "Can't open file for reading: $!";
 for $f.lines {
     @m.push: [ .comb(/\d+/) ];

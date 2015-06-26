@@ -41,7 +41,7 @@ my $default-input = q:to/END/;
 sub MAIN($input-file = Nil) {
     my $input = $input-file ?? $input-file.IO.slurp !! $default-input;
 
-    my $mass-table-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname,
+    my $mass-table-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname,
                                         "monoisotopic-mass-table.txt");
     my %mass-table = slurp($mass-table-file).words;
     my @L = sort $input.lines;

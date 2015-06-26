@@ -90,7 +90,7 @@ sub is_special_sum_set(@A)
 sub MAIN(:$verbose = False) {
     my $total_sum = 0;
 
-    my $sets-file = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, 'sets.txt');
+    my $sets-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'sets.txt');
     for $sets-file.IO.lines -> $l
     {
 	say "Processing $l" if $verbose;

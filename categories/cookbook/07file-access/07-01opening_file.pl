@@ -10,7 +10,7 @@ You want to read or write a file from Perl.
 
 =end pod
 
-my $path = $*SPEC.catdir($*PROGRAM_NAME.IO.dirname, "07-01opening_file.pl");
+my $path = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "07-01opening_file.pl");
 
 my $input = open($path, :r)
     or die "Could not open $path for reading $!\n";

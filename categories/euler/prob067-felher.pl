@@ -34,7 +34,7 @@ Expected result: 7273
 
 =end pod
 
-my $triangle = slurp($*SPEC.catdir($*PROGRAM_NAME.IO.dirname, '/triangle.txt'));
+my $triangle = slurp($*SPEC.catdir($*PROGRAM-NAME.IO.dirname, '/triangle.txt'));
 my @lines = string-to-array($triangle).reverse;
 
 # reduce the triangle by adding up the lines until only one line with one
