@@ -4,7 +4,7 @@ use URI::Escape;
 use Pod::To::HTML;
 use Pod::Convenience;
 use Perl6::Examples;
-use Text::VimColour;
+#use Text::VimColour;
 
 class Website is export {
     has $.categories is rw;
@@ -189,17 +189,17 @@ class Website is export {
     method p2h($pod) {
         my $head = slurp 'template/head.html';
         my $footer = footer-html;
-        my %*POD2HTML-CALLBACKS = code => sub (:$node, :&default) {
-            try {
-                my $v  = Text::VimColour.new(lang => 'perl6', code => "{$node.contents.join}");
-                return $v.html;
-            }
-            CATCH {
-                default {
-                    return "<pre>" ~ $node.contents.join ~ "</pre>";
-                }
-            }
-        };
+        #my %*POD2HTML-CALLBACKS = code => sub (:$node, :&default) {
+        #    try {
+        #        my $v  = Text::VimColour.new(lang => 'perl6', code => "{$node.contents.join}");
+        #        return $v.html;
+        #    }
+        #    CATCH {
+        #        default {
+        #            return "<pre>" ~ $node.contents.join ~ "</pre>";
+        #        }
+        #    }
+        #};
         pod2html $pod,
             :url(&url),
             :$head,
