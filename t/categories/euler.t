@@ -507,6 +507,15 @@ if False {
 subtest {
     plan 1;
 
+    my $problem = "prob097";
+    my @authors = <andreoss>;
+    my $expected-output = 8739992577;
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob097";
+
+subtest {
+    plan 1;
+
     my $problem = "prob098";
     my @authors = <andreoss>;
     my $expected-output = 18769;
