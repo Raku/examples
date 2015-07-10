@@ -1,14 +1,6 @@
-language: perl
-
-perl:
-    - "5.10"
-
-env:
-    PATH=~/.rakudobrew/bin:$PATH
+language: perl6
 
 install:
-    - git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
-    - rakudobrew build moar
     - rakudobrew build-panda
     - panda install URI
     - panda install Pod::To::HTML
