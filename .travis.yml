@@ -7,7 +7,6 @@ install:
     - panda install LWP::Simple
     - panda install Algorithm::Soundex
     - panda install DBIish
-    - panda install Text::VimColour
 
 script:
     - make test
