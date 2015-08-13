@@ -1,3 +1,5 @@
+sudo: false
+
 language: perl6
 
 install:
