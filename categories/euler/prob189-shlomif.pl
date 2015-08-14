@@ -24,9 +24,6 @@ is considered distinct from C unless the two are identical.
 
 How many distinct valid colourings are there for the above configuration?
 
-
-Expected result: 10834893628237824
-
 =end pod
 
 my %colors = ('00' => ['1','2'], '11' => ['0','2'], '22' => ['0','1'],

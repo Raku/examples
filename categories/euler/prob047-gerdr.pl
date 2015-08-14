@@ -23,9 +23,6 @@ are:
 Find the first four consecutive integers to have four distinct prime
 factors. What is the first of these numbers?
 
-Expected result: 134043
-
-
 To run this example, the associated C file (prob047-gerdr.c) needs to be
 compiled into a shared object library.
 

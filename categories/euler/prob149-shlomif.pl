@@ -36,8 +36,6 @@ second row, and so on.
 Finally, find the greatest sum of (any number of) adjacent entries in any
 direction (horizontal, vertical, diagonal or anti-diagonal).
 
-Expected result: 52852124
-
 =end pod
 
 class FiboRand {

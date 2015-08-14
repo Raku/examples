@@ -21,8 +21,6 @@ roots.
 The following algoritm was used for the solution:
 L<http://www.afjarvis.staff.shef.ac.uk/maths/jarvisspec02.pdf>
 
-Expected result:  40886
-
 =end pod
 
 use v6;

@@ -16,8 +16,6 @@ is a divisor of its right-rotation.
 Find the last 5 digits of the sum of all integers n, 10 < n < 10^100, that
 have this property.
 
-Expected result: 59206
-
 =end pod
 
 sub MAIN(Bool :$verbose = False) {

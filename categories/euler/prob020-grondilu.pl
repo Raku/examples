@@ -16,8 +16,6 @@ and the sum of the digits in the number 10! is
 
 Find the sum of the digits in the number 100!
 
-Expected result: 648
-
 =end pod
 
 say [+] .comb given [*] 2..100;

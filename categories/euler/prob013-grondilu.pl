@@ -112,8 +112,6 @@ Work out the first ten digits of the sum of the following one-hundred
     20849603980134001723930671666823555245252804609722
     53503534226472524250874054075591789781264330331690
 
-Expected result: 5537376230
-
 =end pod
 
 say .comb[^10].join given [+] <

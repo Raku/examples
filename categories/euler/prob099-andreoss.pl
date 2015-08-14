@@ -22,8 +22,6 @@ determine which line number has the greatest numerical value.
 NOTE: The first two lines in the file represent the numbers in the example
 given above.
 
-Expected result: 709
-
 =end pod
 
 class BaseExp {

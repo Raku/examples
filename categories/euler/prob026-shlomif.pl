@@ -27,8 +27,6 @@ seen that 1/7 has a 6-digit recurring cycle.
 Find the value of d < 1000 for which 1/d contains the longest recurring
 cycle in its decimal fraction part.
 
-Expected result: The recurring cycle is 983, and the cycle length is 982
-
 =end pod
 
 sub find_cycle_len(Int $n) returns Int {

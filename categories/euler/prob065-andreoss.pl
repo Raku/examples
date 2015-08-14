@@ -51,8 +51,6 @@ The sum of digits in the numerator of the 10th convergent is 1+4+5+7=17.
 Find the sum of digits in the numerator of the 100th convergent of the
 continued fraction for e.
 
-Expected result:  272
-
 =end pod
 
 sub continued-fraction(@sequence, :$depth)  {

@@ -19,9 +19,6 @@ roughly 103.6383346400240996*10^12.
 
 Find the last 8 digits of 1777↑↑1855.
 
-
-Expected result: 95962097
-
 =end pod
 
 sub hyperexp_modulo(int $base, int $exp, int $mod) returns int {

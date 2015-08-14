@@ -21,9 +21,6 @@ digits, is the first Fibonacci number for which the first nine digits are
 Given that Fₖ is the first Fibonacci number for which the first nine digits
 AND the last nine digits are 1-9 pandigital, find k.
 
-
-Expected result: 329468
-
 =end pod
 
 say "please be patient, this is going to take a while";

@@ -13,8 +13,6 @@ from the product of two 2-digit numbers is 9009 = 91 × 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 
-Expected result: 906609
-
 =end pod
 
 # another case where @array = %*% (100..999) would be nice to have:

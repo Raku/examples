@@ -24,9 +24,6 @@ arrive at 1 or 89.
 
 How many starting numbers below ten million will arrive at 89?
 
-
-Expected result: 8581146
-
 =end pod
 
 unless @*ARGS {

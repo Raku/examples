@@ -12,8 +12,6 @@ L<https://projecteuler.net/problem=16>
 
 What is the sum of the digits of the number 2^1000?
 
-Expected result: 1366
-
 =end pod
 
 say [+] .comb given 2**1_000;

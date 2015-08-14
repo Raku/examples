@@ -14,8 +14,6 @@ corner.
 
 How many such routes are there through a 20×20 grid?
 
-Expected result: 137846528820
-
 =end pod
 
 # This program doesn't really simulate anything and is only here for the

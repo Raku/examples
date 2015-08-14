@@ -20,8 +20,6 @@ By finding the first arrangement to contain over 10¹² = 1,000,000,000,000
 discs in total, determine the number of blue discs that the box would
 contain.
 
-Expected result: 756872327473
-
 =end pod
 
 my $blue  = 15;

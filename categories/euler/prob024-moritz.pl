@@ -18,8 +18,6 @@ The lexicographic permutations of 0, 1 and 2 are:
 What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4,
 5, 6, 7, 8 and 9?
 
-Expected result: 2783915460
-
 =end pod
 
 # idea: the last 9 digits can be permuted in 9! = 362880 ways.  so there are

@@ -30,8 +30,6 @@ NOTE: This problem is related to
 L<Problem 103|https://projecteuler.net/problem=103> and
 L<Problem 106|https://projecteuler.net/problem=106>.
 
-Expected result: 73702
-
 =end pod
 
 sub is_special_sum_set(@A)

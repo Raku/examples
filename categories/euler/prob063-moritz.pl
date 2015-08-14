@@ -13,9 +13,6 @@ number, 134217728=8^9, is a ninth power.
 
 How many n-digit positive integers exist which are also an nth power?
 
-
-Expected result: 49
-
 =end pod
 
 sub MAIN(Bool :$verbose = False) {

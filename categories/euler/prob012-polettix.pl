@@ -33,8 +33,6 @@ divisors.
 What is the value of the first triangle number to have over five
 hundred divisors?
 
-Expected result: 76576500
-
 =end pod
 
 # Minimum number of factors, defaults to challenge's request

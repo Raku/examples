@@ -23,9 +23,6 @@ It is not until n = 23, that a value exceeds one-million: ²³C₁₀ = 1144066.
 How many, not necessarily distinct, values of ⁿCᵣ, for 1 ≤ n ≤ 100, are
 greater than one-million?
 
-
-Expected result: 4075
-
 =end pod
 
 my @result;
