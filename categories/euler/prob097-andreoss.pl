@@ -28,8 +28,9 @@ sub power-mod($b is copy, $e is copy, $m is copy
         $e = floor $e/2;
         $b = $b ** 2 mod $m
     }
-    $r; 
+    $r;
 }
 
 say (power-mod(2, 7830457, 10**10) * 28433 + 1) mod 10**10 ;
 
+# vim: expandtab shiftwidth=4 ft=perl6

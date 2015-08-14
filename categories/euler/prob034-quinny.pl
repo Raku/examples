@@ -30,3 +30,5 @@ sub factDigits ($n is copy) {
 say [+] gather for 3...40586 {
     take $_ if factDigits($_) == $_
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
