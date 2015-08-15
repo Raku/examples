@@ -194,7 +194,10 @@ class Website is export {
         my $footer = footer-html;
         my %*POD2HTML-CALLBACKS = code => sub (:$node, :&default) {
             if $vim-colour {
-                my $v  = Text::VimColour.new(lang => 'perl6', code => "{$node.contents.join}");
+                my $v = ::('Text::VimColour').new(
+                    lang => 'perl6',
+                    code => "{$node.contents.join}"
+                );
                 return $v.html;
             }
             else {
