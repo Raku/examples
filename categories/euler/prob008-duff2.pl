@@ -36,15 +36,14 @@ Find the thirteen adjacent digits in the 1000-digit number that have the
 greatest product. What is the value of this product?
 
 Basically:
-  1. build a list of indices,
-  2. convert that into a list of 5 character strings that start at those indices,
-  3. convert that into a list of the product of the digits
-  4. sort the list from #3
-  5. reverse it (Yes, I know that this could have been done in #4 instead)
-  6. grab the first one.
-  7. output the result
 
-1                  2                        3                    4                     5       6   7
+=item build a list of indices,
+=item convert that into a list of 5 character strings that start at those indices,
+=item convert that into a list of the product of the digits
+=item sort the list from #3
+=item reverse it (Yes, I know that this could have been done in #4 instead)
+=item grab the first one
+=item output the result
 
 Expected result: 40824
 
