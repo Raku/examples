@@ -1,6 +1,15 @@
-# This should be doing CSS2.1; hopefully CSS3 when that's ready (but that may be a while)
-
 use v6;
+
+=begin pod
+
+=TITLE CSS2.1 Grammar
+
+=AUTHOR David Warring
+
+This should be doing CSS2.1; hopefully CSS3 when that's ready (but that may
+be a while).
+
+=end pod
 
 grammar CSSGrammar {
         # builtin: ident (we use cssident), alpha

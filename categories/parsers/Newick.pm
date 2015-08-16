@@ -1,6 +1,15 @@
 use v6;
 
-#| Newick tree format. L<https://en.wikipedia.org/wiki/Newick_format>
+=begin pod
+
+=TITLE Newick tree format
+
+=AUTHOR Lucien Grondin
+
+See L<https://en.wikipedia.org/wiki/Newick_format>.
+
+=end pod
+
 grammar Newick {
     rule TOP { '(' <subtree>** 2..3 % \, ');' }
     rule subtree { <species> | '(' <subtree>** 2 % \, ')' }
