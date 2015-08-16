@@ -66,7 +66,7 @@ class Website is export {
         my $pod = (EVAL $perl-pod) || [pod-with-title($file-basename)];
         my $example-title = pod-title-contents($pod, $file-basename);
         my $author = pod-author-contents($pod, $file-basename);
-        my $html-file = $file-basename.subst(/\.p[l||6]$/, ".html");
+        my $html-file = $file-basename.subst(/\.p[l||6||m]$/, ".html");
         my $link = pod-link($file-basename, "$category-key/$html-file");
         my $example = Example.new(
                         title => $example-title,
@@ -178,7 +178,7 @@ class Website is export {
             my $pod = format-author-heading($example);
             $pod.push: source-reference($file, $category.key, $category-dir);
             $pod.push: source-without-pod($file);
-            my $html-file = $file.IO.basename.subst(/\.p(l|6)$/, ".html");
+            my $html-file = $file.IO.basename.subst(/\.p(l|6|m)$/, ".html");
             $html-file = $html-dir ~ $html-file;
             spurt $html-file, self.p2h($pod);
         }
@@ -233,7 +233,7 @@ class Website is export {
 
 #| find all perl6 files within the given category
 sub files-in-category($category, :$base-dir = "./categories") {
-    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6]$ }).sort;
+    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6||m]$ }).sort;
 }
 
 #| return the link to the POD's url
