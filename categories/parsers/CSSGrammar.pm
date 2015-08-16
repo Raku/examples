@@ -21,7 +21,7 @@ grammar CSSGrammar {
         token prio        { <important_sym> }
         token expr        { <term> +% <operator>? }
         token cssident    { '-'?<namestart><namechar>* }
-        rule term         { <unary_operator>? 
+        rule term         { <unary_operator>?
                 [ <percentage> | <length> | <ems> | <exs> | <angle> | <time> | <freq> | <number> ]
                 | <string> | <uri> | <function> | <cssident> | <hexcolor>
         }
@@ -64,3 +64,5 @@ grammar CSSGrammar {
 
         method panic($e)  {die $e;}
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6

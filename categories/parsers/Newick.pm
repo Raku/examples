@@ -5,5 +5,4 @@ grammar Newick {
     token species { <.ident>+ }
 }
 
-# vim: ft=perl6
-
+# vim: expandtab shiftwidth=4 ft=perl6
