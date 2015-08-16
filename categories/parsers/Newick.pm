@@ -1,3 +1,5 @@
+use v6;
+
 #| Newick tree format. L<https://en.wikipedia.org/wiki/Newick_format>
 grammar Newick {
     rule TOP { '(' <subtree>** 2..3 % \, ');' }

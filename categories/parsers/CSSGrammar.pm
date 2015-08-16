@@ -1,5 +1,7 @@
 # This should be doing CSS2.1; hopefully CSS3 when that's ready (but that may be a while)
 
+use v6;
+
 grammar CSSGrammar {
         # builtin: ident (we use cssident), alpha
 
