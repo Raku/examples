@@ -5,6 +5,9 @@
 set -e
 set -x
 
+ulimit -v 2097152   # 2 GB
+ulimit -t 3600      # 1 hour
+
 # need most up to date perl6 to build examples at present
 #source /home/rakudobrew/.rakudobrew-bash
 
