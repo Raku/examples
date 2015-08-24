@@ -51,7 +51,9 @@ my %cookbook-categories-table =
     "10subroutines"              => "10. Subroutines",
     "13classes-objects-and-ties" => "13. Classes, Objects and Ties",
     "14database-access"          => "14. Database Access",
+    "16processes"                => "16. Processes",
     "17sockets"                  => "17. Sockets",
+    "19cgi-programming"          => "19. CGI programming",
     "20web-automation"           => "20. Web Automation",
 ;
 
