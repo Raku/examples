@@ -46,6 +46,7 @@ my %cookbook-categories-table =
     "03dates-and-times"          => "3. Dates and Times",
     "04arrays"                   => "4. Arrays",
     "05hashes"                   => "5. Hashes",
+    "06pattern-matching"         => "6. Pattern Matching",
     "07file-access"              => "7. File access",
     "09directories"              => "9. Directories",
     "10subroutines"              => "10. Subroutines",
