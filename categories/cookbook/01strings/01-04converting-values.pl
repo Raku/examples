@@ -20,6 +20,6 @@ say $copyright ~ " : " ~ $copyright.ord ~ " : " ~ $copyright.ord.chr;
 
 $char = 'foo';
 # ord returns the codepoint of the first char in a string
-say $char ~ " : " ~ $char.ord;
+say $char ~ " : " ~ $char.ords;
 
 # vim: expandtab shiftwidth=4 ft=perl6
