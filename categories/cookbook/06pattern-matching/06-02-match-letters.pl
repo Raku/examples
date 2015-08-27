@@ -2,16 +2,16 @@ use v6;
 
 =begin pod
 
-=TITLE Matching alphabetic wide characters 
-
-You want to match alphabetic characters which include unicode
+=TITLE Matching alphabetic wide characters
 
 =AUTHOR stmuk
+
+You want to match alphabetic characters which include unicode
 
 =end pod
 
 my $var = "\c[OGHAM LETTER RUIS]";
-if $var ~~ /^<:letter>+$/ {   # or just /^<:L>+$/ or even  /^\w+$/ 
+if $var ~~ /^<:letter>+$/ {   # or just /^<:L>+$/ or even  /^\w+$/
     say "{$var}  is purely alphabetic";
 }
 

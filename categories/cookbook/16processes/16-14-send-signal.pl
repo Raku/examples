@@ -4,9 +4,9 @@ use v6;
 
 =TITLE send a signal
 
-You want to send a signal to a process on a UNIX-like OS
-
 =AUTHOR stmuk
+
+You want to send a signal to a process on a UNIX-like OS
 
 =end pod
 
@@ -19,3 +19,5 @@ signal(SIGHUP).tap( {say "caught HUP"});
 kill($*PID, Signal::SIGHUP);
 
 sleep 2;
+
+# vim: expandtab shiftwidth=4 ft=perl6
