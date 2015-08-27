@@ -91,12 +91,12 @@ sub MAIN(:$verbose = False) {
     my $sets-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'sets.txt');
     for $sets-file.IO.lines -> $l
     {
-	say "Processing $l" if $verbose;
-	my @set = $l.split(',');
-	if (is_special_sum_set(@set))
-	{
-	    $total_sum += ([+] @set);
-	}
+        say "Processing $l" if $verbose;
+        my @set = $l.split(',');
+        if (is_special_sum_set(@set))
+        {
+            $total_sum += ([+] @set);
+        }
     }
     $verbose ?? say "Total Sum = $total_sum" !! say $total_sum;
 }

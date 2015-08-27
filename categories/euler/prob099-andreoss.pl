@@ -29,7 +29,7 @@ class BaseExp {
     has $.exp;
     has $.line;
     method comparable {
-	$.exp * $.base.log;
+        $.exp * $.base.log;
     }
 }
 
@@ -41,14 +41,14 @@ multi my-max($a, $b where $a cmp $b ~~ More) { $a }
 multi my-max($a, $b) { $b }
 
 sub MAIN(:$file  = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'base_exp.txt'),
-	) {
+        ) {
     die "'$file' is missing" unless $file.IO.e ;
     my $n = 1 ;
     say .line for [[&my-max]] do for $file.IO.lines -> $l {
-	my ($base, $exp) = $l.split: /','/;
-	BaseExp.new(base => $base,
-		    exp  => $exp,
-		    line => $n++);
+        my ($base, $exp) = $l.split: /','/;
+        BaseExp.new(base => $base,
+                    exp  => $exp,
+                    line => $n++);
     }
 }
 

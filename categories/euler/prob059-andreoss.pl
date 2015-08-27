@@ -62,23 +62,23 @@ sub guess-password(Str $w, @cipher) {
 
     for @chunks -> @chunk {
 
-	my @password  = @chunk[^3] XOR @word;
-	my $password  = as-word @password;
+        my @password  = @chunk[^3] XOR @word;
+        my $password  = as-word @password;
 
-	next unless $password ~~ /^^ <[a..z]> ** 3 $$/ ;
+        next unless $password ~~ /^^ <[a..z]> ** 3 $$/ ;
 
-	my $decrypted = as-word @cipher[$offset .. *] XOR @password;
+        my $decrypted = as-word @cipher[$offset .. *] XOR @password;
 
-	my $count =  [+] do for @common-words.grep({$_ !~~ $w}) -> $word {
-	    elems $decrypted ~~ m:g:i/$word/
-	}
+        my $count =  [+] do for @common-words.grep({$_ !~~ $w}) -> $word {
+            elems $decrypted ~~ m:g:i/$word/
+        }
 
-	%tries{$password} += $count if $count > 0;
+        %tries{$password} += $count if $count > 0;
 
-	return %tries if $count > @common-words.elems;
+        return %tries if $count > @common-words.elems;
 
-	$offset   += 1;
-	$offset div= $w.chars;
+        $offset   += 1;
+        $offset div= $w.chars;
     }
     %tries;
 }
@@ -91,9 +91,9 @@ sub MAIN(Bool :$verbose = False,
     my @cipher     = map *.Int, split /<[,]>/ , slurp $file;
 
     unless $pass {
-	my %variants = guess-password $word, @cipher;
-	$pass  = %variants.max(*.value).key;
-	say "The password is more likely to be '$pass'. " if $verbose;
+        my %variants = guess-password $word, @cipher;
+        $pass  = %variants.max(*.value).key;
+        say "The password is more likely to be '$pass'. " if $verbose;
     }
 
     my $decrypted =  as-word @cipher XOR as-code($pass);

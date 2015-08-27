@@ -38,14 +38,14 @@ sub anagrams(@x) {
     my %result;
 
     %aux{$_.comb.sort.join}.push: $_
-	for @x;
+        for @x;
 
     for %aux.kv -> $k, @v {
-	next if +@v < 2; ;
-	%result{@v[0].chars}.push:
-		+@v == 2
-	 	  ?? @v.item
-	 	  !! @v.combinations(2).map(*.item);
+        next if +@v < 2; ;
+        %result{@v[0].chars}.push:
+                +@v == 2
+                  ?? @v.item
+                  !! @v.combinations(2).map(*.item);
     }
 
     %result;
@@ -53,7 +53,7 @@ sub anagrams(@x) {
 
 
 sub MAIN(Bool :$verbose = False,
-	 Str  :$file    = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'words.txt')) {
+         Str  :$file    = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'words.txt')) {
 
     die "$file is missing" unless $file.IO.e;
 
@@ -62,19 +62,19 @@ sub MAIN(Bool :$verbose = False,
     my %words   =  anagrams(@words);
     my $longest-word = %words.keys.max;
     my %squares =  anagrams(
-	(1 ... (10**($longest-word + 1).sqrt)) »**» 2
+        (1 ... (10**($longest-word + 1).sqrt)) »**» 2
     );
 
 
     say max do for 3 ... $longest-word -> \size {
-	do for @(%words{size}) -> @pair {
-	    do for @(%squares{size}) -> @nums {
-		if correspond(@pair, @nums) {
-		    $verbose and say "@pair[] => @nums[]" ;
-		    max @nums;
-		}
-	    }
-	}
+        do for @(%words{size}) -> @pair {
+            do for @(%squares{size}) -> @nums {
+                if correspond(@pair, @nums) {
+                    $verbose and say "@pair[] => @nums[]" ;
+                    max @nums;
+                }
+            }
+        }
     }
 }
 
