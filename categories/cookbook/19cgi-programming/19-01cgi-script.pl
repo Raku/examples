@@ -22,7 +22,7 @@ my $http = HTTP::Easy::PSGI.new(:port(8080));
 my $form = qq :to 'EOT';
 <html>
   <form>
-    Enter your name 
+    Enter your name
     <input name="name" type="text">
     <input type="submit">
   </form>
@@ -33,7 +33,7 @@ EOT
 my $app = sub (%env) {
     my $req = Web::Request.new(%env);
 
-    if !(my $name = $req.get('name')).so { 
+    if !(my $name = $req.get('name')).so {
         # no CGI param passed so display form
         return [ 200, [ 'Content-Type' => 'text/html;charset=UTF-8' ], [ $form ]];
     }
