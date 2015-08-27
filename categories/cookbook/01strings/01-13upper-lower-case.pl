@@ -6,7 +6,7 @@ use v6;
 
 =AUTHOR stmuk
 
-You have a string and what to upper/lower case it
+You have a string and want to upper/lower case it
 
 =end pod
 
@@ -14,8 +14,10 @@ my $string = "the cat sat on the mat";
 
 say $string=$string.uc; # THE CAT SAT ON THE MAT
 
-say $string.=lc; # the cat sat on the mat
+say $string.=lc;        # the cat sat on the mat
 
-say $string.wordcase; # The Cat Sat On The Mat
+say $string.wordcase;   # The Cat Sat On The Mat
+
+$string.tc.say;         # The cat sat on the mat
 
 # vim: expandtab shiftwidth=4 ft=perl6
