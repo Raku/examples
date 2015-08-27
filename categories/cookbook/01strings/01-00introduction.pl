@@ -33,12 +33,12 @@ Or a string can be declared implicitly by assigning a string value to
 a variable, in this case a scalar.  It automatically becomes a string
 variable.
 
-    my $scalar = 'String';
+    my $scalar = 'Party time';
 
 =end pod
 
 my Str $string = 'This Str is holding a String';
-my $scalar = 'String'; # Also a string
+my $scalar = 'Party time'; # Also a string
 
 =begin pod
 
@@ -63,11 +63,11 @@ say   'Hello'   ; # same
 Both print and say also accept a list of things to display, and will
 attempt to join all the things into a string:
 
-    say "Hello", "World", "!"; # Hello World!
+    say "Hello", " World", "!"; # Hello World!
 
 =end pod
 
-say "Hello", "World", "!"; # Hello World!
+say "Hello", " World", "!"; # Hello World!
 
 =begin pod
 
@@ -82,6 +82,7 @@ Hello World! followed by a newline.
     my Str $str;
     $str = "Hello" ~ " World" ~ "!";
     say $str; # Hello World!
+    $str.say; # As above
 
 =end pod
 
@@ -89,6 +90,7 @@ Hello World! followed by a newline.
   my Str $string;
   $string = "Hello" ~ " World" ~ "!";
   say $string; # Hello World!
+  $string.say; # As above
 }
 
 =begin pod

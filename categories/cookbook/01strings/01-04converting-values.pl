@@ -6,21 +6,20 @@ use v6;
 
 =AUTHOR Scott Penrose
 
-You want to convert characters to their numeric value or vice-versa
+You want to convert characters to their codepoint number value or vice-versa
 
 =end pod
-
-# XXX I'm not sure "numeric value" is still correct for utf-8, as the actual
-# value(s) in memory can be very different. Maybe use "codepoint", or "codepoint
-# number"?
 
 my $char = 'a';
 my $num  = $char.ord;
 say $num;
 my $char2 = $num.chr;
 say $char2;
+my $copyright = '©';
+say $copyright ~ " : " ~ $copyright.ord ~ " : " ~ $copyright.ord.chr;
 
 $char = 'foo';
-say $char.ord; # XXX is this correct behavior?
+# ord returns the codepoint of the first char in a string
+say $char ~ " : " ~ $char.ord;
 
 # vim: expandtab shiftwidth=4 ft=perl6
