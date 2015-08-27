@@ -5,7 +5,7 @@ use Test;
 use Perl6::Examples;
 use Pod::Convenience;
 
-plan 11;
+plan 12;
 
 use-ok("Pod::Htmlify");
 
@@ -75,6 +75,16 @@ subtest {
 
     is($website.base-html-dir, "html", "base html directory");
 }, "Website object instantiation";
+
+subtest {
+    plan 2;
+
+    my $website = Website.new;
+    is $website.syntax-highlighting, True, "syntax highlighting on by default";
+    $website.syntax-highlighting = False;
+    is $website.syntax-highlighting, False,
+        "syntax highlighting turned off successfully";
+}, "--no-highlight option";
 
 subtest {
     plan 1;

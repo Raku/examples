@@ -9,6 +9,7 @@ class Website is export {
     has $.categories is rw;
     has $.base-html-dir is rw = "html";
     has $.base-categories-dir is rw = "categories";
+    has $.syntax-highlighting is rw = True;
     has %.menu-tabs;
 
     submethod BUILD(:$categories) {
