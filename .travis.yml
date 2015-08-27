@@ -9,7 +9,7 @@ install:
     - panda install LWP::Simple
     - panda install Algorithm::Soundex
     - panda install DBIish
-    - panda install HTTP::Easy::PSGI
+    - panda install HTTP::Easy
 
 script:
     - make test
