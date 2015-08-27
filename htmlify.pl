@@ -71,7 +71,6 @@ sub MAIN(:$no-highlight = False) {
     my $wsg-categories = Categories.new(categories-table => %wsg-categories-table);
     $all-categories.append-subcategories(to-category => "wsg", subcategories => $wsg-categories);
 
-    say "no highlight ", $no-highlight;
     my $website = Website.new(categories => $all-categories);
     $website.syntax-highlighting = False if $no-highlight;
     $website.menu-tabs = %menu-tabs;

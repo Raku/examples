@@ -187,7 +187,7 @@ class Website is export {
 
     #| convert the POD into html
     method p2h($pod) {
-        my $vim-colour = try {
+        my $vim-colour = $.syntax-highlighting && try {
             require Text::VimColour;
         };
 
