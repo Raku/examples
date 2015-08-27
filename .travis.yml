@@ -10,6 +10,7 @@ install:
     - panda install Algorithm::Soundex
     - panda install DBIish
     - panda install HTTP::Easy
+    - panda install File::Temp
 
 script:
     - make test
