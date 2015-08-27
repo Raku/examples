@@ -10,6 +10,8 @@ use v6;
 
 say "\c[REGISTERED SIGN]";
 
-say uniname("\x1f63E"); # POUTING CAT FACE
+# POUTING CAT FACE
+"\x1f63E".say;
+"\x1f63E".uniname.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6

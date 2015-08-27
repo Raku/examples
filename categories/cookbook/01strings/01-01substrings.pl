@@ -10,7 +10,7 @@ You want to access or modify a portion of a string, not the whole thing.
 
 =end pod
 
-my ($string, $offset, $count) = ('Rakudo is da bomb', 2, 5);
+my ($string, $offset, $count) = ('Rakudo is da bomb', 2, 7);
 say $string.substr($offset, $count);
 say $string.substr($offset);
 

@@ -14,7 +14,8 @@ subtest {
 Hello
 Hello
 Hello
-HelloWorld!
+Hello World!
+Hello World!
 Hello World!
 This is $string: a scalar holding a String
 $string is Str
@@ -58,9 +59,9 @@ subtest {
 
     my $example-name = "01-01substrings.pl";
     my $expected-output = q:to/EOD/;
-    gs is
-    gs is da bomb
-    Pugilism ain't for wimps
+    kudo is
+    kudo is da bomb
+    Radiators are nice in winter
     EOD
 
     my $output = run-example($example-name);
@@ -85,10 +86,11 @@ subtest {
 
     my $example-name = "01-04converting-values.pl";
     my $expected-output = q:to/EOD/;
-    97
-    a
-    102
-    EOD
+97
+a
+© : 169 : ©
+foo : 102 111 111
+EOD
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
@@ -100,6 +102,7 @@ subtest {
     my $example-name = "01-05namedunicode.pl";
     my $expected-output = q:to/EOD/;
     ®
+    😾
     POUTING CAT FACE
     EOD
 
@@ -128,6 +131,7 @@ subtest {
     THE CAT SAT ON THE MAT
     the cat sat on the mat
     The Cat Sat On The Mat
+    The cat sat on the mat
     EOD
 
     my $output = run-example($example-name);
