@@ -12,7 +12,7 @@ my @dependencies = qw{
     Algorithm::Soundex
     DBIish
     File::Temp
-    HTTP::Easy::PSGI
+    HTTP::Easy
 };
 
 for @dependencies -> $dep {

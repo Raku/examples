@@ -1,3 +1,4 @@
+# XXX module deps added below should also go in 'util/update-and-sync' and the test
 sudo: false
 
 language: perl6

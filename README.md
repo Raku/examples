@@ -57,14 +57,11 @@ No need to submit a pull request!
 
 ## Dependencies
 
-To run all examples and tests, the following modules need to be installed:
+To run all examples and tests, a number of modules need to be installed.
 
-    URI
-    Pod::To::HTML
-    LWP::Simple
-    Algorithm::Soundex
-    DBIish
-    Text::VimColour
+These are listed in '.travis.yml', 'util/update-and-sync' and the test.
+
+Ideally the list should be refactored and defined in fewer places.
 
 ## Running the examples
 
