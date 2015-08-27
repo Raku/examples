@@ -79,6 +79,7 @@ subtest {
 
     my $example-name = "09-10-filename-splitting.pl";
     my $tempdir = tempdir;
+    $tempdir ~~ s!'//'!'/'!;
     my $filename = $*SPEC.catdir($tempdir, "alice.pl");
     my $expected-output = qq:to/EOD/;
     basename: alice.pl
