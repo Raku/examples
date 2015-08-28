@@ -105,7 +105,7 @@ subtest {
 }, "prob009";
 
 skip("prob010-polettix.pl takes too long to run");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -128,7 +128,7 @@ subtest {
 }, "prob011";
 
 skip("prob012-polettix.pl uses too much memory");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -151,7 +151,7 @@ subtest {
 }, "prob013";
 
 skip("prob014-felher.pl takes too long and uses too much memory");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -290,7 +290,7 @@ subtest {
 }, "prob026";
 
 skip("prob027-shlomif.pl uses too much memory");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -514,7 +514,7 @@ subtest {
 
 
 skip("prob092-moritz.pl takes too long to run");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -564,7 +564,7 @@ subtest {
 }, "prob100";
 
 skip("prob104-moritz.pl takes too long to run");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -590,7 +590,7 @@ unless $skip {
 }
 
 skip("prob149-shlomif.pl takes too long to run");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
@@ -636,7 +636,7 @@ subtest {
 }, "prob188";
 
 skip("prob189-shlomif.pl takes too long to run");
-if False {
+unless $skip {
     subtest {
         plan 1;
 
