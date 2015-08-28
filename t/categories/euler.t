@@ -648,14 +648,17 @@ unless $skip {
     }, "prob189";
 }
 
-subtest {
-    plan 1;
-     my $problem = "prob034";
-     my @authors = <quinny>;
-     my $expected-output = 40730;
+skip("prob034 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
+         my $problem = "prob034";
+         my @authors = <quinny>;
+         my $expected-output = 40730;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob034";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob034";
+}
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors) {
