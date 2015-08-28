@@ -453,6 +453,7 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob063";
+
 subtest {
     plan 1;
 
@@ -485,6 +486,7 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob067";
+
 subtest {
     plan  1;
     my $problem = "prob080";
@@ -493,6 +495,7 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob080";
+
 subtest {
     plan 1;
 
@@ -502,6 +505,7 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob081";
+
 subtest {
     plan 1;
 
@@ -511,7 +515,6 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob089";
-
 
 skip("prob092-moritz.pl takes too long to run");
 unless $skip {
@@ -552,7 +555,6 @@ subtest {
     my $expected-output = 709;
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob099";
-
 
 subtest {
     plan 1;
