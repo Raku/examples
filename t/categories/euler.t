@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 60;
 
 my $skip = True;
 
