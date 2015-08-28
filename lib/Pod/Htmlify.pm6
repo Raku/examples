@@ -98,7 +98,7 @@ class Website is export {
     method write-category-indices {
         say "Creating category index files";
         my @headers = qw{File Title Author};
-        for $!categories.categories-table.sort({ $^a.key cmp $^b.key })>>.kv -> ($category-key, $title) {
+        for $!categories.categories-table.sort(*.key)>>.kv -> ($category-key, $title) {
             my $category = $!categories.category-with-key($category-key);
             my @examples = $category.examples.values.sort({ $^a.filename cmp $^b.filename });
             my @rows = @examples.map: {[.pod-link, .title, .author]};
