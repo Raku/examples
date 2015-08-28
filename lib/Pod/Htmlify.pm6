@@ -111,7 +111,7 @@ class Website is export {
                 <ul>
                 EOT
 
-                for $category.subcategories.categories-list -> $subcategory {
+                for $category.subcategories.categories-list.sort(*.key) -> $subcategory {
                     my $subcat-title = $subcategory.title;
                     my $subcat-key = $subcategory.key;
                     $category-index-html ~= qq:to/EOT/;
