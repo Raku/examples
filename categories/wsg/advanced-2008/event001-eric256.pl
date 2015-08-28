@@ -130,7 +130,7 @@ sub MAIN(Bool :$verbose = False) {
     my $phone_number = 7323464;
     my @test_words;
 
-    for $phone_number.split('') {
+    for $phone_number.comb {
         say $_, "->", %digits{$_}.join('-') if $verbose;
         if (@test_words.elems) {
             my @values = %digits{$_}.values;
