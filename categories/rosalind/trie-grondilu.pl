@@ -75,7 +75,9 @@ sub trie(@string is copy, $root = $node) {
     hash gather for @string.classify(*.substr: 0, 1).sort(*.key)>>.kv -> ($k, $v) {
         my @value = map *.substr(1), grep *.chars > 1, $v[];
         say "$root {++$node} $k";
-        take $k => &?ROUTINE( @value, $node ) if @value;
+        if (@value) {
+            take $k => &?ROUTINE( @value, $node );
+        }
     }
 }
 
