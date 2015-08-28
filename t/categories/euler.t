@@ -4,6 +4,8 @@ use Test;
 
 plan 58;
 
+my $skip = True;
+
 subtest {
     plan 5;
 
@@ -69,15 +71,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob006";
 
-subtest {
-    plan 1;
+skip("prob007 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob007";
-    my @authors = <polettix>;
-    my $expected-output = 104743;
+        my $problem = "prob007";
+        my @authors = <polettix>;
+        my $expected-output = 104743;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob007";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob007";
+}
 
 subtest {
     plan 2;
@@ -218,15 +223,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob020";
 
-subtest {
-    plan 1;
+skip("prob021 takes too long to run in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob021";
-    my @authors = <gerdr>;
-    my $expected-output = 852810;
+        my $problem = "prob021";
+        my @authors = <gerdr>;
+        my $expected-output = 852810;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob021";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob021";
+}
 
 subtest {
     plan 1;
@@ -238,15 +246,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob022";
 
-subtest {
-    plan 1;
+skip("prob023 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob023";
-    my @authors = <shlomif>;
-    my $expected-output = 4179871;
+        my $problem = "prob023";
+        my @authors = <shlomif>;
+        my $expected-output = 4179871;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob023";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob023";
+}
 
 subtest {
     plan 1;
@@ -387,15 +398,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob047";
 
-subtest {
-    plan 1;
+skip("prob052 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob052";
-    my @authors = <duff>;
-    my $expected-output = 142857;
+        my $problem = "prob052";
+        my @authors = <duff>;
+        my $expected-output = 142857;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob052";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob052";
+}
 
 subtest {
     plan 2;
@@ -407,15 +421,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob053";
 
-subtest {
-    plan 1;
+skip("prob054 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob054";
-    my @authors = <andreoss>;
-    my $expected-output = 376;
+        my $problem = "prob054";
+        my @authors = <andreoss>;
+        my $expected-output = 376;
 
-    check-example-solutions($problem, $expected-output, @authors);
-}, "prob054";
+        check-example-solutions($problem, $expected-output, @authors);
+    }, "prob054";
+}
 
 subtest {
     plan 1;
@@ -445,15 +462,20 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob065";
-subtest {
-    plan 1;
 
-    my $problem = "prob066";
-    my @authors = <andreoss>;
-    my $expected-output = 661;
+skip("prob066 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob066";
+        my $problem = "prob066";
+        my @authors = <andreoss>;
+        my $expected-output = 661;
+
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob066";
+}
+
 subtest {
     plan 1;
 
@@ -554,15 +576,18 @@ if False {
     }, "prob104";
 }
 
-subtest {
-    plan 1;
+skip("prob105 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob105";
-    my @authors = <shlomif>;
-    my $expected-output = 73702;
+        my $problem = "prob105";
+        my @authors = <shlomif>;
+        my $expected-output = 73702;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob105";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob105";
+}
 
 skip("prob149-shlomif.pl takes too long to run");
 if False {
@@ -577,15 +602,18 @@ if False {
     }, "prob149";
 }
 
-subtest {
-    plan 1;
+skip("prob151 takes too long in tests");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob151";
-    my @authors = <shlomif>;
-    my $expected-output = 0.464399;
+        my $problem = "prob151";
+        my @authors = <shlomif>;
+        my $expected-output = 0.464399;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob151";
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob151";
+}
 
 subtest {
     plan 1;
