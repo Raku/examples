@@ -137,7 +137,7 @@ class Website is export {
                 my $subcategories = $category.subcategories;
                 for $subcategories.categories-table.kv -> $subcategory-key, $title {
                     my $subcategory = $subcategories.category-with-key($subcategory-key);
-                    my @examples = $subcategory.examples.values;
+                    my @examples = $subcategory.examples.values.sort(*.filename);
                     my @rows = @examples.map: {[.pod-link, .title, .author]};
                     my $base-dir = $!base-html-dir ~ "/categories/" ~ $category-key;
                     my $output-file = $base-dir ~ "/$subcategory-key.html";
