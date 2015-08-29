@@ -10,7 +10,7 @@ Parse program arguments as passed from the command line
 
 =end pod
 
-#| open file, whatever
+##| open file, whatever
 sub MAIN (Str :$output!, Bool :$debug = False )  { # False can be ommitted
     warn "debugging" if $debug;
     dd $output;
