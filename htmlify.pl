@@ -53,6 +53,7 @@ sub MAIN(:$no-highlight = False) {
         "10subroutines"              => "10. Subroutines",
         "13classes-objects-and-ties" => "13. Classes, Objects and Ties",
         "14database-access"          => "14. Database Access",
+        "15interactivity"            => "15. Interactivity",
         "16processes"                => "16. Processes",
         "17sockets"                  => "17. Sockets",
         "19cgi-programming"          => "19. CGI programming",

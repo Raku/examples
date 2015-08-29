@@ -8,7 +8,8 @@ use v6;
 
 =end pod
 
-# TODO fix on windows
+# TODO check on windows
+# TODO control code sequence probably better
 
 shell "clear";
 
