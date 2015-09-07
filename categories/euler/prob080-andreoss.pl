@@ -18,7 +18,7 @@ For the first one hundred natural numbers, find the total of the digital
 sums of the first one hundred decimal digits for all the irrational square
 roots.
 
-The following algoritm was used for the solution:
+The following algorithm was used for the solution:
 L<http://www.afjarvis.staff.shef.ac.uk/maths/jarvisspec02.pdf>
 
 =end pod
