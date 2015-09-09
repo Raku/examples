@@ -12,14 +12,11 @@ You want to recurse over all files in and under a directory
 
 use File::Find;
 
-sub MAIN(:$dir = "/etc") {
-    # note binding := for a list
+sub MAIN(:$dir = ".") {
 
-    my @files := find(:dir($dir), :type('file'));
+    my $files = find(:dir($dir), :type('file'));
 
-    #  returns a list of IO::Path objects
-
-    for @files.sort -> $io {
+    for $files.map({.IO}).sort -> $io {
         say $io.abspath;
     }
 }
