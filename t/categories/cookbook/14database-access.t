@@ -9,7 +9,7 @@ subtest {
 
     my $example-name = "14-09-dbi-sql.pl";
     my $expected-output = q:to/EOD/;
-    title => Larry Wall - Keynote, APW2014 2014-10-10 , uri => https://www.youtube.com/watch?v=enlqVqit62Y title => Carl Mäsak - Regexes in Perl 6 - Zero to Perl 6 Training, uri => https://www.youtube.com/watch?v=oo-gA9Z9SaA
+    [title => Larry Wall - Keynote, APW2014 2014-10-10 , uri => https://www.youtube.com/watch?v=enlqVqit62Y title => Carl Mäsak - Regexes in Perl 6 - Zero to Perl 6 Training, uri => https://www.youtube.com/watch?v=oo-gA9Z9SaA]
     EOD
 
     my $output = run-example($example-name);
