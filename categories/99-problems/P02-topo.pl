@@ -20,6 +20,6 @@ sub last-two(@list)
     @list[* - 2, * - 1];
 }
 
-say last-two(<a b c d e>);
+say "{last-two(<a b c d e>)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

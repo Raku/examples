@@ -41,8 +41,8 @@ sub prime_factors_mult (Int $n) {
     }
 }
 
-say prime_factors_mult($_).perl for 1..20;
-prime_factors_mult(315).perl.say;
-prime_factors_mult(1723).perl.say;
+say prime_factors_mult($_).list.perl for 1..20;
+prime_factors_mult(315).list.perl.say;
+prime_factors_mult(1723).list.perl.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6

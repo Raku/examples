@@ -17,6 +17,6 @@ sub get-rand-elems(@list, $amount) {
     @list.pick($amount);
 }
 
-say get-rand-elems(<a b c d e>, 3);
+say "{get-rand-elems(<a b c d e>, 3)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

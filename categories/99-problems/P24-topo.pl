@@ -21,6 +21,6 @@ sub lotto-select($n, $m)
     }
 }
 
-say lotto-select(6, 49);
+say "{lotto-select(6, 49)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

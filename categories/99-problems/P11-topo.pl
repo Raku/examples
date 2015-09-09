@@ -9,7 +9,7 @@ use v6;
 =head1 Example
 
     > say encode(<a a a a b c c a a d e e e e>.list).perl;
-    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"]).list
+    ([4, "a"], "b", [2, "c"], [2, "a"], "d", [4, "e"])
 
 =end pod
 
@@ -28,6 +28,6 @@ sub encode(@list)
     }
 }
 
-say encode(<a a a a b c c a a d e e e e>.list).perl;
+say encode([<a a a a b c c a a d e e e e>]).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6
