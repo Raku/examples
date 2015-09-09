@@ -49,6 +49,7 @@ sub MAIN(:$no-highlight = False) {
         "05hashes"                   => "5. Hashes",
         "06pattern-matching"         => "6. Pattern Matching",
         "07file-access"              => "7. File access",
+        "08file-contents"            => "8. File contents",
         "09directories"              => "9. Directories",
         "10subroutines"              => "10. Subroutines",
         "13classes-objects-and-ties" => "13. Classes, Objects and Ties",
