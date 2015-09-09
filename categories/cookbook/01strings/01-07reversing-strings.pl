@@ -18,6 +18,6 @@ say $string.flip;
 
 # reverse the words in a scalar
 
-say $string.split(" ").reverse;
+say $string.split(" ").reverse.join(" ");
 
 # vim: expandtab shiftwidth=4 ft=perl6
