@@ -118,7 +118,7 @@ sub prime-factors(Int $number is copy) {
 }
 
 for 17, 53, 90, 94, 200, 289, 62710561 -> $number {
-    say "Prime factors of $number are: ", prime-factors($number).perl;
+    say "Prime factors of $number are: ", prime-factors($number).flat.sort.list.perl;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
