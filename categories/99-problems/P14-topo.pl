@@ -15,9 +15,9 @@ use v6;
 
 sub duplicate(@list)
 {
-    @list.map({$_, $_});
+    @list.map({$_, $_}).flat;
 }
 
-say duplicate(<a b c c d e>.list);
+say "{duplicate(<a b c c d e>.list)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

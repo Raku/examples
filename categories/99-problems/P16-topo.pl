@@ -23,6 +23,6 @@ sub drop-nth(@list, $n)
     }
 }
 
-say drop-nth(<a b c d e f g h i j k l m n>.list, 3);
+say "{drop-nth(<a b c d e f g h i j k l m n>.list, 3)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

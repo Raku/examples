@@ -45,7 +45,7 @@ say my_last(<A B C D>);
 # c. Pop like perl5
 #       pop the last element off, which also returns it
 #       say either way
-say <X Y Z>.list.pop;
-<X Y Z>.list.pop.say;
+say <X Y Z>.Array.pop;
+<X Y Z>.Array.pop.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6

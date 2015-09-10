@@ -112,7 +112,7 @@ sub expected-output {
     END
 
     %expected-output{"P07-topo.pl"} = q:to/END/;
-    [1, 2, [3, 4], 5]<>
+    (1, 2, [3, 4], 5)
     Flattened:
     (1, 2, 3, 4, 5)
     END
@@ -122,7 +122,7 @@ sub expected-output {
     END
 
     %expected-output{"P08-eric256.pl"} = q:to/END/;
-    ["a", "b", "c", "a", "d", "e"]<>
+    ["a", "b", "c", "a", "d", "e"]
     END
 
     %expected-output{"P08-topo.pl"} = q:to/END/;
@@ -139,7 +139,7 @@ sub expected-output {
 
     %expected-output{"P09-scottp.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    [["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"]]<>
+    [["a", "a", "a", "a"], ["b"], ["c", "c"], ["a", "a"], ["d"], ["e", "e", "e", "e"]]
     END
 
     %expected-output{"P09-topo.pl"} = q:to/END/;
@@ -222,7 +222,7 @@ sub expected-output {
     END
 
     %expected-output{"P15-unobe.pl"} = q:to/END/;
-    ["a", "b", "c"]<>
+    ["a", "b", "c"]
     ("a", "a", "a", "b", "b", "b", "c", "c", "c")
     END
 

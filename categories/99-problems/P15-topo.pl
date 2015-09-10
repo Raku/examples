@@ -15,9 +15,9 @@ use v6;
 
 sub replicate(@list, $times)
 {
-    @list.map({$_ xx $times});
+    @list.map({$_ xx $times}).flat;
 }
 
-say replicate(<a b c c d e>.list, 3);
+say "{replicate(<a b c c d e>.list, 3)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

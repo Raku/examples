@@ -37,6 +37,6 @@ sub prob10 (@in) {
     };
 }
 say ~@l;
-say prob10(@l).perl;
+say prob10(@l).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

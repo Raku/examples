@@ -26,7 +26,7 @@ my @examples = [
     [[< a b b a >], True],
     [[< a >], True],
     [[< a a >], True],
-    [[< E a >], False] ].lol;
+    [[< E a >], False] ];
 
 for @examples -> ($list, $result) {
     if palindromic($list) != $result {

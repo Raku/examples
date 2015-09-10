@@ -26,10 +26,10 @@ my @l = <A B C B A>;
 #       elements - but it does not care about the order of the elements.
 #       eq  This will turn the list into a string, and compare those
 if (@l eq @l.reverse) {
-    say @l, ' is a palindrome';
+    say "{@l}", ' is a palindrome';
 }
 else {
-    say @l, ' is not a palindrome';
+    say "{@l}", ' is not a palindrome';
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -4,28 +4,20 @@ use v6;
 
 =TITLE P07 - Flatten a nested array structure.
 
-=AUTHOR Ryan Connelly
+=AUTHOR Orginally Ryan Connelly
 
 =head1 Example
 
     > my @a = 1, 2, [3, 4], 5;
-    > say flatten(@a).perl;
-    (1, 2, 3, 4, 5).list
+    > say @a.flat.list.perl
+    (1, 2, 3, 4, 5)
 
 =end pod
 
-sub flatten(@array)
-{
-    gather for @array -> $e
-    {
-        $e ~~ Array ?? take(flatten $e) !! take $e
-    }
-}
-
-my @a = 1, 2, [3, 4], 5;
+my @a := 1, 2, [3, 4], 5;
 
 say @a.perl;
 say 'Flattened:';
-say flatten(@a).perl;
+say @a.flat.list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

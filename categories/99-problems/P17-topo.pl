@@ -19,13 +19,13 @@ sub split-list(@list, $length)
 
     gather while $i <= $length {
         take [ gather while $i <= $length {
-            $i++ and take @list.shift;
+            $i++ and take @list.[0];
         } ];
 
         take [ @list ];
     }
 }
 
-say split-list(('a' xx 20).list, 8).perl;
+say split-list(('a' xx 20).list, 8).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

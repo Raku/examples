@@ -18,6 +18,6 @@ sub get-slice(@list, $start, $end)
     @list[$start - 1 ... $end - 1];
 }
 
-say get-slice(<a b c d e>, 2, 4);
+say "{get-slice(<a b c d e>, 2, 4)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

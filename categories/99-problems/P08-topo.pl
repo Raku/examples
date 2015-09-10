@@ -30,6 +30,6 @@ sub eliminate-consecutive-duplicates(@list)
     }
 }
 
-say eliminate-consecutive-duplicates(<a a a a a b b c b d e e>);
+say "{eliminate-consecutive-duplicates(<a a a a a b b c b d e e>)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

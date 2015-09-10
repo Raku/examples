@@ -29,6 +29,6 @@ sub encode(@ls)
     }
 }
 
-say encode(<a a a a a b b c b d e e>.list).perl;
+say encode(<a a a a a b b c b d e e>).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

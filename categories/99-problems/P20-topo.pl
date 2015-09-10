@@ -20,6 +20,6 @@ sub remove-at(@list is copy, $place)
     @list
 }
 
-say remove-at(<a b c d e>, 4);
+say "{remove-at(<a b c d e>, 4)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

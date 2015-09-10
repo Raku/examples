@@ -17,6 +17,6 @@ use v6;
 
 =end pod
 
-say (map { $_ xx 2 }, <a b c c d>).perl;
+say <a b c c d>.map({ $_ xx 2 }).map({.list}).flat.list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

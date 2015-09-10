@@ -24,13 +24,13 @@ Specification:
 =end pod
 
 # a. One line example
-#   <> can be used to generate an array, similar to perl 5 - qw<a b c d>
-#   [] is used to slice a list or array
+#   <> can be used to generate an list, similar to perl 5 - qw<a b c d>
+#   [] is used to slice a list or array and returns a list
 #   * means the number of elements
 #   say is like print to stdout with a new line
 #   .say can be called as everything is an object
 #   we pass a list to [] to ask for the second-last and last elements
-<A B C D E F>[*-2,*-1].say;
+"{<A B C D E F>.[*-2,*-1]}".say;
 
 # b. Subroutine example
 #   @l lists can be passed in as parameters - no need to use references

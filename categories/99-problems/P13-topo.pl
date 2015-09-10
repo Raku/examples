@@ -31,6 +31,6 @@ sub encode(@list)
     }
 }
 
-say encode(<a a a a b c c a a d e e e e>.list).perl;
+say encode(<a a a a b c c a a d e e e e>.Array).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6

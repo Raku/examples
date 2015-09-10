@@ -54,6 +54,6 @@ sub prob12 (@a) {
 my @l = ([4,'a'],'b',[2,'c'],[2,'a'],'d',[4,'e']);
 
 say ~@l;
-prob12(@l).perl.say;
+prob12(@l).list.perl.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6
