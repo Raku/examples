@@ -46,6 +46,6 @@ sub factors(Int $remainder is copy) {
     }
 }
 
-say factors 536870911;
+say "{factors 536870911}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

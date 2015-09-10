@@ -21,7 +21,7 @@ Sample output
 my $default-input = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
 
 sub MAIN(Str $input = $default-input) {
-    say bag($input.comb)<A C G T>;
+    say "{bag($input.comb)<A C G T>}";
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

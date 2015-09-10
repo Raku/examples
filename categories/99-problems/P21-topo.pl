@@ -20,6 +20,6 @@ sub insert-at($elem, @list is copy, $place)
     @list
 }
 
-say insert-at('alfa', <a b c d>, 2);
+say "{insert-at('alfa', <a b c d>, 2)}";
 
 # vim: expandtab shiftwidth=4 ft=perl6

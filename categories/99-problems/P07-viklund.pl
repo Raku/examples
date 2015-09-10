@@ -45,6 +45,6 @@ sub _splat(@t) {
 
 sub splat (@t) { gather _splat(@t) }
 
-splat([1, [2,[3,4], 5]]).perl.say;
+splat([1, [2,[3,4], 5]]).list.perl.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6

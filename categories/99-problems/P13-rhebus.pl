@@ -38,6 +38,6 @@ sub runlength (@a) {
 my @l = <a a a a b c c a a d e e e e>;
 
 say ~@l;
-runlength(@l).perl.say;
+runlength(@l).list.perl.say;
 
 # vim: expandtab shiftwidth=4 ft=perl6

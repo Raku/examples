@@ -27,7 +27,7 @@ sub MAIN($input-file = Nil) {
     my @A = $gc-content-string.split(" ");
     my @B = map { log(prob :$dna, :gc-content($_))/log(10) }, @A;
 
-    say @B».fmt: "%.3f";
+    say "{@B».fmt: "%.3f"}";
 }
 
 sub prob(:$dna, :$gc-content) {

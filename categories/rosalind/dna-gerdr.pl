@@ -21,7 +21,7 @@ Sample output
 my $default-input = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
 
 sub MAIN($input = $default-input) {
-    <A C G T>.map({ +$input.comb(/$_/) }).say;
+    "{<A C G T>.map({ +$input.comb(/$_/) })}".say;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
