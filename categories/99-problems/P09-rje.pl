@@ -27,8 +27,7 @@ my @in = <a a a a b c c a a d e e e e>;
 my @out = pack_dup( @in );
 @out.perl.say;
 
-sub pack_dup {
-    my @in = @_;
+sub pack_dup(@in) {
     my @out = [ @in.shift ];
 
     for @in -> $elem {
