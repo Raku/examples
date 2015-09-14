@@ -130,7 +130,7 @@ sub expected-output {
     END
 
     %expected-output{"P08-viklund.pl"} = q:to/END/;
-    ["a", "b", "c", "a", "d", "e"]<>
+    ("a", "b", "c", "a", "d", "e")
     END
 
     %expected-output{"P09-rje.pl"} = q:to/END/;
