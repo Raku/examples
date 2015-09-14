@@ -10,7 +10,10 @@ my @dependencies = qw{
     HTTP::Easy
     LWP::Simple
     Pod::To::HTML
+    Term::ANSIColor
+    Term::termios
     URI
+    Web::Request 
 };
 
 plan @dependencies.elems;
