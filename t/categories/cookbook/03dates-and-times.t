@@ -79,7 +79,7 @@ subtest {
 
     my $output = run-example($example-name);
     my $diff = abs($expected-output - $output.chomp);
-    ok($diff < 1e-2, $example-name);
+    ok($diff < 1e-1, $example-name) or die dd $diff;
 }, "03-09-hires-times.pl";
 
 #| run the given example script

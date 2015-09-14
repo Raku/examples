@@ -239,8 +239,8 @@ sub expected-output {
     END
 
     %expected-output{"P17-unobe.pl"} = q:to/END/;
-    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "k"]<>
-    (["a", "b", "c"], ["d", "e", "f", "g", "h", "i", "k"])
+    ["a", "b", "c", "d", "e", "f", "g", "h", "i", "k"]
+    ($["a", "b", "c"], $["d", "e", "f", "g", "h", "i", "k"])
     END
 
     %expected-output{"P18-topo.pl"} = q:to/END/;

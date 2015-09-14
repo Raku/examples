@@ -29,6 +29,6 @@ sub pack-consecutive-dups(@list)
     }
 }
 
-say pack-consecutive-dups(<a a a a a b b c b d e e>.list).perl;
+say pack-consecutive-dups([<a a a a a b b c b d e e>]).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6
