@@ -28,11 +28,11 @@ my @out = pack_dup( @in );
 @out.perl.say;
 
 sub pack_dup(@in) {
-    my @out = [ @in.shift ];
+    my @out = [ [@in.shift], ];
 
     for @in -> $elem {
-        push @out, [] if $elem ne @out[*-1][0];
-        push @out[*-1], $elem;
+        push @out, [Nil] if $elem ne @out[*-1][0];
+        push @out[*-1], [$elem];
     }
     return @out;
 }
