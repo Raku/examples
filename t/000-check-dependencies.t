@@ -4,13 +4,13 @@ use lib 'lib';
 use Test;
 
 my @dependencies = qw{
-    URI
-    Pod::To::HTML
-    LWP::Simple
     Algorithm::Soundex
     DBIish
     File::Temp
     HTTP::Easy
+    LWP::Simple
+    Pod::To::HTML
+    URI
 };
 
 plan @dependencies.elems;
