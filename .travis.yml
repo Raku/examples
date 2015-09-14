@@ -12,7 +12,7 @@ install:
     - panda install DBIish
     - panda install HTTP::Easy
     - panda install File::Temp
-    - panda install Web::Request
+    - panda install Web
     - panda install Term::ANSIColor
     - panda install Term::termios
 

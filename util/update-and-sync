@@ -15,7 +15,7 @@ ulimit -t 3600      # 1 hour
 export PATH=$PATH:$HOME/.rakudobrew/bin
 rakudobrew build moar
 rakudobrew build-panda
-for dep in URI Pod::To::HTML LWP::Simple Algorithm::Soundex DBIish File::Temp Text::VimColour HTTP::Easy Web::Request Term::ANSIColor Term::termios
+for dep in URI Pod::To::HTML LWP::Simple Algorithm::Soundex DBIish File::Temp Text::VimColour HTTP::Easy Web Term::ANSIColor Term::termios
 do
     panda install $dep
 done
