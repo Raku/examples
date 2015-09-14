@@ -4,7 +4,7 @@ use Test;
 
 my $base-dir = "categories/99-problems";
 my %expected-output = expected-output;
-my @script-names = %expected-output.keys;
+my @script-names = %expected-output.keys.sort;
 
 for @script-names -> $name {
     my $script-path = $base-dir ~ "/" ~ $name;
