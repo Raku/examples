@@ -15,8 +15,13 @@ my @dependencies = qw{
 
 plan @dependencies.elems;
 
+my @missing-deps;
 for @dependencies -> $dep {
-    use-ok $dep, "$dep able to be use-d ok";
+    my $use-able = use-ok $dep, "$dep able to be use-d ok";
+    @missing-deps.push($dep) if not $use-able;
 }
+
+die "Please install the required dependencies:\n", @missing-deps.join("\n")
+    if @missing-deps;
 
 # vim: expandtab shiftwidth=4 ft=perl6
