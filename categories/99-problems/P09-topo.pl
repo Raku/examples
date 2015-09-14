@@ -23,12 +23,12 @@ sub pack-consecutive-dups(@list)
             gather while @list.elems
                    and @list[0] ~~ $last
             {
-                take ($last = shift @list)
+                take ($last = @list.shift)
             }
         ]
-    }
+    }.list
 }
 
-say pack-consecutive-dups([<a a a a a b b c b d e e>]).list.perl;
+say pack-consecutive-dups([<a a a a a b b c b d e e>]).perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6
