@@ -24,13 +24,10 @@ use v6;
 #   My first Perl6 script - I'm sure this can be done better
 #
 my @in = <a a a a b c c a a d e e e e>;
-my @out = p09( @in );
+my @out = pack_dup( @in );
 @out.perl.say;
 
-#
-#  Here's where the work is done.
-#
-sub p09 {
+sub pack_dup {
     my @in = @_;
     my @out = [ @in.shift ];
 
