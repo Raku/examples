@@ -20,15 +20,7 @@ use v6;
 =end pod
 
 sub splat (@t) {
-    my @return = [];
-    for @t -> $i {
-        if ($i.isa(Array)) {
-            @return.push( splat($i) );
-        } else {
-            @return.push( $i );
-        }
-    }
-    return @return;
+    return (gather @t.deepmap(*.take)).list;
 }
 
 splat(['a', ['b',['c','d'], 'e']]).perl.say;

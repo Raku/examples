@@ -108,7 +108,7 @@ sub expected-output {
     END
 
     %expected-output{"P07-eric256.pl"} = q:to/END/;
-    [[], "a", [], "b", [], "c", "d", "e"]<>
+    ("a", "b", "c", "d", "e")
     END
 
     %expected-output{"P07-topo.pl"} = q:to/END/;
