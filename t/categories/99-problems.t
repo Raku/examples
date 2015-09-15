@@ -23,8 +23,8 @@ for @script-names -> $name {
         }
     }
     elsif $name eq "P25-topo.pl" {
-        is($output.chomp.split(' ').sort, %expected-output{$name}.chomp.split(' ').sort, $name);
-        isnt($$output, <a b c d e>, $name);
+        is($output.chomp.substr(1,*-1).split(' ').list.sort, %expected-output{$name}.chomp.split(' ').sort, $name);
+        isnt($output, <a b c d e>, $name);
     }
     elsif $name eq "P26-topo.pl" {
         is($output.trim-trailing, %expected-output{$name}.trim-trailing, $name);
