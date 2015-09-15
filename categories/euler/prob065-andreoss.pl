@@ -60,7 +60,7 @@ sub continued-fraction(@sequence, :$depth)  {
         continued-fraction :depth($depth - 1), @sequence
 }
 
-my @e := gather { take 2;  take (1; $_; 1) for 2,4 ... * };
+my @e = lazy gather { take 2;  (1, $_, 1)».&take for 2,4 ... * };
 
 say [+] continued-fraction(@e, depth => 100).numerator.comb;
 

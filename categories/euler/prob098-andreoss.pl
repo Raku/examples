@@ -61,13 +61,16 @@ sub MAIN(Bool :$verbose = False,
 
     my %words   =  anagrams(@words);
     my $longest-word = %words.keys.max;
+    
     my %squares =  anagrams(
-        (1 ... (10**($longest-word + 1).sqrt)) »**» 2
+        (1 ... (10**($longest-word + 1).sqrt)).list »**» 2
     );
 
 
     say max do for 3 ... $longest-word -> \size {
+        next unless %words{size};
         do for @(%words{size}) -> @pair {
+            next unless %squares{size};
             do for @(%squares{size}) -> @nums {
                 if correspond(@pair, @nums) {
                     $verbose and say "@pair[] => @nums[]" ;

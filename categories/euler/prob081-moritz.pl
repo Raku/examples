@@ -26,10 +26,10 @@ down.
 
 my @m;
 
-my $matrix-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'matrix.txt');
+my $matrix-file = $*SPEC.catdir(#`{$*PROGRAM-NAME.IO.dirname} "./categories/euler/", 'matrix.txt');
 my $f = open $matrix-file or die "Can't open file for reading: $!";
-for $f.lines {
-    @m.push: [ .comb(/\d+/) ];
+for $f.lines <-> $line {
+    @m.push: $line.comb(/\d+/).Array.item;
 }
 $f.close;
 

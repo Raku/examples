@@ -23,17 +23,18 @@ fifth powers of their digits.
 =end   pod
 
 sub get-numbers(:$start = 10, :$depth = 6, *@a) {
-    return @a.item unless $depth;
-    do for ^$start -> \x {
+    return $@a unless $depth;
+    flat do for ^$start -> \x {
         get-numbers start => x + 1,
                     depth => $depth -1, |@a,x;
     }
 }
 
-say [+] -1, gather for get-numbers() -> @a {
-    my $v = [+] @a       »**» 5;
-    my $b = [+] $v.comb  »**» 5;
+say [+] gather for get-numbers() -> @a {
+    my $v = [+] @a »**» 5;
+    my $b = [+] $v.comb.list »**» 5;
     take $b if $v == $b;
+    LAST take -1;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

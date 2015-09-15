@@ -40,7 +40,7 @@ sub MAIN(Int :$length = 1000, Bool :$boring = False) {
         return;
     }
 
-    my @fibs := 0, 1, *+* ... *;
+    my @fibs = 0, 1, *+* ... *;
     ((1..*).grep:{@fibs[$_].chars == $length})[0].say;
     return;
 }
