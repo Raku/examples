@@ -184,8 +184,8 @@ sub expected-output {
     END
 
     %expected-output{"P12-unobe.pl"} = q:to/END/;
-    [["4", "a"], "b", ["2", "c"], ["2", "a"], "d", ["4", "e"]]<>
-    ["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]<>
+    [["4", "a"], "b", ["2", "c"], ["2", "a"], "d", ["4", "e"]]
+    ["a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"]
     END
 
     %expected-output{"P13-rhebus.pl"} = q:to/END/;
