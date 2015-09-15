@@ -366,9 +366,9 @@ skip("prob034 takes too long in tests");
 unless $skip {
     subtest {
         plan 1;
-         my $problem = "prob034";
-         my @authors = <quinny>;
-         my $expected-output = 40730;
+        my $problem = "prob034";
+        my @authors = <quinny>;
+        my $expected-output = 40730;
 
         check-example-solutions($problem, $expected-output, @authors)
     }, "prob034";
@@ -456,16 +456,18 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob059";
 
-subtest {
-    plan 1;
+skip("prob060 takes too long to run (about 90m)");
+unless $skip {
+    subtest {
+        plan 1;
 
-    my $problem = "prob060";
-    my @authors = <andreoss>;
-    my $expected-output = 26033;
+        my $problem = "prob060";
+        my @authors = <andreoss>;
+        my $expected-output = 26033;
 
-    check-example-solutions($problem, $expected-output, @authors)
-}, "prob060";
-
+        check-example-solutions($problem, $expected-output, @authors)
+    }, "prob060";
+};
 
 subtest {
     plan 2;
@@ -687,8 +689,8 @@ sub run-example($name) {
     my $base-dir = "categories/euler";
     my $script-path = $base-dir ~ "/" ~ $name;
     $script-path = "$script-path.pl".IO.e
-                ?? "$script-path.pl"
-                !! "$script-path.p6";
+    ?? "$script-path.pl"
+    !! "$script-path.p6";
     my $base-cmd = "perl6 $script-path";
     my $output = qqx{$base-cmd};
 

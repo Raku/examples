@@ -42,7 +42,7 @@ the ASCII values in the original text.
 my constant @common-words = <the was who not did with have does and one that>;
 
 sub infix:<XOR>(@cipher, @password) {
-    @cipher Z+^ (@password xx *);
+    @cipher Z+^ flat (@password xx *);
 }
 
 sub as-code(Str $w) {
@@ -56,19 +56,19 @@ sub as-word(*@s) {
 sub guess-password(Str $w, @cipher) {
     my @word = as-code $w;
 
-    my @chunks := @cipher.rotor((@word.elems) => -(@word.elems - 1));
+    my @chunks = @cipher.rotor((@word.elems) => -(@word.elems - 1));
     my %tries;
     my $offset = 0;
 
     for @chunks -> @chunk {
-
+        
         my @password  = @chunk[^3] XOR @word;
+        
         my $password  = as-word @password;
-
+        
         next unless $password ~~ /^^ <[a..z]> ** 3 $$/ ;
-
         my $decrypted = as-word @cipher[$offset .. *] XOR @password;
-
+        
         my $count =  [+] do for @common-words.grep({$_ !~~ $w}) -> $word {
             elems $decrypted ~~ m:g:i/$word/
         }
@@ -86,7 +86,9 @@ sub guess-password(Str $w, @cipher) {
 sub MAIN(Bool :$verbose = False,
         :$file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'cipher.txt'),
         :$word = @common-words[0],
-        :$pass is copy) {
+        :$pass is copy,
+        Bool :$test = False) {
+    return TEST if $test;
     die "'$file' is missing" unless $file.IO.e ;
     my @cipher     = map *.Int, split /<[,]>/ , slurp $file;
 
@@ -97,12 +99,18 @@ sub MAIN(Bool :$verbose = False,
     }
 
     my $decrypted =  as-word @cipher XOR as-code($pass);
-
+    
     say "The message: {$decrypted.perl}" if $verbose;
-
     say [+] as-code $decrypted;
-
     say "Done in {now - BEGIN now}" if $verbose;
+}
+
+sub TEST {
+    use Test;
+    is as-code("abc"), [97,98,99], "as-code works";
+    is as-word(100,101,102), "def", "as-word works";
+    is as-word([79,59,12] XOR [103,111,100]), "(Th", "XOR works";
+    done;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

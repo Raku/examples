@@ -9,13 +9,13 @@ use v6;
 L<https://projecteuler.net/problem=54>
 
 The file, poker.txt, contains one-thousand random hands dealt to two
-players. Each line of the file contains ten cards (separated by a single
-space): the first five are Player 1's cards and the last five are Player 2's
-cards. You can assume that all hands are valid (no invalid characters or
-repeated cards), each player's hand is in no specific order, and in each
-hand there is a clear winner.
+                              players. Each line of the file contains ten cards (separated by a single
+                                                                                 space): the first five are Player 1's cards and the last five are Player 2's
+                                                                                             cards. You can assume that all hands are valid (no invalid characters or
+                                                                                                                                             repeated cards), each player's hand is in no specific order, and in each
+                                                                                                                                                                                                              hand there is a clear winner.
 
-How many hands does Player 1 win?
+                                                                                                                                                                                                              How many hands does Player 1 win?
 
 =end pod
 
@@ -122,7 +122,7 @@ class Deal {
 
     method !flush {
         if [~~] @.cards».suit {
-            (Flush) => Array[Rank].new: @.cards».rank;
+            (Flush) => Array[Rank].new: |@.cards».rank;
         }
     }
 
@@ -148,7 +148,7 @@ class Deal {
     }
     method !full-house {
         # Three of a kind and a pair.
-        my Ranks %x{Hand} = self!three-of-kind , self!one-pair;
+        my Ranks %x{Hand} = flat self!three-of-kind , self!one-pair;
         if %x{ThreeOfKind}.defined && %x{OnePair}.defined {
             (FullHouse) => Ace
         }
@@ -179,7 +179,6 @@ class Deal {
             (TwoPairs)  => my $y= @pairs».value.max,
             (HighCard)  => max grep { $_ !~~ $x | $y },@.cards».rank;
         }
-
     }
 
     method !one-pair {
