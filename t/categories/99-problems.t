@@ -153,7 +153,7 @@ sub expected-output {
 
     %expected-output{"P10-scottp.pl"} = q:to/END/;
     a a a a b c c a a d e e e e
-    [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]<>
+    [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]]
     END
 
     %expected-output{"P10-topo.pl"} = q:to/END/;

@@ -31,12 +31,12 @@ sub packit (@in) {
             $count++;
         }
         else {
-            push @out, [$count, $last];
+            push @out, $[$count, $last];
             $last = $t;
             $count = 1;
         }
     }
-    push @out, [$count, $last];
+    push @out, $[$count, $last];
     return @out;
 }
 say ~@l;
