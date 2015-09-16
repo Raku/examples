@@ -32,7 +32,7 @@ sub gcds (Int $a, Int $b) {
 }
 
 # from P33-rhebus.pl
-our sub infix:<coprime> (Int $a, Int $b) { gcds($a,$b) == 1 }
+our sub infix:<coprime> (Int $a, Int $b) { (gcds($a,$b) == 1).Numeric }
 
 
 # Example 1: iteration
