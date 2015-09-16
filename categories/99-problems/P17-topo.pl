@@ -13,19 +13,18 @@ use v6;
 
 =end pod
 
-sub split-list(@list, $length)
-{
+sub split-list(@list, $length) {
     my $i = 0;
 
     gather while $i <= $length {
         take [ gather while $i <= $length {
-            $i++ and take @list.[0];
+            $i++ and take @list.shift;
         } ];
 
         take [ @list ];
     }
 }
 
-say split-list(('a' xx 20).list, 8).list.perl;
+say split-list(['a' xx 20], 8).list.perl;
 
 # vim: expandtab shiftwidth=4 ft=perl6
