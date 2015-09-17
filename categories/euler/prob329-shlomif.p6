@@ -1,4 +1,6 @@
-#!/usr/bin/perl
+#!/usr/bin/perl6
+
+use v6;
 
 my @is_prime = (False, False, (map { $_.is-prime ?? True !! False }, 2 .. 500), False);
 
