@@ -25,7 +25,7 @@ my $n = 5;
 my $size = $n * $n;
 
 my @track;
-my @directions = (1, -1 X 2, -2), (2, -2 X 1, -1);
+my @directions = flat ((1, -1 X 2, -2), (2, -2 X 1, -1));
 
 sub valid_moves($curr, @temp_track=@track) {
     my @valid_squares = @directions.map(->$a,$b { ($curr.key + $a) => ($curr.value + $b) }).grep({0 <= all(.key, .value) < $n});
