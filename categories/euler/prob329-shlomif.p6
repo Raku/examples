@@ -2,14 +2,14 @@
 
 use v6;
 
-my @is_prime = (False, False, (map { $_.is-prime ?? True !! False }, 2 .. 500), False);
+my @is_prime = flat (False, False, (map { $_.is-prime ?? True !! False }, 2 .. 500), False);
 
-my @p_letter = (map { $_ ?? 'P' !! 'N' }, @is_prime);
+my @p_letter = flat (map { $_ ?? 'P' !! 'N' }, @is_prime);
 
-my @init_probab = (0, (map { FatRat.new(1, 500) }, 1 .. 500) , 0);
+my @init_probab = flat (0, (map { FatRat.new(1, 500) }, 1 .. 500) , 0);
 
-my @up_step_probab = (0, 1, (map { FatRat.new(1, 2) }, 2 .. 499) , 0 , 0);
-my @down_step_probab = (0, 0, (map { FatRat.new(1, 2) }, 2 .. 499) , 1, 0 );
+my @up_step_probab = flat (0, 1, (map { FatRat.new(1, 2) }, 2 .. 499) , 0 , 0);
+my @down_step_probab = flat (0, 0, (map { FatRat.new(1, 2) }, 2 .. 499) , 1, 0 );
 my $s = 'PPPPNNPPPNPPNPN';
 
 my @probab = @init_probab;
@@ -27,7 +27,7 @@ sub f($k, $idx, @step)
 
 for $s.comb() -> $k
 {
-    my @next_probab = (0, (map { my $i = $_;
+    my @next_probab = flat (0, (map { my $i = $_;
                 (
                 f($k, $i - 1, @up_step_probab)
                 +
