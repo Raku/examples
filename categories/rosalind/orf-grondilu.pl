@@ -50,15 +50,15 @@ sub revc($dna) {
 
 sub orf($dna) {
     my %match;
-    my @match = gather for $dna, revc $dna {
+    my @match = (gather for $dna, revc $dna {
         take .match: rx/ ATG [ <[ACGT]>**3 ]*? <before TAA|TAG|TGA> /, :overlap;
-    };
+    })>>.list.flat;
 
     %match{
         [~] map { DNA-codon{$_} }, .match: rx/ <[ACGT]>**3 /, :g
     }++ for @match;
 
-    return %match.keys;
+    return %match.keys.sort;
 }
 
 sub MAIN(Str $input = $default-input) {
