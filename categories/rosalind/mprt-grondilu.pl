@@ -45,7 +45,8 @@ sub MAIN($input-file = Nil) {
         given join '', grep /^ <.alpha>+ $/, $fasta.split: "\n" {
             if $N-glycosylation {
                 say $id;
-                say gather for m:overlap/$N-glycosylation/ { take .from + 1}
+                 my @arr = gather for m:overlap/$N-glycosylation/ { take .from + 1}
+                 say "{@arr}"
             }
         }
     }

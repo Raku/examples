@@ -43,11 +43,12 @@ sub interwove($a, $b) {
 
 my %seen;
 for @motif -> $a {
-    say gather for @motif -> $b {
+    my @arr = gather for @motif -> $b {
         my @interwove = interwove($a, $b).unique;
         take %seen{sort($a, $b).join(':')} //=
         +so grep rx/ <@interwove> /, $dna;
     }
+    say "{@arr}"
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6

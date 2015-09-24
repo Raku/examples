@@ -60,6 +60,6 @@ for ^N -> \c {
     take <A C G T>[$_] given first { @profile[$_][c] == $max }, ^4;
 }
 
-say .key, ': ', @profile[.value] for enum <A C G T>.sort;
+say [~] .key, ': ', @profile[.value] for enum <A C G T>.sort;
 
 # vim: expandtab shiftwidth=4 ft=perl6
