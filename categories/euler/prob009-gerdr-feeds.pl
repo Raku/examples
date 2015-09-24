@@ -43,6 +43,6 @@ my $result;
 ==> $result;
 
 # print result
-$result.say;
+$result.[0].say;
 
 # vim: expandtab shiftwidth=4 ft=perl6
