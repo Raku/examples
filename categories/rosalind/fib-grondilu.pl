@@ -19,7 +19,7 @@ Sample output
 =end pod
 
 sub MAIN(Int $n = 5, Int $k = 3) {
-    my @fib := 1, 1, * * $k + * ... *;
+    my @fib = 1, 1, * * $k + * ... *;
 
     say @fib[$n-1];
 }
