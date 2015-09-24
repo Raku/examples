@@ -42,7 +42,7 @@ sub mrna($rna) {
     %count{.value}++ for RNA-codon;
 
     my $count = 1;
-    for $rna.comb, 'Stop' {
+    for ($rna.comb, 'Stop').flat {
         $count *= %count{$_};
         $count %= 1_000_000;
     }
