@@ -23,7 +23,7 @@ sub take-two($n) { $n*($n-1)/2 }
 sub MAIN(Str $input = "2 2 2") {
     given $input.split: " " {
         say
-        take-two([+] .[]) R/ (
+        take-two([+] .[].cache) R/ (
             [+]
             take-two(.[0])       ,   # two homozygous dominant
             3/4 * take-two(.[1]) ,   # two heterozygous
