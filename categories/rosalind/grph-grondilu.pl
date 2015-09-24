@@ -44,14 +44,15 @@ END
 
 sub MAIN($input-file = Nil) {
     my $input = !$input-file ?? $default-data !! $input-file.IO.slurp;
-    my %dna = gather for
+
+    my %dna = (gather for
         $input.match(/ ^^ '>Rosalind_' (<digit> **4) \n (<[\nACGT]>*) /, :g) {
         take ~.[0], ~.[1].subst(/\n/,'', :g);
-    }
+    })>>.list.flat;
 
     for (%dna X %dna).flat -> $a, $b {
         next if $a.key eq $b.key;
-        say 'Rosalind_' «~« ($a, $b)».key
+        print " {'Rosalind_' «~« ($a, $b)».key}"
         if $a.value.substr(*-3) eq $b.value.substr(0, 3);
     }
 }
