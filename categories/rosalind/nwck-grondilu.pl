@@ -37,7 +37,7 @@ my $default-data = q:to/END/;
 
 sub MAIN($input-file = Nil) {
     my $input = $input-file ?? $input-file.IO.slurp !! $default-data;
-    say gather for $input.lines -> $newick, $taxa, $ {
+    say gather for $input.lines.list -> $newick, $taxa, $ {
         my ($a, $b) = $taxa.split: ' ';
         my @token = $newick.comb: rx/ <.ident>+ | <[(),]> /;
         Mu while @token.shift ne $a|$b;
@@ -51,7 +51,7 @@ sub MAIN($input-file = Nil) {
             if /< , ( >/ { $descents++ }
         }
         take $climbs + $descents;
-    }
+    }.join(" ");
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
