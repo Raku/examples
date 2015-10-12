@@ -13,7 +13,7 @@ my @dependencies = qw{
     Term::ANSIColor
     Term::termios
     URI
-    Web
+    Web::Request
 };
 
 plan @dependencies.elems;

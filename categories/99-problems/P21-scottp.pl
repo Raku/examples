@@ -44,7 +44,7 @@ say ~@array;
 #       copy of it, you will mutate the caller's copy.
 #   However if you modify the argument, you must declare it with "is rw" or
 #   the compiler may complain at you.
-sub insert_at ($in, @arr is rw, $pos) {
+sub insert_at ($in, @arr, $pos) {
     @arr.splice($pos - 1, 0, $in);
     return;
 }

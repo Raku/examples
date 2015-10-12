@@ -21,11 +21,11 @@ use v6;
 
 my @l = <a a a a b c c a a d e e e e>;
 sub packit (@in) {
-    my @out = [[,]];
+    my @out;
     my @last = [shift @in,];
     for @in -> $t {
         if (@last[0] ne $t) {
-            push @out, [@last,];
+            push @out, @last;
             @last := [$t,];
         }
         else {
@@ -33,7 +33,7 @@ sub packit (@in) {
         }
     }
     if (@last.elems) {
-        push @out, [@last,];
+        push @out, @last;
     }
     return @out;
 }

@@ -43,7 +43,7 @@ say ~@array;
 # b. Using a sub in-place
 #       @arr is declared with "is rw", so if you splice on the actual array, not a
 #       copy of it, you will mutate the caller's copy.
-sub remove-at (@arr is rw, Int $pos) {
+sub remove-at (@arr, Int $pos) {
     @arr.splice($pos - 1, 1);
     return;
 }
