@@ -312,11 +312,11 @@ sub tests {
     ok eval("xxx") == 2, 'set!';
     ok eval("(define xs (list 1 2 3 4))") == [[1,2,3,4]] ,"define";
     ok eval("(define sqr (lambda (x) (* x x)))") , 'define'; ;
-    ok eval("((lambda (x) (* x x)) 13))") == 169, 'lambda';
     ok eval("(sqr 10)") == 100, 'lambda';
     ok eval("(define plus (lambda (x y) (+ x y)))") &&
     eval("(plus 1 2)") == 3, "lambda";
     is eval("(length xs)"), 4, 'length';
+    is eval("((lambda (x) (* x x)) 13)"), 169, 'lambda';
     ok eval("(if (> 1 2) 3 4)") == 4, 'if';
     ok eval("(if (< 1 2) 3 4)") == 3, 'if';
     ok eval("(abs (- 3))") == 3, 'abs';
