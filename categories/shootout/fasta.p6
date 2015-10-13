@@ -252,7 +252,7 @@ makeRepeatFasta('ONE', 'Homo sapiens alu', $n*2, $alu);
 makeRandomFasta('TWO', 'IUB ambiguity codes', $n*3, @iub);
 makeRandomFasta('THREE', 'Homo sapiens frequency', $n*5, @homosapiens);
 
-sub makeCumulative(@genelist is rw) {
+sub makeCumulative(@genelist) {
     my $cp = 0.0;
     for @genelist -> @gene {
         @gene[1] = $cp += @gene[1];

@@ -192,7 +192,7 @@ sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "revcomp.input")
 
     for $input-file.IO.lines {
         dump, $desc = $_, next if /^ \>/;
-        @seq.unshift(.comb.reverse.map({ %trans{$^c} // $^c }));
+        @seq.unshift(|.comb.reverse.map({ %trans{$^c} // $^c }));
         LAST dump;
     }
 
