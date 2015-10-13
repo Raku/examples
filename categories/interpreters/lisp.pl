@@ -143,7 +143,7 @@ our %*BUILTINS    =
         @x.push: @a[1];
         @x;
 },
-'list'   => -> *@a { [ @a.item ]  },
+'list'   => -> *@a { @a.item  },
 'list?'  => ->  $a  { so $a ~~ Positional },
 'null?'  => -> Positional $a  {
         $a.elems == 0
@@ -297,7 +297,7 @@ sub tests {
     ok eval("(* 1 2 5)") == 10, 'product';
     ok eval("(cons 1 2)") == ['1','2'], 'cons';
     ok eval("(append (cons 1 2) 1)") == [<1 2 1>], 'append';
-    ok eval("(list 1 2 3 4)") == [[1,2,3,4]], "list";
+    ok eval("(list 1 2 3 4)") == [1,2,3,4], "list";
     ok eval("(car (list 1 2 3 4))") == 1 ,"car";
     ok eval("(cdr (list 1 2 3 4))") == [2,3,4] ,"cdr";
     ok eval("(list? (list 1 2 3 4))") ,"list?";
