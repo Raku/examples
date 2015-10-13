@@ -160,7 +160,7 @@ our %*BUILTINS    =
 our %*LISP-GLOBAL =
 '#f' => False,
 '#t' => True,
-map { $_.key => Func.new(code => $_.value, desc => "builtin:{$_.key}") }, %*BUILTINS;
+|map { $_.key => Func.new(code => $_.value, desc => "builtin:{$_.key}") }, %*BUILTINS;
 
 our $*LISP-ENV = Env.new(scope => %*LISP-GLOBAL);
 
