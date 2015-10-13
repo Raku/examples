@@ -1,7 +1,17 @@
 .PHONY: html run-all test help
 
-EXAMPLES_DEPS = URI Pod::To::HTML LWP::Simple Algorithm::Soundex DBIish File::Temp Text::VimColour HTTP::Easy Web::Request Term::ANSIColor Term::termios
-
+EXAMPLES_DEPS = \
+		URI \
+		Pod::To::HTML \
+		LWP::Simple \
+		Algorithm::Soundex \
+		DBIish \
+		File::Temp \
+		Text::VimColour \
+		HTTP::Easy \
+		Web::Request \
+		Term::ANSIColor \
+		Term::termios
 
 html: install-deps
 	perl6 htmlify.pl
