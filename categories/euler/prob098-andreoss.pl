@@ -45,7 +45,7 @@ sub anagrams(@x) {
         %result{@v[0].chars}.push:
                 +@v == 2
                   ?? @v.item
-                  !! @v.combinations(2).map(*.item);
+                  !! |@v.combinations(2).map(*.item);
     }
 
     %result;
@@ -61,17 +61,16 @@ sub MAIN(Bool :$verbose = False,
 
     my %words   =  anagrams(@words);
     my $longest-word = %words.keys.max;
-    
-    my %squares =  anagrams(
-        (1 ... (10**($longest-word + 1).sqrt)).list »**» 2
-    );
 
+    my %squares =  anagrams(
+        (1 ... (10**($longest-word + 1).sqrt)) »**» 2
+    );
 
     say max do for 3 ... $longest-word -> \size {
         next unless %words{size};
-        do for @(%words{size}) -> @pair {
+        |do for @(%words{size}) -> @pair {
             next unless %squares{size};
-            do for @(%squares{size}) -> @nums {
+            |do for @(%squares{size}) -> @nums {
                 if correspond(@pair, @nums) {
                     $verbose and say "@pair[] => @nums[]" ;
                     max @nums;

@@ -44,7 +44,7 @@ my $feedback_threshold = 0; # To give some life signals during computation...
 while $prime < $upper_bound {
     $sum += $prime;
     if $prime > $feedback_threshold {
-        say "Processed up to prime number: $prime";
+        say "# Processed up to prime number: $prime";
         $feedback_threshold += 10000;
     }
     $prime = $it();

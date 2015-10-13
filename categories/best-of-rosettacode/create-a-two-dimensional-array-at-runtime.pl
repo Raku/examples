@@ -26,7 +26,7 @@ my @array := [ for ^$major { [ for ^$minor { '@' } ] } ];
 
 @array[ (^$major).pick  ][ (^$minor).pick ] = ' ';
 
-.say for @array;
+.Str.say for @array;
 
 
 # vim: expandtab shiftwidth=4 ft=perl6

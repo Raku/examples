@@ -2,9 +2,9 @@ use v6;
 
 use Test;
 
-plan 60;
+plan 62;
 
-my $skip = True;
+my $skip = %*ENV<PERL6_EXAMPLES_NOSKIP> ?? False !! True;
 
 subtest {
     plan 5;
@@ -71,7 +71,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob006";
 
-skip("prob007 takes too long in tests");
+skip("prob007 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -104,7 +104,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob009";
 
-skip("prob010-polettix.pl takes too long to run");
+skip("prob010-polettix.pl takes too long to run") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -127,7 +127,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob011";
 
-skip("prob012-polettix.pl uses too much memory");
+skip("prob012-polettix.pl uses too much memory") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -150,7 +150,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob013";
 
-skip("prob014-felher.pl takes too long and uses too much memory");
+skip("prob014-felher.pl takes too long and uses too much memory") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -223,7 +223,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob020";
 
-skip("prob021 takes too long to run in tests");
+skip("prob021 takes too long to run in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -246,7 +246,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob022";
 
-skip("prob023 takes too long in tests");
+skip("prob023 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -289,7 +289,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob026";
 
-skip("prob027-shlomif.pl uses too much memory");
+skip("prob027-shlomif.pl uses too much memory") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -362,7 +362,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob033";
 
-skip("prob034 takes too long in tests");
+skip("prob034 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -374,7 +374,7 @@ unless $skip {
     }, "prob034";
 }
 
-skip("prob039 takes too long in tests");
+skip("prob039 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -422,7 +422,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob047";
 
-skip("prob052 takes too long in tests");
+skip("prob052 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -445,7 +445,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob053";
 
-skip("prob054 takes too long in tests");
+skip("prob054 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -468,7 +468,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob059";
 
-skip("prob060 takes too long to run (about 90m)");
+skip("prob060 takes too long to run (about 90m)") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -501,7 +501,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob065";
 
-skip("prob066 takes too long in tests");
+skip("prob066 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -553,7 +553,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob089";
 
-skip("prob092-moritz.pl takes too long to run");
+skip("prob092-moritz.pl takes too long to run") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -602,7 +602,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob100";
 
-skip("prob104-moritz.pl takes too long to run");
+skip("prob104-moritz.pl takes too long to run") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -615,7 +615,7 @@ unless $skip {
     }, "prob104";
 }
 
-skip("prob105 takes too long in tests");
+skip("prob105 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -628,7 +628,7 @@ unless $skip {
     }, "prob105";
 }
 
-skip("prob149-shlomif.pl takes too long to run");
+skip("prob149-shlomif.pl takes too long to run") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -641,7 +641,7 @@ unless $skip {
     }, "prob149";
 }
 
-skip("prob151 takes too long in tests");
+skip("prob151 takes too long in tests") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -674,7 +674,7 @@ subtest {
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob188";
 
-skip("prob189-shlomif.pl takes too long to run");
+skip("prob189-shlomif.pl takes too long to run") if $skip;
 unless $skip {
     subtest {
         plan 1;
@@ -688,10 +688,11 @@ unless $skip {
 }
 
 #| check examples provided by the given authors
-sub check-example-solutions($problem, $expected-output, @authors) {
+sub check-example-solutions($problem, $expected-output, @authors, Bool :$strip_debug = True) {
     for @authors -> $author {
         my $name = "$problem-$author";
         my $output = run-example($name);
+        $output ~~ s:g/^ \s* '#' \N* \n // if $strip_debug;
         is($output.chomp, $expected-output, $name);
     }
 }

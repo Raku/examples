@@ -30,7 +30,7 @@ my @directions = flat ((1, -1 X 2, -2), (2, -2 X 1, -1));
 sub valid_moves($curr, @temp_track=@track) {
     my @valid_squares = @directions.map(->$a,$b { ($curr.key + $a) => ($curr.value + $b) }).grep({0 <= all(.key, .value) < $n});
     # exclude occupied squares. !eqv doesn't work yet.
-    @valid_squares.grep({ not $_ eqv any(@temp_track, $curr) });
+    @valid_squares.grep({ not $_ eqv any(|@temp_track, $curr) });
 }
 
 sub knight($square) {
@@ -39,7 +39,9 @@ sub knight($square) {
 
     # simple heuristic, for move ordering
     my @possible_moves = valid_moves($square).sort: ->$a,$b {
-        valid_moves($a, [@track,$a]).elems <=> valid_moves($b, [@track, $b]).elems;
+        valid_moves($a, [|@track,$a]).elems <=> valid_moves($b, [|@track, $b]).elems
+            or $a.key <=> $b.key
+            or $a.value <=> $b.value;
     };
 
     return unless @possible_moves.elems;

@@ -9,18 +9,18 @@ use v6;
 =head1 Example
 
     > say c(2, <a b c d e>);
-    a b a c a d b c b d c d
+    ((a b) (a c) (a d) (a e) (b c) (b d) (b e) (c d) (c e) (d e))
 
 =end pod
 
-sub c(Int $n, [ $x, *@xs ])
-{
-    if $n  == 0  { return [] }
-    if @xs ~~ () { return () }
-
-    map({ [ $x, @^others ] }, c($n - 1, @xs)), c($n, @xs);
+multi sub c(0,      @xs)          { return ((),) }
+multi sub c(Int $n, [])           { return ()    }
+multi sub c(Int $n, [ $x, *@xs ]) {
+    |map({($x, |@$_)}, c($n - 1, @xs)), |c($n, @xs);
 }
 
-say c(3, <a b c d e f g h i j k l>);
+my @combos = c(3, <a b c d e f g h i j k l>);
+say @combos.elems;
+say @combos[200..*];
 
 # vim: expandtab shiftwidth=4 ft=perl6

@@ -28,7 +28,7 @@ my @m;
 
 my $matrix-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'matrix.txt');
 my $f = open $matrix-file or die "Can't open file for reading: $!";
-for $f.lines <-> $line {
+for $f.lines -> $line {
     @m.push: $line.comb(/\d+/).Array.item;
 }
 $f.close;

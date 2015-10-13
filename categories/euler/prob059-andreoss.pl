@@ -94,7 +94,7 @@ sub MAIN(Bool :$verbose = False,
 
     unless $pass {
         my %variants = guess-password $word, @cipher;
-        $pass  = %variants.max(*.value).key;
+        $pass  = %variants.pairs.max(*.value).key;
         say "The password is more likely to be '$pass'. " if $verbose;
     }
 

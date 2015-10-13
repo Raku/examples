@@ -38,11 +38,7 @@ my $result;
 ==> map -> @triple { [*] @triple } \
 
 # ... to give the result.
-# We don't .say directly on the output yet, since Rakudo (2015.02) doesn't
-# yet handle this case of a feed into a .say
-==> $result;
-
-# print result
-$result.[0].say;
+# XXX Rakudo feed operator wraps results in an extra sequence, thus .[0]
+==> { .[0].say }();
 
 # vim: expandtab shiftwidth=4 ft=perl6

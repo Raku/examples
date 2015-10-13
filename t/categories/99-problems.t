@@ -34,7 +34,7 @@ for @script-names -> $name {
     }
 }
 
-done;
+done-testing;
 
 #| return hash of expected output for each example script
 sub expected-output {
@@ -298,7 +298,8 @@ sub expected-output {
     END
 
     %expected-output{"P26-topo.pl"} = q:to/END/;
-    a b c a b d a b e a b f a b g a b h a b i a b j a b k a c d a c e a c f a c g a c h a c i a c j a c k a d e a d f a d g a d h a d i a d j a d k a e f a e g a e h a e i a e j a e k a f g a f h a f i a f j a f k a g h a g i a g j a g k a h i a h j a h k a i j a i k a j k b c d b c e b c f b c g b c h b c i b c j b c k b d e b d f b d g b d h b d i b d j b d k b e f b e g b e h b e i b e j b e k b f g b f h b f i b f j b f k b g h b g i b g j b g k b h i b h j b h k b i j b i k b j k c d e c d f c d g c d h c d i c d j c d k c e f c e g c e h c e i c e j c e k c f g c f h c f i c f j c f k c g h c g i c g j c g k c h i c h j c h k c i j c i k c j k d e f d e g d e h d e i d e j d e k d f g d f h d f i d f j d f k d g h d g i d g j d g k d h i d h j d h k d i j d i k d j k e f g e f h e f i e f j e f k e g h e g i e g j e g k e h i e h j e h k e i j e i k e j k f g h f g i f g j f g k f h i f h j f h k f i j f i k f j k g h i g h j g h k g i j g i k g j k h i j h i k h j k i j k
+    220
+    ((g h i) (g h j) (g h k) (g h l) (g i j) (g i k) (g i l) (g j k) (g j l) (g k l) (h i j) (h i k) (h i l) (h j k) (h j l) (h k l) (i j k) (i j l) (i k l) (j k l))
     END
 
     %expected-output{"P31-rhebus.pl"} = q:to/END/;
@@ -609,7 +610,7 @@ sub expected-output {
     END
 
     %expected-output{"P91-edpratomo.pl"} = q:to/END/;
-    FOUND: [0 => 0, 1 => 2, 0 => 4, 2 => 3, 4 => 4, 3 => 2, 4 => 0, 2 => 1, 3 => 3, 4 => 1, 2 => 0, 0 => 1, 1 => 3, 3 => 4, 4 => 2, 3 => 0, 1 => 1, 0 => 3, 2 => 4, 4 => 3, 3 => 1, 1 => 0, 0 => 2, 1 => 4, 2 => 2]
+    FOUND: [0 => 0, 1 => 2, 0 => 4, 2 => 3, 4 => 4, 3 => 2, 4 => 0, 2 => 1, 0 => 2, 1 => 0, 3 => 1, 4 => 3, 2 => 4, 0 => 3, 1 => 1, 3 => 0, 4 => 2, 3 => 4, 1 => 3, 0 => 1, 2 => 0, 4 => 1, 2 => 2, 1 => 4, 3 => 3]
     END
 
     return %expected-output;
