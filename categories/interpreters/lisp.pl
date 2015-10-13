@@ -133,7 +133,7 @@ our %*BUILTINS    =
 'length' => -> $a {
         $a.elems
 },
-'cons'   => -> *@a { [ @a.item ]},
+'cons'   => -> *@a { @a.item },
 'car'    => ->  @a {  @a[0] },
 'cdr'    => ->  @a {
         @a[1...*]
@@ -295,7 +295,7 @@ sub tests {
     ok eval("(not #f)") == True, "booleans";
     ok eval("(+ 1 2 3)") == 6, 'sum';
     ok eval("(* 1 2 5)") == 10, 'product';
-    ok eval("(cons 1 2)") == [['1','2']], 'cons';
+    ok eval("(cons 1 2)") == ['1','2'], 'cons';
     ok eval("(append (cons 1 2) 1)") == [<1 2 1>], 'append';
     ok eval("(list 1 2 3 4)") == [[1,2,3,4]], "list";
     ok eval("(car (list 1 2 3 4))") == 1 ,"car";
