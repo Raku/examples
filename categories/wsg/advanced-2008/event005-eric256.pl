@@ -149,7 +149,7 @@ sub MAIN(Str :$pw = "", Bool :$verbose = False) {
     my $password = $pw || prompt("Enter password to test: ");
 
     my $input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "wordlist.txt");
-    my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars > 6}) X 1);
+    my %dict = (($input-file.IO.lines.grep: {.chars > 6}) X 1).flat;
 
     say "Testing strength of password '$password'" if $verbose;
 

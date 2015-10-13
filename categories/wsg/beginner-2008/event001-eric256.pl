@@ -43,9 +43,9 @@ script should still return the correct number of pairs.
 
 my @cards = qw{6 5 6 6 K};
 my $p = 0;
-for @cards[0..@cards-2].kv -> $k, $v {
-    $p += (@cards[$k+0 .. ^*-1].grep: {$_ eq $v}).elems -1
-};
+for @cards.kv -> $k, $v {
+    $p += @cards[$k+1 .. *].grep: {$_ eq $v}
+}
 say "Total: $p";
 
 # vim: expandtab shiftwidth=4 ft=perl6

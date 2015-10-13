@@ -114,7 +114,7 @@ L<http://web.archive.org/web/20080321224441/http://www.microsoft.com/technet/scr
 
 sub MAIN(Bool :$verbose = False) {
     my $input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "wordlist.txt");
-    my %dict = ( ($input-file.IO.slurp.split("\n").grep: {.chars == 7}) X 1);
+    my %dict = (($input-file.IO.lines.grep: {.chars == 7}) X 1).flat;
 
     my %digits = (
         2 => (<a b c>),
