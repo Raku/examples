@@ -306,8 +306,8 @@ sub tests {
     ok eval("(equal? 1 1)") ,"equal?";
     ok !eval("(equal? 1 0)") ,"equal?";
     #ok !eval("(symbol? 1)") ,"symbol?"; # todo
-                                         #ok eval("(symbol? +)") ,"symbol?";  # todo
-                                                                              ok eval("(define xxx 1)") == 1 ,"define";
+    #ok eval("(symbol? +)") ,"symbol?";  # todo
+    ok eval("(define xxx 1)") == 1 ,"define";
     eval("(set! xxx 2)");
     ok eval("xxx") == 2, 'set!';
     ok eval("(define xs (list 1 2 3 4))") == [[1,2,3,4]] ,"define";
