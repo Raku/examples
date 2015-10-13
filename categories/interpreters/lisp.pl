@@ -56,10 +56,7 @@ class Env {
         my $verb = @x.shift;
         given $verb {
             when 'quote'   {
-                if @x[0] ~~ Positional {
-                    [ @x[0] ];
-                }
-                else { @x[0] }
+                @x[0];
             }
             when 'if'      {
                 my ($test,
@@ -324,7 +321,8 @@ sub tests {
     ok eval("(if (< 1 2) 3 4)") == 3, 'if';
     ok eval("(abs (- 3))") == 3, 'abs';
     ok eval("(begin 1 2 3 4 5)") == 5, 'begin';
-    ok eval("(quote (1 2 3 4 5))") == [[<1 2 3 4 5>]], 'quote';
+    ok eval("(quote (1 2 3 4 5))") == [<1 2 3 4 5>], 'quote';
+    ok eval("(quote (1))") == ['1',], 'quote';
     ok (eval "(list 1 (list 2 (list 3 (list 3 5))))" ) == [["1", ["2", ["3", ["3", "5"]]]]], 'nested list';
     ok eval(qq{ (define fib (lambda (n)  (if (< n 2)  1  (+ (fib (- n 1)) (fib (- n 2)))))) })  &&
     eval("(fib 10)") == 89, 'fib(10)';
