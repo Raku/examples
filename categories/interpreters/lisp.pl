@@ -85,7 +85,7 @@ class Env {
             when 'lambda' | 'λ' {
                 my ($vars, $exp) = @x;
                 Func.new( code => -> *@argv {
-                    my %x = ($vars.list Z @argv);
+                    my %x = flat ($vars.list Z @argv);
                     my $new-env = Env.new(scope => %x , outer => self);
                     $new-env.evaluate-tokens($exp)
                 },
