@@ -67,7 +67,7 @@ my $n = prompt "Number of bracket pairs: ";
 {
     sub balanced($s) {
         .none < 0 and .[*-1] == 0
-        given [\+] '\\' «leg« $s.comb.cache;
+            given ([\+] '\\' «leg« $s.comb).cache;
     }
 
     my $s = <[ ]>.roll($n*2).join;

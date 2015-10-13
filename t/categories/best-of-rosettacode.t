@@ -96,7 +96,7 @@ plan 15;
     like($output, rx/^^'Dimensions'/, $name ~ ": contains prompt");
     like($output, rx/['@' \s]+/, $name ~ ": contains array element symbols");
     $output.=chomp;
-    my $match = $output ~~ m:g/['@' \s]+/;
+    my $match = $output ~~ m:g/['@' \s+]+/;
     my $num-rows = (split /\n/, $match).elems;
     is($num-rows, 3, $name ~ ": three rows of @ chars");
     my @num-ats-in-row = (split /\n/, $match).map: { (split /\s+/, $_).elems };
