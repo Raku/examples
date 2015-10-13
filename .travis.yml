@@ -1,20 +1,9 @@
-# XXX module deps added below should also go in 'util/update-and-sync' and the test
 sudo: false
 
 language: perl6
 
 install:
     - rakudobrew build-panda
-    - panda install URI
-    - panda install Pod::To::HTML
-    - panda install LWP::Simple
-    - panda install Algorithm::Soundex
-    - panda install DBIish
-    - panda install HTTP::Easy
-    - panda install File::Temp
-    - panda install Web
-    - panda install Term::ANSIColor
-    - panda install Term::termios
 
 script:
     - make test
