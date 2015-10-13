@@ -175,7 +175,7 @@ multi read-from-tokens([]) {
     fail  "unexpected EOF while reading"
 }
 
-multi read-from-tokens(@tokens is copy) {
+multi read-from-tokens(@tokens) {
     my $token = @tokens.shift;
     given $token {
         when '(' {
