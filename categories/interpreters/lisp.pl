@@ -344,7 +344,7 @@ sub tests {
                (sqrt-iter 1.0)))) });
     ok eval("(sqrt 4)").Int == 2, 'sqrt example';
 
-    done;
+    done-testing;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
