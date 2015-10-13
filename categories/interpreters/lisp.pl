@@ -165,11 +165,11 @@ our %*LISP-GLOBAL =
 our $*LISP-ENV = Env.new(scope => %*LISP-GLOBAL);
 
 sub tokenize(Str $s) {
-    $s.trans(
-        <()> => [' ( ', ' ) ' ])\
-            .split(/\s+/, :g)\
-                .grep(*.chars);
-            }
+    my @tokens = $s.trans(<()> => [' ( ', ' ) ' ])\
+        .split(/\s+/, :g)\
+            .grep(*.chars);
+    return @tokens.Array;
+}
 
 multi read-from-tokens([]) {
     fail  "unexpected EOF while reading"
