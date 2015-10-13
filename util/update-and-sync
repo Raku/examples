@@ -8,18 +8,6 @@ set -x
 ulimit -v 2097152   # 2 GB
 ulimit -t 3600      # 1 hour
 
-# need most up to date perl6 to build examples at present
-#source /home/rakudobrew/.rakudobrew-bash
-
-# purge rakudobrew
-# this is necessary, as sometimes the Rakudo stack needs to be completely
-# rebuilt, and this is the only way to ensure this in an automated manner
-rm -rf $HOME/.rakudobrew
-git clone https://github.com/tadzik/rakudobrew $HOME/.rakudobrew
-export PATH=$PATH:$HOME/.rakudobrew/bin
-
-rakudobrew build moar
-rakudobrew build-panda
 cd ~/perl6-examples
 git fetch
 before=$(git rev-parse HEAD)
@@ -32,9 +20,23 @@ else
     LOGDIR=$HOME/perl6-examples/html/build-log
     mkdir -p "$LOGDIR"
     DATE=$(date --iso-8601=minutes)
-    LOGFILE="$LOGDIR/build-$DATE.log";
-    echo "Writing logs to $LOGFILE";
+    LOGFILE="$LOGDIR/build-$DATE.log"
+    echo "Writing logs to $LOGFILE"
     exec >$LOGFILE 2>&1
+
+    echo "Building Rakudo and Panda"
+    # need most up to date perl6 to build examples at present
+    #source /home/rakudobrew/.rakudobrew-bash
+
+    # purge rakudobrew
+    # this is necessary, as sometimes the Rakudo stack needs to be completely
+    # rebuilt, and this is the only way to ensure this in an automated manner
+    rm -rf $HOME/.rakudobrew
+    git clone https://github.com/tadzik/rakudobrew $HOME/.rakudobrew
+    export PATH=$PATH:$HOME/.rakudobrew/bin
+
+    rakudobrew build moar
+    rakudobrew build-panda
 
     echo 'Cleaning out old HTML files'
     # don't clean out html/ entirely, because there are some files
