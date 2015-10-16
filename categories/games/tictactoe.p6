@@ -15,7 +15,7 @@ Find out who won, if anyone, in a game of tic-tac-toe.
 
 =end pod
 
-sub tictactoe-masak (*@b) {
+sub tictactoe-masak (**@b) {
     my @lines = [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6];
     for @lines {
         if ([==] (my @l = slicel(@b, $_))) && all @l {
@@ -30,10 +30,11 @@ sub slicel(@a, @s) {
 
 tictactoe-masak([-1, 0, 0],
                 [ 0,-1, 0],
-                [ 0, 0,-1]);
+                [ 0, 0,-1],
+            );
 
 sub tictactoe-rhebus (*@b) {
-    my @lines = (0,3,6 X+ 0,1,2),(0,1,2 X+ 0,3,6),0,4,8,2,4,6;
+    my @lines = flat (0,3,6 X+ 0,1,2),(0,1,2 X+ 0,3,6),0,4,8,2,4,6;
     for @lines -> $a,$b,$c {
         if @b[$a] && [==] @b[$a,$b,$c] {
             say "@b[$a] won"
@@ -46,7 +47,7 @@ tictactoe-rhebus( 1, 1,-1,
                  -1, 0, 0);
 
 sub tictactoe-moritz (*@b) {
-    my @lines = (0,3,6 X+ ^3), (^3 X+ 0,3,6), 0,4,8,2,4,6;
+    my @lines = flat (0,3,6 X+ ^3), (^3 X+ 0,3,6), 0,4,8,2,4,6;
     for @lines -> $a, $b, $c {
         if @b[$a] && [==] @b[$a,$b,$c] {
             say "@b[$a] won"
@@ -59,7 +60,7 @@ tictactoe-moritz( 1, 1, 1,
                  -1,-1, 0);
 
 sub tictactoe-rhebus2 (*@b) {
-    my @lines = ^9,(^3 X+ 0,3,6),8,4,(^4 Z+ ^4);
+    my @lines = flat ^9,(^3 X+ 0,3,6),8,4,(^4 Z+ ^4);
     say ~@lines;
     for @lines -> $a, $b, $c {
         if @b[$a] && [==] @b[$a,$b,$c] {
