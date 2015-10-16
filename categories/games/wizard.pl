@@ -114,7 +114,7 @@ class Person is Mortal {
         $enemy.life.say;
         say $enemy.name, " is attacking you! What will you do?";
 
-        until ($choice eq 'f' or $enemy.dead) {
+        until ($choice //'') eq 'f' or $enemy.dead {
             my @options;
             for @.weapons -> $wep {
                 @options.push(
