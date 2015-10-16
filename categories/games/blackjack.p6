@@ -34,7 +34,7 @@ my @values = (
 
 my @suites = < spades clubs diamonds hearts >;
 
-my @deck = ( @values X @suites ).map: { my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value };
+my @deck = flat( @values X @suites ).map: { my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value };
 
 my @cards = @deck.pick( @deck.elems );
 
