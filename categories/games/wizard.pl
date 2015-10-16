@@ -13,15 +13,14 @@ my $DEBUG = 0;
 multi wiz-prompt (Str $prompt, @options = ()) {
     my $choice;
     for (@options.kv) -> $key, $item {
-           $item.key //= $key;
+           $item.key //= ~$key;
     }
 
     until (defined $choice && $choice ~~ any(@options.map: {.key})) {
-        say $prompt;
         for @options -> $value {
                 say "\t", $value.key, "\t", $value.text;
         }
-        $choice = .prompt;
+        $choice = prompt($prompt);
     }
 
     my %options_by_key = @options.kv;
@@ -36,13 +35,13 @@ sub cls {
    #system(($*OS eq any <MSWin32 mingw>) ?? 'cls' !! 'clear');
  }
 
-sub random ($low,$high) {int( ($high - $low).rand + $low ) + 1; };
+sub random ($low,$high) { ($low..$high).pick }
 #multi sub infix:<.?.> ($low,$high) {int( rand($high - $low) + $low ) + 1; };
 
 class Option {
     has Str $.key is rw ;
     has Str $.text is rw ;
-    has Str $.param is rw ;
+    has $.param is rw ;
 }
 
 class WObject {
