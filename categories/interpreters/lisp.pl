@@ -10,9 +10,133 @@ Inspired by L<http://www.norvig.com/lispy.html>
 
 =end pod
 
-subset Number of Str where  -> $x {
-    so $x ~~ /^^ <[-+]>?\d+ ( '.' \d* )? $$/
+class Symbol {
+    has $.name;
+    
+    method CALL-ME($x) {
+        Symbol.new(name => $x);
+    }
+
+    method gist { "#<symbol:{$.name}>" }
+    method Str  { $.name }
 }
+
+class Literal {
+    has $.value;
+    method CALL-ME($x) {
+        Literal.new(value => $x)
+    }
+
+    method gist { '"' ~ $.value ~ '"' }
+    method Str  {     ~ $.value       }
+}
+
+grammar Lisp::Grammar  {
+    rule TOP {
+       ^^ <statement>+ $$
+    } 
+
+    rule statement {
+        [ <sexp> |  <atom> ] 
+    }
+
+    proto token bool { * }
+    token bool:sym<true>    {  '#t'  }
+    token bool:sym<false>   {  '#f'  }
+    
+    proto token number { * } 
+    token number:sym<integer> { <[-+]>?   \d+            }
+    token number:sym<float>   { <[-+]>? [ \d+ ]? '.' \d+ }
+    
+    # TODO more number types
+
+    proto token atom { * }
+
+    token atom:sym<bool>   { <bool>   }
+    token atom:sym<number> { <number> }
+    token atom:sym<string> { <string> }
+    token atom:sym<quote>  { <quote>  }
+    token atom:sym<symbol> { <symbol> }
+    
+    token quote {
+        \c[APOSTROPHE] <statement>
+    } 
+    token symbol {
+        <-[\c[APOSTROPHE]()\s]>+
+    }
+    rule sexp {
+        '('  ~ ')' <statement>*
+    }
+    token string {
+        \c[QUOTATION MARK] ~ \c[QUOTATION MARK]
+        [ <str> | \\ <str=.str_escape> ]*
+    }
+    token str {
+        <-[\c[QUOTATION MARK]\\\t\n]>+
+    }
+
+    token str_escape {
+        <[\c[QUOTATION MARK]\\/bfnrt]> 
+    }
+}
+
+class List::Actons {
+    method TOP($/) {
+        make $<statement>».made 
+    }
+
+    method statement($/) {
+        make $/.caps».values.flat».made[0] 
+    }
+    
+    method bool:sym<true>($/)  { make Symbol(~$/) }
+    method bool:sym<false>($/) { make Symbol(~$/) }
+
+    method number:sym<integer>($/) { make $/.Int }
+    method number:sym<float>($/) { make $/.Rat }
+    
+    method atom:sym<bool>($/)   { make $<bool>.made   }
+    method atom:sym<number>($/) { make $<number>.made }
+    method atom:sym<string>($/) { make $<string>.made }
+    method atom:sym<quote>($/)  { make $<quote>.made  }
+    method atom:sym<symbol>($/) { make Symbol($<symbol>.made) }
+    
+    method atom($/) {
+        make $/.caps».values.flat».made[0];
+    }
+    method quote($/) {
+        make [ Symbol('quote'), $<statement>.made.Array ];
+    }
+
+    method symbol($/) {  make ~$/ }
+
+    method sexp($/)    {
+        make $/.caps».values.flat».made.Array;
+    }
+
+    method string($/) {
+        my $str =  +@$<str> == 1
+        ?? $<str>[0].made
+        !! $<str>».made.join ;
+
+        make Literal($str);
+    }
+    
+    method str($/) { make $/.Str }
+
+    method str_escape($/) { make $/.Str }
+}
+
+
+sub parse-sexp(Str $str) {
+    state $a = List::Actons.new();
+    my $parse = Lisp::Grammar.parse($str,  :actions($a));
+
+    return fail "syntax error" unless $parse;
+
+    return $parse.ast[0];
+}
+
 
 class Func {
     has Callable $.code;
@@ -21,30 +145,27 @@ class Func {
     method gist     { "#<{$.desc}>" }
 }
 
-class Symbol {
-    has $.name;
-    method CALL-ME($x) {
-        Symbol.new(name => $x);
-    }
-    method Str  { $.name }
-}
-
 class Env {
-    has       %.scope;
+    has       %.scope is rw;
     has  Env  $.outer;
+
     method resolve($key) is rw {
+        
         if %.scope{$key}:exists {
-            %.scope{$key}
+             %.scope{$key}
         }
-        else {
-            fail "Not found symbol '$key'" unless $.outer;
-            $.outer.resolve($key)
+        else {    
+            fail "unbound symbol '$key'" unless $.outer;
+             $.outer.resolve($key);        
         }
     }
     method merge(*@env) {
         %.scope = %.scope, %(@env)
     }
-    multi method evaluate-tokens(Number $x) {
+    multi method evaluate-tokens(Int $x) {
+        $x
+    }
+    multi method evaluate-tokens(Rat $x) {
         $x
     }
     multi method evaluate-tokens(Symbol $x) {
@@ -56,12 +177,14 @@ class Env {
         my $verb = @x.shift;
         given $verb {
             when 'quote'   {
+                fail "syntax error" if +@x > 1;
                 @x[0];
             }
             when 'if'      {
                 my ($test,
-                $conseq,
-                $alt) = @x;
+                    $conseq,
+                    $alt) = @x;
+                
                 self.evaluate-tokens(
                     self.evaluate-tokens($test)
                     ?? $conseq
@@ -73,6 +196,10 @@ class Env {
                 self.resolve($var) = self.evaluate-tokens($exp);
                 #return $var;
 
+            }
+            when 'eval' {
+                my ($quoted-sexp) = @x;
+                self.evaluate-tokens($quoted-sexp[1]);
             }
             when 'define'  {
                 my ($var, $exp) = @x;
@@ -90,10 +217,10 @@ class Env {
                     $new-env.evaluate-tokens($exp)
                 },
                 desc => "closure:arity:{$vars.elems}" );
-
             }
             when 'begin'   {
                 my $val;
+                fail "syntax error" unless +@x;
                 for @x -> $exp {
                     $val = self.evaluate-tokens($exp);
                 }
@@ -104,108 +231,91 @@ class Env {
                 my @args = map {
                     self.evaluate-tokens($^x)
                 }, @x;
-                fail "$verb is not a function" unless
-                $func ~~ Func;
+                fail "$verb is not a function" unless $func ~~ Func;
                 $func.eval(@args)
-
-
             }
 
         }
 
     }
+    multi method evaluate-tokens(Literal $x) {
+        $x
+    }
+    multi method evaluate-tokens(Any $x) {
+        fail $x.^name ~ " is NYI"
+    }
+    multi method add-builtin(*@x, *%x) {
+        for |@x,|%x -> $p {
+            $.scope{$p.key} = Func.new:
+                            code => $p.value,
+                            desc => "builtin:{$p.key}"
+        }       
+    }
+    method add-constant(*@x, *%x) {
+        for |@x,|%x -> $p {
+            $.scope{$p.key} = $p.value
+        }
+    }
 }
 
-our %*BUILTINS    =
-'+'          => -> *@a { [+] @a },
-'-'          => -> *@a { +@a > 1 ?? [-] @a !! - @a[0] },
-'*'          => -> *@a { [*] @a },
-'/'          => -> *@a { [/] @a },
-'abs'        => -> $a { abs $a },
-'not'        => -> $a { not $a } ,
-'so'         => -> $a { so  $a } ,
-'>'          => -> *@a { [>] @a },
-'<'          => -> *@a { [<] @a },
-'>='         => -> *@a { [>=]  @a },
-'<='         => -> *@a { [<=]  @a },
-'='          => -> *@a { [==]  @a },
-'equal?'     => -> *@a { [~~]  @a },
-'length' => -> $a {
-        $a.elems
-},
-'cons'   => -> *@a { @a.item },
-'car'    => ->  @a {  @a[0] },
-'cdr'    => ->  @a {
-        @a[1...*]
-},
-'append' => -> *@a {
-        my @x =  @a[0][0..*];
-        @x.push: @a[1];
-        @x;
-},
-'list'   => -> *@a { @a.item  },
-'list?'  => ->  $a  { so $a ~~ Positional },
-'null?'  => -> Positional $a  {
-        $a.elems == 0
-},
-'symbol?' => -> *@a {
-        #so @a ~~ Str
-},
-'display' => -> *@a {
-        say join ', ', @a.map(*.Str);
-},
-'exit'    => -> $a { exit $a }
-;
-
-our %*LISP-GLOBAL =
-'#f' => False,
-'#t' => True,
-|map { $_.key => Func.new(code => $_.value, desc => "builtin:{$_.key}") }, %*BUILTINS;
+our %*LISP-GLOBAL;
 
 our $*LISP-ENV = Env.new(scope => %*LISP-GLOBAL);
 
-sub tokenize(Str $s) {
-    my @tokens = $s.trans(<()> => [' ( ', ' ) ' ])\
-        .split(/\s+/, :g)\
-            .grep(*.chars);
-    return @tokens.Array;
-}
 
-multi read-from-tokens([]) {
-    fail  "unexpected EOF while reading"
-}
+$*LISP-ENV.add-constant:
+    '#t' => True,
+    '#f' => False
+;
 
-multi read-from-tokens(@tokens) {
-    my $token = @tokens.shift;
-    given $token {
-        when '(' {
-            fail "unexpected EOF while reading" unless @tokens;
-            my @x = gather while @tokens[0] ne ')' {
-                take read-from-tokens(@tokens)
-            }
-            @tokens.shift;
-            return @x.item;
-        }
-        when ')' { fail "unexpected ')'" }
-    }
+$*LISP-ENV.add-builtin:
+     '>'       =>-> *@a { [>] @a },
+     '<'       =>-> *@a { [<] @a },
+     '>='      =>-> *@a { [>=] @a },
+     '<='      =>-> *@a { [<=] @a },
+     '='       =>-> *@a { [==] @a },
+;
 
-    atom $token;
-}
+# ariphmetic ops
+$*LISP-ENV.add-builtin:
+     '+'       =>-> *@a { [+] @a },
+     '-'       =>-> *@a { +@a > 1 ?? [-] @a !! - @a[0] },
+     '*'       =>-> *@a { [*] @a },
+     '/'       =>-> *@a { [/] @a },
+     abs       =>   &abs,
+;
 
+# lisp ops
+$*LISP-ENV.add-builtin:
+     list    =>-> *@a { @a.item  },
+     length  =>->  $a { $a.elems  },
+     cons    =>-> *@a { @a.item   },
+     car     =>->  @a { @a[0]     },
+     cdr     =>->  @a { @a[1...*] },
+     append  =>-> *@a {
+         my @x =  @a[0][0..*];
+         @x.push: @a[1];
+         @x;
+     },
+     'list?'   =>-> *@a  { so @a[0] ~~ Positional },
+     'null?'   =>-> *@a  { fail "too many arguments" unless +@a == 1 ;  @a[0].elems == 0 },
+;
 
-sub read(Str $s ) {
-    read-from-tokens tokenize $s;
-}
+$*LISP-ENV.add-builtin:
+  not     => -> $a { not $a },
+  so      => -> $a { so  $a },
+  'equal?'  => -> *@a { [~~] @a },
+  'symbol?' => -> *@a {
+    fail "NYI"
+  },
+  display => -> *@a {
+    say join ', ', @a.map(*.Str);
+  },
+  exit    => -> $a { exit $a };
 
-multi atom(Number $token) {
-    $token
-}
-multi atom($token) {
-    Symbol($token)
-}
 
 sub eval(Str $sexp) {
-    $*LISP-ENV.evaluate-tokens(read($sexp))
+    $*LISP-ENV.evaluate-tokens(parse-sexp $sexp)
 }
 
 sub balanced($s) {
@@ -222,12 +332,24 @@ sub balanced($s) {
     $l ;
 }
 
-sub repl {
+multi lispify(Positional $x) {
+    '\'(' ~ @$x.map(*.&lispify).join(' ') ~ ')'
+}
+multi lispify(Bool $x where so * )  { '#t' }
+multi lispify(Bool $x where not so * )  { '#f' }
+multi lispify(Any $x) { $x.gist }
+
+sub REPL {
     my Str $exp = '';
     my Int $balance = 0;
     loop {
         try {
-            exit unless defined my $p =  prompt($exp eq '' ?? "> " !! ("--" xx $balance) ~ "> ");
+            my $p =  prompt(
+                $exp eq ''
+                    ?? '> '
+                    !! ('--' xx $balance) ~ '> '
+            );
+            exit unless defined $p;
             $exp ~= "$p ";
             $exp ~~ s:i/ ';' ** 1..* .*? $$//;
             $balance = balanced $exp;
@@ -235,7 +357,9 @@ sub repl {
             next if $balance != 0 || $exp !~~ /\S+/;
 
             my $result = eval $exp;
-            say ";; " ~ $result.&to-string;
+            
+            say ";; " ~ $result.&lispify;
+            
             CATCH {
                 default {
                     say "error: $_";
@@ -246,22 +370,15 @@ sub repl {
     }
 }
 
-multi to-string(Number $exp) {
-    $exp
-}
-multi to-string(Func $exp) {
-    $exp.gist;
-}
-multi to-string(Positional $exp) {
-    "(" ~ join ' ', $exp[0].map(*.&to-string) ~ ")"
-}
-multi to-string(Symbol $exp) { $exp }
-
-multi to-string(Bool $x ) { $x ?? "#t" !! "#f" }
-multi to-string(Any $x) { $x.perl }
-
-sub MAIN(Bool :$run-tests = False,
-         Str  :$file) {
+sub MAIN(Bool :$test     = False,
+         Bool :$debug    = False,
+         Str  :$file            ,
+         Str  :$command         ,
+         ) {
+    if $command {
+        return eval $command
+    }        
+    
     if $file {
         die "Can't open '$file'" unless $file.IO.f;
         my $exp;
@@ -276,23 +393,55 @@ sub MAIN(Bool :$run-tests = False,
         }
         return;
     }
-    if $run-tests {
-        return tests;
-    }
-    repl;
+    
+    return TEST  if $test;
+    return DEBUG if $debug;
+    
+    REPL
 }
 
+sub DEBUG {
+    ... 
+}
 
-sub tests {
-
+sub TEST {
     use Test;
+    
+    ok so parse-sexp("1"), "number";
 
-    ok tokenize("(1 2 3 4 5)") == ["(", "1", "2", "3", "4", "5", ")"], "tokenize";
-    ok read("(1 2 3 4 5)") == ["1", "2","3","4","5"], "read";
-    ok read("(1 2 3 (4 5 6))")  == ["1", "2", "3", ["4", "5", "6"]], "read";
+    ok so parse-sexp("#t"), "true";
+    ok so parse-sexp("#f"), "false";
+    ok so parse-sexp("(- 1 2 3)"), "simple s-exp";
+    ok so parse-sexp("(+ 1 2 3 (* 1 2 3))"), "nested s-exps";
 
-    ok eval("(not #t)") == False, "booleans";
-    ok eval("(not #f)") == True, "booleans";
+    is-deeply parse-sexp('1'), 1, "parse atom (numeric)";
+    
+    is-deeply parse-sexp('#f'), Symbol('#f'),  "parse atom (boolean)";
+    is-deeply parse-sexp('var'), Symbol('var'),  "parse atom (variable)";
+    
+    ok parse-sexp("(1 2 3 4 5)") == ["1", "2","3","4","5"], "sexp";
+    ok parse-sexp("(1 2 3 (4 5 6))")  == ["1", "2", "3", ["4", "5", "6"]], "nested sexps";
+
+    {
+        my $y =  [Symbol('+'), 1, 2, 3];
+        is-deeply parse-sexp('(+ 1 2 3)'), $y , "s-exp";
+        is-deeply parse-sexp('   (+    1   2    3 )'), $y, "spaces are irrelevant";
+    }
+    
+    {
+        my $y = [Symbol('foo'), 1, [Symbol('quote'), [1, 2, 3]]];
+        is-deeply parse-sexp("(foo 1 '(1 2 3))"),
+        $y;
+        "quote by symbol";
+        is-deeply parse-sexp("(foo 1 (quote (1 2 3)))"), $y, "quote by word";
+    }
+    # 
+    
+    ok !eval("(not #t)"), "booleans";
+    ok eval("(not #f)") , "booleans";
+    ok !eval("(so #f)") , "booleans";
+    ok  eval("(so #t)") , "booleans";
+
     ok eval("(+ 1 2 3)") == 6, 'sum';
     ok eval("(* 1 2 5)") == 10, 'product';
     ok eval("(cons 1 2)") == ['1','2'], 'cons';
@@ -303,13 +452,17 @@ sub tests {
     ok eval("(list? (list 1 2 3 4))") ,"list?";
     ok !eval("(list? #f)") ,"list?";
     ok eval("(null? (list))") ,"null? on empty list";
+    ok eval("(null? '())") , 'null? on `() ';
+    ok !eval("(null? '(1 2 3))") , 'null?';
     ok eval("(equal? 1 1)") ,"equal?";
     ok !eval("(equal? 1 0)") ,"equal?";
-    #ok !eval("(symbol? 1)") ,"symbol?"; # todo
-    #ok eval("(symbol? +)") ,"symbol?";  # todo
-    ok eval("(define xxx 1)") == 1 ,"define";
-    eval("(set! xxx 2)");
-    ok eval("xxx") == 2, 'set!';
+    
+    {
+        ok eval("(define xxx 1)") == 1 ,"define";
+         eval("(set! xxx 2)");
+        ok eval("xxx") == 2, 'set!';
+    }  
+    
     ok eval("(define xs (list 1 2 3 4))") == [[1,2,3,4]] ,"define";
     ok eval("(define sqr (lambda (x) (* x x)))") , 'define'; ;
     is eval("(length xs)"), 4, 'length';
@@ -318,29 +471,35 @@ sub tests {
     ok eval("(define plus (lambda (x y) (+ x y)))") && eval("(plus 1 2)") == 3, "lambda";
     ok eval("(if (> 1 2) 3 4)") == 4, 'if';
     ok eval("(if (< 1 2) 3 4)") == 3, 'if';
+    ok eval("(abs 3)") == 3, 'abs';
     ok eval("(abs (- 3))") == 3, 'abs';
+    
     ok eval("(begin 1 2 3 4 5)") == 5, 'begin';
     ok eval("(quote (1 2 3 4 5))") == [<1 2 3 4 5>], 'quote';
     ok eval("(quote (1))") == ['1',], 'quote';
-    ok (eval "(list 1 (list 2 (list 3 (list 3 5))))" ) == [["1", ["2", ["3", ["3", "5"]]]]], 'nested list';
+
+    ok eval("(eval (quote 1))") == 1 , 'eval';
+    ok eval("(eval '(+ 1 2 3))") == 6 , 'eval';
+    ok (
+        eval "(list 1 (list 2 (list 3 (list 3 5))))" ) ==
+                [["1", ["2", ["3", ["3", "5"]]]]], 'nested list';
     ok eval(qq{ (define fib (lambda (n)  (if (< n 2)  1  (+ (fib (- n 1)) (fib (- n 2)))))) })  &&
     eval("(fib 10)") == 89, 'fib(10)';
-    eval(qq{
-            (define sqrt
-             (lambda (x)
-              (begin
-               (define square (lambda (x) (* x x)))
-               (define average (lambda (x y) (/ (+ x y) 2)))
-               (define good-enough?
-                (lambda (guess)
-                 (< (abs (- (square guess) x)) 0.001)))
-               (define improve (lambda (guess)
-                                (average guess (/ x guess))))
-               (define sqrt-iter (lambda (guess)
-                                  (if (good-enough? guess)
-                                   guess
-                                   (sqrt-iter (improve guess)))))
-               (sqrt-iter 1.0)))) });
+    eval «
+         (define (sqrt x)
+           (begin
+            (define (square x) (* x x))
+            (define (average x y) (/ (+ x y) 2))
+            (define (good-enough? guess x)
+              (< (abs (- (square guess) x)) 0.001))
+            (define (improve guess)
+              (average guess (/ x guess)))
+            (define (sqrt-iter guess)
+              (if (good-enough? guess)
+                  guess
+                (sqrt-iter (improve guess))))
+            (sqrt-iter 1.0)))
+    »;
     ok eval("(sqrt 4)").Int == 2, 'sqrt example';
 
     done-testing;
