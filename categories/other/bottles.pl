@@ -12,15 +12,15 @@ song.
 
 =end pod
 
-my @bottles = ((99...2) X~ ' bottles'),
+my @bottles = (flat ((99...2) X~ ' bottles'),
               '1 bottle',
               'no more bottles',
-              '99 bottles';
+              '99 bottles');
 
-my @actions = 'Take one down and pass it around' xx 99,
-              'Go to the store and buy some more';
+my @actions = (flat 'Take one down and pass it around' xx 99,
+              'Go to the store and buy some more');
 
-for @bottles Z @actions Z @bottles[1..*] {
+for flat @bottles Z @actions Z @bottles[1..*] {
     say "$^a of beer on the wall, $^a of beer.
 $^b, $^c of beer on the wall.\n".tc;
 }
