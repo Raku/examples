@@ -42,10 +42,10 @@ subtest {
 }, "prob003";
 
 subtest {
-    plan 1;
+    plan 2;
 
     my $problem = "prob004";
-    my @authors = <unobe>;
+    my @authors = <unobe xfix>;
     my $expected-output = 906609;
 
     check-example-solutions($problem, $expected-output, @authors)
