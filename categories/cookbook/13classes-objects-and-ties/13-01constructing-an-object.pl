@@ -19,6 +19,6 @@ Merely declare the class.  Constructors are provided for you automatically.
 class Foo {}
 
 my $foo = Foo.new;
-say $foo.isa('Foo') ?? "Yes" !! "No";
+say $foo ~~ Foo ?? "Yes" !! "No";
 
 # vim: expandtab shiftwidth=4 ft=perl6
