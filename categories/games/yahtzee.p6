@@ -11,7 +11,7 @@ L<Yahtzee|http://en.wikipedia.org/wiki/Yahtzee>.
 
 =end pod
 
-sub roll-dice { map { (1..6).pick }, 1..$^rolls };
+sub roll-dice { (1..6).roll($^rolls) };
 
 sub round {
     my @roll = roll-dice(5);
