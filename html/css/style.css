@@ -31,6 +31,8 @@ pre {
     border: 1px solid #CFCFCF;
     padding: 0.6ex;
     color: black;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 pre a, pre a:visited, pre a:link {
