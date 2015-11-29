@@ -35,8 +35,8 @@ else
     git clone https://github.com/tadzik/rakudobrew $HOME/.rakudobrew
     export PATH=$PATH:$HOME/.rakudobrew/bin
 
-    rakudobrew build moar
-    rakudobrew build-panda
+    rakudobrew build moar 6153f1
+    rakudobrew build-panda 490c85
 
     echo 'Cleaning out old HTML files'
     # don't clean out html/ entirely, because there are some files
