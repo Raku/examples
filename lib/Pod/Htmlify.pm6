@@ -189,7 +189,7 @@ class Website is export {
     method p2h($pod) {
         my $vim-colour = $.syntax-highlighting && try {
             require Text::VimColour;
-        };
+        }.^name eq 'Text::VimColour';
 
         my $head = slurp 'template/head.html';
         my $footer = footer-html;
