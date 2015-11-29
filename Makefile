@@ -34,7 +34,7 @@ install-deps:
 	    perl6 -e "use $$dep" 2> /dev/null;\
 	    if [ $$? != 0 ];\
 	    then\
-		panda install $$dep;\
+		${HOME}/.rakudobrew/bin/panda install $$dep;\
 	    fi;\
 	done
 
