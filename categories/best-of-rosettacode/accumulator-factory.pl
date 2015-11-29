@@ -85,13 +85,4 @@ my $a = accum 5;
 $a(4.5);
 say $a(.5);   # Prints "10".
 
-
-=begin pod
-
-=head1 Features used
-
-=item C<> - L<http://perlcabal.org/syn/>
-
-=end pod
-
 # vim: expandtab shiftwidth=4 ft=perl6
