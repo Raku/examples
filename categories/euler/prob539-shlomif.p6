@@ -10,7 +10,7 @@ for 1 .. 64 -> $i
     {
         $mask +|= (0b1 +< $offset);
     }
-    @ar.push({ 't' => (1 +< $i), 'h' => (+^(1 +< ($i-1))), 'o' => $mask})
+    @ar.push({ 't' => (1 +< $i), 'h' => (+^(1 +< ($i-1))), 'o' => $mask});
 }
 
 # print @ar.perl;
@@ -115,7 +115,7 @@ sub fast_S($MAX)
     }
 
 
-    return $s
+    return $s;
 }
 
 my $myMAX = 1000000000000000000;
