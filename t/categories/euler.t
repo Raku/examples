@@ -417,7 +417,7 @@ subtest {
     # assume gcc is available
     my $path = "categories/euler";
     qqx{gcc --std=c99 -fPIC -c -o $path/prob047-gerdr.o $path/prob047-gerdr.c};
-    qqx{gcc -shared -o $path/prob047-gerdr.so $path/prob047-gerdr.o};
+    qqx{gcc -shared -o $path/libprob047-gerdr.so $path/prob047-gerdr.o};
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob047";
