@@ -14,9 +14,11 @@ EXAMPLES_DEPS = \
 		Term::termios
 
 html: install-deps
+	@echo "*** Generating HTML pages ***"
 	perl6 htmlify.pl
 
 html-nohighlight: install-deps
+	@echo "*** Generating HTML pages (without syntax highlighting) ***"
 	perl6 htmlify.pl --no-highlight
 
 run-all: install-deps
@@ -29,6 +31,7 @@ test: install-deps
 	prove --exec perl6 -r t
 
 install-deps:
+	@echo "*** Installing dependencies ***"
 	for dep in $(EXAMPLES_DEPS);\
 	do\
 	    perl6 -e "use $$dep" 2> /dev/null;\
