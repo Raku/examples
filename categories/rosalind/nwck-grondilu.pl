@@ -40,7 +40,7 @@ sub MAIN($input-file = Nil) {
     say gather for $input.lines.list -> $newick, $taxa, $ {
         my ($a, $b) = $taxa.split: ' ';
         my @token = $newick.comb: rx/ <.ident>+ | <[(),]> /;
-        Mu while @token.shift ne $a|$b;
+        Nil while @token.shift ne $a|$b;
         my ($climbs, $descents) = 0 xx 2;
         for @token {
             last if $_ eq $a or $_ eq $b;
