@@ -50,6 +50,8 @@ L<http://rosettacode.org/wiki/24_game#Perl_6>
 
 =end pod
 
+use MONKEY-SEE-NO-EVAL;  # we use EVAL to process user input
+
 grammar Exp24 {
     token TOP { ^ <exp> $ }
     token exp { <term> [ <op> <term> ]* }
