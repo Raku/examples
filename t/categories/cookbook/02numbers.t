@@ -24,6 +24,9 @@ subtest {
     my $expected-output = q:to/EOD/;
     16+4i
     2+1i
+    5
+    3
+    4
     EOD
 
     my $output = run-example($example-name);
