@@ -11,9 +11,9 @@ You want to process all files in a directory
 =end pod
 
 sub MAIN(:$dir = ".") {
-    # print Perl's representation of each file
+    # print a string representation of each file's path
     for dir($dir).sort -> $file {
-        say $file.perl;
+        say Str($file);
     }
 }
 

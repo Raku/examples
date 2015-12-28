@@ -26,7 +26,7 @@ subtest {
     my $expected-output;
     for @filenames -> $file {
         my $path = $*SPEC.catdir($tempdir, $file);
-        $expected-output ~= $path.IO.perl ~ "\n";
+        $expected-output ~= $path.IO.Str ~ "\n";
         my $fh = open $path, :w or die "$!";
         $fh.close;
     }
