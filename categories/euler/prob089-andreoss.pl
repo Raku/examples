@@ -44,6 +44,8 @@ no more than four consecutive identical units.
 
 =end pod
 
+use experimental :cached;
+
 multi roman-to-int() { 0 }
 multi roman-to-int(Str $r where $r.chars > 1 ) {
     roman-to-int(| $r.comb)
