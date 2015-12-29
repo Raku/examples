@@ -3,7 +3,7 @@ use v6;
 use lib 'lib';
 use Test;
 
-use Perl6::Examples;
+use Examples::Categories;
 
 plan 6;
 

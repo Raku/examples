@@ -5,8 +5,9 @@ use Test;
 
 plan 3;
 
-use-ok "Perl6::Examples";
+use-ok "Examples::Categories";
 
+use Examples::Categories;
 use Perl6::Examples;
 use Pod::Convenience;
 

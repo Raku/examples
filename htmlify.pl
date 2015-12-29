@@ -2,7 +2,7 @@ use v6;
 
 use lib 'lib';
 use Pod::Htmlify;
-use Perl6::Examples;
+use Examples::Categories;
 
 sub MAIN(:$no-highlight = False) {
     my %base-categories-table =
