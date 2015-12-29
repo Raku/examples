@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 62;
+plan 65;
 
 my $skip = %*ENV<PERL6_EXAMPLES_NOSKIP> ?? False !! True;
 
@@ -686,6 +686,36 @@ unless $skip {
         check-example-solutions($problem, $expected-output, @authors)
     }, "prob189";
 }
+
+subtest {
+    plan 1;
+
+    my $problem = "prob288";
+    my @authors = <shlomif>;
+    my $expected-output = "Solution == 594452426380733382";
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob288";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob329";
+    my @authors = <shlomif>;
+    my $expected-output = "199740353/29386561536000";
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob329";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob539";
+    my @authors = <shlomif>;
+    my $expected-output = "S(1000000000000000000) = 271051139927967385167988795568221935 (mod = 426334056)";
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob539";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors, Bool :$strip_debug = True) {
