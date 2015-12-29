@@ -36,6 +36,8 @@ Below is "Hello world" in Brainfuck:
 
 =end pod
 
+use MONKEY-SEE-NO-EVAL;  # we need to parse user input
+
 my $hello-bf = "
 ++++++++++    initializes cell zero to 10
 [
