@@ -12,7 +12,7 @@ Inspired by L<http://www.norvig.com/lispy.html>
 
 class Symbol {
     has $.name;
-    
+
     method CALL-ME($x) {
         Symbol.new(name => $x);
     }
@@ -34,20 +34,20 @@ class Literal {
 grammar Lisp::Grammar  {
     rule TOP {
        ^^ <statement>+ $$
-    } 
+    }
 
     rule statement {
-        [ <sexp> |  <atom> ] 
+        [ <sexp> |  <atom> ]
     }
 
     proto token bool { * }
     token bool:sym<true>    {  '#t'  }
     token bool:sym<false>   {  '#f'  }
-    
-    proto token number { * } 
+
+    proto token number { * }
     token number:sym<integer> { <[-+]>?   \d+            }
     token number:sym<float>   { <[-+]>? [ \d+ ]? '.' \d+ }
-    
+
     # TODO more number types
 
     proto token atom { * }
@@ -57,10 +57,10 @@ grammar Lisp::Grammar  {
     token atom:sym<string> { <string> }
     token atom:sym<quote>  { <quote>  }
     token atom:sym<symbol> { <symbol> }
-    
+
     token quote {
         \c[APOSTROPHE] <statement>
-    } 
+    }
     token symbol {
         <-[\c[APOSTROPHE]()\s]>+
     }
@@ -76,31 +76,31 @@ grammar Lisp::Grammar  {
     }
 
     token str_escape {
-        <[\c[QUOTATION MARK]\\/bfnrt]> 
+        <[\c[QUOTATION MARK]\\/bfnrt]>
     }
 }
 
 class List::Actons {
     method TOP($/) {
-        make $<statement>».made 
+        make $<statement>».made
     }
 
     method statement($/) {
-        make $/.caps».values.flat».made[0] 
+        make $/.caps».values.flat».made[0]
     }
-    
+
     method bool:sym<true>($/)  { make Symbol(~$/) }
     method bool:sym<false>($/) { make Symbol(~$/) }
 
     method number:sym<integer>($/) { make $/.Int }
     method number:sym<float>($/) { make $/.Rat }
-    
+
     method atom:sym<bool>($/)   { make $<bool>.made   }
     method atom:sym<number>($/) { make $<number>.made }
     method atom:sym<string>($/) { make $<string>.made }
     method atom:sym<quote>($/)  { make $<quote>.made  }
     method atom:sym<symbol>($/) { make Symbol($<symbol>.made) }
-    
+
     method atom($/) {
         make $/.caps».values.flat».made[0];
     }
@@ -121,7 +121,7 @@ class List::Actons {
 
         make Literal($str);
     }
-    
+
     method str($/) { make $/.Str }
 
     method str_escape($/) { make $/.Str }
@@ -150,13 +150,13 @@ class Env {
     has  Env  $.outer;
 
     method resolve($key) is rw {
-        
+
         if %.scope{$key}:exists {
              %.scope{$key}
         }
-        else {    
+        else {
             fail "unbound symbol '$key'" unless $.outer;
-             $.outer.resolve($key);        
+             $.outer.resolve($key);
         }
     }
     method merge(*@env) {
@@ -184,7 +184,7 @@ class Env {
                 my ($test,
                     $conseq,
                     $alt) = @x;
-                
+
                 self.evaluate-tokens(
                     self.evaluate-tokens($test)
                     ?? $conseq
@@ -249,7 +249,7 @@ class Env {
             $.scope{$p.key} = Func.new:
                             code => $p.value,
                             desc => "builtin:{$p.key}"
-        }       
+        }
     }
     method add-constant(*@x, *%x) {
         for |@x,|%x -> $p {
@@ -357,9 +357,9 @@ sub REPL {
             next if $balance != 0 || $exp !~~ /\S+/;
 
             my $result = eval $exp;
-            
+
             say ";; " ~ $result.&lispify;
-            
+
             CATCH {
                 default {
                     say "error: $_";
@@ -377,8 +377,8 @@ sub MAIN(Bool :$test     = False,
          ) {
     if $command {
         return eval $command
-    }        
-    
+    }
+
     if $file {
         die "Can't open '$file'" unless $file.IO.f;
         my $exp;
@@ -393,20 +393,20 @@ sub MAIN(Bool :$test     = False,
         }
         return;
     }
-    
+
     return TEST  if $test;
     return DEBUG if $debug;
-    
+
     REPL
 }
 
 sub DEBUG {
-    ... 
+    ...
 }
 
 sub TEST {
     use Test;
-    
+
     ok so parse-sexp("1"), "number";
 
     ok so parse-sexp("#t"), "true";
@@ -415,10 +415,10 @@ sub TEST {
     ok so parse-sexp("(+ 1 2 3 (* 1 2 3))"), "nested s-exps";
 
     is-deeply parse-sexp('1'), 1, "parse atom (numeric)";
-    
+
     is-deeply parse-sexp('#f'), Symbol('#f'),  "parse atom (boolean)";
     is-deeply parse-sexp('var'), Symbol('var'),  "parse atom (variable)";
-    
+
     ok parse-sexp("(1 2 3 4 5)") == ["1", "2","3","4","5"], "sexp";
     ok parse-sexp("(1 2 3 (4 5 6))")  == ["1", "2", "3", ["4", "5", "6"]], "nested sexps";
 
@@ -427,7 +427,7 @@ sub TEST {
         is-deeply parse-sexp('(+ 1 2 3)'), $y , "s-exp";
         is-deeply parse-sexp('   (+    1   2    3 )'), $y, "spaces are irrelevant";
     }
-    
+
     {
         my $y = [Symbol('foo'), 1, [Symbol('quote'), [1, 2, 3]]];
         is-deeply parse-sexp("(foo 1 '(1 2 3))"),
@@ -435,8 +435,8 @@ sub TEST {
         "quote by symbol";
         is-deeply parse-sexp("(foo 1 (quote (1 2 3)))"), $y, "quote by word";
     }
-    # 
-    
+    #
+
     ok !eval("(not #t)"), "booleans";
     ok eval("(not #f)") , "booleans";
     ok !eval("(so #f)") , "booleans";
@@ -456,13 +456,13 @@ sub TEST {
     ok !eval("(null? '(1 2 3))") , 'null?';
     ok eval("(equal? 1 1)") ,"equal?";
     ok !eval("(equal? 1 0)") ,"equal?";
-    
+
     {
         ok eval("(define xxx 1)") == 1 ,"define";
          eval("(set! xxx 2)");
         ok eval("xxx") == 2, 'set!';
-    }  
-    
+    }
+
     ok eval("(define xs (list 1 2 3 4))") == [[1,2,3,4]] ,"define";
     ok eval("(define sqr (lambda (x) (* x x)))") , 'define'; ;
     is eval("(length xs)"), 4, 'length';
@@ -473,7 +473,7 @@ sub TEST {
     ok eval("(if (< 1 2) 3 4)") == 3, 'if';
     ok eval("(abs 3)") == 3, 'abs';
     ok eval("(abs (- 3))") == 3, 'abs';
-    
+
     ok eval("(begin 1 2 3 4 5)") == 5, 'begin';
     ok eval("(quote (1 2 3 4 5))") == [<1 2 3 4 5>], 'quote';
     ok eval("(quote (1))") == ['1',], 'quote';
