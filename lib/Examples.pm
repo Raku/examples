@@ -1,4 +1,4 @@
-unit module Perl6::Examples;
+unit module Examples;
 
 use v6;
 

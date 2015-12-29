@@ -8,7 +8,7 @@ plan 3;
 use-ok "Examples::Categories";
 
 use Examples::Categories;
-use Perl6::Examples;
+use Examples;
 use Pod::Convenience;
 
 subtest {

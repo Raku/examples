@@ -2,7 +2,7 @@ use v6;
 
 use lib 'lib';
 use Test;
-use Perl6::Examples;
+use Examples;
 use Examples::Categories;
 use Pod::Convenience;
 

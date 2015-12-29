@@ -3,7 +3,7 @@ unit module Pod::Htmlify;
 use URI::Escape;
 use Pod::To::HTML;
 use Pod::Convenience;
-use Perl6::Examples;
+use Examples;
 use MONKEY-SEE-NO-EVAL;  # until we have better serialisation
 
 class Website is export {
