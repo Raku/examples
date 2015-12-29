@@ -12,7 +12,7 @@ running from terminal or in batch mode (like cron on UNIX)
 =end pod
 
 sub I-am-interactive {
-    return  $*IN.t && -t $*OUT.t;
+    return  $*IN.t && $*OUT.t;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
