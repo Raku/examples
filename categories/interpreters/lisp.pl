@@ -431,7 +431,7 @@ sub TEST {
     {
         my $y = [Symbol('foo'), 1, [Symbol('quote'), [1, 2, 3]]];
         is-deeply parse-sexp("(foo 1 '(1 2 3))"),
-        $y;
+        $y,
         "quote by symbol";
         is-deeply parse-sexp("(foo 1 (quote (1 2 3)))"), $y, "quote by word";
     }
