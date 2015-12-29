@@ -218,6 +218,7 @@ subtest {
 
     create-fake-examples($website);
 
+    $website.syntax-highlighting = False;
     $website.create-category-dirs;
     $website.collect-all-metadata;
     $website.write-example-files;
