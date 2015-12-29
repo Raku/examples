@@ -1,6 +1,35 @@
-#!/usr/bin/perl6
-
 use v6;
+
+=begin pod
+
+=TITLE Odd elimination`
+
+=AUTHOR Shlomi Fish
+
+L<http://projecteuler.net/problem=539>
+
+Start from an ordered list of all integers from 1 to n. Going from left to
+right, remove the first number and every other number afterward until the
+end of the list. Repeat the procedure from right to left, removing the right
+most number and every other number from the numbers left. Continue removing
+every other numbers, alternating left to right and right to left, until a
+single number remains.
+
+Starting with n = 9, we have:
+B<1> 2    B<3> 4    B<5> 6 B<7> 8 B<9>
+2    B<4> 6    B<8>
+B<2> 6
+6
+
+Let C<P(n)> be the last number left starting with a list of length C<n>.
+
+Let C<S(n) = sum(k=1..n, P(k))>.
+
+You are given C<P(1)=1>, C<P(9)=6>, C<P(1000)=510>, C<S(1000)=268271>.
+
+Find C<S(10^18) mod 987654321>.
+
+=end pod
 
 my @ar;
 for 1 .. 64 -> $i
