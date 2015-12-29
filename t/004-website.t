@@ -377,6 +377,7 @@ subtest {
 
     create-fake-examples($website);
 
+    $website.syntax-highlighting = False;
     $website.build;
 
     ok(($website.base-html-dir ~ "/index.html").IO.e, "index.html exists");
