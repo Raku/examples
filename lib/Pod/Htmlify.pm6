@@ -204,7 +204,7 @@ class Website is export {
                     return $v.html;
                     CATCH {
                         default {
-                            return "<!-- Error while syntax highlighting this piece of code: $!.message() -->\n" ~
+                            return "<!-- Error while syntax highlighting this piece of code: $_.message() -->\n" ~
                                 "<pre>" ~ $node.contents.join ~ "</pre>";
                         }
                     }
