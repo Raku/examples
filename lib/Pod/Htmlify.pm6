@@ -196,11 +196,19 @@ class Website is export {
         my $footer = footer-html;
         my %*POD2HTML-CALLBACKS = code => sub (:$node, :&default) {
             if $vim-colour {
-                my $v = ::('Text::VimColour').new(
-                    lang => 'perl6',
-                    code => "{$node.contents.join}"
-                );
-                return $v.html;
+                try {
+                    my $v = ::('Text::VimColour').new(
+                        lang => 'perl6',
+                        code => "{$node.contents.join}"
+                    );
+                    return $v.html;
+                    CATCH {
+                        default {
+                            return "<!-- Error while syntax highlighting this piece of code: $!.message() -->\n" ~
+                                "<pre>" ~ $node.contents.join ~ "</pre>";
+                        }
+                    }
+                }
             }
             else {
                 return "<pre>" ~ $node.contents.join ~ "</pre>";
