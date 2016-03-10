@@ -17,13 +17,8 @@ sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     my $count = 0;
     for $tempfile.lines {
         $count++;
-        lines(words($_));
+        lines(.words);
     }
-}
-
-# Split a line into words (array)
-sub words ($in) {
-    return $in.split(/\s/);
 }
 
 # Print words, new line at word wrap, new line for paragraph
