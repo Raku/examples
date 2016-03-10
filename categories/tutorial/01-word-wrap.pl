@@ -15,12 +15,12 @@ my $line_length = 50;
 sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     my $tempfile = open($input-file, :r);
     for $tempfile.lines {
-        lines(.words);
+        wrap(.words);
     }
 }
 
 # Print words, new line at word wrap, new line for paragraph
-sub lines (@in) {
+sub wrap (@in) {
     my $length = 0;
     for @in -> $l {
         if ( ($length + $l.chars) < $line_length) {
