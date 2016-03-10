@@ -14,9 +14,7 @@ my $line_length = 50;
 
 sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     my $tempfile = open($input-file, :r);
-    my $count = 0;
     for $tempfile.lines {
-        $count++;
         lines(.words);
     }
 }
