@@ -11,7 +11,7 @@ subtest {
     plan 1;
 
     my $example-name = "09-01-get-set-filetime.pl";
-    my $expected-output = rx/':dt($(' \d+\.0 ', '['Bool::False'||'0']'))'/;
+    my $expected-output = rx/':dt($('['\d+\.0'||'<' \d+\/\d+ '>']', '['Bool::False'||'0']'))'/;
 
     my $output = run-example($example-name);
     like($output, $expected-output, $example-name);
