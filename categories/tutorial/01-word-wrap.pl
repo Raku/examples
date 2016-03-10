@@ -13,8 +13,7 @@ use v6;
 my $line_length = 50;
 
 sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
-    my $tempfile = open($input-file, :r);
-    for $tempfile.lines {
+    for $input-file.IO.lines {
         wrap(.words);
     }
 }
