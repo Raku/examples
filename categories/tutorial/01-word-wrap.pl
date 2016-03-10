@@ -12,14 +12,14 @@ use v6;
 
 my $line_length = 50;
 
-my $tempfile = open('lorem.txt', :r);
-my $count = 0;
-for $tempfile.lines {
-    $count++;
-    lines(words($_));
+sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
+    my $tempfile = open($input-file, :r);
+    my $count = 0;
+    for $tempfile.lines {
+        $count++;
+        lines(words($_));
+    }
 }
-
-exit 0;
 
 # Split a line into words (array)
 sub words ($in) {
