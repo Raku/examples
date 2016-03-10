@@ -35,8 +35,8 @@ sub lines (@in) {
             $length += $l.chars;
         }
         else {
-            say '';
-            $length = 0;
+            print "\n$l ";
+            $length = $l.chars;
         }
     }
     say '';
