@@ -10,28 +10,29 @@
 
 use v6;
 
-my $line_length = 50;
-
 sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     for $input-file.IO.lines {
-        wrap(.words);
+        print-wrapped(.words);
     }
 }
 
 # Print words, new line at word wrap, new line for paragraph
-sub wrap (@in) {
-    my $length = 0;
-    for @in -> $l {
-        if ( ($length + $l.chars) < $line_length) {
-            print $l ~ ' ';
-            $length += $l.chars;
+sub print-wrapped (@words, $wrap-at = 50 ) {
+    my $column = 0;
+    for @words -> $word {
+        my $word-length = $word.chars;
+        if $column + $word-length > $wrap-at {
+            print "\n";
+            $column = 0;
         }
-        else {
-            print "\n$l ";
-            $length = $l.chars;
+        unless $column = 0 {
+            print ' ';
+            $column++ ;
         }
+        print $word;
+        $column += $word-length;
     }
-    say '';
+    print "\n";
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
