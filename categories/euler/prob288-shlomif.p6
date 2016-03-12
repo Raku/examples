@@ -48,26 +48,26 @@ sub MAIN(:$verbose = False) {
     my $s = $S_0;
 
     for (0 .. $N_LIM-1) -> $n {
-	@t_n.push($s % $BASE);
-	$s = (($s * $s) % 50515093);
+        @t_n.push($s % $BASE);
+        $s = (($s * $s) % 50515093);
     }
 
     my $sum = 0;
     for ($N_LIM .. $LIM) -> $n {
-	if $n % 10_000 == 0 {
-	    say "Reached $n" if $verbose;
-	}
-	$sum += ($s % $BASE);
-	$s = (($s * $s) % 50515093);
+        if $n % 10_000 == 0 {
+            say "Reached $n" if $verbose;
+        }
+        $sum += ($s % $BASE);
+        $s = (($s * $s) % 50515093);
     }
 
     sub f($n)
     {
-	return factorial_factor_exp($n, ($BASE)) % (($BASE) ** $N_LIM);
+        return factorial_factor_exp($n, ($BASE)) % (($BASE) ** $N_LIM);
     }
 
     say "Solution == ", +([+] (
-	(map { f(($BASE) ** $_) * @t_n[$_] }, 1 .. @t_n-1),
-	$sum * f(($BASE) ** $N_LIM)
+        (map { f(($BASE) ** $_) * @t_n[$_] }, 1 .. @t_n-1),
+        $sum * f(($BASE) ** $N_LIM)
     )) % (($BASE) ** $N_LIM);
 }
