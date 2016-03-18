@@ -692,7 +692,7 @@ subtest {
 
     my $problem = "prob288";
     my @authors = <shlomif>;
-    my $expected-output = "Solution == 594452426380733382";
+    my $expected-output = "Solution == 605857431263981935";
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob288";
