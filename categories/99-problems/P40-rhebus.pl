@@ -24,24 +24,17 @@ use v6;
 
 =end pod
 
-# From P31-rhebus.pl again
-sub is_prime (Int $n) {
-    for 2..sqrt $n -> $k {
-        return Bool::False if $n %% $k;
-    }
-    return Bool::True;
-}
+subset Even of Int where * %% 2;
 
-# require even arguments
-sub goldbach (Int $n where {$^a > 2 && $^a %% 2}) {
+sub goldbach (Even $n where * > 2 ) {
     for 2..$n/2 -> $k {
-        if is_prime($k) && is_prime($n-$k) {
+        if $k.is-prime && ($n-$k).is-prime {
             return ($k, $n-$k);
         }
     }
     return; # fail
 }
 
-say ~goldbach $_ for 28, 36, 52, 110;
+say goldbach $_ for 28, 36, 52, 110, 62710560;
 
 # vim: expandtab shiftwidth=4 ft=perl6
