@@ -25,7 +25,7 @@ L<http://blogs.perl.org/users/ovid/2010/08/prime-factors-in-perl-6.html>.
 
 constant PRIMES = grep { .is-prime }, 2 .. *;
 
-sub prime-factors(Int $number-to-factor --> Hash) {
+sub prime-factors(Int $number-to-factor where * > 1 --> Hash) {
     return { $number-to-factor => 1 } if $number-to-factor.is-prime;
 
     my %factors;
@@ -41,7 +41,7 @@ sub prime-factors(Int $number-to-factor --> Hash) {
     return %factors;
 }
 
-for 17, 53, 90, 94, 200, 289, 62710561 -> $number {
+for 2, 17, 53, 90, 94, 200, 289, 62710561 -> $number {
     say "Prime factors of $number are: {prime-factors($number).perl}";
 }
 
