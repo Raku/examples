@@ -32,7 +32,7 @@ sub prime-factors(Int $number-to-factor where * > 1 --> Hash) {
     my $number = $number-to-factor;
     for PRIMES.cache -> $prime {
         last if $prime ** 2 > $number;
-        while $number % $prime == 0 {
+        while $number %% $prime {
             %factors{$prime}++;
             $number div= $prime;
         }
