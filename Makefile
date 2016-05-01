@@ -13,6 +13,17 @@ EXAMPLES_DEPS = \
 		Term::ANSIColor \
 		Term::termios
 
+help:
+	@echo "Usage: make <option>"
+	@echo ""
+	@echo "Options:"
+	@echo "   html               generate the HTML documentation"
+	@echo "   html-nohighlight   generate HTML without syntax highlighting"
+	@echo "   run-all            run all examples"
+	@echo "   test               test the supporting software"
+	@echo "   web-server         display HTML on localhost:3000"
+	@echo "   install-deps       install dependencies required for examples"
+
 html: install-deps
 	@echo "*** Generating HTML pages ***"
 	perl6 htmlify.pl
@@ -40,14 +51,3 @@ install-deps:
 		panda --notests install $$dep;\
 	    fi;\
 	done
-
-help:
-	@echo "Usage: make [html|test]"
-	@echo ""
-	@echo "Options:"
-	@echo "   html:              generate the HTML documentation"
-	@echo "   html-nohighlight:  generate HTML without syntax highlighting"
-	@echo "   run-all:           run all examples"
-	@echo "   test:              test the supporting software"
-	@echo "   web-server:        display HTML on localhost:3000"
-	@echo "   install-deps:      install dependencies required for examples"
