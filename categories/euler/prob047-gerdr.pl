@@ -39,7 +39,7 @@ After which, the example can be run as expected:
 
 use NativeCall;
 
-sub factors(int $n) returns int is native($*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'prob047-gerdr')) { * }
+sub factors(int32 $n) returns int32 is native($*SPEC.catdir($*PROGRAM-NAME.IO.dirname, 'prob047-gerdr')) { * }
 
 sub MAIN(Int $N = 4) {
     my int $n = 2;
