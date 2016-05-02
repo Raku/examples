@@ -35,6 +35,6 @@ sub goldbach (Even $n where * > 2 ) {
     return; # fail
 }
 
-say goldbach $_ for 28, 36, 52, 110, 62710560;
+say ~ goldbach $_ for 28, 36, 52, 110;
 
 # vim: expandtab shiftwidth=4 ft=perl6
