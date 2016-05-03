@@ -10,9 +10,8 @@ EXAMPLES_DEPS = \
 		Text::VimColour \
 		HTTP::Easy \
 		Term::ANSIColor \
+		Web \
 		Term::termios
-
-#		Web::Request \
 
 help:
 	@echo "Usage: make <option>"
