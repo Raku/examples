@@ -10,7 +10,7 @@ EXAMPLES_DEPS = \
 		Text::VimColour \
 		HTTP::Easy \
 		Term::ANSIColor \
-		Web \
+		Web::Request \
 		Term::termios
 
 help:
