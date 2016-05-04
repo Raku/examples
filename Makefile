@@ -9,8 +9,8 @@ EXAMPLES_DEPS = \
 		File::Temp \
 		Text::VimColour \
 		HTTP::Easy \
-		Web::Request \
 		Term::ANSIColor \
+		Web::Request \
 		Term::termios
 
 help:

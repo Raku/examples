@@ -24,5 +24,7 @@ say ~ grep { .is-prime }, 10..20;
 
 # or we can pass a list...
 say ~ grep { .is-prime }, 3,5,17,257,65537;
+# or another range
+say ~ grep { .is-prime }, 1..100;
 
 # vim: expandtab shiftwidth=4 ft=perl6

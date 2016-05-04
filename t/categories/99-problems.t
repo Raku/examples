@@ -419,13 +419,14 @@ sub expected-output {
     END
 
     %expected-output{"P36-ovid.pl"} = q:to/END/;
-    Prime factors of 17 are: ("17" => 1,)
-    Prime factors of 53 are: ("53" => 1,)
-    Prime factors of 90 are: ("2" => 1, "3" => 2, "5" => 1)
-    Prime factors of 94 are: ("2" => 1, "47" => 1)
-    Prime factors of 200 are: ("2" => 3, "5" => 2)
-    Prime factors of 289 are: ("17" => 2,)
-    Prime factors of 62710561 are: ("7919" => 2,)
+    Prime factors of 2 are: {"2" => 1}
+    Prime factors of 17 are: {"17" => 1}
+    Prime factors of 53 are: {"53" => 1}
+    Prime factors of 90 are: {"2" => 1, "3" => 2, "5" => 1}
+    Prime factors of 94 are: {"2" => 1, "47" => 1}
+    Prime factors of 200 are: {"2" => 3, "5" => 2}
+    Prime factors of 289 are: {"17" => 2}
+    Prime factors of 62710561 are: {"7919" => 2}
     END
 
     %expected-output{"P36-rhebus.pl"} = q:to/END/;
@@ -481,7 +482,7 @@ sub expected-output {
     %expected-output{"P39-rhebus.pl"} = q:to/END/;
     11 13 17 19
     3 5 17 257 65537
-    1 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97
+    2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97
     END
 
     %expected-output{"P40-rhebus.pl"} = q:to/END/;
@@ -489,6 +490,7 @@ sub expected-output {
     5 31
     5 47
     3 107
+    7 62710553
     END
 
     %expected-output{"P41-rhebus.pl"} = q:to/END/;

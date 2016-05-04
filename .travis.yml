@@ -3,7 +3,7 @@ sudo: false
 language: perl6
 
 perl6:
-    - 2016.01
+    - latest
 
 install:
     - rakudobrew build-panda 2016.01
