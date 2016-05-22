@@ -24,7 +24,7 @@ L<http://rosettacode.org/wiki/100_doors#Perl_6>
 
 =head1 Features used
 
-C<X**> - L<http://perlcabal.org/syn/S03.html#Cross_operators>
+C<X**> - L<http://doc.perl6.org/language/operators#Cross_Operators>
 
 =end pod
 
