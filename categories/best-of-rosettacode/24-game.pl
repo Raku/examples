@@ -42,11 +42,7 @@ L<http://rosettacode.org/wiki/24_game#Perl_6>
 =item eval
 =item prompt
 =item roll
-=item casting
-
-=head1 Features used
-
-=item C<type casting> - L<http://perlcabal.org/syn/S13.html#Type_Casting>
+=item coercion
 
 =end pod
 
