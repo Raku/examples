@@ -14,7 +14,7 @@ Prints all the combinations of items from the given array.
 
 =head1 Features used
 
-=item C<Placeholder variables> - L<http://perlcabal.org/syn/S06.html#Placeholder_variables>
+=item C<Placeholder variables> - L<https://doc.perl6.org/language/variables>
 
 =end pod
 

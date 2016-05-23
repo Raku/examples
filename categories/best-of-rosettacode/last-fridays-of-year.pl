@@ -16,9 +16,9 @@ L<http://rosettacode.org/wiki/Last_Fridays#Perl_6>
 
 =head1 Features used
 
-The MAIN sub - L<http://perlcabal.org/syn/S06.html#Declaring_a_MAIN_subroutine>
+The MAIN sub - L<https://doc.perl6.org/language/functions#sub_MAIN>
 
-Date objects - L<http://perlcabal.org/syn/S32/Temporal.html#Date>
+Date objects - L<https://doc.perl6.org/type/Date>
 
 =end pod
 

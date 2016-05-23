@@ -26,10 +26,6 @@ L<http://rosettacode.org/wiki/Arbitrary-precision_integers_(included)#Perl_6>
 =item casting
 =item {} in string
 
-=head1 Features used
-
-=item C<> - L<http://perlcabal.org/syn/>
-
 =end pod
 
 my $x = ~[**] 5, 4, 3, 2;

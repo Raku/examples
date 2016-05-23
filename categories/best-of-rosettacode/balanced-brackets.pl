@@ -27,10 +27,10 @@ L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
 
 =head1 Features used
 
-=item C<roll> - L<http://perlcabal.org/syn/S32/Containers.html#roll>
-=item C<given> - L<http://perlcabal.org/syn/S04.html#Switch_statements>
-=item C<prompt> - L<http://perlcabal.org/syn/S32/IO.html#prompt>
-=item C<grammar> - L<http://perlcabal.org/syn/S05.html#Grammars>
+=item C<roll> - L<https://doc.perl6.org/routine/roll#class_List>
+=item C<given> - L<https://doc.perl6.org/syntax/given#language_documentation_Control_Flow>
+=item C<prompt> - L<https://doc.perl6.org/routine/prompt>
+=item C<grammar> - L<https://doc.perl6.org/language/grammars>
 
 =head2 Depth counter
 
