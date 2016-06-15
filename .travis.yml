@@ -6,7 +6,7 @@ perl6:
     - latest
 
 install:
-    - rakudobrew build-panda 2016.01
+    - rakudobrew build-panda
 
 script:
     - make test
