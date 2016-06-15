@@ -10,7 +10,7 @@ my @dependencies = qw{
     HTTP::Easy
     LWP::Simple
     Pod::To::HTML
-    Term::ANSIColor
+    Terminal::ANSIColor
     Term::termios
     URI
     Web::Request
