@@ -9,7 +9,7 @@ EXAMPLES_DEPS = \
 		File::Temp \
 		Text::VimColour \
 		HTTP::Easy \
-		Term::ANSIColor \
+		Terminal::ANSIColor \
 		Web::Request \
 		Term::termios
 
