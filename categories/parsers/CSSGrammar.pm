@@ -4,7 +4,7 @@ use v6;
 
 =TITLE CSS2.1 Grammar
 
-=AUTHOR David Warring
+=AUTHOR wayland76, David Warring
 
 This should be doing CSS2.1; hopefully CSS3 when that's ready (but that may
 be a while).
