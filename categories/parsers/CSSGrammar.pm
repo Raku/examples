@@ -66,7 +66,7 @@ grammar CSSGrammar {
         rule media_type   { <cssident> }
         rule media_rules  { '{' ~ '}' <ruleset>* }
 
-        rule page         {:i'@page' [':'<cssident>]? <declarations> }
+        rule page         {:i'@page' [':'<cssident>]? '{' ~ '}' <declarations> }
 
         # Comments and whitespace.
         token comment {'<!--' .*? '-->' | '/*' .*? '*/'}
