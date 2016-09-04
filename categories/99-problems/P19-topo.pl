@@ -15,7 +15,7 @@ use v6;
 
 sub rotate(@list is copy, $places is copy)
 {
-    $places < 0 ?? ( $places = @list.elems + $places) !! ();
+    $places = @list.elems + $places if $places < 0;
 
     for ^$places {
         @list.push: @list.shift;
