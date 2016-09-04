@@ -1,6 +1,26 @@
-
 use v6;
 use MONKEY-TYPING;
+
+=begin pod
+
+=TITLE Sum of digits sequence
+
+=AUTHOR Shlomi Fish
+
+L<http://projecteuler.net/problem=551>
+
+Let C<a₀, a₁, a₂, ...> be an integer sequence defined by:
+
+=item a₀ = 1;
+
+=item for C<n ≥ 1>, an is the sum of the digits of all preceding terms.
+
+The sequence starts with 1, 1, 2, 4, 8, 16, 23, 28, 38, 49, ...
+You are given C<a_{10^6} = 31054319>.
+
+Find C<a_{10^{15}}>.
+
+=end pod
 
 my $NUM_DIGITS = 30;
 
@@ -141,3 +161,5 @@ while $a_n.i < $LIM
 }
 
 _print_me;
+
+# vim: expandtab shiftwidth=4 ft=perl6
