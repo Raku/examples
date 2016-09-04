@@ -1,5 +1,15 @@
-# A trivial parser that handles quoted strings with backslash-escaped
-# quotes and either single or double quotes used to delimit.
+use v6;
+
+=begin pod
+
+=TITLE Simple strings
+
+=AUTHOR Aaron Sherman
+
+A trivial parser that handles quoted strings with backslash-escaped
+quotes and either single or double quotes used to delimit.
+
+=end pod
 
 grammar String::Simple::Grammar {
     rule TOP {^ <string> $}
