@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+use v6;
 
 =begin pod
 
@@ -6,9 +6,10 @@
 
 =AUTHOR Scott Penrose
 
-=end pod
+Uses a minimum number of lines algorithm based upon
+L<https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap#Minimum_number_of_lines>.
 
-use v6;
+=end pod
 
 sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     for $input-file.IO.lines {
@@ -16,23 +17,25 @@ sub MAIN($input-file = $*SPEC.catdir($*PROGRAM-NAME.IO.dirname, "lorem.txt")) {
     }
 }
 
+my $space-width = 1;  # width of a space character
+
 # Print words, new line at word wrap, new line for paragraph
-sub print-wrapped (@words, $wrap-at = 50 ) {
-    my $column = 0;
+sub print-wrapped (@words, $line-width = 60) {
+    my $space-remaining = $line-width;
+    my @words-in-line;
     for @words -> $word {
         my $word-length = $word.chars;
-        if $column + $word-length > $wrap-at {
-            print "\n";
-            $column = 0;
+        if $word-length + $space-width > $space-remaining {
+            @words-in-line.join(" ").say;
+            $space-remaining = $line-width - $word-length;
+            @words-in-line = ($word);
         }
-        unless $column = 0 {
-            print ' ';
-            $column++ ;
+        else {
+            @words-in-line.push($word);
+            $space-remaining = $space-remaining - ($word-length + $space-width);
         }
-        print $word;
-        $column += $word-length;
     }
-    print "\n";
+    @words-in-line.join(" ").say;
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
