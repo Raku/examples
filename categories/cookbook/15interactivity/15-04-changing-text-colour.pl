@@ -10,7 +10,7 @@ Change text colour on a terminal
 
 =end pod
 
-use Term::ANSIColor;
+use Terminal::ANSIColor;
 
 print color("red"), "Danger, Will Robinson!\n", color("reset");
 
