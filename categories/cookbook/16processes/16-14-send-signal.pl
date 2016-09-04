@@ -12,7 +12,7 @@ You want to send a signal to a process on a UNIX-like OS
 
 use NativeCall;
 
-sub kill(Int,Int) returns Int is native { ... }
+sub kill(int32, int32) returns int32 is native { ... }
 
 signal(SIGHUP).tap( {say "caught HUP"});
 
