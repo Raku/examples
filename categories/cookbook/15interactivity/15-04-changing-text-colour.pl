@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE Change text colour 
+=TITLE Change text colour
 
 =AUTHOR stmuk
 
