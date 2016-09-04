@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE Odd elimination`
+=TITLE Odd elimination
 
 =AUTHOR Shlomi Fish
 
