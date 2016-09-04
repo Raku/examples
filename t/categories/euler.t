@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 66;
+plan 67;
 
 my $skip = %*ENV<PERL6_EXAMPLES_NOSKIP> ?? False !! True;
 
@@ -726,6 +726,16 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob539";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob551";
+    my @authors = <shlomif>;
+    my $expected-output = "a[1000000] = 31054319";
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob551";
 
 #| check examples provided by the given authors
 sub check-example-solutions($problem, $expected-output, @authors, Bool :$strip_debug = True) {
