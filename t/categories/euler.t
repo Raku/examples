@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 65;
+plan 66;
 
 my $skip = %*ENV<PERL6_EXAMPLES_NOSKIP> ?? False !! True;
 
@@ -706,6 +706,16 @@ subtest {
 
     check-example-solutions($problem, $expected-output, @authors)
 }, "prob329";
+
+subtest {
+    plan 1;
+
+    my $problem = "prob463";
+    my @authors = <shlomif>;
+    my $expected-output = "S(3 ** 37) = 808981553";
+
+    check-example-solutions($problem, $expected-output, @authors)
+}, "prob463";
 
 subtest {
     plan 1;
