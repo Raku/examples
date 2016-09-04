@@ -2,7 +2,7 @@ use v6;
 
 =begin pod
 
-=TITLE send a signal
+=TITLE Send a signal to a process
 
 =AUTHOR stmuk
 
