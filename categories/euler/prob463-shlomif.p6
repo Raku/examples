@@ -1,9 +1,34 @@
 use v6;
 
-# Dedicated to the memory of Christina Grimmie (
-# https://en.wikipedia.org/wiki/Christina_Grimmie ), see:
-# https://www.youtube.com/watch?v=kYX8sjIzjGw .
-#   -- shlomif
+=begin pod
+
+=TITLE A weird recurrence relation
+
+=AUTHOR Shlomi Fish
+
+L<http://projecteuler.net/problem=463>
+
+The function C<f> is defined for all positive integers as follows:
+
+    f(1)=1
+    f(3)=3
+    f(2n)=f(n)
+    f(4n + 1)=2f(2n + 1) - f(n)
+    f(4n + 3)=3f(2n + 1) - 2f(n)
+
+The function C<S(n)> is defined as C<∑_i=1..q f(i)>.
+
+    S(8)=22 and S(100)=3604.
+
+Find C<S(3**37)>. Give the last 9 digits of your answer.
+
+
+Dedicated to the memory of Christina Grimmie
+(L<https://en.wikipedia.org/wiki/Christina_Grimmie>),
+see: L<https://www.youtube.com/watch?v=kYX8sjIzjGw>.
+   -- shlomif
+
+=end pod
 
 class Poly
 {
@@ -242,3 +267,5 @@ if (False)
 {
     say "S(3 ** 37) = ", s_smart(1, 3 ** 37);
 }
+
+# vim: expandtab shiftwidth=4 ft=perl6
