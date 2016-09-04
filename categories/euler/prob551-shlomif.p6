@@ -20,6 +20,14 @@ You are given C<a_{10^6} = 31054319>.
 
 Find C<a_{10^{15}}>.
 
+=head2 Usage
+
+By default the code will only run up to C<a[1_000_000]>; to run the full
+version, specify the C<--LIM> option on the command line.  For progress
+output, specify the C<--verbose> option.  E.g.
+
+    perl6 categories/euler/prob551-shlomif.p6 --LIM=1_000_000_000_000_000 --verbose
+
 =end pod
 
 my $NUM_DIGITS = 30;
