@@ -80,30 +80,30 @@ sub lookup_proto($mult)
                 }
             }
 
-            if (@c[1] == 1)
+            if @c[1] == 1
             {
-                if (@c[0] != 0)
+                if @c[0] != 0
                 {
                     die "Dont know how to handle.";
                 }
                 $x_coeff += $m;
             }
-            elsif (@c[1] == 2)
+            elsif @c[1] == 2
             {
-                if (@c[0] != 1)
+                if @c[0] != 1
                 {
                     die "Dont know how to handle.";
                 }
                 $x2_p_1_coeff += $m;
             }
-            elsif (@c[1] == 4)
+            elsif @c[1] == 4
             {
-                if (@c[0] == 1)
+                if @c[0] == 1
                 {
                     $x2_p_1_coeff += ($m +< 1);
                     $x_coeff -= $m;
                 }
-                elsif (@c[0] == 3)
+                elsif @c[0] == 3
                 {
                     $x2_p_1_coeff += ($m * 3);
                     $x_coeff -= ($m +< 1);
@@ -134,7 +134,7 @@ sub lookup($mult)
     return @($ret).map({ .mult });
 }
 
-if (False)
+if False
 {
     my $mult = 4;
     while (1)
@@ -150,7 +150,7 @@ sub _cache(%h, $key, $promise)
 {
     my $ret = %h{$key};
 
-    if (!defined($ret))
+    if !defined($ret)
     {
         $ret = ($promise.() % $MOD);
         %h{$key} = $ret;
@@ -163,25 +163,25 @@ my %f_cache;
 
 sub f_mod($n)
 {
-    if ($n < 1)
+    if $n < 1
     {
         die "Foo";
     }
 
     return _cache(%f_cache, $n, sub {
-        if ($n == 1)
+        if $n == 1
         {
             return 1;
         }
-        elsif ($n == 3)
+        elsif $n == 3
         {
             return 3;
         }
-        elsif (($n +& 1) == 0)
+        elsif ($n +& 1) == 0
         {
             return f_mod($n +> 1);
         }
-        elsif (($n +& 3) == 1)
+        elsif ($n +& 3) == 1
         {
             return (2 * f_mod(($n +> 1) + 1) - f_mod($n +> 2));
         }
@@ -213,23 +213,23 @@ sub s_smart($start, $end)
 
     # say "s->e : $start->$end";
     return _cache(%s_cache, "$start|$end", sub {
-        if ($start > $end)
+        if $start > $end
         {
             return 0;
         }
-        if ($start == $end)
+        if $start == $end
         {
             return f_mod($start);
         }
-        if ($end <= 8)
+        if $end <= 8
         {
             return s_bruteforce($end) - s_bruteforce($start - 1);
         }
-        if (($start +& 0b11) != 0)
+        if ($start +& 0b11) != 0
         {
             return (f_mod($start) + s_smart($start+1, $end));
         }
-        if (($end +& 0b11) != 0b11)
+        if ($end +& 0b11) != 0b11
         {
             return (f_mod($end) + s_smart($start, $end-1));
         }
@@ -246,18 +246,18 @@ sub s_smart($start, $end)
 );
     }
 
-if (False)
+if False
 {
     my $want = 0;
     for 1 .. 100_000 -> $n
     {
-        if ($n % 1_000 == 0)
+        if $n % 1_000 == 0
         {
             say "Reached n=$n";
         }
         ($want += f_mod($n)) %= $MOD;
         my $have = s_smart(1, $n);
-        if ($want != $have)
+        if $want != $have
         {
             die "want=$want have=$have n=$n!";
         }
