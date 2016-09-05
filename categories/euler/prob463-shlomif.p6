@@ -30,6 +30,8 @@ see: L<https://www.youtube.com/watch?v=kYX8sjIzjGw>.
 
 =end pod
 
+my $debug = False;
+
 class Poly
 {
     has $.mult;
@@ -134,7 +136,7 @@ sub lookup($mult)
     return @($ret).map({ .mult });
 }
 
-if False
+if $debug
 {
     my $mult = 4;
     while (1)
@@ -246,7 +248,7 @@ sub s_smart($start, $end)
     );
 }
 
-if False
+if $debug
 {
     my $want = 0;
     for 1 .. 100_000 -> $n
