@@ -242,9 +242,9 @@ sub s_smart($start, $end)
         my @c = lookup($power2);
         my $m = $start / $power2;
         return (@c[0] * f_mod($m*2+1) + @c[1] * f_mod($m) + s_smart($new_end+1, $end));
-    },
-);
-    }
+        },
+    );
+}
 
 if False
 {
