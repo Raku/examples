@@ -485,7 +485,7 @@ sub TEST {
                 [["1", ["2", ["3", ["3", "5"]]]]], 'nested list';
     ok eval(qq{ (define fib (lambda (n)  (if (< n 2)  1  (+ (fib (- n 1)) (fib (- n 2)))))) })  &&
     eval("(fib 10)") == 89, 'fib(10)';
-    eval «
+    eval '
          (define (sqrt x)
            (begin
             (define (square x) (* x x))
@@ -499,7 +499,7 @@ sub TEST {
                   guess
                 (sqrt-iter (improve guess))))
             (sqrt-iter 1.0)))
-    »;
+    ';
     ok eval("(sqrt 4)").Int == 2, 'sqrt example';
 
     done-testing;
