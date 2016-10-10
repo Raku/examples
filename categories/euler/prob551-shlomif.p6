@@ -32,18 +32,11 @@ output, specify the C<--verbose> option.  E.g.
 
 my $NUM_DIGITS = 30;
 
-my $NUM_FMT = '%0' ~ $NUM_DIGITS ~ 'd';
-
 augment class Int
 {
     method digits-sum() returns Int
     {
         [+] self.comb;
-    }
-
-    method _format_n() returns Str
-    {
-        $NUM_FMT.sprintf(self);
     }
 }
 
@@ -59,7 +52,7 @@ class Point
 
     method _format() returns Str
     {
-        self.n._format_n;
+        0 x (30 - self.n.chars) ~ self.n;
     }
 }
 
