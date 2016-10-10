@@ -38,12 +38,12 @@ augment class Int
 {
     method digits-sum() returns Int
     {
-        return [+] self.comb;
+        [+] self.comb;
     }
 
     method _format_n() returns Str
     {
-        return $NUM_FMT.sprintf(self);
+        $NUM_FMT.sprintf(self);
     }
 }
 
@@ -59,7 +59,7 @@ class Point
 
     method _format() returns Str
     {
-        return self.n._format_n;
+        self.n._format_n;
     }
 }
 
@@ -68,11 +68,9 @@ my @calced_arr;
 my $a_n = Point.new(n => $A0, i => 1, s => $A0.digits-sum);
 
 # Short for insert.
-sub ins()
+sub ins(-->Nil)
 {
     @calced_arr.push($a_n.clone);
-
-    return;
 }
 
 ins();
@@ -80,20 +78,18 @@ ins();
 
 my @cache = [{} xx ($NUM_DIGITS+1)] xx ($NUM_DIGITS*9+1);
 
-sub calc_next()
+sub calc_next(-->Nil)
 {
     my $new_n = $a_n.n + $a_n.s;
     $a_n = Point.new(n => $new_n, i => $a_n.i+1, s => $new_n.digits-sum);
-
-    return;
 }
 
 sub _common_len(Str $s, Str $e)
 {
-    return -1 + (0 .. $NUM_DIGITS).first: { $s.substr($^a, 1) ne $e.substr($^a, 1) };
+    -1 + (0 .. $NUM_DIGITS).first: { $s.substr($^a, 1) ne $e.substr($^a, 1) };
 }
 
-sub cache_delta()
+sub cache_delta(-->Nil)
 {
     # Start and end.
     my $i = @calced_arr-2;
@@ -106,7 +102,6 @@ sub cache_delta()
     {
         @cache[$s.s][$ll]{$s_digits.substr($ll)} = $i;
     }
-    return;
 }
 
 calc_next;
@@ -134,12 +129,12 @@ sub MAIN(:$LIM = 1_000_000, Bool :$verbose = False) {
                 {
                     my $start_arr_i = $lookup{$sub_s};
                     my $get_prefix = sub ($idx) {
-                        return @calced_arr[$idx]._format().substr(0,$i);
+                        @calced_arr[$idx]._format().substr(0,$i);
                     };
                     my $prefix = $get_prefix.($start_arr_i);
                     my $base_idx = $a_n.i - @calced_arr[$start_arr_i].i;
                     my $end_arr_i = $start_arr_i + 1;
-                    my $new_idx = sub () { return $base_idx + @calced_arr[$end_arr_i].i };
+                    my $new_idx = sub () { $base_idx + @calced_arr[$end_arr_i].i; };
                     while $end_arr_i < @calced_arr and $get_prefix.($end_arr_i) eq $prefix and $new_idx.() <= $LIM
                     {
                         $end_arr_i++;
@@ -156,7 +151,7 @@ sub MAIN(:$LIM = 1_000_000, Bool :$verbose = False) {
                     }
                 }
             }
-            return True;
+            True;
         }.();
 
         if $to_proc
