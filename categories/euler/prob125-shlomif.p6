@@ -29,7 +29,7 @@ my $LIMIT = 100_000_000;
 
 my $sqrt_limit = $LIMIT.sqrt.Int;
 
-my %found;
+my $found = SetHash.new;
 my $sum_found = 0;
 
 for 1 .. $sqrt_limit -> $start
@@ -46,9 +46,10 @@ for 1 .. $sqrt_limit -> $start
 
         if $sum.flip eq $sum
         {
-            if %found{$sum}++ == 0
+            if not $sum ∈ $found
             {
                 say "Found $sum";
+                $found{$sum} = True;
                 $sum_found += $sum;
             }
         }
