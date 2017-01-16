@@ -44,9 +44,9 @@ for 1 .. $sqrt_limit -> $start
             last;
         }
 
-        if "$sum".flip eq "$sum"
+        if $sum.flip eq $sum
         {
-            if %found{"$sum"}++ == 0
+            if %found{$sum}++ == 0
             {
                 say "Found $sum";
                 $sum_found += $sum;
