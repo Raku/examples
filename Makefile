@@ -1,18 +1,5 @@
 .PHONY: html run-all test help
 
-EXAMPLES_DEPS = \
-		URI \
-		Pod::To::HTML \
-		LWP::Simple \
-		Algorithm::Soundex \
-		DBIish \
-		File::Temp \
-		Text::VimColour \
-		HTTP::Easy \
-		Terminal::ANSIColor \
-		Web::Request \
-		Term::termios
-
 help:
 	@echo "Usage: make <option>"
 	@echo ""
@@ -43,11 +30,4 @@ test: install-deps
 
 install-deps:
 	@echo "*** Installing dependencies ***"
-	for dep in $(EXAMPLES_DEPS);\
-	do\
-	    perl6 -e "use $$dep" 2> /dev/null;\
-	    if [ $$? != 0 ];\
-	    then\
-		panda --notests install $$dep;\
-	    fi;\
-	done
+	panda --notests installdeps .
