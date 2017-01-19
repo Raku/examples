@@ -24,7 +24,7 @@ else
     echo "Writing logs to $LOGFILE"
     exec >$LOGFILE 2>&1
 
-    echo "Building Rakudo and Panda"
+    echo "Building Rakudo and Zef"
     # need most up to date perl6 to build examples at present
     #source /home/rakudobrew/.rakudobrew-bash
 
@@ -36,7 +36,7 @@ else
     export PATH=$PATH:$HOME/.rakudobrew/bin
 
     rakudobrew build moar
-    rakudobrew build-panda
+    rakudobrew build zef
 
     echo 'Cleaning out old HTML files'
     # don't clean out html/ entirely, because there are some files

@@ -6,7 +6,7 @@ perl6:
     - latest
 
 install:
-    - rakudobrew build-panda
+    - rakudobrew build zef
 
 script:
     - make test

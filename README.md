@@ -61,9 +61,9 @@ To run all examples and tests, a number of modules need to be installed.
 
 These are listed in 'META6.json.
 
-They may be installed by either `zef` or `panda`:
+They can be installed via `zef` or `panda`:
 
-    $ zef install --deps-only .
+    $ zef --depsonly install .
     $ panda installdeps .
 
 ## Running the examples

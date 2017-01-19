@@ -30,4 +30,4 @@ test: install-deps
 
 install-deps:
 	@echo "*** Installing dependencies ***"
-	panda --notests installdeps .
+	zef --/test --depsonly install .
