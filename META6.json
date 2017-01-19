@@ -1,6 +1,6 @@
 {
     "perl"        : "6.*",
-    "name"        : "pdf-examples",
+    "name"        : "perl6-examples",
     "version"     : "0.0.1",
     "auth"        : "github:perl6",
     "description" : "Many examples of Perl 6 code",
