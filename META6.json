@@ -4,7 +4,7 @@
     "version"     : "0.0.1",
     "auth"        : "github:perl6",
     "description" : "Many examples of Perl 6 code",
-    "depends"     : [ "URI", "Pod::To::HTML", "LWP::Simple", "Algorithm::Soundex", "DBIish", "File::Temp", "Text::VimColour", "HTTP::Easy", "Terminal::ANSIColor", "Web::Request", "Term::termios" ],
+    "depends"     : [ "URI", "Pod::To::HTML", "LWP::Simple", "Algorithm::Soundex", "DBIish", "File::Find", "File::Temp", "Text::VimColour", "HTTP::Easy", "Terminal::ANSIColor", "Web::Request", "Term::termios" ],
     "source-url"  : "git://github.com/perl6/perl6-examples",
     "provides"    : {
      }
