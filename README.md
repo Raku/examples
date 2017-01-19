@@ -59,9 +59,12 @@ No need to submit a pull request!
 
 To run all examples and tests, a number of modules need to be installed.
 
-These are listed in '.travis.yml', 'util/update-and-sync' and the test.
+These are listed in 'META6.json.
 
-Ideally the list should be refactored and defined in fewer places.
+They may be installed by either `zef` or `panda`:
+
+    $ zef install --deps-only .
+    $ panda installdeps .
 
 ## Running the examples
 
