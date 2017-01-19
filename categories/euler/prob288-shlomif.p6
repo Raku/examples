@@ -38,22 +38,22 @@ sub factorial_factor_exp($n , $f)
 }
 
 sub MAIN(:$verbose = False) {
-    my @t_n;
+    my int @t_n;
 
     my $N_LIM = 10;
-    my $BASE = 61;
+    my int $BASE = 61;
     my $LIM = 10_000_000;
 
     my $S_0 = 290797;
-    my $s = $S_0;
+    my int $s = $S_0;
 
     for (0 .. $N_LIM-1) -> $n {
         @t_n.push($s % $BASE);
         $s = (($s * $s) % 50515093);
     }
 
-    my $sum = 0;
-    for ($N_LIM .. $LIM) -> $n {
+    my int $sum = 0;
+    for ($N_LIM .. $LIM) -> int $n {
         if $n % 10_000 == 0 {
             say "Reached $n" if $verbose;
         }
