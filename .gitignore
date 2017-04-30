@@ -4,4 +4,4 @@ html/*.html
 html/categories
 categories/wsg/beginner-2008/newfile.txt
 *.un~
-lib/.precomp
+.precomp
