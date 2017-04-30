@@ -59,7 +59,7 @@ No need to submit a pull request!
 
 To run all examples and tests, a number of modules need to be installed.
 
-These are listed in 'META6.json.
+These are listed in `META6.json`.
 
 They can be installed via `zef` or `panda`:
 
