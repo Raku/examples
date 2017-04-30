@@ -15,11 +15,11 @@ L<http://projecteuler.net/problem=601>
 
 sub calc_P($s, $N)
 {
-    my $l = [lcm] 1 .. $s;
-    my $i = 0;
-    my $ret = 0;
-    my $t = $s + 1;
-    my $M = $N - 1;
+    my int $l = [lcm] 1 .. $s;
+    my int $i = 0;
+    my int $ret = 0;
+    my int $t = $s + 1;
+    my int $M = $N - 1;
     while (($i = $i + $l) < $M)
     {
         ++$ret if $i % $t;
