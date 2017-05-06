@@ -27,4 +27,9 @@ what the expected result of the computation is.
 
 CODE
 
+# Local Variables:
+# mode: perl6
+# indent-tabs-mode: nil
+# perl6-indent-offset: 4
+# End:
 # vim: expandtab shiftwidth=4 ft=perl6
