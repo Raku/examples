@@ -17,7 +17,7 @@ use v6;
 
 sub palindromic(@list)
 {
-    @list ~~ @list.reverse;
+    @list ~~ @list.reverse.list;
 }
 
 say palindromic(<a b c d e>);
