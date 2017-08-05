@@ -17,7 +17,7 @@ sub MAIN(:$dir = ".") {
     my $files = find(:dir($dir), :type('file'));
 
     for $files.map({.IO}).sort -> $io {
-        say $io.abspath;
+        say $io.absolute;
     }
 }
 
