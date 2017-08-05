@@ -66,6 +66,7 @@ lectus id lectus. Nullam sodales, est id auctor lobortis,
 lectus massa posuere tellus, commodo eleifend diam ligula
 convallis arcu. Proin eros magna, sodales a aliquet ut,
 eleifend at est.
+
 EOT
 
     my $output = run-example($name);
