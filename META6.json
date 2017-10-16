@@ -7,7 +7,7 @@
     "description"  : "Many examples of Perl 6 code",
     "depends"      : [ "URI", "Pod::To::HTML", "LWP::Simple", "Algorithm::Soundex",
                        "DBIish", "File::Find", "File::Temp", "Text::VimColour",
-                       "HTTP::Easy", "Terminal::ANSIColor", "Web::Request",
+                       "HTTP::Easy", "Terminal::ANSIColor", "Web::Request", "HTML::Escape"
                        "Term::termios" ],
     "test-depends" : [ "Test", "Test::META" ],
     "source-url"   : "git://github.com/perl6/perl6-examples",

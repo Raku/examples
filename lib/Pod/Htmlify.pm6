@@ -1,6 +1,7 @@
 unit module Pod::Htmlify;
 
 use URI::Escape;
+use HTML::Escape;
 use Pod::To::HTML;
 use Pod::Convenience;
 use Examples;
@@ -199,19 +200,19 @@ class Website is export {
                 try {
                     my $v = ::('Text::VimColour').new(
                         lang => 'perl6',
-                        code => "{$node.contents.join}"
+                        code => $node.contents.join
                     );
                     return $v.html;
                     CATCH {
                         default {
                             return "<!-- Error while syntax highlighting this piece of code: $_.message() -->\n" ~
-                                "<pre>" ~ $node.contents.join ~ "</pre>";
+                                "<pre>" ~ $node.contents.join.&escape-html ~ "</pre>";
                         }
                     }
                 }
             }
             else {
-                return "<pre>" ~ $node.contents.join ~ "</pre>";
+                return "<pre>" ~ $node.contents.join.&escape-html ~ "</pre>";
             }
         };
         pod2html $pod,
