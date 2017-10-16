@@ -4,6 +4,7 @@
 
 set -e
 set -x
+. /home/rakudobrew/rakudobrew-bash
 
 ulimit -v 2097152   # 2 GB
 ulimit -t 3600      # 1 hour
@@ -23,20 +24,6 @@ else
     LOGFILE="$LOGDIR/build-$DATE.log"
     echo "Writing logs to $LOGFILE"
     exec >$LOGFILE 2>&1
-
-    echo "Building Rakudo and Zef"
-    # need most up to date perl6 to build examples at present
-    #source /home/rakudobrew/.rakudobrew-bash
-
-    # purge rakudobrew
-    # this is necessary, as sometimes the Rakudo stack needs to be completely
-    # rebuilt, and this is the only way to ensure this in an automated manner
-    rm -rf $HOME/.rakudobrew
-    git clone https://github.com/tadzik/rakudobrew $HOME/.rakudobrew
-    export PATH=$PATH:$HOME/.rakudobrew/bin
-
-    rakudobrew build moar
-    rakudobrew build zef
 
     echo 'Cleaning out old HTML files'
     # don't clean out html/ entirely, because there are some files
