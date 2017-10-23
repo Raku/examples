@@ -6,6 +6,9 @@ for 1 .. 100 -> $n
 
 say @FACTS[10];
 
+sub nCr($n, @k_s) {
+    return @FACTS[$n] / [*] @FACTS[|@k_s, $n-@k_s.sum];
+}
 
 
 sub calc_count($l, $w_zero, $num_nat_digits)
@@ -21,8 +24,8 @@ sub calc_count($l, $w_zero, $num_nat_digits)
         # Choose a pivot for the first place and go for it
         for 0 .. $l-2 -> $cnt
         {
-            $ret += @FACTS[$l-1]/@FACTS[$cnt]/@FACTS[$l-1-$cnt] *
-                   calc_count($l - 1 - $cnt, False, $num_nat_digits);
+            $ret += nCr($l-1, [$cnt]) *
+                calc_count($l - 1 - $cnt, False, $num_nat_digits);
         }
         return $ret * $num_nat_digits;
     }
@@ -94,14 +97,12 @@ sub solve($myl)
                 {
                     next;
                 }
-                my $r = ($vi * $vj) * @FACTS[9] /
-                    @FACTS[$num_common] / @FACTS[$i_num_diff] /
-                    @FACTS[$j_num_diff] / @FACTS[9 - $digs];
+                my $r = $vi * $vj * nCr(9, [$num_common, $i_num_diff, $j_num_diff]);
                 if $ik == $jk
                 {
                     if $num_common == $ni
                     {
-                        $r -= $vi * @FACTS[9] / @FACTS[$ni] / @FACTS[9 - $ni];
+                        $r -= $vi * nCr(9, [$ni])
                     }
                 }
                 else
