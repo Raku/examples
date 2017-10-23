@@ -60,7 +60,7 @@ sub solve($myl)
     {
         for 0 .. 9 -> $n
         {
-            my $v = sum(map sub ($l) { calc_count($l, $z, $n) }, 0 .. $myl);
+            my $v = sum(map { calc_count($_, $z, $n) }, 0 .. $myl);
             if $v > 0
             {
                 @counts.push([$z, $n, $v]);
