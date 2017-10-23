@@ -41,15 +41,7 @@ sub calc_count($l, $w_zero, $num_nat_digits)
             {
                 return 0;
             }
-            my $ret = @FACTS[$l] * @FACTS[$num_digits];
-            my %repeats;
-            for @counts -> $x
-            {
-                $ret /= @FACTS[$x];
-                ++%repeats{$x};
-            }
-            $ret /= [*] @FACTS[%repeats.values()];
-            return $ret;
+            return nCr($l, @counts) * nCr($num_digits,(bag @counts).values);
         }
         my $ret = 0;
         for 1 .. (+@counts ?? @counts[*-1] !! $l - $num_digits + 1) -> $nxt
