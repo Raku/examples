@@ -77,12 +77,12 @@ sub solve($myl)
     }
     say(@counts);
     my $ret = 0;
-    for 0 ..^@counts -> $ik
+    for 0 ..^@counts -> $i
     {
-        my ($zi, $ni, $vi) = |@counts[$ik];
-        for $ik ..^@counts -> $jk
+        my ($zi, $ni, $vi) = |@counts[$i];
+        for $i ..^@counts -> $j
         {
-            my ($zj, $nj, $vj) = |@counts[$jk];
+            my ($zj, $nj, $vj) = |@counts[$j];
             for 0 .. min($ni, $nj) -> $num_common
             {
                 if ($num_common == 0 and (!$zi or !$zj))
@@ -98,7 +98,7 @@ sub solve($myl)
                     next;
                 }
                 my $r = $vi * $vj * nCr(9, [$num_common, $i_num_diff, $j_num_diff]);
-                if $ik == $jk
+                if $i == $j
                 {
                     if $num_common == $ni
                     {
@@ -110,7 +110,7 @@ sub solve($myl)
                     $r *= 2;
                 }
 
-                say ("num_common=", $num_common, "i=", $ik, "j=", $jk,
+                say ("num_common=", $num_common, "i=", $i, "j=", $j,
                        "r=", $r);
                 $ret += $r;
             }
