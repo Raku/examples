@@ -96,22 +96,22 @@ sub solve($myl)
                 {
                     next;
                 }
-                my $r = $vi * $vj * nCr(9, [$num_common, $i_num_diff, $j_num_diff]);
+                my $result = $vi * $vj * nCr(9, [$num_common, $i_num_diff, $j_num_diff]);
                 if $i == $j
                 {
                     if $num_common == $ni
                     {
-                        $r -= $vi * nCr(9, [$ni])
+                        $result -= $vi * nCr(9, [$ni])
                     }
                 }
                 else
                 {
-                    $r *= 2;
+                    $result *= 2;
                 }
 
                 say ("num_common=", $num_common, "i=", $i, "j=", $j,
-                       "r=", $r);
-                $ret += $r;
+                       "r=", $result);
+                $ret += $result;
             }
         }
     }
