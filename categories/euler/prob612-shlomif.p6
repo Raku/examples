@@ -92,8 +92,7 @@ sub solve($myl)
                 my $i_num_diff = $ni - $num_common;
                 my $j_num_diff = $nj - $num_common;
 
-                my $digs = $num_common + $i_num_diff + $j_num_diff;
-                if $digs > 9
+                if $num_common + $i_num_diff + $j_num_diff > 9
                 {
                     next;
                 }
