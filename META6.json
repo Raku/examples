@@ -10,7 +10,7 @@
                        "HTTP::Easy", "Terminal::ANSIColor", "Web::Request", "HTML::Escape",
                        "Term::termios" ],
     "test-depends" : [ "Test", "Test::META" ],
-    "source-url"   : "git://github.com/perl6/perl6-examples",
+    "source-url"   : "git://github.com/perl6/perl6-examples.git",
     "provides"     : {
         "Examples" : "lib/Examples.pm",
         "Examples::Categories" : "lib/Examples/Categories.pm",
