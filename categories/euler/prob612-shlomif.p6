@@ -45,10 +45,7 @@ sub calc_count($l, $w_zero, $num_nat_digits)
                 $ret /= @FACTS[$x];
                 ++%repeats{$x};
             }
-            for %repeats.values() -> $v
-            {
-                $ret /= @FACTS[$v];
-            }
+            $ret /= [*] @FACTS[%repeats.values()];
             return $ret;
         }
         my $ret = 0;
