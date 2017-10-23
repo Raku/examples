@@ -26,15 +26,15 @@ sub calc_count($l, $w_zero, $num_nat_digits)
         }
         return $ret * $num_nat_digits;
     }
-    sub rec(@counts, $s)
+    sub rec(@counts, $sum)
     {
-        if $s > $l
+        if $sum > $l
         {
             return 0;
         }
         if @counts == $num_digits
         {
-            if $s != $l
+            if $sum != $l
             {
                 return 0;
             }
@@ -49,13 +49,12 @@ sub calc_count($l, $w_zero, $num_nat_digits)
             {
                 $ret /= @FACTS[$v];
             }
-            # say('ret = ', $ret, ' ',$s, ' ', $l, ' ', $num_digits, @counts);
             return $ret;
         }
         my $ret = 0;
         for 1 .. (+@counts ?? @counts[*-1] !! $l - $num_digits + 1) -> $nxt
         {
-            $ret += rec([|@counts, $nxt], $s + $nxt);
+            $ret += rec([|@counts, $nxt], $sum + $nxt);
         }
         return $ret;
     }
