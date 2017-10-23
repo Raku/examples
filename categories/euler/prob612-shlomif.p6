@@ -15,44 +15,7 @@ sub calc_count($l, $w_zero, $num_nat_digits)
     {
         return 0;
     }
-    if ! $w_zero
-    {
-        sub rec(@counts, $s)
-        {
-            if $s > $l
-            {
-                return 0;
-            }
-            if @counts == $num_digits
-            {
-                if $s != $l
-                {
-                    return 0;
-                }
-                my $ret = @FACTS[$l] * @FACTS[$num_digits];
-                my %repeats;
-                for @counts -> $x
-                {
-                    $ret /= @FACTS[$x];
-                    ++%repeats{$x};
-                }
-                for %repeats.values() -> $v
-                {
-                    $ret /= @FACTS[$v];
-                }
-                # say('ret = ', $ret, ' ',$s, ' ', $l, ' ', $num_digits, @counts);
-                return $ret;
-            }
-            my $ret = 0;
-            for 1 .. (+@counts ?? @counts[*-1] !! $l - $num_digits + 1) -> $nxt
-            {
-                $ret += rec([|@counts, $nxt], $s + $nxt);
-            }
-            return $ret;
-        }
-        return rec([], 0);
-    }
-    else
+    if $w_zero
     {
         my $ret = 0;
         # Choose a pivot for the first place and go for it
@@ -62,8 +25,41 @@ sub calc_count($l, $w_zero, $num_nat_digits)
                    calc_count($l - 1 - $cnt, False, $num_nat_digits);
         }
         return $ret * $num_nat_digits;
-        # raise BaseException("unimplemented")
     }
+    sub rec(@counts, $s)
+    {
+        if $s > $l
+        {
+            return 0;
+        }
+        if @counts == $num_digits
+        {
+            if $s != $l
+            {
+                return 0;
+            }
+            my $ret = @FACTS[$l] * @FACTS[$num_digits];
+            my %repeats;
+            for @counts -> $x
+            {
+                $ret /= @FACTS[$x];
+                ++%repeats{$x};
+            }
+            for %repeats.values() -> $v
+            {
+                $ret /= @FACTS[$v];
+            }
+            # say('ret = ', $ret, ' ',$s, ' ', $l, ' ', $num_digits, @counts);
+            return $ret;
+        }
+        my $ret = 0;
+        for 1 .. (+@counts ?? @counts[*-1] !! $l - $num_digits + 1) -> $nxt
+        {
+            $ret += rec([|@counts, $nxt], $s + $nxt);
+        }
+        return $ret;
+    }
+    return rec([], 0);
 }
 
 sub solve($myl)
