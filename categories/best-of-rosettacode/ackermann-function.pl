@@ -15,7 +15,7 @@ L<http://rosettacode.org/wiki/Ackermann_function#Perl_6>
 =head1 What's interesting here?
 
 =item ternary chaining
-=item recursive funtion
+=item recursive functions
 
 =head1 Features used
 
