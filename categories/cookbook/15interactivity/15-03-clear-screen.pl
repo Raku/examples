@@ -8,9 +8,9 @@ use v6;
 
 =end pod
 
-# TODO check on windows
 # TODO control code sequence probably better
 
 shell "clear";
+# shell "cls"; # for windows
 
 # vim: expandtab shiftwidth=4 ft=perl6
