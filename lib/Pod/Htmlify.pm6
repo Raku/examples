@@ -189,9 +189,8 @@ class Website is export {
 
     #| convert the POD into html
     method p2h($pod) {
-        my $vim-colour = $.syntax-highlighting && try {
-            require Text::VimColour;
-        }.^name eq 'Text::VimColour';
+        my $vim-colour = $.syntax-highlighting && (try 
+            require Text::VimColour) !=== Nil;
 
         my $head = slurp 'template/head.html';
         my $footer = footer-html;
