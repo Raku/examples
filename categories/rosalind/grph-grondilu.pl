@@ -52,7 +52,7 @@ sub MAIN($input-file = Nil) {
 
     for (%dna X %dna).flat -> $a, $b {
         next if $a.key eq $b.key;
-        say " {'Rosalind_' «~« ($a, $b)».key}"
+        say "{'Rosalind_' «~« ($a, $b)».key} ".trim
         if $a.value.substr(*-3) eq $b.value.substr(0, 3);
     }
 }
