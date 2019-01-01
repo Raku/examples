@@ -23,8 +23,6 @@ L<http://www.afjarvis.staff.shef.ac.uk/maths/jarvisspec02.pdf>
 
 =end pod
 
-use v6;
-
 my constant $limit = 100;
 
 sub sqrt-subtraction($n) {
