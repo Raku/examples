@@ -17,7 +17,7 @@ sub lotto-select($n, $m)
 {
     gather for ^$n
     {
-        take (1 ... $m).pick(1);
+        take (1 ... $m).pick(1).first;
     }
 }
 
