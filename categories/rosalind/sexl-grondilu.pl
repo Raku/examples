@@ -19,7 +19,7 @@ Sample output
 =end pod
 
 sub MAIN(Str $input = "0.1 0.5 0.8") {
-    say "{map { 2*$^x*(1-$x) }, $input.split(' ')».Num}";
+    say "{map { 2*$^x*(1-$x) }, $input.split(' ')».Num».round(0.01)}";
 }
 
 # vim: expandtab shiftwidth=4 ft=perl6
