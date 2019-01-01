@@ -228,7 +228,7 @@ subtest {
 
     my $problem = "gc";
     my @authors = <gerdr>;
-    my $expected-output = rx/Rosalind_0808 \s+ 60\.919540/;
+    my $expected-output = rx/60\.91954/;
 
     for @authors -> $author {
         my $name = "$problem-$author.pl";
