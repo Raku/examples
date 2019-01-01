@@ -150,8 +150,10 @@ sub MAIN(Bool :$computer-player = False) {
 
     my @suites = < spades clubs diamonds hearts >;
 
-    my @deck = ( @values X @suites ).flatmap: {
-        my ($name, $value) = $^a.kv; $name ~= " of $^b"; $name => $value
+    my @deck = ( @values X @suites ).flat.map: {
+        my ($name, $value) = $^a.kv;
+        $name ~= " of $^b";
+        $name => $value
     };
 
     my @cards = $computer-player ?? default-cards() !! @deck.pick( @deck.elems );
