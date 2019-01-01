@@ -1,6 +1,6 @@
-unit module Examples;
-
 use v6;
+
+unit module Examples;
 
 #| Encapsulates an example's metadata
 class Example is export {

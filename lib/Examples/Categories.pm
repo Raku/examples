@@ -1,6 +1,6 @@
-unit module Examples::Categories;
-
 use v6;
+
+unit module Examples::Categories;
 
 #| Encapsulates a category's metadata
 class Category is export {
