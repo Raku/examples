@@ -77,7 +77,7 @@ subtest {
         "sender" => "alice",
     ;
     my $categories = Categories.new(categories-table => %categories-table);
-    is($categories.keys, <receiver sender>, "keys method returns expected list");
+    is($categories.keys.sort, <receiver sender>, "keys method returns expected list");
 }, "keys method";
 
 subtest {
