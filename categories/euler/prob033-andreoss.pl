@@ -23,7 +23,7 @@ terms, find the value of the denominator.
 
 =end pod
 
-sub is-curios($num, $den) {
+sub is-curious($num, $den) {
     my @d = $den.comb;
     my @n = $num.comb;
     @d[0] == @n[1] && @n[0]/@d[1] == $num/$den;
@@ -31,7 +31,7 @@ sub is-curios($num, $den) {
 
 say 1 / [*] gather for 10 ...^ 100 -> $den {
     for 10 ...^ $den -> $num {
-        take $num/$den if is-curios $num, $den;
+        take $num/$den if is-curious $num, $den;
     }
 }
 
