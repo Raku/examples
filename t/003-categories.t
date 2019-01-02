@@ -57,10 +57,9 @@ subtest {
         to-category => "receiver",
         subcategories => $subcategories);
     my @categories-list = $categories.categories-list;
-    my $first-category = @categories-list[0];
-    ok($first-category.subcategories ~~ Categories,
+    ok(@categories-list[0].subcategories ~~ Categories,
         "Appended subcategories are a Categories object");
-    my @subcategories-list = $first-category.subcategories.categories-list;
+    my @subcategories-list = @categories-list[0].subcategories.categories-list;
     ok(@subcategories-list[0] ~~ Category,
         "Appended subcategory is a Category object");
     is(@subcategories-list.elems, 2, "Number of appended subcategories");
