@@ -30,4 +30,5 @@ test: install-deps
 
 install-deps:
 	@echo "*** Installing dependencies ***"
-	zef --/test --depsonly install .
+	zef --/test --depsonly install .  # install most deps without testing them
+	zef --test --depsonly install .   # install test-required deps
