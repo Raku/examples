@@ -16,16 +16,16 @@ class Categories is export {
     has %.categories;
 
     submethod TWEAK {
-        for %!categories-table.keys -> $category-key {
-            %!categories{$category-key} = Category.new(
-                                            key => $category-key,
-                                            title => %!categories-table{$category-key},
+        for %!categories-table.kv -> $key, $title {
+            %!categories{$key} = Category.new(
+                                            :$key,
+                                            :$title,
                                             );
         }
     }
 
     method categories-list {
-        return %!categories.values;
+        return %!categories.pairs.sort.map(*.value);
     }
 
     method append-subcategories(:$to-category, :$subcategories) {
