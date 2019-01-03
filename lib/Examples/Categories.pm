@@ -15,8 +15,7 @@ class Categories is export {
     has %.categories-table;
     has %.categories;
 
-    submethod BUILD(:%categories-table) {
-        %!categories-table = %categories-table;
+    submethod TWEAK {
         for %!categories-table.keys -> $category-key {
             %!categories{$category-key} = Category.new(
                                             key => $category-key,
