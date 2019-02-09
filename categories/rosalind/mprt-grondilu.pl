@@ -42,11 +42,11 @@ sub MAIN($input-file = Nil) {
         my $fasta = $fasta-name.IO.e
             ?? $fasta-name.IO.slurp
             !! qqx{wget -O - -q "http://www.uniprot.org/uniprot/$id.fasta"};
-        given join '', grep /^ <.alpha>+ $/, $fasta.split: "\n" {
-            if $N-glycosylation {
+        given join '', grep /^ <.alpha>+ $/, $fasta.lines {
+            when $N-glycosylation {
                 say $id;
-                 my @arr = gather for m:overlap/$N-glycosylation/ { take .from + 1}
-                 say "{@arr}"
+                my @arr = gather for m:overlap/$N-glycosylation/ { take .from + 1}
+                say "{@arr}"
             }
         }
     }
