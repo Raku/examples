@@ -194,7 +194,7 @@ sub MAIN($word-file-name = "/usr/share/dict/words") {
         $lose-state.worsen unless $win-state.guess($letter);
 
         if $win-state.is-winner {
-            say qq:to/END_OF_WIN/;
+            say q:to/END_OF_WIN/;
                 /----|
                 |
                 |  \😅/
