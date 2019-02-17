@@ -12,7 +12,7 @@ name a different list of words.
 
 =head1 USAGE
 
-    perl6 hangment.p6
+    perl6 hangman.p6
 
 =end pod
 
