@@ -360,9 +360,6 @@ that we only want scalars interpolated. These adverbs can also be
 expressed in a short form, for instance q:s// can be expressed as
 qs//.
 
-    :0          :raw            No escapes at all (unless otherwise adverbed)
-    :1          :single         Interpolate \\, \q and \' (or whatever)
-    :2          :double         Interpolate all the following
     :s          :scalar         Interpolate $ vars
     :a          :array          Interpolate @ vars
     :h          :hash           Interpolate % vars
@@ -375,22 +372,16 @@ qs//.
     :t          :to             Interpret result as heredoc terminator
 
     # Raw quoting: no escaping at all (unless otherwise adverbed)
-    say q:raw/:raw (no interpolation) even backslash has no special meaning: \\ \/;
-    say q:0/:0 (no interpolation) even backslash has no special meaning: \\ \/;
-    say q0/0 (no interpolation) even backslash has no special meaning: \\ \/;
+    say Q/(no interpolation) even backslash has no special meaning: \\ \/;
 
     # Single quoting:
     say 'Lots of options for single quotes';
     say q/Lots of options for single quotes/;
-    say q:1/Lots of options for single quotes/;
-    say q1/Lots of options for single quotes/;
 
     # Double quoting: interpolates scalars, arrays, hashes, functions,
     # closures, and backslash codes
     say "Plenty of ways to double quote too";
     say qq/Plenty of ways to double quote too/;
-    say q:2/Plenty of ways to double quote too/;
-    say q2/Plenty of ways to double quote too/;
 
     # Interpolate scalars only:
     say q:s/The quick brown $var1 jumps over the lazy dog/;
@@ -411,8 +402,8 @@ qs//.
     say qf/The quick brown &get_animal('quick') jumps.../;
 
     # interpolate closures only:
-    say q:c/The quick brown { return 'fox'; } jumps.../;
-    say qc/The quick brown { return 'fox'; } jumps.../;
+    say q:c/The quick brown { 'fox'; } jumps.../;
+    say qc/The quick brown { 'fox'; } jumps.../;
 
     # interpolate backslash codes only:
     say q:b/The quick brown fox\n\tJumps over the lazy dog/;
