@@ -398,6 +398,7 @@ qs//.
     say qh/We have %animal.elems() key in %animal{}/;
 
     # interpolate functions only: both & and () are required
+    sub get_animal ($tag) { return %animal{$tag}; }
     say q:f/The quick brown &get_animal('quick') jumps.../;
     say qf/The quick brown &get_animal('quick') jumps.../;
 
