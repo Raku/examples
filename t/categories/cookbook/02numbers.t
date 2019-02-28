@@ -7,7 +7,7 @@ plan 3;
 subtest {
     plan 1;
 
-    my $example-name = "02-01valid-number.pl";
+    my $example-name = "02-01valid-number.p6";
     my $expected-output = q:to/EOD/;
     12 is a Integer
     14.12 is a Rational
@@ -15,12 +15,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "02-01valid-number.pl";
+}, "02-01valid-number.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "02-14complex-number.pl";
+    my $example-name = "02-14complex-number.p6";
     my $expected-output = q:to/EOD/;
     16+4i
     2+1i
@@ -31,12 +31,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "02-14complex-number.pl";
+}, "02-14complex-number.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "02-15convert-bases.pl";
+    my $example-name = "02-15convert-bases.p6";
     my $expected-output = q:to/EOD/;
     3735928559
     493
@@ -47,7 +47,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "02-15convert-bases.pl";
+}, "02-15convert-bases.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {

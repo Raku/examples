@@ -7,12 +7,12 @@ plan 1;
 subtest {
     plan 1;
 
-    my $example-name = "17-01tcp_client.pl";
+    my $example-name = "17-01tcp_client.p6";
     my $expected-output = rx{:i 'HTTP/1.1' 200|302};
 
     my $output = run-example($example-name);
     like($output, $expected-output, $example-name);
-}, "17-01tcp_client.pl";
+}, "17-01tcp_client.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {

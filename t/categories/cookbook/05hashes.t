@@ -7,7 +7,7 @@ plan 1;
 subtest {
     plan 1;
 
-    my $example-name = "05-05traversing.pl";
+    my $example-name = "05-05traversing.p6";
     my $expected-output = q:to/EOD/;
     The word 'one' is 'un' in French.
     The word 'three' is 'trois' in French.
@@ -22,7 +22,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "05-05traversing.pl";
+}, "05-05traversing.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {

@@ -7,7 +7,7 @@ plan 3;
 subtest {
     plan 1;
 
-    my $example-name = "04-01specifying-a-list-in-your-program.pl";
+    my $example-name = "04-01specifying-a-list-in-your-program.p6";
     my $expected-output = q:to/EOD/;
     beta
     alpha
@@ -17,12 +17,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "04-01specifying-a-list-in-your-program.pl";
+}, "04-01specifying-a-list-in-your-program.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "04-02printing-a-list-with-commas.pl";
+    my $example-name = "04-02printing-a-list-with-commas.p6";
     my $expected-output = q:to/EOD/;
     foo
     this and that
@@ -31,12 +31,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "04-02printing-a-list-with-commas.pl";
+}, "04-02printing-a-list-with-commas.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "04-05iterating-over-an-array.pl";
+    my $example-name = "04-05iterating-over-an-array.p6";
     my $expected-output = q:to/EOD/;
     94
     13
@@ -90,7 +90,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "04-05iterating-over-an-array.pl";
+}, "04-05iterating-over-an-array.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {
