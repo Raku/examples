@@ -7,14 +7,14 @@ plan 1;
 subtest {
     plan 1;
 
-    my $example-name = "13-01constructing-an-object.pl";
+    my $example-name = "13-01constructing-an-object.p6";
     my $expected-output = q:to/EOD/;
     Yes
     EOD
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "13-01constructing-an-object.pl";
+}, "13-01constructing-an-object.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {

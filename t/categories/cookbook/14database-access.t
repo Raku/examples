@@ -7,7 +7,7 @@ plan 1;
 subtest {
     plan 1;
 
-    my $example-name = "14-09-dbi-sql.pl";
+    my $example-name = "14-09-dbi-sql.p6";
     my $expected-output = q:to/EOD/;
     [{title => Larry Wall - Keynote, APW2014 2014-10-10 , uri => https://www.youtube.com/watch?v=enlqVqit62Y} {title => Carl Mäsak - Regexes in Perl 6 - Zero to Perl 6 Training, uri => https://www.youtube.com/watch?v=oo-gA9Z9SaA}]
     EOD
@@ -17,7 +17,7 @@ subtest {
     say $output;
     is($output, $expected-output, $example-name);
     unlink "video.db"; # the script creates this file
-}, "14-09-dbi-sql.pl";
+}, "14-09-dbi-sql.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {

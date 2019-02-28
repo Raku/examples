@@ -9,7 +9,7 @@ my $skip = True;
 subtest {
     plan 1;
 
-    my $example-name = "01-00introduction.pl";
+    my $example-name = "01-00introduction.p6";
     my $expected-output = q:to/EOD/;
 Hello
 Hello
@@ -52,12 +52,12 @@ EOD
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-00introduction.pl";
+}, "01-00introduction.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-01substrings.pl";
+    my $example-name = "01-01substrings.p6";
     my $expected-output = q:to/EOD/;
     kudo is
     kudo is da bomb
@@ -66,12 +66,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-01substrings.pl";
+}, "01-01substrings.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-03exchanging-values.pl";
+    my $example-name = "01-03exchanging-values.p6";
     my $expected-output = q:to/EOD/;
     2
     3
@@ -79,12 +79,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-03exchanging-values.pl";
+}, "01-03exchanging-values.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-04converting-values.pl";
+    my $example-name = "01-04converting-values.p6";
     my $expected-output = q:to/EOD/;
 97
 a
@@ -94,12 +94,12 @@ EOD
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-04converting-values.pl";
+}, "01-04converting-values.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-05namedunicode.pl";
+    my $example-name = "01-05namedunicode.p6";
     my $expected-output = q:to/EOD/;
     ®
     😾
@@ -108,12 +108,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-05namedunicode.pl";
+}, "01-05namedunicode.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-07reversing-strings.pl";
+    my $example-name = "01-07reversing-strings.p6";
     my $expected-output = q:to/EOD/;
     egarfissO hsimaeuqS era sdroW cigaM ehT
     Ossifrage Squeamish are Words Magic The
@@ -121,12 +121,12 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-07reversing-strings.pl";
+}, "01-07reversing-strings.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-13upper-lower-case.pl";
+    my $example-name = "01-13upper-lower-case.p6";
     my $expected-output = q:to/EOD/;
     THE CAT SAT ON THE MAT
     the cat sat on the mat
@@ -141,19 +141,19 @@ subtest {
 subtest {
     plan 1;
 
-    my $example-name = "01-19trim-whitespace.pl";
+    my $example-name = "01-19trim-whitespace.p6";
     my $expected-output = q:to/EOD/;
     :string("the cat sat on the mat")
     EOD
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-19trim-whitespace.pl";
+}, "01-19trim-whitespace.p6";
 
 subtest {
     plan 1;
 
-    my $example-name = "01-22soundex-matching.pl";
+    my $example-name = "01-22soundex-matching.p6";
     my $expected-output = q:to/EOD/;
     S530
     S530
@@ -162,7 +162,7 @@ subtest {
 
     my $output = run-example($example-name);
     is($output, $expected-output, $example-name);
-}, "01-22soundex-matching.pl";
+}, "01-22soundex-matching.p6";
 
 #| run the given example script
 sub run-example($name, :$script-args = Nil) {
