@@ -8,7 +8,7 @@ subtest {
     plan 1;
 
     my $example-name = "17-01tcp_client.p6";
-    my $expected-output = rx{:i 'HTTP/1.1' 200|302};
+    my $expected-output = rx:s:i{'HTTP/1.1' 200|302};
 
     my $output = run-example($example-name);
     like($output, $expected-output, $example-name);
