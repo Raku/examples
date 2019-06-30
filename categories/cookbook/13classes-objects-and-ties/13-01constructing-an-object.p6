@@ -14,7 +14,8 @@ You want to create a way for your users to generate new objects
 
 =head2 Solution
 
-Merely declare the class.  Constructors are provided for you automatically.
+Merely declare the class. A C«new» constructor is provided for each one of
+your class automatically.
 
 =end pod
 
