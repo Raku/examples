@@ -13,7 +13,7 @@ You want to connect to a socket on a remote host
 =end pod
 
 my $s = IO::Socket::INET.new( :host<www.perl6.org>, :port(80) );
-$s.print( "HEAD / HTTP/1.0\r\n\r\n" );
+$s.print( "HEAD / HTTP/1.1\r\nHost: perl6.org\r\nHost: perl6.org\r\n\r\n" );
 
 while my $r = $s.get {
     say $r;
