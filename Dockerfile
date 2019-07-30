@@ -1,32 +1,20 @@
-FROM alpine
+# get minimal perl from standard docker image 
+FROM perl:5.20 AS perlrun
+RUN curl -L https://cpanmin.us | perl - -M https://cpan.metacpan.org -n Mojolicious 
 
-LABEL name=perl6-examples
+# building base alpine + install the perl6 from repository rakudo-pkg
+FROM alpine:3.10 as base
+RUN apk add --update --no-cache build-base wget git curl \
+    && wget https://github.com/nxadm/rakudo-pkg/releases/download/v2019.07/rakudo-pkg-Alpine3.10_2019.07-01_x86_64.apk && \
+    apk add --allow-untrusted rakudo-pkg-Alpine3.10_2019.07-01_x86_64.apk 
 
-# change the version based on version from perl6 download page
-ARG rakudo_version=2019.03
-ENV rakudo_version=${rakudo_version}
+ENV PATH=$PATH:/opt/rakudo-pkg/bin
 
-# install base package & mojolicious
-RUN apk --update --no-cache add build-base curl wget gcc perl make git vim perl-io-socket-ssl perl-dbd-pg perl-dev g++ && \
-    curl -L https://cpanmin.us | perl - -M https://cpan.metacpan.org -n Mojolicious      
+RUN mkdir -p /opt/perl6-examples \ && git clone https://github.com/perl6/perl6-examples /opt/perl6-examples \
+    && cd /opt/perl6-examples && zef --/test --test-depends --depsonly install . && make html
 
-# Download & install perl6 (like to try directly from rakudo-perl image)
-RUN curl -O https://rakudostar.com/files/star/rakudo-star-${rakudo_version}.tar.gz && \
-    tar xfz rakudo-star-2019.03.tar.gz && \
-    cd rakudo-star-2019.03 && perl Configure.pl --gen-moar --make-install --prefix=/usr 
-
-# Perl6-Examples clone repo & tried to install dependencies of it
-RUN mkdir -p /opt/perl6-examples && mkdir -p /opt/zef 
-RUN git clone https://github.com/perl6/perl6-examples /opt/perl6-examples && \
-    git clone https://github.com/ugexe/zef /opt/zef && \
-    cd /opt/zef && perl6 -I. bin/zef install . 
-
-ENV PATH=$PATH:/usr/share/perl6/site/bin
-
-# Running the make html / perl6 htmlify.pl process take around 1-2 hour in my box
-RUN cd /opt/perl6-examples && zef --/test --test-depends --depsonly install . && make html 
-#RUN cd /opt/perl6-examples && make html
-
+# running daemon perl6-examples 
+FROM perlrun as release
+COPY --from=base /opt/perl6-examples/ /opt/
 EXPOSE 3000
-
-ENTRYPOINT perl /opt/perl6-examples/app.pl daemon 
+CMD perl /opt/app.pl daemon
