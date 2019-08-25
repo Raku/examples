@@ -14,6 +14,6 @@ What is the sum of the digits of the number 2^1000?
 
 =end pod
 
-say [+] .comb given 2**1_000;
+say 2**1000 .comb.sum;
 
 # vim: expandtab shiftwidth=4 ft=perl6
