@@ -62,26 +62,16 @@ multi xnor ($input1, $input2) {
   return and(or($input1, not($input2)), or(not($input1), $input2));
 }
 
-# Using an example to understand the working
-my $A = 'true';
-my $B = 'true';
-my $result = and($A, or($A, not($B)));
-print "$A ";
-print "$B ";
-say $result;
+#Next we define a function which will provide us the truth table
+#for any logical expression made from logic gates
+#given above.
 
-$B = 'fail';
-print "$A ";
-print "$B ";
-say $result;
+sub table(&callable) {
+    say "{$_.join("\t")}\t{&callable(|$_)}" for [X] [True, False] xx &callable.arity;
+}
 
-$A = 'true';
-$B = 'fail';
-print "$A ";
-print "$B ";
-say $result;
+# Below here is an example to understand the workingf of above script.
 
-$A = 'fail';
-print "$A ";
-print "$B ";
-say $result;
+table(-> $a, $b { and($a, or($a, not($b))) });
+
+# vim: expandtab shiftwidth=4 ft=perl6
