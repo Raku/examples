@@ -70,7 +70,7 @@ sub table(&callable) {
     say "{$_.join("\t")}\t{&callable(|$_)}" for [X] [True, False] xx &callable.arity;
 }
 
-# Below here is an example to understand the workingf of above script.
+# Below here is an example to understand the working of above script.
 
 table(-> $a, $b { and($a, or($a, not($b))) });
 
