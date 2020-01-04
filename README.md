@@ -1,27 +1,27 @@
-# Perl 6 Examples
+# Raku Examples
 
 [![Build Status](https://travis-ci.org/perl6/perl6-examples.svg?branch=master)](https://travis-ci.org/perl6/perl6-examples)
 
-This is intended to be a repository for all kinds of Perl 6 examples.
+This is intended to be a repository for all kinds of Raku examples.
 
-All examples should work for any full implementation of Perl 6.
+All examples should work for any full implementation of Raku.
 
 If an example needs an implementation specific version then it should end in
 .implementation.  For example, if you are making an example that only works
 on Rakudo, it should end in .rakudo.
 
 If you want to contribute, just ask! The quicker choice is to use IRC:
-[join `#perl6` on `irc.freenode.net`](https://docs.perl6.org/webchat.html)
+[join `#raku` on `irc.freenode.net`](https://webchat.freenode.net/?channels=#raku-dev>)
 and you'll be welcome.
 
-Please use POD (mostly this template
+Please use POD6 (mostly this template
 https://github.com/perl6/perl6-examples/blob/master/doc/example-template.pl) when
 adding a new example.
 
 ## Goals
 
-1. Compile a list of open source Perl 6 examples
-2. Help different implementations of Perl 6 test out their code in a less
+1. Compile a list of open source Raku examples
+2. Help different implementations of Raku test out their code in a less
    testy and more fun manner `;)`
 
 ## What you can find here
@@ -105,7 +105,7 @@ http://localhost:3000.
 
 ## License Information
 
-"Perl 6 Examples" is free software; you can redistribute it and/or modify it
+"Raku Examples" is free software; you can redistribute it and/or modify it
 under the terms of the Artistic License 2.0.  (Note that, unlike the
 Artistic License 1.0, version 2.0 is GPL compatible by itself, hence there
 is no benefit to having an Artistic 2.0 / GPL disjunction.)  See the file
