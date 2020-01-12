@@ -46,6 +46,7 @@ my @interactive-examples = qw{
     event005-eric256.pl
     event008-eric256.pl
     event008-j1n3l0.pl
+    16-18-catch-control-c.p6
 };
 
 # skip memory hogs
@@ -59,6 +60,7 @@ my @memory-hogs = qw{
 # skip long-running examples
 my @long-runners = qw{
     prob010-polettix.pl
+    prob060-andreoss.pl
     prob092-moritz.pl
     prob104-moritz.pl
     prob149-shlomif.pl
@@ -76,12 +78,11 @@ my @shared-lib-required = qw{
     lcsq-grondilu.pl
 };
 
-my @examples-to-skip = @interactive-examples,
-                        @memory-hogs,
-                        @long-runners,
-                        @internet-required,
-                        @shared-lib-required,
-                        ;
+my @examples-to-skip = flat |@interactive-examples,
+                       |@memory-hogs,
+                       |@long-runners,
+                       |@internet-required,
+                       |@shared-lib-required;
 
 sub MAIN (:$category) {
     @categories = [$category] if $category;
