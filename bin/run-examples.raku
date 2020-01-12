@@ -33,6 +33,7 @@ my @interactive-examples = qw{
     event008-eric256.pl
     event008-j1n3l0.pl
     16-18-catch-control-c.p6
+    19-01cgi-script.p6
 };
 
 # skip memory hogs
