@@ -1,25 +1,38 @@
 {
-    "perl"         : "6.*",
-    "name"         : "perl6-examples",
-    "version"      : "0.0.1",
-    "auth"         : "github:perl6",
-    "license"      : "Artistic-2.0",
-    "description"  : "Many examples of Perl 6 code",
-    "depends"      : [ "URI", "Pod::To::HTML", "LWP::Simple", "Algorithm::Soundex",
-                       "DBIish", "File::Find", "File::Temp", "Text::VimColour",
-                       "HTTP::Easy", "Terminal::ANSIColor", "Web::Request", "HTML::Escape",
-                       "Term::termios" ],
-    "test-depends" : [ "Test", "Test::META" ],
-    "source-url"   : "git://github.com/perl6/perl6-examples.git",
-    "provides"     : {
-        "Examples" : "lib/Examples.pm",
-        "Examples::Categories" : "lib/Examples/Categories.pm",
-        "Examples::Example" : "lib/Examples.pm",
-        "Text::Levenshtein" : "lib/Text/Levenshtein.pm",
-        "Pod6" : "lib/Pod/Parser.pm",
-        "Pod6Block" : "lib/Pod/Parser.pm",
-        "Context" : "lib/Pod/Parser.pm",
-        "Pod::Parser" : "lib/Pod/Parser.pm",
-        "Pod::To::Perl" : "lib/Pod/To/Perl.pm"
-     }
+  "name": "perl6-examples",
+  "description": "Many examples of Perl 6 code",
+  "version": "0.0.1",
+  "perl": "6.*",
+  "auth": "github:perl6",
+  "depends": [
+    "URI",
+    "Pod::To::HTML",
+    "LWP::Simple",
+    "Algorithm::Soundex",
+    "DBIish",
+    "File::Find",
+    "File::Temp",
+    "Text::VimColour",
+    "HTTP::Easy",
+    "Terminal::ANSIColor",
+    "Web::Request",
+    "HTML::Escape",
+    "Term::termios"
+  ],
+  "test-depends": [
+    "Test",
+    "Test::META"
+  ],
+  "provides": {
+    "Context": "lib/Pod/Parser.pm",
+    "Examples": "lib/Examples.pm",
+    "Examples::Categories": "lib/Examples/Categories.pm",
+    "Examples::Example": "lib/Examples.pm",
+    "Pod6": "lib/Pod/Parser.pm",
+    "Pod6Block": "lib/Pod/Parser.pm",
+    "Pod::Parser": "lib/Pod/Parser.pm",
+    "Pod::To::Perl": "lib/Pod/To/Perl.pm"
+  },
+  "license": "Artistic-2.0",
+  "source-url": "git://github.com/perl6/perl6-examples.git"
 }
