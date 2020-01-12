@@ -24,6 +24,7 @@ use File::Find;
 # interactive examples
 my @interactive-examples = qw{
     01-read-from-terminal.pl
+    15-05-get-char.p6
     24-game.pl
     balanced-brackets.pl
     create-a-two-dimensional-array-at-runtime.pl
