@@ -20,21 +20,6 @@ compile and/or work as expected.
 
 use File::Find;
 
-my @categories = qw{
-    99-problems
-    best-of-rosettacode
-    cookbook
-    euler
-    interpreters
-    module-management
-    parsers
-    perlmonks
-    rosalind
-    shootout
-    tutorial
-    wsg
-};
-
 # skip interactive examples; need to work out how to pass input data to
 # interactive examples
 my @interactive-examples = qw{
@@ -85,20 +70,17 @@ my @examples-to-skip = flat |@interactive-examples,
                        |@shared-lib-required;
 
 sub MAIN (:$category) {
-    @categories = [$category] if $category;
-    my $base-dir = $*CWD;
+    my @categories = $category ?? [$category] !! 'categories'.IO.dir.grep({ $_.basename !~~ 'games'|'other' });
     for @categories -> $dir {
-        my @example-files = find(dir => "categories/" ~ $dir).grep(/<?!after 'p5'>.p(l|6)$/).sort;
+        my @example-files = find(:$dir, name => / <?!after 'p5'> .p(l|6) $ /).sort;
         for @example-files -> $example {
             my $example-dir = $example.dirname;
             my $example-name = $example.basename;
             next if grep $example-name, @examples-to-skip;
             say $example-dir ~ "/" ~ $example-name;
-            chdir $example-dir;
-            qqx{perl6 $example-name}.say;
-            chdir $base-dir;
+            indir($example-dir, {
+                shell "$*EXECUTABLE.absolute() $example-name";
+            });
         }
     }
 }
-
-# vim: expandtab shiftwidth=4 ft=perl6
