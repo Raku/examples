@@ -10,9 +10,10 @@ use v6;
 
 =end pod
 
-# TODO control code sequence probably better
-
-shell "clear";
-# shell "cls"; # for windows
+if $*DISTRO.is-win {
+    shell "cls";
+} else {
+    shell "clear";
+}
 
 # vim: expandtab shiftwidth=4 ft=perl6
