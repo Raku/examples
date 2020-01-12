@@ -44,4 +44,6 @@ my @rows =  $st.fetchall-AoH;
 
 say @rows.gist;
 
+unlink 'video.db';
+
 # vim: expandtab shiftwidth=4 ft=perl6
