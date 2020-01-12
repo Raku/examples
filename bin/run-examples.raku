@@ -70,7 +70,7 @@ my @examples-to-skip = flat |@interactive-examples,
                        |@shared-lib-required;
 
 sub MAIN (:$category) {
-    my @categories = $category ?? [$category] !! 'categories'.IO.dir.grep({ $_.basename !~~ 'games'|'other' });
+    my @categories = $category ?? ["categories/$category"] !! 'categories'.IO.dir.grep({ $_.basename !~~ 'games'|'other' });
     for @categories -> $dir {
         my @example-files = find(:$dir, name => / <?!after 'p5'> .p(l|6) $ /).sort;
         for @example-files -> $example {
