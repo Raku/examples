@@ -12,12 +12,12 @@
     "DBIish",
     "File::Find",
     "File::Temp",
-    "Text::VimColour",
     "HTTP::Easy",
     "Terminal::ANSIColor",
     "Web::Request",
     "HTML::Escape",
-    "Term::termios"
+    "Term::termios",
+    "Cro::HTTP"
   ],
   "test-depends": [
     "Test",

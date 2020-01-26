@@ -96,12 +96,12 @@ or you can run the `htmlify.p6` script in the base directory:
     $ raku -Ilib htmlify.p6
 
 After the pages have been generated, you can view them on your local
-computer by starting the included `app.pl` program:
+computer by starting the included `service.p6` program:
 
-    $ perl app.pl daemon
+    $ raku service.p6
 
 You can then view the examples documentation by pointing your web browser at
-http://localhost:3000.
+http://localhost:20000.
 
 ## License Information
 
