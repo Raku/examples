@@ -53,6 +53,8 @@ my @long-runners = qw{
     prob104-moritz.pl
     prob149-shlomif.pl
     prob189-shlomif.pl
+    prob039-quinny.pl
+    prob284-shlomif.p6
 };
 
 # skip examples requiring internet access

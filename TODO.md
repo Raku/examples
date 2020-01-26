@@ -1,3 +1,3 @@
-- [ ] Ensure run-examples runs without errors
+- [x] Ensure run-examples runs without errors
 - [ ] Update extensions
 - [ ] Revise website generation
