@@ -13,11 +13,11 @@ help:
 
 html: install-deps
 	@echo "*** Generating HTML pages ***"
-	perl6 htmlify.pl
+	perl6 -Ilib htmlify.p6
 
 html-nohighlight: install-deps
 	@echo "*** Generating HTML pages (without syntax highlighting) ***"
-	perl6 htmlify.pl --no-highlight
+	perl6 -Ilib htmlify.p6 --no-highlight
 
 run-all: install-deps
 	perl6 bin/run-examples.pl

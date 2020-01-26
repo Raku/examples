@@ -1,6 +1,5 @@
 use v6;
 
-use lib 'lib';
 use Pod::Htmlify;
 use Examples::Categories;
 
