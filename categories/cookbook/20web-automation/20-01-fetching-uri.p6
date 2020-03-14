@@ -14,7 +14,7 @@ You want to fetch a uri
 
 use LWP::Simple;
 
-my $html = LWP::Simple.get('http://examples.perl6.org/');
+my $html = LWP::Simple.get('https://examples.raku.org/');
 
 say $html;
 

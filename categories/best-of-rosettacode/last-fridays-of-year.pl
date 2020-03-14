@@ -16,9 +16,9 @@ L<http://rosettacode.org/wiki/Last_Fridays#Perl_6>
 
 =head1 Features used
 
-The MAIN sub - L<https://doc.perl6.org/language/functions#sub_MAIN>
+The MAIN sub - L<https://docs.raku.org/language/create-cli>
 
-Date objects - L<https://doc.perl6.org/type/Date>
+Date objects - L<https://docs.raku.org/type/Date>
 
 =end pod
 

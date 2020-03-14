@@ -19,8 +19,8 @@ L<http://rosettacode.org/wiki/Ackermann_function#Perl_6>
 
 =head1 Features used
 
-=item C<ternary operator> - L<http://doc.perl6.org/language/operators#infix_%3F%3F_%21%21>
-=item C<multi subs> - L<http://doc.perl6.org/syntax/multi>
+=item C<ternary operator> - L<http://docs.raku.org/language/operators#infix_%3F%3F_%21%21>
+=item C<multi subs> - L<http://docs.raku.org/syntax/multi>
 
 =end pod
 
