@@ -21,7 +21,7 @@ use v6;
 
 # Robert Eaglestone  22 sept 09
 #
-#   My first Perl6 script - I'm sure this can be done better
+#   My first Raku script - I'm sure this can be done better
 #
 my @in = <a a a a b c c a a d e e e e>;
 my @out = pack_dup( @in );

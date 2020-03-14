@@ -18,7 +18,7 @@ Find and show the number of decimal digits in the answer.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Arbitrary-precision_integers_(included)#Perl_6>
+L<http://rosettacode.org/wiki/Arbitrary-precision_integers_(included)#Raku>
 
 =head1 What's interesting here?
 

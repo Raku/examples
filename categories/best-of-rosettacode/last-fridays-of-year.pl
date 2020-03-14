@@ -12,7 +12,7 @@ in your language (command line, std in, etc.).
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Last_Fridays#Perl_6>
+L<http://rosettacode.org/wiki/Last_Fridays#Raku>
 
 =head1 Features used
 

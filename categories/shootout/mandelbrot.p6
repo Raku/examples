@@ -6,14 +6,14 @@ use v6;
 
 =AUTHOR Rodrigo Siqueira (@rsiqueira)
 
-To be submitted to "The Computer Language Benchmarks Game", to test Perl6 speed / performance 
+To be submitted to "The Computer Language Benchmarks Game", to test Raku speed / performance
 in comparison with other programming languages.
 
 L<https://benchmarksgame.alioth.debian.org/u32q/mandelbrot-description.html>
 L<http://benchmarksgame.alioth.debian.org/u32/performance.php?test=mandelbrot>
 L<http://benchmarksgame.alioth.debian.org/u64/performance.php?test=mandelbrot>
 
-USAGE: perl6 mandelbrot.p6 200 > image.pbm
+USAGE: raku mandelbrot.p6 200 > image.pbm
 
 =end pod
 

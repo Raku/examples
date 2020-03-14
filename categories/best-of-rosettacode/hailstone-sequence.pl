@@ -30,7 +30,7 @@ together with that sequence's length.
 
 =head1 More
 
-U<http://rosettacode.org/wiki/Hailstone_sequence#Perl_6>
+U<http://rosettacode.org/wiki/Hailstone_sequence#Raku>
 
 
 =end pod

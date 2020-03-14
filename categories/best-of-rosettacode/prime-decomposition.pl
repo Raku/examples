@@ -21,7 +21,7 @@ before your code).
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Prime_decomposition#Perl_6>
+L<http://rosettacode.org/wiki/Prime_decomposition#Raku>
 
 =end pod
 

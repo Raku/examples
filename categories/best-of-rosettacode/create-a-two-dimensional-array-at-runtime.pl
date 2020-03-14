@@ -14,7 +14,7 @@ itself.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6>
+L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Raku>
 
 =end pod
 

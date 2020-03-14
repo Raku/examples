@@ -20,7 +20,7 @@ which are closed?
 
 =head1 More
 
-L<http://rosettacode.org/wiki/100_doors#Perl_6>
+L<http://rosettacode.org/wiki/100_doors#Raku>
 
 =head1 Features used
 

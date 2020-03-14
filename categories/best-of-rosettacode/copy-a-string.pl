@@ -12,7 +12,7 @@ reference to an existing string.
 
 =head2 More
 
-L<http://rosettacode.org/wiki/Copy_a_string#Perl_6>
+L<http://rosettacode.org/wiki/Copy_a_string#Raku>
 
 =end pod
 
