@@ -62,24 +62,18 @@ class Website is export {
     }
 
     #| collect metadata for a given example
-    method collect-example-metadata($file, $category-key) {
-        say "Collecting metadata from $file";
-        my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
-        my $file-basename = $file.basename;
+    method collect-example-metadata($filename, $category-key) {
+        say "Collecting metadata from $filename";
+        my $pod-collector = run $*EXECUTABLE.absolute, '-Ilib', '--doc=Perl', $filename, :out;
+        my $perl-pod = $pod-collector.out.slurp(:close);
+        my $file-basename = $filename.basename;
         my $pod = (EVAL $perl-pod) || [pod-with-title($file-basename)];
-        my $example-title = pod-title-contents($pod, $file-basename);
+        my $title = pod-title-contents($pod, $file-basename);
         my $author = pod-author-contents($pod, $file-basename);
-        my $html-file = $file-basename.subst(/\.p[l||6||m]$/, ".html");
+        my $html-file = $file-basename.subst(/\.p[l || 6 || m]$/, ".html");
         my $link = pod-link($file-basename, "$category-key/$html-file");
-        my $example = Example.new(
-                        title => $example-title,
-                        author => $author,
-                        filename => $file,
-                        pod-link => $link,
-                        pod-contents => $pod,
-                        );
-
-        return $example;
+        Example.new(:$title, :$author, :$filename,
+                pod-link => $link, pod-contents => $pod);
     }
 
     #| create category and subcategory directories
@@ -243,7 +237,7 @@ class Website is export {
 
 #| find all perl6 files within the given category
 sub files-in-category($category, :$base-dir = "./categories") {
-    dir($base-dir ~ "/$category", test => rx{ <?!after 'p5'> \.p[l||6||m]$ }).sort;
+    sort dir "$base-dir/$category", test => / <?!after 'p5'> \.p[l||6||m]$ /;
 }
 
 #| return the link to the POD's url
