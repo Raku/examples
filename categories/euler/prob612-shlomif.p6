@@ -1,3 +1,22 @@
+=begin pod
+
+=TITLE Friend numbers
+
+=AUTHOR Shlomi Fish
+
+L<http://projecteuler.net/problem=612>
+
+Let's call two numbers friend numbers if their representation in base 10 has at least one common digit.
+E.g. 1123 and 3981 are friend numbers.
+
+Let f(n) be the number of pairs (p,q) with 1≤p<q<n such that p and q are friend numbers.
+
+f(100)=1539.
+
+Find f(1018) mod 1000267129.
+
+=end pod
+
 my @FACTS = (1);
 for 1 .. 100 -> $n
 {

@@ -6,6 +6,8 @@ use v6;
 
 =TITLE A TCP server and a client
 
+=AUTHOR stmuk
+
 You create a TCP echo server and a client to it.
 
 =end pod
