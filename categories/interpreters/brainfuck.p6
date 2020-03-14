@@ -10,7 +10,7 @@ Inspired by C<Acme::Brainfuck>.
 
 =head1 USAGE
 
-    perl6 brainfuck.p6.pl myprog.bf
+    raku brainfuck.p6.pl myprog.bf
 
 Below is "Hello world" in Brainfuck:
 
@@ -62,7 +62,7 @@ sub MAIN($input = "") {
     # Read the program.
     my $program = $input eq "" ?? $hello-bf !! $input.IO.slurp;
 
-    # Compile to Perl 6.
+    # Compile to Raku
     $program .= subst(/ <-[+\-<>,.\[\]]> /, '', :g);
     $program .= subst(/(\++)/, { 'P += ' ~ $0.chars ~ ";" }, :g);
     $program .= subst(/(\-+)/, { 'P -= ' ~ $0.chars ~ ";" }, :g);

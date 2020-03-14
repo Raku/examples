@@ -1,4 +1,4 @@
-# Perl 6 Examples Documentation
+# Raku Examples Documentation
 
 Documentation where possible, should be inline in the example.
 There are always other documents required. Create a sensible name,

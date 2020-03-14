@@ -4,23 +4,23 @@ use v6;
 
 =begin pod
 
-=TITLE Perl 6 Cookbook: Introduction to Strings
+=TITLE Raku Cookbook: Introduction to Strings
 
 =AUTHOR Scott Penrose
 
 =head1 Definition
 
-In Perl 6, a string is a sequence of zero or more characters and other
+In Raku, a string is a sequence of zero or more characters and other
 simple objects, forming a single unit of data of the type Str. A string
 is data usually in its reportable or printable form. You can write a
-Perl string using single-quotes '', double-quotes "", and various quote-like
+Raku string using single-quotes '', double-quotes "", and various quote-like
 operators. You can create and manipulate strings programmatically, in
-many ways. In fact, this is what Perl does best.
+many ways. In fact, this is what Raku does best.
 
 
 =head1 Description
 
-Perl 6 interprets strings depending on context.  A string may consist
+Raku interprets strings depending on context.  A string may consist
 of zero or more characters, including letters, spaces, numbers, and
 other characters.
 
@@ -99,7 +99,7 @@ Hello World! followed by a newline.
 
 =head1 Introspection
 
-Perl 6 has extensive support for introspection, that is, to see the
+Raku has extensive support for introspection, that is, to see the
 internals of types and objects during runtime.  It is therefore
 possible to find out if a variable is a string and act upon that
 information.
@@ -139,7 +139,7 @@ A number may be interpreted as a string, depending on the context:
     say 2, " is a number interpreted as a string"; # 2 is a number interpreted as a string.
     say 1+2*3, " is a number interpreted as a string"; # 7 is a number interpreted as a string.
 
-Note that Perl 6 ensures that the arithmetic expression before the
+Note that Raku ensures that the arithmetic expression before the
 first comma is evaluated even without enclosing parentheses, and that
 it is only afterwards that it is interpreted as a string.
 
@@ -169,7 +169,7 @@ say  "1" + 1  ; # 2
 
 =begin pod
 
-Context sensitivity is the essence of Perl.  Keeping this in mind, what
+Context sensitivity is the essence of Raku. Keeping this in mind, what
 would you expect to be the output string, for the following?
 
     my $string = "1" ~ "1" + 10; # 12, 21, or even... "111"?
@@ -185,11 +185,11 @@ value it might contain, use the built-in EVAL() call:
 
     say EVAL "1 + 1";    # 2
 
-On the command-line, you may pass a string to the perl 6 interpretor,
+On the command-line, you may pass a string to the Raku interpreter,
 to have it evaluated as a program expression, by using the -e switch:
 
-    ./perl6 -e "say 1+1"; # 2
-    ./perl6 -e 'say "1+1"'; # 1+1
+    raku -e "say 1+1"; # 2
+    raku -e 'say "1+1"'; # 1+1
 
 =end pod
 
@@ -232,7 +232,7 @@ This is so that you can write literal single-quotes
 within a single-quoted string, and also be able to write
 a backslash at the end of a single-quote-enclosed string:
 
-    say 'n\'     ; # Error: perl sees no closing '
+    say 'n\'     ; # Error: no closing '
     say '\\'     ; # \
     say 'n\''    ; # n'
     say 'n\n'    ; # n\n
@@ -321,7 +321,7 @@ say "@animal.elems() {@animal.elems} &elems(@animal)";
 
 =begin pod
 
-=head2 Perl's Quote-like Operators
+=head2 Raku's Quote-like Operators
 
 It's often useful to use something other than single or double quotes
 when declaring strings. To do so use the q// and qq// quote operators,
@@ -349,14 +349,14 @@ for user-defined quotes.
     say q?Many delimiters are available for quoting?;
 
     # But not the colon B<:>
-    q:illegal_perl6:; #legal perl 5
+    q:illegal_raku:; #legal perl 5
 
     # Also a space is needed below, because q() is a function call
     say q (Many delimiters are available for quoting);
 
 =head2 Advanced Interpolation Control
 
-Perl 6 allows very fine control over string quoting using the q//
+Raku allows very fine control over string quoting using the q//
 quote operator with specialized adverbs. For instance, q:s// signifies
 that we only want scalars interpolated. These adverbs can also be
 expressed in a short form, for instance q:s// can be expressed as

@@ -1,9 +1,9 @@
 {
   "name": "perl6-examples",
-  "description": "Many examples of Perl 6 code",
+  "description": "Many examples of Raku code",
   "version": "0.0.1",
   "perl": "6.*",
-  "auth": "github:perl6",
+  "auth": "github:Raku",
   "depends": [
     "URI",
     "Pod::To::HTML",

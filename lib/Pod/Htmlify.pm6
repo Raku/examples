@@ -208,12 +208,9 @@ class Website is export {
                 return "<pre>" ~ $node.contents.join.&escape-html ~ "</pre>";
             }
         };
-        pod2html $pod,
-            :url(&url),
-            :$head,
+        pod2html $pod, :&url, :$head,
             :header(self.header-html),
-            :$footer,
-            :default-title("Perl 6 Examples");
+            :$footer, :default-title("Raku Examples");
     }
 
     #| return the header html for the current page

@@ -52,7 +52,7 @@ for (1 .. $MAX) -> $num {
     if @divisors_sums[$num] > $num {
         @abundants.push($num);
         # The sub { ... } and return are a workaround for the fact that Rakudo
-        # Perl 6 does not have last LABEL yet.
+        # Rakudoes not have last LABEL yet.
         my $c = sub {
             for @abundants -> $i {
                 if ((my $s = $i + $num) > $MAX) {
