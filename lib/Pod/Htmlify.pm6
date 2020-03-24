@@ -64,7 +64,7 @@ class Website is export {
     #| collect metadata for a given example
     method collect-example-metadata($file, $category-key) {
         say "Collecting metadata from $file";
-        my $perl-pod = qqx{perl6-m -Ilib --doc=Perl $file};
+        my $perl-pod = qqx{$*EXECUTABLE -Ilib --doc=Perl $file};
         my $file-basename = $file.basename;
         my $pod = (EVAL $perl-pod) || [pod-with-title($file-basename)];
         my $example-title = pod-title-contents($pod, $file-basename);
