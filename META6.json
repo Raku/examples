@@ -17,7 +17,8 @@
     "Web::Request",
     "HTML::Escape",
     "Term::termios",
-    "Cro::HTTP"
+    "Cro::HTTP",
+    "Cro::WebApp"
   ],
   "test-depends": [
     "Test",

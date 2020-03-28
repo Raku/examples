@@ -1,0 +1,7 @@
+<:use 'layout.crotmp'>
+<|page(.title, .categories)>
+<&HTML(.preface)>
+<pre>
+<.code>
+</pre>
+</|>
