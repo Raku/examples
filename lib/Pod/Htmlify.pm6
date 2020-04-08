@@ -24,18 +24,10 @@ class Website is export {
 
     #| build the website
     method build {
-        self.write-index;
         self.collect-all-metadata;
         self.create-category-dirs;
         self.write-category-indices;
         self.write-example-files;
-    }
-
-    #| write main index file
-    method write-index {
-        say "Creating main index file";
-        spurt $!base-html-dir ~ '/index.html',
-            self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
     }
 
     #| collect metadata for all example files

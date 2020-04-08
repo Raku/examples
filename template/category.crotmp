@@ -1,0 +1,21 @@
+<:use 'layout.crotmp'>
+<|page(.title, .categories)>
+    <h1 class='title'><.title></h1>
+    <div class="pod-body no-toc">
+    <table class="pod-table">
+<thead><tr>
+<th>File</th> <th>Title</th> <th>Author</th>
+</tr></thead>
+<tbody>
+<@category-files>
+<tr>
+    <td><a href="<.url>"><.filename></a></td>
+    <td><.title></td>
+    <td><.author></td>
+</tr>
+</@>
+</tr>
+</tbody>
+</table>
+    </div>
+</|>

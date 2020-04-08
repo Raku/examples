@@ -4,41 +4,35 @@ use Pod::Htmlify;
 use Examples::Categories;
 
 sub MAIN(:$no-highlight = False) {
-    my %base-categories-table =
-            "best-of-rosettacode" => "Best of Rosettacode",
-            "99-problems"         => "99 problems",
-            "cookbook"            => "Cookbook examples",
-            "euler"               => "Answers for Project Euler",
-            "games"               => "Games written in Raku",
-            "interpreters"        => "Language or DSL interpreters",
-            "module-management"   => "Module management",
-            "parsers"             => "Example grammars",
-            "perlmonks"           => "Answers to perlmonks.org questions",
-            "rosalind"            => "Bioinformatics programming problems",
-            "shootout"            => "The Computer Language Benchmark Game",
-            "tutorial"            => "Tutorial examples",
-            "wsg"                 => "The Winter Scripting Games",
-            "other"               => "Uncategorized examples",
-    ;
-
-    my %menu-tabs =
-        "/categories/best-of-rosettacode.html" => "Rosettacode",
-        "/categories/99-problems.html"         => "99 Problems",
-        "/categories/cookbook.html"            => "Cookbook",
-        "/categories/euler.html"               => "Euler",
-        "/categories/games.html"               => "Games",
-        "/categories/interpreters.html"        => "Interpreters",
-        "/categories/module-management.html"   => "Modules",
-        "/categories/parsers.html"             => "Grammars",
-        "/categories/perlmonks.html"           => "Perlmonks",
-        "/categories/rosalind.html"            => "Rosalind",
-        "/categories/shootout.html"            => "Shootout",
-        "/categories/tutorial.html"            => "Tutorial",
-        "/categories/wsg.html"                 => "WSG",
-        "/categories/other.html"               => "Other",
-    ;
-
-    my $all-categories = Categories.new(categories-table => %base-categories-table);
+    my @categories =
+            { :url<best-of-rosettacode>, :full-name("Best of Rosettacode"),
+              :short-name("Rosettacode"), :desc("The best of the rosettacode.org examples") },
+            { :url<99-problems>, :full-name("99 Problems"),
+              :short-name("99 problems"), :desc("Based on lisp 99 problems") },
+            { :url<cookbook>, :full-name("Cookbook examples"),
+            :short-name("Cookbook"), :desc("Cookbook examples") },
+            { :url<euler>, :full-name("Project Euler"),
+            :short-name("Euler"), :desc("Answers for Project Euler") },
+            { :url<games>, :full-name("Games"),
+            :short-name("Games"), :desc("Games written in Raku") },
+            { :url<interpreters>, :full-name("Interpreters"),
+            :short-name("Interpreters"), :desc("Language or DSL interpreters") },
+            { :url<module-management>, :full-name("Module management"),
+            :short-name("Modules"), :desc("Examples of organising modules") },
+            { :url<parsers>, :full-name("Parsers"),
+            :short-name("Grammars"), :desc("Example grammars") },
+            { :url<perlmonks>, :full-name("Perlmonks"),
+            :short-name("Perlmonks"), :desc("Answers to perlmonks.org questions") },
+            { :url<rosalind>, :full-name("Project Rosalind"),
+            :short-name("Rosalind"), :desc("Bioinformatics-related programming problems") },
+            { :url<shoutout>, :full-name("Shootout"),
+            :short-name("Shoutout"), :desc("Implementations for the Computer Language Benchmark Game") },
+            { :url<tutorial>, :full-name("Raku Tutorial Examples"),
+            :short-name("Tutorial"), :desc("Initial work in collecting Raku tutorial examples") },
+            { :url<wsg>, :full-name("Winter Scripting Games"),
+            :short-name("WSG"), :desc("Answers for the Winter Scripting Games") },
+            { :url<other>, :full-name("Other examples"),
+            :short-name("Other"), :desc("Other examples which aren't yet categorized") };
 
     my %cookbook-categories-table =
         "01strings"                  => "1. Strings",
