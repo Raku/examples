@@ -3,6 +3,53 @@
 
 Platform:
 ---------
+Hardware: i7-7500u
+
+Operating System:	Void Linux
+Perl 5 version:		5.30.2
+Rakudo version:		This is Rakudo version 2020.02 built on MoarVM version 2020.02
+
+Date: 12 Apr 2020
+
+	N-Body  (double precision arithmetic)
+	------
+	perl  n-body.pl   1000  98.71 millis
+	raku  n-body.raku 1000  621.24 millis
+
+	=> Rakudo is 6 times slower than Perl 5.
+
+	Regex-DNA  (regular expressions)
+	---------
+	perl regex-dna.pl < regex-dna.input    101.51 millis
+	raku regex-dna.raku < regex-dna.input  1.17 secs
+
+	=> Rakudo is 11.5 times slower than Perl 5.
+
+	K-Nucleotide (substrings)
+	------------
+	perl k-nucleotide.pl < k-nucleotide.input    71.11 millis
+	raku k-nucleotide.raku < k-nucleotide.input  407.06 millis
+
+	=> Rakudo is 5.7 times slower than Perl 5.
+
+	Revcomp (.flip and .trans)
+	-------
+	perl revcomp.pl < revcomp.input     23.78 millis
+	raku revcomp.raku < revcomp.input  318.67 millis
+
+	=> Rakudo is 13.4 times slower than Perl 5.
+
+	Fasta (arrays, string concat, substr)
+	-----
+	perl fasta.pl   1000  70.38 millis
+	raku fasta.raku 1000  494.73 millis
+
+	=> Rakudo is 7 times slower than Perl 5.
+
+--------
+
+Platform:
+---------
 Hardware: An old MacBook
 
 Operating System:	Ubuntu Ibex
