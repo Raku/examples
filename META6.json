@@ -18,7 +18,8 @@
     "HTML::Escape",
     "Term::termios",
     "Cro::HTTP",
-    "Cro::WebApp"
+    "Cro::WebApp",
+    "Terminal::Spinners"
   ],
   "test-depends": [
     "Test",
