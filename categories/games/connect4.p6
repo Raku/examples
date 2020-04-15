@@ -81,64 +81,64 @@ class ComputerPlayer is Player {
 }
 
 class Game {
-    has @board;
-    has Int @current_levels;
+    has @!board;
+    has Int @!current_levels;
 
     has @.player_types;
 
-    has Player @players;
+    has Player @!players;
 
     method clear_board() {
         if @.player_types.elems != 2 {
             die "invalid game spec: {@.player_types} -- expencted list of two elems, each is either strength or 'H' for human";
         }
-        @players = ();
+        @!players = ();
 
         if @.player_types[0] eq "H" {
-            @players.push: HumanPlayer.new( token => "X", highlighter_token => "*" )
+            @!players.push: HumanPlayer.new( token => "X", highlighter_token => "*" )
         }
         else {
-            @players.push: ComputerPlayer.new( token => "X", highlighter_token => "*", look_ahead => @.player_types[0] )
+            @!players.push: ComputerPlayer.new( token => "X", highlighter_token => "*", look_ahead => @.player_types[0] )
         }
 
         if @.player_types[1] eq "H" {
-            @players.push: HumanPlayer.new( token => "O", highlighter_token => "@" )
+            @!players.push: HumanPlayer.new( token => "O", highlighter_token => "@" )
         }
         else {
-            @players.push: ComputerPlayer.new( token => "O", highlighter_token => "@", look_ahead => @.player_types[1] )
+            @!players.push: ComputerPlayer.new( token => "O", highlighter_token => "@", look_ahead => @.player_types[1] )
         }
 
-        @board = (^7).map({[ "" xx 7 ]});
-        @current_levels = 0 xx 7;
+        @!board = (^7).map({[ "" xx 7 ]});
+        @!current_levels = 0 xx 7;
     }
 
     method other_player( Player $who ) {
-        @players.first: { $_ !=== $who };
+        @!players.first: { $_ !=== $who };
     }
 
     method next_available_row_of_column( Int $column ) {
-        if (@board[6][$column]) {
+        if (@!board[6][$column]) {
             die "illegal move: $column";
         }
-        return @current_levels[$column];
+        return @!current_levels[$column];
     }
 
     multi method set_board_state( Move $move ;; $value = $move.who.token ) {
-        @board[$move.row][$move.column] = $value;
+        @!board[$move.row][$move.column] = $value;
     }
 
     multi method set_board_state( Int $row, Int $column ;; $value ) {
-        @board[$row][$column] = $value
+        @!board[$row][$column] = $value
     }
 
     method play_move( Move $move ) {
         self.set_board_state: $move;
-        ++@current_levels[$move.column];
+        ++@!current_levels[$move.column];
     }
 
     method undo_move( Move $move ) {
         self.set_board_state: $move, "";
-        --@current_levels[$move.column];
+        --@!current_levels[$move.column];
     }
 
     method scan_for_win( Move $move, $fn ) {
@@ -155,7 +155,7 @@ class Game {
                     my $y = $row + ( $delta_x * $left_right * $diag );
                     last unless 0 <= $x <= 6;
                     last unless 0 <= $y <= 6;
-                    last unless @board[$y][$x] eq $token;
+                    last unless @!board[$y][$x] eq $token;
                     push @winning_points, [$y, $x];
                 }
             }
@@ -165,10 +165,10 @@ class Game {
         if $row > 2 {
             my @winning_points = (1..3).map: -> $delta_y { [$row - $delta_y, $column] };
             for @winning_points -> @p {
-                # TODO: @board[ [;] @p ] eq $token
+                # TODO: @!board[ [;] @p ] eq $token
                 my ($y, $x);
                 ($y, $x) = @p;
-                return unless @board[$y][$x] eq $token;
+                return unless @!board[$y][$x] eq $token;
             }
             $fn( @winning_points );
         }
@@ -182,14 +182,14 @@ class Game {
 
     method display {
         say (1..7).join("   ");
-        .map({ $_ || "-" }).join(" | ").say for reverse @board;
+        .map({ $_ || "-" }).join(" | ").say for reverse @!board;
     }
 
 
     method legal_moves (Player $who) {
         my @moves;
         for ^7 -> $column {
-            push @moves, Move.new( game => self, who => $who, column => $column) unless @board[6][$column];
+            push @moves, Move.new( game => self, who => $who, column => $column) unless @!board[6][$column];
         }
         return @moves;
     }
@@ -199,7 +199,7 @@ class Game {
         self.display;
 
         for ^49 -> $move_num {
-            my $who = @players[ Int($move_num % 2) ];
+            my $who = @!players[ Int($move_num % 2) ];
             my Move $where = $who.get_move( self );
             my $win = $where.is_winning_move;
             say "";
