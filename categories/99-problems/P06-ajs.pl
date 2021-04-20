@@ -29,11 +29,12 @@ my @examples = [
     [[< E a >], False] ];
 
 for @examples -> ($list, $result) {
+    my $is-result = $result ?? "" !! "not ";
     if palindromic($list) != $result {
-        die "{$list.perl} was expected to be a palindrome, but isn't";
+        die "{$list.perl} was expected {$is-result}to be a palindrome, but isn't";
     }
     else {
-        say $list ~ " is a palindrome";
+        say $list ~ " is {$is-result}a palindrome";
     }
 }
 
