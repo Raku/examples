@@ -10,7 +10,7 @@ The Ackermann function is a classic recursive example in computer science.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Ackermann_function#Perl_6>
+L<http://rosettacode.org/wiki/Ackermann_function#Raku>
 
 =head1 What's interesting here?
 

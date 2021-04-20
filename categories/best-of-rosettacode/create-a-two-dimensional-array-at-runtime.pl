@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Create a two-dimensional array at runtime
 
-=AUTHOR Salve J. Nilsen
+=AUTHOR TimToady
 
 Get two integers from the user, then create a two-dimensional array where the
 two dimensions have the sizes given by those numbers, and which can be accessed
@@ -14,7 +14,7 @@ itself.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Perl_6>
+L<http://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Raku>
 
 =end pod
 

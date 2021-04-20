@@ -34,7 +34,7 @@ an expression is even possible.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/24_game#Perl_6>
+L<http://rosettacode.org/wiki/24_game#Raku>
 
 =head1 What's interesting here?
 

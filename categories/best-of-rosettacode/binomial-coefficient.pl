@@ -17,7 +17,7 @@ monome of degree P in the expansion of (1 + X)^N, thus the name.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Perl_6>
+L<http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Raku>
 
 =head1 Notable features used
 

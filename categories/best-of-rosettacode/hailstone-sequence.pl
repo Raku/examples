@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Hailstone sequence
 
-=AUTHOR Salve J. Nilsen
+=AUTHOR TimToady
 
 The Hailstone sequence of numbers can be generated from a starting positive
 integer, n by:
@@ -30,7 +30,7 @@ together with that sequence's length.
 
 =head1 More
 
-U<http://rosettacode.org/wiki/Hailstone_sequence#Perl_6>
+U<http://rosettacode.org/wiki/Hailstone_sequence#Raku>
 
 
 =end pod

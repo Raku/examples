@@ -15,7 +15,7 @@ of which mis-nest.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Balanced_brackets#Perl_6>
+L<http://rosettacode.org/wiki/Balanced_brackets#Raku>
 
 =head1 What's interesting here?
 

@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Prime decomposition
 
-=AUTHOR Salve J. Nilsen
+=AUTHOR TimToady
 
 The prime decomposition of a number is defined as a list of prime numbers
 which when all multiplied together, are equal to that number.
@@ -21,7 +21,7 @@ before your code).
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Prime_decomposition#Perl_6>
+L<http://rosettacode.org/wiki/Prime_decomposition#Raku>
 
 =end pod
 

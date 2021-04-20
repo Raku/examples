@@ -4,7 +4,7 @@ use v6;
 
 =TITLE 100 Doors
 
-=AUTHOR Salve J. Nilsen
+=AUTHOR TimToady
 
 You have 100 doors in a row that are all initially closed. You make 100 passes
 by the doors. The first time through, you visit every door and toggle the door
@@ -20,7 +20,7 @@ which are closed?
 
 =head1 More
 
-L<http://rosettacode.org/wiki/100_doors#Perl_6>
+L<http://rosettacode.org/wiki/100_doors#Raku>
 
 =head1 Features used
 

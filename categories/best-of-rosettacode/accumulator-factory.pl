@@ -4,7 +4,7 @@ use v6;
 
 =TITLE Accumulator factory
 
-=AUTHOR Salve J. Nilsen
+=AUTHOR Kodi Arfer
 
 A problem posed by Paul Graham is that of creating a function that takes a
 single (numeric) argument and which returns another function that is an
@@ -66,7 +66,7 @@ use a closure, providing the language supports them.
 
 =head1 More
 
-L<http://rosettacode.org/wiki/Accumulator_factory#Perl_6>
+L<http://rosettacode.org/wiki/Accumulator_factory#Raku>
 
 
 =head1 What's interesting here?
