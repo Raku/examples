@@ -206,7 +206,7 @@ Assignments of non-strings set the variable to the appropriate type:
 
     my $scalar = 1234;
     say $scalar; # 1234
-    say '$scalar is ', $string.^name   # $scalar is Int
+    say '$scalar is ', $scalar.^name   # $scalar is Int
 
 An object can be stringified, by using the ~ operator immediately
 prior to the variable's sigil
