@@ -13,20 +13,20 @@ help:
 
 html: install-deps
 	@echo "*** Generating HTML pages ***"
-	perl6 htmlify.pl
+	raku htmlify.pl
 
 html-nohighlight: install-deps
 	@echo "*** Generating HTML pages (without syntax highlighting) ***"
-	perl6 htmlify.pl --no-highlight
+	raku htmlify.pl --no-highlight
 
 run-all: install-deps
-	perl6 bin/run-examples.pl
+	raku bin/run-examples.pl
 
 web-server:
 	perl app.pl daemon
 
 test: install-deps
-	prove --exec perl6 -r t
+	prove --exec raku -r t
 
 install-deps:
 	@echo "*** Installing dependencies ***"

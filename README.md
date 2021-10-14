@@ -1,6 +1,6 @@
 # Raku Examples
 
-[![Build Status](https://travis-ci.org/perl6/perl6-examples.svg?branch=master)](https://travis-ci.org/perl6/perl6-examples)
+[![Build Status](https://travis-ci.org/raku/examples.svg?branch=master)](https://travis-ci.org/raku/examples)
 
 This is intended to be a repository for all kinds of Raku examples.
 
@@ -15,7 +15,7 @@ If you want to contribute, just ask! The quicker choice is to use IRC:
 and you'll be welcome.
 
 Please use POD6 (mostly this template
-https://github.com/perl6/perl6-examples/blob/master/doc/example-template.pl) when
+https://github.com/raku/examples/blob/master/doc/example-template.pl) when
 adding a new example.
 
 ## Goals
@@ -52,8 +52,8 @@ adding a new example.
 |tutorial            | Tutorial examples |
 |wsg                 | Answers for Winter Scripting Games |
 
-Since you have a commit-bit (if not then talk to the folks at #perl6 on
-irc.freenode.net) feel free to commit your changes to the main repository.
+Since you have a commit-bit (if not then talk to the folks at #raku on
+irc.libera.chat) feel free to commit your changes to the main repository.
 No need to submit a pull request!
 
 ## Dependencies
@@ -62,7 +62,7 @@ To run all examples and tests, a number of modules need to be installed.
 
 These are listed in `META6.json`.
 
-They can be installed via [`zef`](https://modules.perl6.org/dist/zef):
+They can be installed via [`zef`](https://modules.raku.org/dist/zef):
 
     $ zef --depsonly install .
 
@@ -72,7 +72,7 @@ To run most examples (all examples excluding those which take a very long
 time or are memory hogs) one can use the `run-examples.pl` script in the
 `bin` directory:
 
-    $ perl6 bin/run-examples.pl
+    $ raku bin/run-examples.pl
 
 or simply via the `run-all` target of the Makefle:
 
@@ -83,7 +83,7 @@ use the `--category=<category-dir>` option specifying the desired category's
 directory name.  For example, to run the examples for the `cookbook`
 category, use the following:
 
-    $ perl6 bin/run-examples.pl --category=cookbook
+    $ raku bin/run-examples.pl --category=cookbook
 
 ## Building the examples documentation
 
@@ -93,12 +93,12 @@ To build the examples documentation web pages, simply run
 
 or you can run the `htmlify.p6` script in the base directory:
 
-    $ perl6 htmlify.p6
+    $ raku htmlify.p6
 
 After the pages have been generated, you can view them on your local
 computer by starting the included `app.pl` program:
 
-    $ perl app.pl daemon
+    $ raku app.pl daemon
 
 You can then view the examples documentation by pointing your web browser at
 http://localhost:3000.
