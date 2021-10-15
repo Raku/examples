@@ -11,7 +11,7 @@ If an example needs an implementation specific version then it should end in
 on Rakudo, it should end in .rakudo.
 
 If you want to contribute, just ask! The quicker choice is to use IRC:
-[join `#raku` on `irc.freenode.net`](https://webchat.freenode.net/?channels=#raku-dev>)
+[join `#raku` on `irc.freenode.net`](https://webchat.freenode.net/?channels=#raku>)
 and you'll be welcome.
 
 Please use POD6 (mostly this template
