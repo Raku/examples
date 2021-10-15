@@ -4,11 +4,7 @@
 
 This is intended to be a repository for all kinds of Raku examples.
 
-All examples should work for any full implementation of Raku.
-
-If an example needs an implementation specific version then it should end in
-.implementation.  For example, if you are making an example that only works
-on Rakudo, it should end in .rakudo.
+All examples should work on a recent compiler release of Rakudo.
 
 If you want to contribute, just ask! The quicker choice is to use IRC:
 [join `#raku` on `irc.freenode.net`](https://webchat.freenode.net/?channels=#raku>)
