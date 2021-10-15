@@ -15,7 +15,6 @@
         "Examples" : "lib/Examples.pm",
         "Examples::Categories" : "lib/Examples/Categories.pm",
         "Examples::Example" : "lib/Examples.pm",
-        "Text::Levenshtein" : "lib/Text/Levenshtein.pm",
         "Pod6" : "lib/Pod/Parser.pm",
         "Pod6Block" : "lib/Pod/Parser.pm",
         "Context" : "lib/Pod/Parser.pm",
