@@ -7,7 +7,7 @@ This is intended to be a repository for all kinds of Raku examples.
 All examples should work on a recent compiler release of Rakudo.
 
 If you want to contribute, just ask! The quicker choice is to use IRC:
-[join `#raku` on `irc.freenode.net`](https://webchat.freenode.net/?channels=#raku>)
+[join `#raku` on `irc.libera.chat`](https://kiwiirc.com/nextclient/irc.libera.chat/#raku)
 and you'll be welcome.
 
 Please use POD6 (mostly this template
