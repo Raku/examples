@@ -4,6 +4,8 @@ http://projecteuler.net/
 
 This is a directory to post answers to Project Euler questions.
 
+Please only post solutions for the first 100 problems.
+
 ## Adding a new example solution
 
 Use the file format `prob000-author.pl`, replacing "000" with the problem
