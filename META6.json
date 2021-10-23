@@ -18,6 +18,7 @@
         "Pod6" : "lib/Pod/Parser.pm",
         "Pod6Block" : "lib/Pod/Parser.pm",
         "Context" : "lib/Pod/Parser.pm",
-        "Pod::Parser" : "lib/Pod/Parser.pm"
+        "Pod::Parser" : "lib/Pod/Parser.pm",
+        "Pod::To::Perl" : "lib/Pod/To/Perl.pm"
      }
 }
