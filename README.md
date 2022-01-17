@@ -10,9 +10,10 @@ If you want to contribute, just ask! The quicker choice is to use IRC:
 [join `#raku` on `irc.libera.chat`](https://kiwiirc.com/nextclient/irc.libera.chat/#raku)
 and you'll be welcome.
 
-Please use POD6 (mostly this template
-https://github.com/raku/examples/blob/master/doc/example-template.pl) when
-adding a new example.
+
+Please use POD6 when adding a new example. [This
+template](https://github.com/raku/examples/blob/master/doc/example-template.pl)
+can help get you started.
 
 ## Goals
 
