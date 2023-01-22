@@ -34,9 +34,6 @@ my $result;
 # compute b and c
 ==> map -> [ $a, $u, $v ] { my $b = $u div $v; [ $a, $b, $N - $a - $b ] } \
 
-# compute product
-==> map -> @triple { [*] @triple } \
-
 # ... to give the result.
 # XXX Rakudo feed operator wraps results in an extra sequence, thus .[0]
 ==> { .[0].say }();
