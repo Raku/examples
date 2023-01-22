@@ -38,9 +38,9 @@ The condition a < b gives the constraint
 a < (1 - 1/√2)·N
 
 =end pod
-
+constant \SQRT2 = sqrt(0.5);
 sub triples($N) {
-    for 1..Int((1 - sqrt(0.5)) * $N) -> $a {
+    for 1..Int((1 - SQRT2) * $N) -> $a {
         my $u = $N * ($N - 2 * $a);
         my $v = 2 * ($N - $a);
 
@@ -49,11 +49,11 @@ sub triples($N) {
         if $u %% $v {
             my $b = $u div $v;
             my $c = $N - $a - $b;
-            take $($a, $b, $c);
+            return ($a, $b, $c);
         }
     }
 }
 
-say [*] .list for gather triples(1000);
+say triples(1000);
 
 # vim: expandtab shiftwidth=4 ft=perl6
