@@ -49,10 +49,6 @@ can help get you started.
 |tutorial            | Tutorial examples |
 |wsg                 | Answers for Winter Scripting Games |
 
-Since you have a commit-bit (if not then talk to the folks at #raku on
-irc.libera.chat) feel free to commit your changes to the main repository.
-No need to submit a pull request!
-
 ## Dependencies
 
 To run all examples and tests, a number of modules need to be installed.
