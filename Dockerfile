@@ -7,7 +7,7 @@ RUN apk add --update --no-cache build-base wget git curl vim \
 ENV PATH=$PATH:/opt/rakudo-pkg/bin
 
 RUN mkdir -p /opt/perl6-examples \ && git clone https://github.com/perl6/perl6-examples /opt/perl6-examples \
-    && cd /opt/perl6-examples && zef --/test --test-depends --depsonly install . && make html
+    && cd /opt/perl6-examples && zef --/test --test-depends --deps-only install . && make html
 
 # running daemon perl6-examples 
 FROM alpine:3.10

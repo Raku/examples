@@ -30,4 +30,4 @@ test: install-deps
 
 install-deps:
 	@echo "*** Installing dependencies ***"
-	zef --/test --test-depends --depsonly install .
+	zef --/test --test-depends --deps-only install .

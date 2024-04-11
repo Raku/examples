@@ -60,7 +60,7 @@ These are listed in `META6.json`.
 
 They can be installed via [`zef`](https://modules.raku.org/dist/zef):
 
-    $ zef --depsonly install .
+    $ zef --deps-only install .
 
 ## Running the examples
 
