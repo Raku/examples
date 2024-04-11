@@ -12,13 +12,13 @@
     "test-depends" : [ "Test", "Test::META" ],
     "source-url"   : "git://github.com/Raku/examples.git",
     "provides"     : {
-        "Examples" : "lib/Examples.pm",
-        "Examples::Categories" : "lib/Examples/Categories.pm",
-        "Examples::Example" : "lib/Examples.pm",
-        "Pod6" : "lib/Pod/Parser.pm",
-        "Pod6Block" : "lib/Pod/Parser.pm",
-        "Context" : "lib/Pod/Parser.pm",
-        "Pod::Parser" : "lib/Pod/Parser.pm",
-        "Pod::To::Perl" : "lib/Pod/To/Perl.pm"
+        "Examples" : "lib/Examples.rakumod",
+        "Examples::Categories" : "lib/Examples/Categories.rakumod",
+        "Examples::Example" : "lib/Examples.rakumod",
+        "Pod6" : "lib/Pod/Parser.rakumod",
+        "Pod6Block" : "lib/Pod/Parser.rakumod",
+        "Context" : "lib/Pod/Parser.rakumod",
+        "Pod::Parser" : "lib/Pod/Parser.rakumod",
+        "Pod::To::Perl" : "lib/Pod/To/Perl.rakumod"
      }
 }

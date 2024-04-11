@@ -35,7 +35,7 @@ class Website is export {
     method write-index {
         say "Creating main index file";
         spurt $!base-html-dir ~ '/index.html',
-            self.p2h(EVAL slurp('lib/HomePage.pod') ~ "\n\$=pod");
+            self.p2h(EVAL slurp('lib/HomePage.rakudoc') ~ "\n\$=pod");
     }
 
     #| collect metadata for all example files
