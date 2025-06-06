@@ -1,5 +1,3 @@
-use v6;
-
 =begin pod
 
 =TITLE P06 - Find out whether a list is a palindrome.
