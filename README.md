@@ -43,7 +43,6 @@ can help get you started.
 |module-management   | Module management |
 |other               | All other examples |
 |parsers             | Example grammars |
-|perlmonks           | Answers to perlmonks.org questions |
 |rosalind            | Bioinformatics programming problems |
 |shootout            | [The Computer Language Benchmark Game](http://shootout.alioth.debian.org/) |
 |tutorial            | Tutorial examples |

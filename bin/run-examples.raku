@@ -28,7 +28,6 @@ my @categories = qw{
     interpreters
     module-management
     parsers
-    perlmonks
     rosalind
     shootout
     tutorial
