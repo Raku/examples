@@ -1,18 +1,18 @@
-use v6;
+#!/usr/bin/env raku
 
 =begin pod
 
 =head1 NAME
 
-run-all-examples.pl - run all current Perl 6 examples
+run-all-examples.raku - run all current Raku examples
 
 =head1 SYNOPSIS
 
-    $ perl6 run-all-examples.pl [--category=<category-name>]
+    $ raku run-all-examples.pl [--category=<category-name>]
 
 =head1 DESCRIPTION
 
-A script to run all current Perl 6 examples in the C<perl6-examples>
+A script to run all current Raku examples in this
 repository and print their output.  This is useful to check if the examples
 compile and/or work as expected.
 
@@ -94,7 +94,7 @@ sub MAIN (:$category) {
             next if grep $example-name, @examples-to-skip;
             say $example-dir ~ "/" ~ $example-name;
             chdir $example-dir;
-            qqx{perl6 $example-name}.say;
+            qqx{raku $example-name}.say;
             chdir $base-dir;
         }
     }
