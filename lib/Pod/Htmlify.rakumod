@@ -219,7 +219,7 @@ class Website is export {
             :$head,
             :header(self.header-html),
             :$footer,
-            :default-title("Perl 6 Examples");
+            :default-title("Raku Examples");
     }
 
     #| return the header html for the current page

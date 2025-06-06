@@ -1,6 +1,6 @@
 =encoding utf8
 
-=head1 99 Perl 6 Problems
+=head1 99 Raku Problems
 
 Based on an original Prolog problem list by Werner Hett
 L<http://sites.google.com/site/prologsite/prolog-problems>.

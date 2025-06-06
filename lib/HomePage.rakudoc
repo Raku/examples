@@ -1,6 +1,6 @@
 =begin Html
 <img style="float: right; margin: 0 0 1em 1em" src="/images/camelia.png" alt =""/>
-Welcome to the examples collection of the <a href="http://perl6.org">Perl 6</a>
+Welcome to the examples collection of the <a href="http://perl6.org">Raku</a>
 programming language!
 
 <hr>
@@ -25,7 +25,7 @@ programming language!
 </dd>
 <dt><a href="/categories/games.html">Games</a></dt>
 <dd>
-    Games written in Perl 6
+    Games written in Raku
 </dd>
 <dt><a href="/categories/interpreters.html">Interpreters</a></dt>
 <dd>
@@ -49,7 +49,7 @@ programming language!
 </dd>
 <dt><a href="/categories/tutorial.html">Perl6 Tutorial Examples</a></dt>
 <dd>
-    Initial work in collecting Perl 6 tutorial examples
+    Initial work in collecting Raku tutorial examples
 </dd>
 <dt><a href="/categories/wsg.html">Winter Scripting Games</a></dt>
 <dd>
@@ -63,7 +63,6 @@ programming language!
 
 <hr>
 
-<p>The Perl 6 homepage offers <a href="http://perl6.org/documentation/">a
-comprehensive list of Perl 6 documentation</a>, including tutorials, HowTos
-and <a href="http://faq.perl6.org/">FAQs (Frequently Asked Questions)</a>.</p>
+<p>The Raku homepage offers <a href="http://raku.org/documentation/">a
+comprehensive list of Raku documentation</a>, including tutorials and how-tos</p>
 =end Html

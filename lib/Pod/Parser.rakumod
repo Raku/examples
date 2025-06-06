@@ -1,4 +1,4 @@
-# lib/Pod/Parser.pm - Perl 6 Plain Old Documentation parser
+# lib/Pod/Parser.pm - Raku Plain Old Documentation parser
 
 # Names, meanings and sequence according to Synopsis 26 - Documentation
 
@@ -552,10 +552,10 @@ class Pod::Parser {
 =begin pod
 
 =head1 NAME
-Pod::Parser - stream based parser for Perl 6 Plain Old Documentation
+Pod::Parser - stream based parser for Raku Plain Old Documentation
 
 =head1 SYNOPSIS
- # in Perl 6 (Rakudo) - see Makefile for install and test suggestions
+ # in Raku - see Makefile for install and test suggestions
  use v6;
  use Pod::Parser;
  my $p = Pod6Parser.new;
@@ -732,7 +732,7 @@ Martin Berends (mberends on CPAN github #perl6 and @autoexec.demon.nl).
 =head1 ACKNOWLEDGEMENTS
 Many thanks to (in order of contribution):
 Larry Wall for perl, and for letting POD be 'manpages for dummies'.
-Damian Conway, for the Perl 6 POD
+Damian Conway, for the Raku POD
 specification L<S26|http://perlcabal.org/syn/S26.html>.
 The Rakudo developers led by Patrick Michaud and all those helpful
 people on #perl6.
@@ -740,7 +740,7 @@ The Parrot developers led by chromatic and all those clever people on
 #parrot.
 Most recently, the "November" Wiki engine developers led by Carl Mäsak++
 and Johan Viklund++, for illuminating the power and practical use of
-Perl 6 regex and grammar definitions.
+Raku regex and grammar definitions.
 
 =end pod
 

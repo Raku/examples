@@ -9,7 +9,7 @@ They provide an excellent example of TMTOWTDI
 This is done via a loop and dispatch table. It is a direct translation of the
 Perl 5 version (see web site) - http://blog.afoolishmanifesto.com/archives/341
 =head2 rpn2
-This version uses a token parser and is a good example of the power in Perl 6
+This version uses a token parser and is a good example of the power in Raku
 pattern matching.
 =head2 rpn3
 This version uses the infix operator and demonstrates writing your own

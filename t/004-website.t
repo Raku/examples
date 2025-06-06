@@ -342,7 +342,7 @@ subtest {
 
     $pod = Pod::Block.new(contents => ["hello"]);
     $html = $website.p2h($pod);
-    ok($html ~~ m/'Perl 6 Examples'/, "default title text");
+    ok($html ~~ m/'Raku Examples'/, "default title text");
 
     recursive-rmdir($base-dir) if $base-dir.IO.d;
 }, "p2h functionality";
