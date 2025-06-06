@@ -1,5 +1,3 @@
-use v6;
-
 =begin pod
 
 =TITLE P17 - Split a list into two parts; the length of the first part is given.
@@ -8,7 +6,7 @@ use v6;
 
 =head1 Example
 
-    > say split-list(('a' xx 10).list, 8).perl;
+    > say split-list(('a' xx 10).list, 8).raku;
     (["a", "a", "a", "a", "a", "a", "a", "a"], ["a", "a"]).list
 
 =head1 Notes
