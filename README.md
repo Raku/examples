@@ -1,3 +1,10 @@
+# NOTE
+
+This repo is being archived and the site will no longer be available at
+http://examples.raku.org.
+
+Look to http://raku.org and http://docs.raku.org
+
 # Raku Examples
 
 [![Build Status](https://travis-ci.org/raku/examples.svg?branch=master)](https://travis-ci.org/raku/examples)
